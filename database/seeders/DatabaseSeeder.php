@@ -15,6 +15,17 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        DB::table('users')->insert([
+            [
+                'email' => "mr.jams1822@gmail.com",
+                'avatar' => "https://lh3.googleusercontent.com/a/AATXAJzErZRv6Ugom2tgr1Xdk8doj-SpAiWPIZEV8ECH=s96-c",
+                'role' => "admin",
+                'created_at' => "2022-02-25 16:25:30",
+                'updated_at' => "2022-02-25 16:25:30",
+            ],
+
+        ]);
+
         DB::table('clinic_types')->insert([
             [
                 'type_of_clinic' => "dental",
