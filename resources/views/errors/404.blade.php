@@ -37,6 +37,7 @@
             box-shadow: 0px 40px 50px -20px var(--grayishBlue);
             border-top: 5px solid rgb(11, 95, 173);
             border-radius: 10px;
+
         }
 
         #pagenotfound2{
@@ -50,6 +51,7 @@
             box-shadow: 0px 40px 50px -20px var(--grayishBlue);
             border-top: 5px solid rgb(11, 95, 173);
             border-radius: 10px;
+ 
         }
 
         #back_btn{
@@ -61,16 +63,33 @@
     </style>
 </head>
 <body>
-    {{-- <h1>CUSTOM PAGE NOT FOUND</h1>
-    <a href="">Back Previous Page</a> --}}
-    {{-- <div id="pagenotfound">
+    <div id="pagenotfound">
         <img src="{{ URL::asset('images/mrjams/page_not_found_1.png') }}" id="pagenotfound1"/>
         <button onclick="history.back()" type="button" class="btn btn-primary mx-auto d-block" id="back_btn"> <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back</button>
-    </div> --}}
+    </div>
 
     <div id="pagenotfound2">
         <img src="{{ URL::asset('images/mrjams/page_not_found_2.png') }}" id="pagenotfound1"/>
         <button onclick="history.back()" type="button" class="btn btn-primary mx-auto d-block" id="back_btn"> <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back</button>
     </div>
 </body>
+
+<script>
+    $(function(){
+
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+        // var getnum = getRandomInt(2);
+
+        console.log(getRandomInt(2));
+         if(getRandomInt(2) == 0){
+            $("#pagenotfound1").css({"display":"block"});
+            $("#pagenotfound2").css({"display":"none"});
+         }else{
+            $("#pagenotfound2").css({"display":"block"});
+            $("#pagenotfound1").css({"display":"none"});
+         }
+    })
+</script>
 </html>
