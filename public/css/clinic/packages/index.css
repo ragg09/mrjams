@@ -1,0 +1,98 @@
+:root {
+    --varyDarkBlue: hsl(234, 12%, 34%);
+    --grayishBlue: hsl(229, 6%, 66%);
+    --veryLightGray: hsl(0, 0%, 98%);
+}
+
+/* index */
+#index_box {
+    background-color: var(--veryLightGray);
+    box-shadow: 0px 20px 30px -20px var(--grayishBlue);
+    border-top: 2px solid rgb(11, 95, 173);
+}
+
+#create_div button {
+    margin-top: 20px;
+    margin-bottom: 5px;
+    float: right;
+}
+#package_body_div {
+    background-color: aquamarine;
+}
+
+#edit_package_details {
+    font-size: 16px;
+}
+/* index */
+
+/* edit_show */
+#col_box {
+    height: 300px;
+}
+
+#top_box {
+    height: 250px;
+    margin-top: 50px;
+    padding: 20px;
+    box-shadow: 0px 30px 40px -20px var(--grayishBlue);
+    border-radius: 5px;
+    border-top: 3px solid rgb(11, 95, 173);
+}
+
+#mid_box {
+    height: 300px;
+    padding: 20px;
+    margin-top: -100px;
+    box-shadow: 0px 30px 40px -20px var(--grayishBlue);
+    border-radius: 5px;
+    border-top: 3px solid rgb(11, 95, 173);
+    overflow-y: scroll;
+}
+
+#bot_box {
+    height: 250px;
+    margin-top: -100px;
+    padding: 20px;
+    box-shadow: 0px 30px 40px -20px var(--grayishBlue);
+    border-radius: 5px;
+    border-top: 3px solid rgb(11, 95, 173);
+}
+
+#box_img {
+    float: right;
+}
+
+@media (max-width: 990px) and (min-width: 450px) {
+    #top_box {
+        height: 300px;
+        margin-top: 0px;
+    }
+
+    #mid_box {
+        height: 300px;
+        margin-top: 0px;
+    }
+
+    #bot_box {
+        height: 300px;
+        margin-top: 0px;
+    }
+}
+
+@media (max-width: 450px) {
+    #top_box {
+        height: 300px;
+        margin-top: 0px;
+    }
+
+    #mid_box {
+        height: 300px;
+        margin-top: 0px;
+    }
+
+    #bot_box {
+        height: 300px;
+        margin-top: 0px;
+    }
+}
+/* edit_show */

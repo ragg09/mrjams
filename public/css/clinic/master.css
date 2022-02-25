@@ -1,0 +1,130 @@
+body {
+    background-color: #eef5f9 !important;
+}
+
+.header {
+    width: 100%;
+    height: 50px;
+    background-color: #80adcb;
+    position: fixed;
+    z-index: 5;
+}
+
+#logo {
+    height: 50px;
+    padding-left: 50px;
+    background-color: #80adcb;
+}
+
+#logo-wrapper {
+    background-color: #80adcb;
+}
+
+.header_menu {
+    float: right;
+    margin-right: 20px;
+    margin-top: 5px;
+}
+
+#menu-toggle {
+    height: 100%;
+    width: 45px;
+    background-color: rgba(45, 45, 46, 0.918);
+}
+
+#menu-toggle:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.header_menu #user_detail {
+    background-color: aqua;
+}
+
+.header_menu #avatar {
+    height: 50px;
+    border-radius: 100%;
+    float: left;
+    padding: 5px;
+}
+
+#sidebar-wrapper {
+    background-color: white;
+    z-index: 10 !important;
+    position: fixed;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    transition: 0.2s;
+    box-shadow: 0.5px 0 5px -2px rgb(158, 156, 156);
+}
+
+#sidebar-option {
+    width: 100%;
+    height: 38px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+#sidebar-wrapper a {
+    text-decoration: none;
+    color: #9598a4;
+    font-size: 20px;
+}
+
+#sidebar-wrapper a:hover #sidebar-option {
+    color: #5b5c61;
+    border-radius: 10px;
+    transition: 0.1s;
+}
+
+#content-wrapper {
+    width: 100%;
+    position: absolute;
+    transition: 0.1s;
+    padding-left: 265px;
+    margin-top: 50px;
+}
+
+#wrapper.menuDisplayed #sidebar-wrapper {
+    width: 45px;
+    transition: 0.2s;
+}
+
+#wrapper.menuDisplayed #content-wrapper {
+    padding-left: 60px;
+    transition: 0.1s;
+}
+
+#sidebar-option-dropdown {
+    display: none;
+}
+
+#wrapper.menuDisplayed #sidebar-option-dropdown {
+    display: none;
+    transition: 0.2s;
+}
+
+@media only screen and (max-width: 1000px) {
+    #sidebar-wrapper {
+        background-color: rgba(45, 45, 46, 0.95);
+        z-index: 1;
+        position: fixed;
+        top: 0;
+        width: 250px;
+        height: 100%;
+        overflow-y: hidden;
+        overflow-x: hidden;
+        transition: 0.2s;
+    }
+
+    #content-wrapper {
+        width: 100%;
+        position: absolute;
+        transition: 0.1s;
+        padding-left: 45px;
+        margin-top: 50px;
+    }
+}

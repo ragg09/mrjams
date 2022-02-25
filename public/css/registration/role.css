@@ -1,0 +1,33 @@
+.choose_role{
+    width: 800px;
+    padding: 0px;
+    margin: 0px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+#img_choose{
+    padding: 10px;
+    height: 100%;
+}
+#img_choose img{
+    height: auto;
+    width: 100%;
+}
+#roles a{
+    text-decoration: none;
+    color: black;
+}
+
+#roles a:hover #img_choose{
+    -moz-box-shadow:0 5px 5px rgba(67, 151, 207, 0.75);
+    -webkit-box-shadow: 0 5px 5px rgba(67, 151, 207, 0.75);
+    box-shadow: 0 5px 5px rgba(67, 151, 207, 0.75);
+}
+
+#roles a:hover img{
+    width: 101%;
+}
+

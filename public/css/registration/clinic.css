@@ -1,0 +1,48 @@
+
+        body{
+    /* background: url("../../images/mrjams/loginui.jpg") no-repeat fixed center; */
+    background-color: #b3cde0 !important;
+    
+}
+
+.registration_div{
+    width: 1500px;
+    padding: 0px;
+    margin: 0px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    
+}
+
+.registration_div .left{
+    float: left;
+    height: auto;
+    width: 45%;
+    background-color: rgba(0, 0, 0, 0.6);
+
+}
+
+.registration_div .left img{
+    width: 100%;
+}
+
+.registration_div .right{
+    float: right;
+    height: auto;
+    width: 55%;
+    /* background-color: rgb(0, 0, 0); */
+}
+
+#address{
+    visibility: hidden;
+}
+
+#form_form{
+    padding: 20px;
+}
+
+.pac-container {
+    z-index: 100000;
+}

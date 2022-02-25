@@ -1,0 +1,13 @@
+#create_div button{
+    margin-top: 20px;
+    margin-bottom: 5px;
+    float: right;
+}
+
+#search{
+    float: right;
+    margin-top: 20px; 
+    margin-right: 10px; 
+    margin-bottom: 5px;
+    height: 38px;
+}

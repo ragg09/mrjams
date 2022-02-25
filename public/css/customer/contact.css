@@ -1,0 +1,172 @@
+
+* {
+    margin:0px;
+    padding:0px;
+}
+*, *:after, *:before { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing:border-box; -o-box-sizing:border-box; box-sizing: border-box; }
+
+.clearfix:before, .clearfix:after { display: table; content: ''; }
+.clearfix:after { clear: both; }
+
+hr {
+    width: 500px;
+    height: 3px;
+    background-color: #116895;
+    border: 0;
+    margin-bottom: 50px;
+    margin-top: 15px;
+}
+
+body {
+    background: #fff;
+    color: #333;
+    font-weight: normal;
+    font-size: 1em;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+input:focus, textarea:focus, keygen:focus, select:focus {
+    outline: none;
+}
+/* ::-moz-placeholder {
+    color: #000;
+    font-weight: 300;
+    opacity: 1;
+} */
+/* 
+::-webkit-input-placeholder {
+    color: #000;
+    font-weight: 300;
+    text-align: left;
+} */
+
+
+/* Contact Form Styling */
+.container {
+    padding: 0 50px 70px;
+}
+.textcenter {
+    text-align: center;
+}
+.section1 {
+    text-align: center;
+    display: table;
+    width: 100%;
+}
+.section1 .shtext {
+    display: block;
+    margin-top: 20px;
+}
+.section1 .seperator {
+    border-bottom:1px solid #a2a2a2;
+    width: 35px;
+    display: inline-block;
+    margin: 20px;
+}
+
+/* .section1 h1 {
+    font-size: 40px;
+    color: #116895;
+    font-weight: bold;
+    font-family: "Roboto", sans-serif;
+
+} */
+
+.section2 {
+    width: 1170px;
+    margin: 25px auto;
+}
+.section2 .col2 {
+    width: 48.71%;
+    /* margin: 0px 50px 0px 0px; */
+    
+}
+
+
+.section2 .col2.first {
+    float: left;
+}
+.section2 .col2.last {
+    float: right;
+}
+.section2 .col2.column2 {
+    padding: 0 30px;
+}
+/* .section2 span.collig {
+    color: #000;
+    margin-right: 10px;
+    display: inline-block;
+    font-weight: bold;
+    text-align: left;
+  
+} */
+.section2 .sec2addr {
+    display: block;
+    line-height: 26px;
+}
+.section2 .sec2addr p:first-child {
+    margin-bottom: 10px;
+}
+.section2 .sec2contactform input[type="text"], 
+.section2 .sec2contactform input[type="email"],
+.section2 .sec2contactform textarea {
+    padding: 18px;
+    border: 0;
+    background: #B3CDE0;
+    margin: 7px 0;
+    font-family: "Roboto", sans-serif;
+    color:#000;
+    font-weight: bold;
+   
+}
+.section2 .sec2contactform textarea {
+    width: 100%;
+    display: block;
+    color: #526873;
+  resize:none;
+  font-weight: bold;
+}
+.section2 .sec2contactform input[type="submit"] {
+    padding: 15px 40px;
+    color: #fff;
+    border: 0;
+    background: #116895;
+    font-size: 16px;
+    text-transform: uppercase;
+    margin: 7px 0;
+    cursor: pointer;
+    font-weight: bold;
+    /* float: right; */
+    margin-bottom: 15px;
+
+}
+.section2 .sec2contactform h3 {
+    font-weight: bold;
+    margin: 20px 0;
+    margin-top: 30px;
+    border-bottom: 3px solid #116895;
+    padding-bottom: 19px;
+    color: #000;
+    font-family: "Century Gothic", sans-serif;
+    font-size: 25px;
+}
+
+
+#map{
+    height:663px;
+    width:500px;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+
+  .logotitle {
+    display: block;
+    margin-left: 0px;
+    /* margin-right: auto; */
+    width: 40%;
+  }
