@@ -1,4 +1,4 @@
-@extends('layouts.customerlayout1')
+@extends('customerViews.layouts.customerlayout1')
 @section('specificStyle')
     <link rel="stylesheet" href="{{asset('./css/customer/mail.css')}}">
     <link rel="stylesheet" href="{{asset('./css/customer/mail-content.css')}}">
@@ -50,7 +50,7 @@
 
                                     <form action="#" class="pull-right position">
                                             <div class="input-append">
-                                                <input type="text" class="sr-input" placeholder="Search Mail">
+                                                <input type="text" class="sr-input" placeholder="Search Appointment" id="search">
                                                 <button class="btn sr-btn" type="button"><i class="fa fa-search"></i></button>
                                             </div>
                                     </form>

@@ -1,11 +1,12 @@
-@extends('layouts.customerlayout1')
+@extends('customerViews.layouts.customerlayout1')
 @section('specificStyle')
     <link rel="stylesheet" href="{{asset('./css/customer/appoint-modal.css')}}">
     <link rel="stylesheet" href="{{asset('./css/customer/rating.css')}}">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
 @endsection
 @section('content')
     <section>
@@ -16,7 +17,7 @@
                         <span class="card-author subtle"><strong>{{$clinic_type[0]->type_of_clinic}} Clinic</strong></span>
                         <span class="card-author subtle"><strong>Phone: </strong>{{$clinic_data[0]->phone}}</span>
                         <span class="card-author subtle"><strong> Telephone: </strong>{{$clinic_data[0]->telephone}}</span>
-                        <h2 class="card-title">{{$clinic_data[0]->name}}</h2>
+                        <h2 class="card-title">{{$clinic_data[0]->name}}, {{$clinic_data[0]->id}}</h2>
                         <input type="hidden" name="clinic_id" value="{{$clinic_data[0]->id}}">  
                         <!-- <span class="card-description subtle">These last few weeks I have been working hard on a new brunch recipe for you all.These last few weeks I have been working hard on a new brunch recipe for you all.</span> -->
                         <!-- <span class="card-author subtle"><strong>Address: </strong>{{$clinic_address[0]->address_line_1}}, {{$clinic_address[0]->address_line_2}}</span> -->
@@ -51,7 +52,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <i class="fa fa-envelope"></i>
+                            <!-- <i class="fa fa-envelope"></i> -->
                         </div>
                         <!-- <div class="modal-title">Alert</div> -->
                         <center><h2><img src="{{ URL::asset('images/mrjams/logowithname.png') }}" width="220px" height="90px" class="center"></h2></center>
@@ -71,7 +72,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <i class="fa fa-envelope"></i>
+                            <!-- <i class="fa fa-envelope"></i> -->
                         </div>
                         <!-- <div class="modal-title">Alert</div> -->
                         <center><h2><img src="{{ URL::asset('images/mrjams/logowithname.png') }}" width="220px" height="90px" class="center"></h2></center>
@@ -82,6 +83,10 @@
                             Tap a star to rate it.
                         </div>
                         <!-- <h1>Star rating </h1> -->
+                        <form action="/customer/appointment" method="POST" id="main_form">
+                        @csrf
+                            <input type="hidden" name="rater_id" value="{{Auth::user()->id}}">
+                            <input type="hidden" name="ratee_id" value="{{$clinic_data[0]->id}}">
                             <div class="rating"> 
                                 <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label> 
                                 <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label> 
@@ -89,11 +94,11 @@
                                 <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label> 
                                 <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
                             </div>
-                        <div class="modal-footer" >
-                            <button type="button" class="btn btn-info" data-dismiss="modal" onclick="window.location.href='';" style="margin: 0 auto;">Submit</button>
-                            <!-- <button type="button" class="btn btn-info" data-dismiss="modal" onclick="window.location.href='/customer/rate/{{$clinic_data[0]->id}}';" style="margin: 0 auto;">Submit</button> -->
-
-                        </div>
+                            <div class="modal-footer" >
+                                <button type="submit" class="btn btn-info" style="margin: 0 auto;">Submit</button>
+                                <!-- <button type="submit" class="btn btn-info" data-dismiss="modal" style="margin: 0 auto;" onclick="window.location.href='/customer/appointment/{{$clinic_data[0]->id}}';">Submit</button> -->
+                            </div>
+                        </form>
                     </div> <!-- / .modal-content -->
                 </div> <!-- / .modal-dialog -->
             </div>
@@ -101,5 +106,8 @@
 
     </section>
 
+@endsection
+@section('jsScript')
+    <script src="{{ URL::asset('js/customer/rating.js') }}"></script> 
 @endsection
 

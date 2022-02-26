@@ -1,4 +1,4 @@
-@extends('layouts.customerlayout1')
+@extends('customerViews.layouts.customerlayout1')
 @section('specificStyle')
     <link rel="stylesheet" href="{{asset('./css/customer/profile-content.css')}}">
 @endsection

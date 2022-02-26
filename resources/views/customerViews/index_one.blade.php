@@ -1,4 +1,4 @@
-@extends('layouts.customerlayout')
+@extends('customerViews.layouts.customerlayout')
 @section('content')
 
       <section class="hero">

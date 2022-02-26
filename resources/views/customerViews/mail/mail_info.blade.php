@@ -1,4 +1,4 @@
-@extends('layouts.customerlayout1')
+@extends('customerViews.layouts.customerlayout1')
 @section('specificStyle')
     <link rel="stylesheet" href="{{asset('./css/customer/mail-info-content.css')}}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">

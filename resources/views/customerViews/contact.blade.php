@@ -1,4 +1,4 @@
-@extends('layouts.customercontact')
+@extends('customerViews.layouts.customercontact')
 @section('content')
 
 <section class="hero" style="display: flex; flex-direction: column; padding: 100px 80px;">

@@ -1,4 +1,4 @@
-@extends('layouts.customerlayout1')
+@extends('customerViews.layouts.customerlayout1')
 @section('specificStyle')
     <link rel="stylesheet" href="{{asset('./css/customer/relativeAppoint-form.css')}}">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
