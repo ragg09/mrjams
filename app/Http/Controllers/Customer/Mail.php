@@ -15,6 +15,7 @@ use App\Models\User_address;
 use App\Models\Clinic_services;
 use App\Models\Packages;
 use App\Models\Appointment_status;
+use App\Models\Receipt_orders_has_clinic_services;
 
 class Mail extends Controller
 {
@@ -25,36 +26,36 @@ class Mail extends Controller
      */
     public function index()
     {
-         // $appointments = Appointments::all();
-        $user = User::where('email', '=',  Auth::user()->email)->first();
-        $customer = User_as_customer::where('users_id', '=', $user->id)->first();
+    //      // $appointments = Appointments::all();
+    //     $user = User::where('email', '=',  Auth::user()->email)->first();
+    //     $customer = User_as_customer::where('users_id', '=', $user->id)->first();
 
-        $user_id = $customer->id;
+    //     $user_id = $customer->id;
       
-        $all_receipts = Receipt_orders::where('user_as_customer_id', '=',  $user_id)
-        ->get();
+    //     $all_receipts = Receipt_orders::where('user_as_customer_id', '=',  $user_id)
+    //     ->get();
 
-    foreach ($all_receipts as $key) {
-        $all_appointments[] = Appointments::where('id', '=',  $key->id)
-            ->get();
+    // foreach ($all_receipts as $key) {
+    //     $all_appointments[] = Appointments::where('id', '=',  $key->id)
+    //         ->get();
 
-        $all_clinics[] = User_as_clinic::where('id', '=',  $key->user_as_clinic_id)
-            ->get();
-    }
+    //     $all_clinics[] = User_as_clinic::where('id', '=',  $key->user_as_clinic_id)
+    //         ->get();
+    // }
 
-    $count = 0;
-    foreach ($all_receipts as $key) {
-        $all[] = [
-            "created_at" => $all_appointments[$count][0]->created_at, //galing sa appointment table
-            "appointed_at" => $all_appointments[$count][0]->appointed_at,
-            "name" => $all_clinics[$count][0]->name //galing sa clinic table
-        ];
-        $count++;
-    }
+    // $count = 0;
+    // foreach ($all_receipts as $key) {
+    //     $all[] = [
+    //         "created_at" => $all_appointments[$count][0]->created_at, //galing sa appointment table
+    //         "appointed_at" => $all_appointments[$count][0]->appointed_at,
+    //         "name" => $all_clinics[$count][0]->name //galing sa clinic table
+    //     ];
+    //     $count++;
+    // }
 
-    // echo (json_encode($all));
-    //  return view('customerViews.mail.mail',['all'=>$all]);
-     return view('customerViews.mail.mail',['all_appointments'=>$all_appointments]);
+    // // echo (json_encode($all));
+    // //  return view('customerViews.mail.mail',['all'=>$all]);
+     return view('customerViews.mail.mail');
     }
 
     /**
@@ -89,10 +90,6 @@ class Mail extends Controller
      */
     public function show($id)
     {
-        // $appointment = $request->receipt_orders_id;
-       
-        // $receipt_data = Receipt_orders::where('id','=', $appointment_data->receipt_orders_id)->first();
-        // echo($receipt_data);
 
         if($id == 0){
             $user = User::where('email', '=',  Auth::user()->email)->first();
@@ -102,13 +99,6 @@ class Mail extends Controller
             
                 $all_receipts = Receipt_orders::where('user_as_customer_id', '=',  $user_id)
                 ->get();
-
-            // foreach ($all_receipts as $key) {
-            //     // $all_appointments[] = Appointments::where('id', '=',  $key->id)->get();
-            //     // $all_appointments[] = Appointments::where('id', '=',  $key->id)->whereNotIn('appointment_status_id', [7])->get();
-            //     $all_appointments[] = Appointments::where('id', '=',  $key->id)->where('appointment_status_id', '!=', 7)->get();
-            //     $all_clinics[] = User_as_clinic::where('id', '=',  $key->user_as_clinic_id)->get();
-            // }
 
             $count = 0;
             foreach ($all_receipts as $key) {
@@ -128,7 +118,15 @@ class Mail extends Controller
               
             }
 
+          if($count > 0){
             return response()->json(['all'=>$all]);
+          }else{
+
+            // $user = User::where('email', '=',  Auth::user()->email)->first();
+            // $customer = User_as_customer::where('users_id', '=', $user->id)->first();
+
+            return response()->json(['status'=> 0]);
+          }
 
         }else if(strpos($id, "status")){
             $astatus = explode(" ", $id);
@@ -155,7 +153,13 @@ class Mail extends Controller
                     }
             }
         
-            return response()->json(['all'=>$all]);
+            // return response()->json(['all'=>$all]);
+
+            if($count > 0){
+                return response()->json(['all'=>$all]);
+              }else{
+                return response()->json(['status'=> 0]);
+              }
 
         }else{
 
@@ -166,7 +170,9 @@ class Mail extends Controller
             $clinic_info = User_as_clinic::where('id', '=', $receipt_info->user_as_clinic_id)->first();
             $clinic_address = User_address::where('id', '=', $clinic_info->user_address_id)->first();
 
-            $service = Clinic_services::where('id','=', $receipt_info->clinic_services_id)->first();
+            $receiptService = Receipt_orders_has_clinic_services::where('receipt_orders_id', '=', $receipt_info->id)->first();
+            $service = Clinic_services::where('id','=', $receiptService->clinic_services_id)->first();
+
             $package = Packages::where('id', '=', $receipt_info->packages_id)->first();
 
             $status = Appointment_status::where('id', '=', $appointment_data->appointment_status_id)->first();
@@ -185,7 +191,44 @@ class Mail extends Controller
      */
     public function edit($id)
     {
-        //
+        if($id == 0){
+            $user = User::where('email', '=',  Auth::user()->email)->first();
+        // $clinic = User_as_clinic::where('users_id', '=', $user->id)->first();
+        
+            if ($request->ajax()) {
+                // $info = "hello";
+                $query = $request->get('query');
+                $data = User_as_clinic::query()->where('name', 'LIKE', "%{$query}%")->get();
+
+                $count = 0;
+                if(count($data) > 0){
+                    foreach($data as $key){
+                        // $address = User_address::where('id', '=', $key->user_address_id)->first();
+                        // $type = Clinic_types::where('id', '=', $key->clinic_types_id)->first();
+                        // $package = Packages::where('user_as_clinic_id', '=', $key->id)->first();
+                        // $service = Clinic_services::where('user_as_clinic_id', '=', $key->id)->first();
+
+                        $receipt = Receipt_orders::where('user_as_clinic_id', '=', $key->id)->first();
+                        $appointment = Appointments::where('receipt_orders_id', '=', $receipt->id)->first();
+
+                        $ClinicAppoint[] = (object) array(
+                            "id" => $key->id, 
+                            "name" => $data[$count]->name,
+                            "created_at" => $appointment->created_at,
+                            "appointed_at" => $appointment->appointed_at
+                        );
+                        $count++;
+                    
+                    }
+                    return  response()->json(['ClinicAppoint' => $ClinicAppoint, 'status' => 1]);
+                }
+                
+
+            }
+
+        }else{
+
+        }
     }
 
     /**

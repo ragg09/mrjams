@@ -34,25 +34,37 @@ class ClinicList extends Controller
     public function create()
     {
         $clinics = User_as_clinic::all();
+        $count = 0;
         foreach ($clinics as $key) {
             $clinic_types = Clinic_types::where('id', '=',  $key->clinic_types_id)->first();
             $clinic_address = User_address::where('id', '=', $key->user_address_id)->first();
             $package = Packages::where('user_as_clinic_id', '=', $key->id)->first();
             $service = Clinic_services::where('user_as_clinic_id', '=', $key->id)->first();
 
-            $all[] = (object) array(  
-                "id" => $key->id, 
-                "name" => $key->name,
-                "phone" => $key->phone,
-                "telephone" => $key->telephone,
-                "type_of_clinic" => $clinic_types->type_of_clinic,
-                "address_line_1" => $clinic_address->address_line_1,
-                "address_line_2" => $clinic_address->address_line_2,
-                "package" => $package->name,
-                "service" => $service->name
-        );
+           
+            if($clinics){
+                $all[] = (object) array(  
+                    "id" => $key->id, 
+                    "name" => $key->name,
+                    "phone" => $key->phone,
+                    "telephone" => $key->telephone,
+                    "type_of_clinic" => $clinic_types->type_of_clinic,
+                    "address_line_1" => $clinic_address->address_line_1,
+                    "address_line_2" => $clinic_address->address_line_2,
+                    "package" => $package->name,
+                    "service" => $service->name
+                );
+            }
+            $count++;
+           
         }
-        return response()->json(['all'=>$all]);
+
+        if($count > 0){
+            return response()->json(['all'=>$all]);
+        }else{
+            return response()->json(['status'=> 0]);
+        }
+        // return response()->json(['all'=>$clinics]);
     }
 
     /**
@@ -143,7 +155,14 @@ class ClinicList extends Controller
                 
 
             }
-            // return  response()->json(['all' =>  $data, 'address' => $address]);
+            
+
+            if($count > 0){
+                return response()->json(['all'=>$all]);
+              }else{
+                return response()->json(['status'=> 0]);
+              }
+
           
 
         }else{

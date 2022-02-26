@@ -15,6 +15,8 @@ use App\Models\Receipt_orders;
 use App\Models\Appointments;
 use App\Models\User_as_clinic;
 use App\Models\Clinic_types;
+use App\Models\Receipt_orders_has_clinic_services;
+use App\Models\Ratings;
 
 
 class Appointment extends Controller
@@ -36,16 +38,7 @@ class Appointment extends Controller
      */
     public function create()
     {
-        //
-        $user = User::where('email', '=',  Auth::user()->email)->first();
-        $customer = User_as_customer::where('users_id', '=', $user->id)->get();
-        // $customer_add_table = User_address::all();
-        $customer_add = User_address::where('id', '=', $customer[0]->user_address_id)->get();
-        $service = Clinic_services::all();
-        $package = Packages::all();
-        // echo($package);
-        // echo ($customer_add);
-         return view('customerViews.appointment.setAppointment',['customer'=>$customer, 'customer_add'=>$customer_add,'package'=>$package, 'service'=>$service]);
+        
     }
 
     /**
@@ -57,6 +50,23 @@ class Appointment extends Controller
     public function store(Request $request)
     {
         $appointMyself = $request->appointment;
+
+        if($request->rating){
+
+            $clinic_id = User_as_clinic::where('id', '=', $request->ratee_id)->first();
+            $ratee = User::where('id', '=', $clinic_id->users_id)->first();
+
+            // $rater = $request->rater_id;
+
+            $rating = new Ratings();
+            $rating->rating = $request->rating;
+            $rating->comment = null;
+            $rating->users_id_ratee = $ratee->id;
+            $rating->users_id_rater = $request->rater_id;
+            $rating->save();
+            
+            return response()->json(['data'=> $request->rating]);
+        }
 
         if($appointMyself == "myself"){
             $fname = $request->fname;
@@ -77,11 +87,15 @@ class Appointment extends Controller
             $receipt->user_as_customer_id = $request->user_as_customer_id;
             $receipt->patient_details =  $patient_details;
             $receipt->patient_address =  $patient_address;
-            $receipt->clinic_services_id = $request->service;
+            // $receipt->clinic_services_id = $request->service;
             $receipt->save();
+
+            $receiptService = new Receipt_orders_has_clinic_services;
+            $receiptService->receipt_orders_id = $receipt->id;
+            $receiptService->clinic_services_id = $request->service;
+            $receiptService->save();
     
             $appoint = new Appointments;
-        
             $appoint->created_at = $request->date;
             $appoint->appointed_at = $request->appointdate;
             $appoint->time = $request->time;
@@ -108,8 +122,13 @@ class Appointment extends Controller
             $receipt->user_as_customer_id = $request->user_as_customer_id;
             $receipt->patient_details = $patient_details;
             $receipt->patient_address = $patient_address;
-            $receipt->clinic_services_id =  $request->service;
+            // $receipt->clinic_services_id =  $request->service;
             $receipt->save();
+
+            $receiptService = new Receipt_orders_has_clinic_services;
+            $receiptService->receipt_orders_id = $receipt->id;
+            $receiptService->clinic_services_id = $request->service;
+            $receiptService->save();
     
             $appoint = new Appointments;
             $appoint->created_at = $request->date;
@@ -168,7 +187,7 @@ class Appointment extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       
     }
 
     /**
@@ -179,6 +198,6 @@ class Appointment extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }
