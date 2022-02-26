@@ -73,7 +73,11 @@
     
 </body>
 
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7wni7IkDlhVh0eYj1v1A2S7UXFpqRGB4&callback=initMap"></script>
+    {{-- <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7wni7IkDlhVh0eYj1v1A2S7UXFpqRGB4&callback=initMap"></script> --}}
+
+    <script async src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places">
+    </script>
+
     <script src="{{ URL::asset('js/customer/map.js') }}"></script>
     <!-- <script src="{{ URL::asset('js/customer/appointment.js') }}"></script> -->
 
