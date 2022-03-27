@@ -6,15 +6,15 @@ $(function(){
     //reload table first
     // $("#equipment_table").load(window.location + " #equipment_table");
 
-    // $("#EquipmentDataTable").DataTable({
-    //     "order" : [[ 0, 'asc' ], [ 1, 'asc' ]],
-    //     "bFilter" : false,
-    //     "paging":   false,
-    //     "info":     false,
-    // });
+    $("#EquipmentDataTable").DataTable({
+        "order" : [[ 0, 'asc' ], [ 1, 'asc' ]],
+        "bFilter" : false,
+        "paging":   false,
+        "info":     false,
+    });
 
-    // $("#EquipSortIcon").removeAttr("hidden");
-    // $("#EquipSortIcon2").removeAttr("hidden");
+    $("#EquipSortIcon").removeAttr("hidden");
+    $("#EquipSortIcon2").removeAttr("hidden");
 
     //calling reusable script
     $.getScript("../js/clinic/reusableFunction.js");
