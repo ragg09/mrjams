@@ -15,19 +15,32 @@ $(function(){
             },
             success: function(data) {
                 if(data.status == 0){
-                    console.log(data);
+                    // console.log(data);
                     $.each(data.error, function(key, val){
                          $('span.'+key+'_error').text(val[0]);
                     });
                 }else{
-                    $.each(data.keys, function(key, val){
-                        $('input#'+key).val('');
-                    });
-                    $("#package_body").load(window.location + " #package_body");
-                    $("#create_modal").modal('toggle');
-                    bootstrapAlert(data.message, "success", 250);
-                    $('#service_multiple').val(null).trigger('change');
-                    $('#equipment_multiple').val(null).trigger('change');
+                    if(data.dataCount == 1){
+                        $("#package_body").load(window.location + " #package_body");
+                        $("#create_modal").modal('toggle');
+                        bootstrapAlert(data.message, "success", 250);
+                        $('#service_multiple').val(null).trigger('change');
+                        $('#equipment_multiple').val(null).trigger('change');
+
+                        setInterval( reload_page, 2000);
+                        function reload_page(){
+                            location.reload()
+                        }
+                    }else{
+                        $.each(data.keys, function(key, val){
+                            $('input#'+key).val('');
+                        });
+                        $("#package_body").load(window.location + " #package_body");
+                        $("#create_modal").modal('toggle');
+                        bootstrapAlert(data.message, "success", 250);
+                        $('#service_multiple').val(null).trigger('change');
+                        $('#equipment_multiple').val(null).trigger('change');
+                    }
                 }
             }
         });
@@ -50,11 +63,23 @@ $(function(){
         $.ajax({
             type: "GET",
             url: "/clinic/packages/" + id + "/edit",
+            beforeSend: function(){
+                $(document).find('span.error-text').text('');
+                
+                $("#response_waiting_details").removeAttr("hidden")
+
+            },
             success: function(data){
+                
+                $("#response_waiting_details").attr("hidden",true)
+
+
+                
                 $.each(data.package, function(key, val){
                     $("#edit_name").val(val.name);
                     $("#edit_description").val(val.description);
-                    $("#edit_price").val(val.price);
+                    $("#edit_min_price").val(val.min_price);
+                    $("#edit_max_price").val(val.max_price);
                     $("#edit_package_details_form").attr('action', "/clinic/packages/"+id);
                });
             },
@@ -131,7 +156,18 @@ $(function(){
         $.ajax({
             type: "GET",
             url: "/clinic/equipments/" + equipments_ids_array,
+            beforeSend: function(){
+                $(document).find('span.error-text').text('');
+                
+                $("#response_waiting_equipments").removeAttr("hidden")
+                $("#selected_equipments").attr("hidden",true)
+            },
             success: function(data){
+                $("#selected_equipments").removeAttr("hidden")
+                $("#response_waiting_equipments").attr("hidden",true)
+
+                $("#select_equipments").empty();
+
                 $("#edit_package_equipments_form").attr('action', "/clinic/packages/"+package_id);
                 $("#equipments_original_ids").attr('value', equipments_ids_array); 
 
@@ -160,9 +196,17 @@ $(function(){
             url: $(this).attr('action'),
             data: $('#edit_package_equipments_form').serialize(),
             beforeSend: function(){
+                $("#close_btn_equipments").attr("hidden", true);
+                $("#update_btn_equipments").attr("hidden", true);
+                $("#response_waiting_equipments_update").removeAttr("hidden");
+                
                 $(document).find('span.error-text').text('');
             },
             success: function(data) {
+                $("#close_btn_equipments").removeAttr("hidden");
+                $("#update_btn_equipments").removeAttr("hidden");
+                $("#response_waiting_equipments_update").attr("hidden", true);
+
                 if(data.status == 0){
                     $.each(data.error, function(key, val){
                         $('span.'+key+'_error').text(val[0]);
@@ -171,7 +215,7 @@ $(function(){
                     $("#edit_show_body").load(window.location + " #edit_show_body");
                     $("#edit_package_equipment_up").modal('toggle');
                     bootstrapAlert(data.message, "info", 200);
-                    console.log(data.message);
+                    // console.log(data.message);
                     $('#select_equipments').val(null).trigger('change');
                 }
             }
@@ -217,7 +261,19 @@ $(function(){
         $.ajax({
             type: "GET",
             url: "/clinic/services/" + services_ids_array,
+            beforeSend: function(){
+                $(document).find('span.error-text').text('');
+                
+                $("#response_waiting_services").removeAttr("hidden")
+                $("#selected_services").attr("hidden",true)
+            },
             success: function(data){
+                $("#selected_services").removeAttr("hidden")
+                $("#response_waiting_services").attr("hidden",true)
+
+
+                $("#select_services").empty();
+
                 $("#edit_package_services_form").attr('action', "/clinic/packages/"+package_id);
                 $("#services_original_ids").attr('value', services_ids_array); 
 
@@ -246,9 +302,16 @@ $(function(){
             url: $(this).attr('action'),
             data: $('#edit_package_services_form').serialize(),
             beforeSend: function(){
+                $("#close_btn_services").attr("hidden", true);
+                $("#update_btn_services").attr("hidden", true);
+                $("#response_waiting_services_update").removeAttr("hidden");
+                
                 $(document).find('span.error-text').text('');
             },
             success: function(data) {
+                $("#close_btn_services").removeAttr("hidden");
+                $("#update_btn_services").removeAttr("hidden");
+                $("#response_waiting_services_update").attr("hidden", true);
                 if(data.status == 0){
                     $.each(data.error, function(key, val){
                         $('span.'+key+'_error').text(val[0]);
@@ -257,7 +320,7 @@ $(function(){
                     $("#edit_show_body").load(window.location + " #edit_show_body");
                     $("#edit_package_service_up").modal('toggle');
                     bootstrapAlert(data.message, "info", 200);
-                    console.log(data.message);
+                    // console.log(data.message);
                     $('#select_services').val(null).trigger('change');
                 }
             }
@@ -296,51 +359,25 @@ $(function(){
             },
             success: function(data) {
                 //console.log(data);
-                $("#package_body").load(window.location + " #package_body");
-                $("#delete_modal").modal('toggle');
-                bootstrapAlert(data.message, "danger", 200);
+                if(data.dataCount == 0){
+                    $("#package_body").load(window.location + " #package_body");
+                    $("#delete_modal").modal('toggle');
+                    bootstrapAlert(data.message, "danger", 200);
+
+                    setInterval( reload_page, 2000);
+                    function reload_page(){
+                        location.reload()
+                    }
+                }else{
+                    $("#package_body").load(window.location + " #package_body");
+                    $("#delete_modal").modal('toggle');
+                    bootstrapAlert(data.message, "danger", 200);
+                }
             },
             error: function(error) {
               console.log('error');
             }
           });
     });
-
-    // $('#search').on('keyup', function(){
-    //     var query = $(this).val();
-    //     if(query.length > 1){
-    //         $.ajax({
-    //             type: $('#search_form').attr('method'),
-    //             url: $('#search_form').attr('action'),
-    //             data: {query:query},
-    //             success: function(data){
-    //                 $('#service_table_body').empty();
-    //                 $('#pagination_div').css('height', '0px');
-    //                 $.each(data.data, function(key, val){
-    //                     $("#service_table_body").append(
-    //                         '<tr>'
-    //                             +'<th scope="row">'+val.id+'</th>'
-    //                             +'<td>'+val.name+'</td><td>'+val.description+'</td>'
-    //                             +'<td>'
-    //                                 +'<a href="" class="btn btn-outline-warning launch-modal" data-toggle="modal" data-target="#edit_modal_up" id="edit_modal" data-id="'+val.id+'" title="Edit '+val.name+'"><i class="fa fa-pencil" aria-hidden="true" ></i></a>'
-    //                                 +'<a href="" class="btn btn-outline-danger launch-modal" data-toggle="modal" data-target="#delete_modal_up" id="delete_modal" data-id="'+val.id+'" title="Delete '+val.name+'"><i class="fa fa-trash" aria-hidden="true"></i></a>'
-    //                             +'</td>'
-    //                         +'</tr>'
-    //                         );
-    //                 });
-    //             },
-    //             error: function(){
-    //                 console.log('AJAX load did not work');
-    //                 alert("error");
-    //             }
-    //         });
-            
-    //     }else{
-    //         $("#service_table").load(window.location + " #service_table");
-    //         $('#pagination_div').css('height', '54px');
-    //     }
-        
-    // });
-
     
 });

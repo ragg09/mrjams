@@ -26,7 +26,7 @@
 </header>
 <div class="body flex-grow-1 px-3">
   <div class="container-lg">
-      <div class="row">
+        <div class="row">
           <div class="col ">
           {{-- class="col-sm-6 col-lg-3 --}}
               <div class="card mb-4 text-white bg-primary pb-3 align-items-center">
@@ -59,26 +59,16 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="card mb-4">
-            <div class="card-body">
+        <div class="card mb-4 align-items-center">
+            <div class="card-body ">
                 <div class="d-flex justify-content-between">
-                    <h4 class="card-title mb-0"> Clinic</h4>
+                    <h4 class="card-title mb-0"> Appointments</h4>
                 </div>
                 <div class="c-chart-wrapper">
-                <div id="linechartClinic" style="width: 900px; height: 500px;"></div>
+                    <div id="appPerMonth"  style="width: 900px; height: 500px;"></div>
                 </div>
             </div>
         </div>
-        <div class="card mb-4">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <h4 class="card-title mb-0"> Customer</h4>
-                </div>
-                <div class="c-chart-wrapper">
-                    <div id="linechartCustomer" style="width: 900px; height: 500px;"></div>
-                </div>
-            </div>
-        </div> --}}
     </div>
 </div>
 {{-- <div id="linechartUsers" style="width: 900px; height: 500px;"></div> --}}

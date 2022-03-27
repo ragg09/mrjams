@@ -15,8 +15,13 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit"class="btn btn-danger" id="confirm_decline_appointment">Decline</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="confirm_decline_appointment_cancel">Cancel</button>
+                <button type="submit"class="btn btn-danger" id="confirm_decline_appointment_decline" >Decline</button>
+
+                <button class="btn btn-danger" type="button" id="response_waiting_decline" disabled hidden>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Waiting for response . . . 
+                </button>
             </div>
 
         </div>

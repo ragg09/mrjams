@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\User_as_customer;
 use App\Models\User_as_clinic;
+use App\Models\Appointments;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -19,40 +20,7 @@ class UserClinicAnalyticsController extends Controller
      */
     public function index()
     {
-        // $user = User::all();
-        // return view('adminViews.analytics' , ['user'=>$user]);
         return view('adminViews.analytics');
-
-        // //ALL USERS
-        // $current_month_user = User::whereYear('created_at',Carbon::now()->year)->whereMonth('created_at',Carbon::now()->month)->count();
-        // $before_1_month_user = User::whereYear('created_at',Carbon::now()->year)->whereMonth('created_at',Carbon::now()->subMonth(1))->count();
-        // $before_2_month_user = User::whereYear('created_at',Carbon::now()->year)->whereMonth('created_at',Carbon::now()->subMonth(2))->count();
-        // $before_3_month_user = User::whereYear('created_at',Carbon::now()->year)->whereMonth('created_at',Carbon::now()->subMonth(3))->count();
-        // $before_4_month_user = User::whereYear('created_at',Carbon::now()->year)->whereMonth('created_at',Carbon::now()->subMonth(4))->count();
-        // $before_5_month_user = User::whereYear('created_at',Carbon::now()->year)->whereMonth('created_at',Carbon::now()->subMonth(5))->count();
-        // $usersCount = array($current_month_user,$before_1_month_user,$before_2_month_user,$before_3_month_user,$before_4_month_user,$before_5_month_user);
-
-        // //CLINIC
-        // $current_month_clinic = User::where('role','=','clinic')->whereYear('created_at',Carbon::now()->year)->whereMonth('created_at',Carbon::now()->month)->count();
-        // $before_1_month_clinic = User::where('role','=','clinic')->whereYear('created_at',Carbon::now()->year)->whereMonth('created_at',Carbon::now()->subMonth(1))->count();
-        // $before_2_month_clinic = User::where('role','=','clinic')->whereYear('created_at',Carbon::now()->year)->whereMonth('created_at',Carbon::now()->subMonth(2))->count();
-        // $before_3_month_clinic = User::where('role','=','clinic')->whereYear('created_at',Carbon::now()->year)->whereMonth('created_at',Carbon::now()->subMonth(3))->count();
-        // $before_4_month_clinic = User::where('role','=','clinic')->whereYear('created_at',Carbon::now()->year)->whereMonth('created_at',Carbon::now()->subMonth(4))->count();
-        // $before_5_month_clinic = User::where('role','=','clinic')->whereYear('created_at',Carbon::now()->year)->whereMonth('created_at',Carbon::now()->subMonth(5))->count();
-        // $clinicsCount = array($current_month_clinic,$before_1_month_clinic,$before_2_month_clinic,$before_3_month_clinic,$before_4_month_clinic,$before_5_month_clinic);
-
-        // //CUSTOMER
-        // $current_month_customer = User::where('role','=','customer')->whereYear('created_at',Carbon::now()->year)->whereMonth('created_at',Carbon::now()->month)->count();
-        // $before_1_month_customer = User::where('role','=','customer')->whereYear('created_at',Carbon::now()->year)->whereMonth('created_at',Carbon::now()->subMonth(1))->count();
-        // $before_2_month_customer = User::where('role','=','customer')->whereYear('created_at',Carbon::now()->year)->whereMonth('created_at',Carbon::now()->subMonth(2))->count();
-        // $before_3_month_customer = User::where('role','=','customer')->whereYear('created_at',Carbon::now()->year)->whereMonth('created_at',Carbon::now()->subMonth(3))->count();
-        // $before_4_month_customer = User::where('role','=','customer')->whereYear('created_at',Carbon::now()->year)->whereMonth('created_at',Carbon::now()->subMonth(4))->count();
-        // $before_5_month_customer = User::where('role','=','customer')->whereYear('created_at',Carbon::now()->year)->whereMonth('created_at',Carbon::now()->subMonth(5))->count();
-        // $customersCount = array($current_month_customer,$before_1_month_customer,$before_2_month_customer,$before_3_month_customer,$before_4_month_customer,$before_5_month_customer);
-
-        // return view('adminViews.analytics')->with(compact('usersCount','clinicsCount','customersCount'));
-        // return $user;
-        // dd($user);
     }
 
 
@@ -130,7 +98,22 @@ class UserClinicAnalyticsController extends Controller
             );
         }
 
-        return response()->json(['data' => $formatted_data, 'clinic' => $formatted_data_clinic, 'customer' => $formatted_data_customer]);
+        $appPerMonth = Appointments::where('appointment_status_id', '=', 1)->get();
+        $months = [];
+        $months_filtered = "";
+        foreach ($appPerMonth as $item) {
+            $date = date('M', strtotime($item->created_at));
+            array_push($months, $date);
+        }
+
+        $appMonth = array_filter(array_count_values($months), function ($v) {
+
+            return $v > 0;
+        });
+
+
+        return response()->json(['data' => $formatted_data, 'clinic' => $formatted_data_clinic, 'customer' => $formatted_data_customer, 'appointment' => $appMonth]);
+        // return response()->json(['data' => $formatted_data, 'clinic' => $formatted_data_clinic, 'customer' => $formatted_data_customer]);
     }
 
     /**

@@ -1,7 +1,7 @@
-$(document).ready(function () {
+$(function () {
 
     //to load charts
-    google.load('visualization', '1.0', {'packages':['corechart']});
+    //google.load('visualization', '1.0', {'packages':['corechart']});
 
     $("#dashboard_table").load(window.location + " #dashboard_table");
     
@@ -11,8 +11,8 @@ $(document).ready(function () {
     // polling techniquw
     function updatedashboard_table_logs(){
         //console.log("pasok");
-        dashboard();
-        $("#dashboard_table").load(window.location + " #dashboard_table");
+        //dashboard();
+        //$("#dashboard_table").load(window.location + " #dashboard_table");
     }
 
     // var id = 0;
@@ -43,36 +43,44 @@ $(document).ready(function () {
     //         }
     //     });
 
+    function EmptyCalendar() {
+        var calendarEl = document.getElementById('calendar_div');
+                    
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridDay'
+            },
+            //initialView: 'timeGridDay',
+            navLinks: true, // can click day/week names to navigate views
+            businessHours: true, // display business hours
+            // editable: true,
+            selectable: true,
+                    
+        });
+        calendar.render();
+        
+    }
+
     function dashboard() {
         $.ajax({
             type: "GET",
             url: "/clinic/dashboard",
+            beforeSend: function(){
+                EmptyCalendar();
+            },
             success: function(data){
                 //console.log(data);
                 var edata = [];
                 
                 if(data.status == 0){
-                    var calendarEl = document.getElementById('calendar_div');
-                    
-                    var calendar = new FullCalendar.Calendar(calendarEl, {
-                        headerToolbar: {
-                            left: 'prev,next today',
-                            center: 'title',
-                            right: 'dayGridMonth,timeGridDay'
-                        },
-                        //initialView: 'timeGridDay',
-                        navLinks: true, // can click day/week names to navigate views
-                        // businessHours: true, // display business hours
-                        // editable: true,
-                        selectable: true,
-                    
-                    });
-                    calendar.render();
+                    EmptyCalendar();
                 }else{
                     $.each(data.data, function(index, val){
                         
                         edata.push({
-                            title: val.ro_patient_details,
+                            title: "Receipt order: ~" + val.ro_id + "~ " +val.ro_patient_details,
                             //start: moment(val.app_created_at).format("YYYY-MM-DD")+"T00:12:00",
                             start: moment(val.app_appointed_at).format("YYYY-MM-DD")+"T"+val.time,
                             //constraint: "businessHours",
@@ -89,10 +97,44 @@ $(document).ready(function () {
                         },
                         //initialView: 'timeGridDay',
                         navLinks: true, // can click day/week names to navigate views
-                        // businessHours: true, // display business hours
-                        // editable: true,
+                        businessHours: true, // display business hours
+                        //editable: true,
+                        contentHeight: 600,
                         selectable: true,
                         events: edata,
+                        eventClick: function(arg) {
+                            data = arg.event.title;
+                            var get_id = data.substring(
+                                data.indexOf("~") + 1, 
+                                data.lastIndexOf("~")
+                            );
+                            
+                            //console.log(get_id);
+
+                            $.ajax({
+                                type: "GET",
+                                url: "/clinic/appointment/" + get_id,
+                                success: function(data){
+                                    // console.log(data);
+                                    
+                                    $("#ro_id_done").val(get_id);
+                    
+                                    $("#proceed_billing").attr('href', "/clinic/billing/"+get_id);
+                                    $("#accepted_detail_modal_body").empty();
+                    
+                                    $("#accepted_detail_modal_body").append('<div class="col-lg-5" style="border-right: 1px solid black"><div class="row d-flex align-items-baseline"><div class="col-lg-4 col-md-4 col-sm-4"><img class="rounded-circle" src="'+data.data.user_avatar+'"></div><div class="col-lg-8 col-md-8 col-sm-8 align-bottom"><span>'+data.data.user_contact+'<br>'+data.data.user_email+'</span></div></div><div class="row mt-4 mx-4"><p><i class="fas fa-user-tag mx-3"></i> '+data.data.user_name+'</p><p><i class="fas fa-venus-mars mx-3"></i>'+data.data.user_gender+' <span class="mx-3"></span> <i class="fas fa-calendar-day mx-3"></i>'+data.data.user_age+' y/o </p><p><i class="fas fa-address-book mx-3"></i> '+data.data.user_address+' </p></div></div><div class="col-lg-7 mt-md-5 mt-sm-5 mt-lg-0"><div class="row"><h2>Patient</h2><div class="col-lg-4 d-flex align-items-center justify-content-center"><i class="fas fa-briefcase-medical" style="font-size: 60px"></i></div><div class="col-lg-8"><h4 class="mx-4">&#x2022;'+data.data.ro_package_name+data.data.ro_services_name+'</h4></div></div><div class="row mt-5 mx-2"><p><i class="fas fa-user-tag mx-3"></i> '+data.data.patient_name+' </p><p><i class="fas fa-venus-mars mx-3"></i>'+data.data.patient_gender+' <span class="mx-3"></span> <i class="fas fa-calendar-day mx-3"></i>'+data.data.patient_age+' y/o </p><p><i class="fas fa-address-book mx-3"></i> '+data.data.patient_address+' </p></div></div>');
+                    
+                                    
+                                },
+                                error: function(){
+                                    console.log('AJAX load did not work');
+                                    alert("error");
+                                }
+                            });
+
+
+                            $('#accepted_view_detail_modal_up').modal('show'); 
+                        },
                     
                     });
 

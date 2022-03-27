@@ -7,7 +7,6 @@
     
 @endsection
 
-
 @section('content')
 <header class="header header-sticky mb-4"> 
   <div class="container-fluid">
@@ -17,7 +16,7 @@
                   <span>Home</span>
               </li>
               <li class="breadcrumb-item active">
-                  <span>Clinic</span>
+                  <span>Patient</span>
               </li>
           </ol>
       </nav>
@@ -37,18 +36,24 @@
                     <p>{{ $clinic->phone}}</p> <br>
                     <p>{{ $clinic->telephone}}</p> --}}
                 {{-- @endforeach  --}}
-                    <p>{{ $patient->id}}</p> <br>
-                    <p>{{ $patient->fname}}</p> <br>
-                    <p>{{ $patient->lname}}</p> <br>
+                    <h3>{{ $patient->id}}</h3> <br>
+                    <h3>Patient Name: {{ $patient->fname}}</h3> <br>
+                    <h3>Patient Last Name: {{ $patient->lname}}</h3> <br>
+                    <h3>Cellphone #: {{ $patient->phone}}</h3> <br>
+                    <h3>Total appointments made: {{ $appReceipt}}</h3> <br>
+                    <h3>Average Rating for the system: {{number_format($avgRatingApps,1)}}</h3> <br>
+                    <input type="text" id="patientID" value="{{$patient->id}}">
             </div>
       </div>
-  </div>
+      <div id="appMonthPatient" style="width: 900px; height: 500px"></div>
+</div>
 
 
 @endsection
 
 @section('extraScript')
 
-{{-- <script src="{{ URL::asset('js/admin/patientDetails.js') }}"></script> --}}
+{{-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> --}}
+<script src="{{ URL::asset('js/admin/patientAppMonth.js') }}"></script>
 
 @endsection

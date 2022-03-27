@@ -66,5 +66,16 @@ class DatabaseSeeder extends Seeder
                 'remark' => "danger",
             ],
         ]);
+
+        DB::table('billing_status')->insert([
+            [
+                'status' => "fully paid",
+                'remark' => "success",
+            ],
+            [
+                'status' => "installment",
+                'remark' => "danger",
+            ],
+        ]);
     }
 }

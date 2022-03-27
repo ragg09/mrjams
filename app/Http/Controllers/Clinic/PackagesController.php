@@ -60,7 +60,8 @@ class PackagesController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:2',
             'description' => 'required|min:5|max:45',
-            'price' => 'required|numeric',
+            'min_price' => 'required|numeric|gt:0',
+            // 'max_price' => 'required|numeric|gt:min_price',
         ]);
 
         if ($validator->fails()) {
@@ -69,7 +70,8 @@ class PackagesController extends Controller
             $package = new Packages();
             $package->name = request('name');
             $package->description = request('description');
-            $package->price = request('price');
+            $package->min_price = request('min_price');
+            $package->max_price = request('max_price');
             $package->user_as_clinic_id = $clinic->id;
             $package->save();
 
@@ -108,7 +110,11 @@ class PackagesController extends Controller
             $logs->save();
 
 
-            return response()->json(['message' => request('name') . ' added successfully', 'keys' => $package]);
+            return response()->json([
+                'message' => request('name') . ' added successfully',
+                'keys' => $package,
+                'dataCount' => count(Packages::where('user_as_clinic_id', '=',  $clinic->id)->get()),
+            ]);
         }
     }
 
@@ -195,7 +201,8 @@ class PackagesController extends Controller
             $validator = Validator::make($request->all(), [
                 'name' => 'required|min:2',
                 'description' => 'required|min:5|max:45',
-                'price' => 'required|numeric',
+                'min_price' => 'required|numeric|gt:0',
+                // 'max_price' => 'required|numeric|gt:min_price',
             ]);
 
             if ($validator->fails()) {
@@ -209,7 +216,8 @@ class PackagesController extends Controller
 
                 $package = Packages::find($id);
                 $package->name = request('name');
-                $package->price = request('price');
+                $package->min_price = request('min_price');
+                $package->max_price = request('max_price');
                 $package->description = request('description');
                 $package->save();
 
@@ -229,14 +237,14 @@ class PackagesController extends Controller
                     $logs->save();
                 }
 
-                if (!($package_last_name->price == request('price'))) {
+                if (!($package_last_name->min_price == request('min_price')) || !($package_last_name->max_price == request('max_price'))) {
                     $logs_count = Logs::where('user_as_clinic_id', '=',  $user->id)->count();
                     //checking logs limit 5000
                     if ($logs_count == 5000) {
                         Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
                     }
                     $logs = new Logs();
-                    $logs->message = $package_last_name->name . '\'s price: "' . $package_last_name->price . '"' . " has changed into " . '"' . request('price') . '".';
+                    $logs->message = $package_last_name->name . '\'s price: changed into' . ' "' . request('min_price') . ' - ' . request('max_price') . '"';
                     $logs->remark = "warning";
                     $logs->date =  date("Y/m/d");
                     $logs->time = date("h:i:sa");
@@ -366,7 +374,10 @@ class PackagesController extends Controller
         $logs->save();
 
 
-        return response()->json(['message' => 'Package Deleted!']);
+        return response()->json([
+            'message' => 'Package Deleted!',
+            'dataCount' => count(Packages::where('user_as_clinic_id', '=',  $clinic->id)->get()),
+        ]);
 
 
         //return response()->json(['service' => $services, 'equipments' => $equipments]);

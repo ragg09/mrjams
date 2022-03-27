@@ -18,13 +18,14 @@
 
         <header>
           <nav>
-              <li><h2><img src="{{ URL::asset('images/mrjams/logowithname.PNG') }}" class="logotitle"></h2></li>
+              <li><h2><img src="{{asset('images/mrjams/logowithname.PNG') }}" class="logotitle"></h2></li>
               <li><a href="/" style="text-decoration: none; color:black;">Home</a></li>
                                 <li class="nav__item"><a href="{{route('customer.clinicList.index')}}" style="text-decoration: none; color:black;">Clinics</a></li>
               <li><a href="{{route('customer.about')}}" style="text-decoration: none; color:black;">About</a></li>
               <li><a href="{{route('customer.contact')}}" style="text-decoration: none; color:black;">Contact</a></li>
               <li><a href="{{route('customer.mail.index')}}" style="text-decoration: none; color:black;">Mail</a></li>
               <li><a href="/customer/customerinfo/{{Auth::user()->id}}" style="text-decoration: none; color:black;">Account</a></li>
+              <li class="nav__item"><a href="{{route('customer.announcement.index')}}" style="text-decoration: none; color:black;"><i class="fa fa-bullhorn fa-lg " aria-hidden="true"></i></a></li>
               <!-- <li><a href="{{route('customer.customermap.index')}}">Appointment</a></li> -->
               <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i></a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

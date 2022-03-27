@@ -1,8 +1,20 @@
 
 $(function(){
 
+    
+
     //reload table first
-    $("#equipment_table").load(window.location + " #equipment_table");
+    // $("#equipment_table").load(window.location + " #equipment_table");
+
+    $("#EquipmentDataTable").DataTable({
+        "order" : [[ 0, 'asc' ], [ 1, 'asc' ]],
+        "bFilter" : false,
+        "paging":   false,
+        "info":     false,
+    });
+
+    $("#EquipSortIcon").removeAttr("hidden");
+    $("#EquipSortIcon2").removeAttr("hidden");
 
     //calling reusable script
     $.getScript("../js/clinic/reusableFunction.js");
@@ -16,21 +28,43 @@ $(function(){
 	    	url: $(this).attr('action'),
 	    	data: $('#main_form').serialize(),
             beforeSend: function(){
+                $("#create_equipment_add").attr("hidden", true);
+                $("#create_equipment_close").attr("hidden", true);
+                $("#response_waiting_equipment_create").removeAttr("hidden");
                 $(document).find('span.error-text').text('');
             },
             success: function(data) {
+                $("#create_equipment_add").removeAttr("hidden");
+                $("#create_equipment_close").removeAttr("hidden");
+                $("#response_waiting_equipment_create").attr("hidden", true);
+
+
                 if(data.status == 0){
                     // console.log(data);
                     $.each(data.error, function(key, val){
                          $('span.'+key+'_error').text(val[0]);
                     });
                 }else{
-                    $.each(data.keys, function(key, val){
-                        $('input#'+key).val('');
-                    });
-                    $("#equipment_table").load(window.location + " #equipment_table");
-                    $("#create_modal").modal('toggle');
-                    bootstrapAlert(data.message, "success", 250);
+                    if(data.dataCount == 1){
+                        $("#equipment_table").load(window.location + " #equipment_table");
+                        $("#create_modal").modal('toggle');
+                        bootstrapAlert(data.message, "success", 250);
+                        setInterval( reload_page, 2000);
+
+                        function reload_page(){
+                            location.reload()
+                        }
+                    }else{
+                        $.each(data.keys, function(key, val){
+                            $('input#'+key).val('');
+                        });
+                        $("#equipment_table").load(window.location + " #equipment_table");
+                        
+                        $("#create_modal").modal('toggle');
+                        bootstrapAlert(data.message, "success", 250);
+                    }
+
+                    
                 }
             }
         });
@@ -43,13 +77,23 @@ $(function(){
         $.ajax({
             type: "GET",
             url: "/clinic/equipments/" + id + "/edit",
+            beforeSend: function(){
+              
+                
+                $("#response_waiting_equipment_edit").removeAttr("hidden");
+
+                $("#edit_equipment_body").attr("hidden", true);
+
+                $(document).find('span.error-text').text('');
+            },
             success: function(data){
-            //     $.each(data.equipment, function(key, val){
-            //         $("#edit_name").val(val.name);
-            //         $("#edit_quantity").val(val.quantity);
-            //         $("#edit_unit").val(val.unit);
-            //         $("#edit_main_form").attr('action', "/clinic/equipments/"+id);
-            //    });
+                
+                
+                
+                $("#response_waiting_equipment_edit").attr("hidden", true);
+
+                $("#edit_equipment_body").removeAttr("hidden");
+
                 $("#edit_name").val(data.equipment.name);
                 $("#edit_quantity").val(data.equipment.quantity);
                 $("#edit_unit").val(data.equipment.unit);
@@ -70,9 +114,18 @@ $(function(){
             url: $(this).attr('action'),
             data: $('#edit_main_form').serialize(),
             beforeSend: function(){
+                $("#edit_equipment_add").attr("hidden", true);
+                $("#edit_equipment_close").attr("hidden", true);
+                $("#response_waiting_equipment_edit_btn").removeAttr("hidden");
+                
+
                 $(document).find('span.error-text').text('');
             },
             success: function(data) {
+                $("#edit_equipment_add").removeAttr("hidden");
+                $("#edit_equipment_close").removeAttr("hidden");
+                $("#response_waiting_equipment_edit_btn").attr("hidden", true);
+
                 if(data.status == 0){
                     $.each(data.error, function(key, val){
                         $('span.'+key+'_error').text(val[0]);
@@ -124,7 +177,7 @@ $(function(){
             type: "GET",
             url: "/clinic/equipments/" + id + "/edit",
             success: function(data){
-                console.log(data);
+                // console.log(data);
                 $("#delete_name").empty();
                 $("#delete_packages").empty();
 
@@ -137,8 +190,8 @@ $(function(){
 
                 $("#delete_name").append(data.equipment.name.toUpperCase() + '<input type="text" value="'+id+'" id="todelete" hidden>');
 
-                if(packages !== ""){
-                    $("#delete_packages").append(packages);
+                if(packages !== "" || data.services_summary !== ""){
+                    $("#delete_packages").append(packages + data.services_summary.substring(1).toUpperCase());
                 }else{
                     $("#delete_packages").append("No Package Involvement Yet");
                 } 
@@ -153,7 +206,7 @@ $(function(){
     });
 
     //DELETE, delete_modal
-    $(document).on('click', '#confirm_delete', function(e) {
+    $(document).on('click', '#delete_equipment_delete', function(e) {
         e.preventDefault();
         var id = $("input#todelete").val();
         $.ajax({
@@ -162,15 +215,37 @@ $(function(){
             data:{
                 _token: $("input[name=_token]").val()
             },
+            beforeSend: function(){
+                $("#delete_equipment_close").attr("hidden", true);
+                $("#delete_equipment_delete").attr("hidden", true);
+                $("#response_waiting_equipment_delete_btn").removeAttr("hidden");
+                
+            },
             success: function(data) {
-                $("#equipment_table").load(window.location + " #equipment_table");
-                $("#delete_modal_up").modal('toggle');
-                bootstrapAlert(data.message, "danger", 200);
+            
+                if(data.dataCount == 0){
+                    $("#equipment_table").load(window.location + " #equipment_table");
+                    $("#delete_modal_up").modal('toggle');
+                    bootstrapAlert(data.message, "danger", 200);
+                    setInterval( reload_page, 2000);
+
+                    function reload_page(){
+                        location.reload()
+                    }
+                }else{
+                    $("#equipment_table").load(window.location + " #equipment_table");
+                    $("#delete_modal_up").modal('toggle');
+                    bootstrapAlert(data.message, "danger", 200);
+                }
+
+                $("#delete_equipment_close").removeAttr("hidden");
+                $("#delete_equipment_delete").removeAttr("hidden");
+                $("#response_waiting_equipment_delete_btn").attr("hidden", true);
             },
             error: function(error) {
               console.log('error');
             }
-          });
+        });
     });
 
     $('#search').on('keyup', function(){
@@ -181,12 +256,18 @@ $(function(){
                 type: $('#search_form').attr('method'),
                 url: $('#search_form').attr('action'),
                 data: {query:query},
+                beforeSend: function() {
+                    $('#equipment_table_body').empty();
+                    $("#equipment_table_body").append('<div class="row"><div class="col-12 d-flex justify-content-center"><div class="spinner-border"style="width: 3rem; height: 3rem;" role="status" id="response_waiting_accept"><span class="sr-only">Loading..</span></div></div></div>');
+
+                    
+                },
                 success: function(data){
                     //console.log(data.data.length);
                     if(data.data.length == 0){
                         $('#equipment_table_head').hide();
                         $('#equipment_table_body').empty();
-                        $("#equipment_table_body").append('<tr><td><div style="display: flex; justify-content: center; align-item: center; margin-top: 30px;"><h4>No data found!</h4></div><div style="display: flex; justify-content: center; align-item: center;  margin-top: 30px;"><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#create_modal">Create New Data</button></div></td></tr>');
+                        $("#equipment_table_body").append('<tr><td></p><div style="display: flex; justify-content: center; align-item: center; margin-top: 30px;"><img data-loading-text="LOADING...<span></span>" src="/images/mrjams/noData2.jpg" alt="no data available"></div><div style="display: flex; justify-content: center; align-item: center;  margin-top: 30px;"><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#create_modal">Create New Data</button></div></td></tr>');
                     }
                     else{
                         $('#equipment_table_head').show();

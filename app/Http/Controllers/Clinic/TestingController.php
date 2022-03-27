@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Clinic;
 use App\Http\Controllers\Controller;
 use App\Mail\EmailNotification;
 use App\Models\Appointments;
+use App\Models\Clinic_types;
 use Illuminate\Http\Request;
 
 use App\Models\User_address;
@@ -12,7 +13,9 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Logs;
+use App\Models\Messages;
 use App\Models\Packages;
+use App\Models\Ratings;
 use App\Models\User_as_clinic;
 use App\Models\User_as_customer;
 use Illuminate\Support\Facades\App;
@@ -29,12 +32,37 @@ class TestingController extends Controller
     public function index()
     {
 
-        echo Appointments::orderBy('id', 'desc')->first();
+        // $clinics = DB::table('ratings')->distinct()->get(['users_id_ratee']); //root id used
+        // foreach ($clinics as $key) {
+        //     if ($key->users_id_ratee == 1) {
+        //         //para sa buong system to
+        //     } else {
+        //         //para sa clinics and shit
+
+        //         $clinic_info = User_as_clinic::where('users_id', '=', $key->users_id_ratee)->first();
+        //         $thisclinic_avg = Ratings::where('users_id_ratee', '!=', 1)->where('users_id_ratee', '=', $key->users_id_ratee)->avg('rating');
+        //         $this_clinic_type = Clinic_types::where('id', '=', $clinic_info->clinic_types_id)->first();
+
+        //         $clinic_complete[] = (object) array(
+        //             "root_id" => $key->users_id_ratee,
+        //             "clinic_id" =>  $clinic_info->id,
+        //             "name" => $clinic_info->name,
+        //             "type" => $this_clinic_type->type_of_clinic,
+        //             "avg" => $thisclinic_avg,
+
+        //         );
+        //     }
+        // }
+        // echo json_encode($clinic_complete);
+
+        // echo (Messages::whereIn('receiver', ['all', 'patient'])->get());
+
+        return view('clinicViews.testing.index');
 
         //para kay lags, para less query loading
         //return User_address::get(['latitude', 'longitude']);
 
-        //return view('clinicViews.testing.index');
+
 
         // if (Logs::where('user_as_clinic_id', '=',  1)->count() == 1000) {
         //     Logs::where('user_as_clinic_id', '=',  1)->first()->delete();

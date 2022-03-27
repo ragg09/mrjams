@@ -1,0 +1,450 @@
+<div class="row justify-content-center" id="Preferences">
+
+    <div class="col-lg-7 border">
+
+        <form action="">
+            <div class="btn-group d-flex justify-content-center" role="group" aria-label="Basic checkbox toggle button group">
+                @for ($x = 0; $x <= 6; $x++) @if ($auto_sched_day_status[$x]=="on" ) <input type="checkbox" class="btn-check" id="btn_{{ $days[$x] }}" autocomplete="off" checked>
+                    <label class="btn btn-outline-primary" for="btn_{{ $days[$x] }}">{{ ucfirst($days[$x]) }}</label>
+                    @else
+                    <input type="checkbox" class="btn-check" id="btn_{{ $days[$x] }}" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btn_{{ $days[$x] }}">{{ ucfirst($days[$x]) }}</label>
+                    @endif
+                    @endfor
+
+                    {{-- <input type="checkbox" class="btn-check" id="btn_mon" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btn_mon">Mon</label>
+            
+                <input type="checkbox" class="btn-check" id="btn_tue" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btn_tue">Tue</label>
+            
+                <input type="checkbox" class="btn-check" id="btn_wed" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btn_wed">Wed</label>
+    
+                <input type="checkbox" class="btn-check" id="btn_thu" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btn_thu">Thu</label>
+    
+                <input type="checkbox" class="btn-check" id="btn_fri" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btn_fri">Fri</label>
+    
+                <input type="checkbox" class="btn-check" id="btn_sat" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btn_sat">Sat</label>
+    
+                <input type="checkbox" class="btn-check" id="btn_sun" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btn_sun">Sun</label> --}}
+            </div>
+
+            <div class="row border mt-2 mb-1">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary w-100" id="auto_sched_btn" disabled>Update</button>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                @for ($x = 0; $x <= 6; $x++) @if ($auto_sched_day_status[$x]=="on" ) <div class="col-lg-6 p-2" id="div_{{ $days[$x] }}" style="display: block">
+                    @else
+                    <div class="col-lg-6 p-2" id="div_{{ $days[$x] }}" style="display: none">
+                        @endif
+                        <div class="border p-2 bg-white h-100">
+                            <div class="row" id="status_{{ $days[$x] }}">
+                                <div class="col">
+                                    <p>{{ $days_full[$x] }}</p>
+                                    <input type="text" id="data_count_{{ $days[$x] }}" value="{{ count($auto_sched_data_all[$x]) }}" hidden>
+                                </div>
+                                <div class="col">
+                                    <div class="form-check form-switch d-flex justify-content-end">
+                                        @if ($auto_sched_day_status[$x] == "on")
+                                        <input class="form-check-input" type="checkbox" role="switch" checked>
+                                        @else
+                                        <input class="form-check-input" type="checkbox" role="switch">
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" id="data_of_{{ $days[$x] }}">
+                                @foreach ($auto_sched_data_all[$x] as $row)
+                                <div class="col-sm-6 col-md-6 col-lg-12 p-2">
+                                    <div class="input-group">
+                                        <div class="form-group" id="flatpickr">
+                                            <input type="text" class="form-control" aria-describedby="status_{{ $days[$x] }}{{ $row->count }}" id="time_{{ $days[$x] }}{{ $row->count }}" name="time_{{ $days[$x] }}{{ $row->count }}" value="{{ $row->time }}">
+                                        </div>
+                                        <button class="btn btn-link w-25" type="button">
+                                            <div class="form-check form-switch">
+                                                @if ($row->time_status == "on")
+                                                <input class="form-check-input" type="checkbox" role="switch" id="status_{{ $days[$x] }}{{ $row->count }}" checked>
+                                                @else
+                                                <input class="form-check-input" type="checkbox" role="switch" id="status_{{ $days[$x] }}{{ $row->count }}">
+                                                @endif
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+
+                            <input type="text" id="final_data_{{ $days[$x] }}" name="final_data_{{ $days[$x] }}">
+
+                            <div class="row ">
+                                <div class="col d-flex justify-content-center">
+                                    <button type="button" class="btn btn-success" id="add_auto_time_{{ $days[$x] }}">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endfor
+
+                    <div class="col-lg-6 p-2" id="div_auto_sched_options" style="display: block">
+                        <div class="border p-2 bg-white h-100">
+                            <p>Automatic Scheduling Settings</p>
+                            <div class="row">
+                                <div class="col-9">
+                                    <p>Auto Accept appointment
+                                        <i class="fa fa-question-circle mx-2" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Please be noted that by enabling this, appointments will automatically accept depends on your settings.">
+                                        </i>
+                                    </p>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-9">
+                                    <p>Auto fill date
+                                        <i class="fa fa-question-circle mx-2" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Enabling this, your clinic will accept appointments orderly. By default, patient can select their prefered time based on your settings.">
+                                        </i>
+                                    </p>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    {{-- <div class="col-lg-6 p-2" id="div_mon" style="display: none">
+                    <div class="border p-2 bg-white">
+                        <div class="row">
+                            <div class="col">
+                                <p>MONDAY</p>
+                                <input type="text" id="data_count_mon" value="{{ count($auto_sched_data_all[0]) }}" hidden>
+            </div>
+            <div class="col">
+                @if ($auto_sched_day_status[0] == "on")
+                <div class="form-check form-switch d-flex justify-content-end">
+                    <input class="form-check-input" type="checkbox" role="switch" checked>
+                </div>
+                @else
+                <div class="form-check form-switch d-flex justify-content-end">
+                    <input class="form-check-input" type="checkbox" role="switch">
+                </div>
+                @endif
+
+            </div>
+    </div>
+
+    <div class="row">
+        @foreach ($auto_sched_data_all[0] as $row)
+        <div class="col-sm-6 col-md-6 col-lg-12 p-2">
+            <div class="input-group">
+                <div class="form-group" id="flatpickr">
+                    <input type="text" class="form-control" aria-describedby="button-addon2" id="mon{{ $row->count }}" name="mon{{ $row->count }}" value="{{ $row->time }}">
+                </div>
+                <button class="btn btn-link w-25" type="button">
+                    <div class="form-check form-switch">
+                        @if ($row->time_status == "on")
+                        <input class="form-check-input" type="checkbox" role="switch" id="button-addon2" checked>
+                        @else
+                        <input class="form-check-input" type="checkbox" role="switch" id="button-addon2">
+                        @endif
+                    </div>
+                </button>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</div>
+</div> --}}
+
+{{-- <div class="col-lg-6 p-2" id="div_tue" style="display: none">
+                    <div class="border p-2 bg-white">
+                        <div class="row">
+                            <div class="col">
+                                <p>TUESDAY</p>
+                                <input type="text" id="data_count_tue" value="{{ count($auto_sched_data_all[1]) }}" hidden>
+</div>
+<div class="col">
+    @if ($auto_sched_day_status[1] == "on")
+    <div class="form-check form-switch d-flex justify-content-end">
+        <input class="form-check-input" type="checkbox" role="switch" checked>
+    </div>
+    @else
+    <div class="form-check form-switch d-flex justify-content-end">
+        <input class="form-check-input" type="checkbox" role="switch">
+    </div>
+    @endif
+
+</div>
+</div>
+
+<div class="row">
+    @foreach ($auto_sched_data_all[1] as $row)
+    <div class="col-sm-6 col-md-6 col-lg-12 p-2">
+        <div class="input-group">
+            <div class="form-group" id="flatpickr">
+                <input type="text" class="form-control" aria-describedby="button-addon2" id="tue{{ $row->count }}" name="tue{{ $row->count }}" value="{{ $row->time }}">
+            </div>
+            <button class="btn btn-link w-25" type="button">
+                <div class="form-check form-switch">
+                    @if ($row->time_status == "on")
+                    <input class="form-check-input" type="checkbox" role="switch" id="button-addon2" checked>
+                    @else
+                    <input class="form-check-input" type="checkbox" role="switch" id="button-addon2">
+                    @endif
+                </div>
+            </button>
+        </div>
+    </div>
+    @endforeach
+</div>
+</div>
+</div> --}}
+
+{{-- <div class="col-lg-6 p-2" id="div_wed" style="display: none">
+                    <div class="border p-2 bg-white">
+                        <div class="row">
+                            <div class="col">
+                                <p>WEDNESDAY</p>
+                                <input type="text" id="data_count_wed" value="{{ count($auto_sched_data_all[2]) }}" hidden>
+</div>
+<div class="col">
+    @if ($auto_sched_day_status[2] == "on")
+    <div class="form-check form-switch d-flex justify-content-end">
+        <input class="form-check-input" type="checkbox" role="switch" checked>
+    </div>
+    @else
+    <div class="form-check form-switch d-flex justify-content-end">
+        <input class="form-check-input" type="checkbox" role="switch">
+    </div>
+    @endif
+
+</div>
+</div>
+
+<div class="row">
+    @foreach ($auto_sched_data_all[2] as $row)
+    <div class="col-sm-6 col-md-6 col-lg-12 p-2">
+        <div class="input-group">
+            <div class="form-group" id="flatpickr">
+                <input type="text" class="form-control" aria-describedby="button-addon2" id="wed{{ $row->count }}" name="wed{{ $row->count }}" value="{{ $row->time }}">
+            </div>
+            <button class="btn btn-link w-25" type="button">
+                <div class="form-check form-switch">
+                    @if ($row->time_status == "on")
+                    <input class="form-check-input" type="checkbox" role="switch" id="button-addon2" checked>
+                    @else
+                    <input class="form-check-input" type="checkbox" role="switch" id="button-addon2">
+                    @endif
+                </div>
+            </button>
+        </div>
+    </div>
+    @endforeach
+</div>
+</div>
+</div> --}}
+
+{{-- <div class="col-lg-6 p-2" id="div_thu" style="display: none">
+                    <div class="border p-2 bg-white">
+                        <div class="row">
+                            <div class="col">
+                                <p>THURSDAY</p>
+                                <input type="text" id="data_count_thu" value="{{ count($auto_sched_data_all[3]) }}" hidden>
+</div>
+<div class="col">
+    @if ($auto_sched_day_status[3] == "on")
+    <div class="form-check form-switch d-flex justify-content-end">
+        <input class="form-check-input" type="checkbox" role="switch" checked>
+    </div>
+    @else
+    <div class="form-check form-switch d-flex justify-content-end">
+        <input class="form-check-input" type="checkbox" role="switch">
+    </div>
+    @endif
+
+</div>
+</div>
+
+<div class="row">
+    @foreach ($auto_sched_data_all[3] as $row)
+    <div class="col-sm-6 col-md-6 col-lg-12 p-2">
+        <div class="input-group">
+            <div class="form-group" id="flatpickr">
+                <input type="text" class="form-control" aria-describedby="button-addon2" id="thu{{ $row->count }}" name="thu{{ $row->count }}" value="{{ $row->time }}">
+            </div>
+            <button class="btn btn-link w-25" type="button">
+                <div class="form-check form-switch">
+                    @if ($row->time_status == "on")
+                    <input class="form-check-input" type="checkbox" role="switch" id="button-addon2" checked>
+                    @else
+                    <input class="form-check-input" type="checkbox" role="switch" id="button-addon2">
+                    @endif
+                </div>
+            </button>
+        </div>
+    </div>
+    @endforeach
+</div>
+</div>
+</div> --}}
+
+{{-- <div class="col-lg-6 p-2" id="div_fri" style="display: none">
+                    <div class="border p-2 bg-white">
+                        <div class="row">
+                            <div class="col">
+                                <p>FRIDAY</p>
+                                <input type="text" id="data_count_fri" value="{{ count($auto_sched_data_all[4]) }}" hidden>
+</div>
+<div class="col">
+    @if ($auto_sched_day_status[4] == "on")
+    <div class="form-check form-switch d-flex justify-content-end">
+        <input class="form-check-input" type="checkbox" role="switch" checked>
+    </div>
+    @else
+    <div class="form-check form-switch d-flex justify-content-end">
+        <input class="form-check-input" type="checkbox" role="switch">
+    </div>
+    @endif
+
+</div>
+</div>
+
+<div class="row">
+    @foreach ($auto_sched_data_all[4] as $row)
+    <div class="col-sm-6 col-md-6 col-lg-12 p-2">
+        <div class="input-group">
+            <div class="form-group" id="flatpickr">
+                <input type="text" class="form-control" aria-describedby="button-addon2" id="fri{{ $row->count }}" name="fri{{ $row->count }}" value="{{ $row->time }}">
+            </div>
+            <button class="btn btn-link w-25" type="button">
+                <div class="form-check form-switch">
+                    @if ($row->time_status == "on")
+                    <input class="form-check-input" type="checkbox" role="switch" id="button-addon2" checked>
+                    @else
+                    <input class="form-check-input" type="checkbox" role="switch" id="button-addon2">
+                    @endif
+                </div>
+            </button>
+        </div>
+    </div>
+    @endforeach
+</div>
+</div>
+</div> --}}
+
+{{-- <div class="col-lg-6 p-2" id="div_sat" style="display: none">
+                    <div class="border p-2 bg-white">
+                        <div class="row">
+                            <div class="col">
+                                <p>SATURDAY</p>
+                                <input type="text" id="data_count_sat" value="{{ count($auto_sched_data_all[5]) }}" hidden>
+</div>
+<div class="col">
+    @if ($auto_sched_day_status[5] == "on")
+    <div class="form-check form-switch d-flex justify-content-end">
+        <input class="form-check-input" type="checkbox" role="switch" checked>
+    </div>
+    @else
+    <div class="form-check form-switch d-flex justify-content-end">
+        <input class="form-check-input" type="checkbox" role="switch">
+    </div>
+    @endif
+
+</div>
+</div>
+
+<div class="row">
+    @foreach ($auto_sched_data_all[5] as $row)
+    <div class="col-sm-6 col-md-6 col-lg-12 p-2">
+        <div class="input-group">
+            <div class="form-group" id="flatpickr">
+                <input type="text" class="form-control" aria-describedby="button-addon2" id="sat{{ $row->count }}" name="sat{{ $row->count }}" value="{{ $row->time }}">
+            </div>
+            <button class="btn btn-link w-25" type="button">
+                <div class="form-check form-switch">
+                    @if ($row->time_status == "on")
+                    <input class="form-check-input" type="checkbox" role="switch" id="button-addon2" checked>
+                    @else
+                    <input class="form-check-input" type="checkbox" role="switch" id="button-addon2">
+                    @endif
+                </div>
+            </button>
+        </div>
+    </div>
+    @endforeach
+</div>
+</div>
+</div> --}}
+
+{{-- <div class="col-lg-6 p-2" id="div_sun" style="display: none">
+                    <div class="border p-2 bg-white">
+                        <div class="row">
+                            <div class="col">
+                                <p>SUNDAY</p>
+                                <input type="text" id="data_count_sun" value="{{ count($auto_sched_data_all[6]) }}" hidden>
+</div>
+<div class="col">
+    @if ($auto_sched_day_status[6] == "on")
+    <div class="form-check form-switch d-flex justify-content-end">
+        <input class="form-check-input" type="checkbox" role="switch" checked>
+    </div>
+    @else
+    <div class="form-check form-switch d-flex justify-content-end">
+        <input class="form-check-input" type="checkbox" role="switch">
+    </div>
+    @endif
+
+</div>
+</div>
+
+<div class="row">
+    @foreach ($auto_sched_data_all[6] as $row)
+    <div class="col-sm-6 col-md-6 col-lg-12 p-2">
+        <div class="input-group">
+            <div class="form-group" id="flatpickr">
+                <input type="text" class="form-control" aria-describedby="button-addon2" id="sun{{ $row->count }}" name="sun{{ $row->count }}" value="{{ $row->time }}">
+            </div>
+            <button class="btn btn-link w-25" type="button">
+                <div class="form-check form-switch">
+                    @if ($row->time_status == "on")
+                    <input class="form-check-input" type="checkbox" role="switch" id="button-addon2" checked>
+                    @else
+                    <input class="form-check-input" type="checkbox" role="switch" id="button-addon2">
+                    @endif
+                </div>
+            </button>
+        </div>
+    </div>
+    @endforeach
+</div>
+</div>
+</div> --}}
+
+
+</div>
+</form>
+</div>
+
+
+</div>
+
+
+{{-- ung js nito nasa timedat.js --}}

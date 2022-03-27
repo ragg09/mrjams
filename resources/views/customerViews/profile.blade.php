@@ -1,164 +1,126 @@
-@extends('customerViews.layouts.customerlayout1')
+@extends('customerViews.layouts.customerlayout')
 @section('specificStyle')
+
     <link rel="stylesheet" href="{{asset('./css/customer/profile-content.css')}}">
+
 @endsection
 @section('content')
+@include('customerViews.header.header3')
 
-        <div class="container emp-profile">
-            <form method="post">
+        <div class="container" style="margin-top: 20px; ">
+            <div class="main-body" id="profile" >
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="profile-img">
-                            <img src="{{Auth::user()->avatar}}" alt=""/>
-                            <div class="file btn btn-lg btn-primary">
-                                Change Photo
-                                <input type="file" name="file"/>
+                    <div class="col-lg-4">
+                        <div class="card" style="padding:30px;">
+                            <div class="card-body">
+                                <div class="d-flex flex-column align-items-center text-center">
+                                    <img src="{{Auth::user()->avatar}}" alt="customer" class="rounded-circle p-1 bg-dark" width="110">
+                                    <div class="mt-3">
+                                       
+                                        <h4>{{$customer->fname}} {{$customer->lname}}</h4>
+                                    
+                                        <p class="text-secondary mb-1">{{Auth::user()->email}}</p>
+                                      
+                                        <p class="text-muted font-size-sm">{{$address->address_line_1}}, {{$address->address_line_2}}</p>
+                                   
+                                    </div>
+                                </div>
+                              
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                    @foreach($customer as $customers)
-                        <div class="profile-head">
-                                    <h5>
-                                    {{$customers->lname}}, {{$customers->fname}} {{$customers->mname}}
-                                    </h5>
-                                    <h6>
-                                        Web Developer and Designer
-                                    </h6>
-                                    <p class="proile-rating">RANKINGS : <span>8/10</span></p>
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
-                                </li>
-                            </ul>
-                        </div>
-                        @endforeach
-                    </div>
-                    <div class="col-md-2">
-                        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="profile-work">
-                            <p>WORK LINK</p>
-                            <a href="">Website Link</a><br/>
-                            <a href="">Bootsnipp Profile</a><br/>
-                            <a href="">Bootply Profile</a>
-                            <p>SKILLS</p>
-                            <a href="">Web Designer</a><br/>
-                            <a href="">Web Developer</a><br/>
-                            <a href="">WordPress</a><br/>
-                            <a href="">WooCommerce</a><br/>
-                            <a href="">PHP, .Net</a><br/>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="tab-content profile-tab" id="myTabContent">
-                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab" style="margin-top:-70px;">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>User Id</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>{{$customers->users_id}}</p>
-                                            </div>
+                    <div class="col-lg-8">
+
+                        <form action="/customer/customerinfo/{{Auth::user()->id }}" method="POST" id="main_form">
+                            @csrf
+                            {{method_field('PUT')}}
+
+                            <div class="card" style="padding:30px;">
+                                <div class="card-body" style="width: 100%">
+                                   
+                                    <div class="row mb-3" >
+                                        <div class="col-sm-3" style="margin-top: 2%;">
+                                            <h6 class="mb-0">First Name</h6>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Name</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>{{$customers->lname}}, {{$customers->fname}}</p>
-                                            </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="text" class="form-control" name="fname" value="{{$customer->fname}}">
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Email</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>{{ Auth::user()->email }}</p>
-                                            </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3" style="margin-top: 2%;">
+                                            <h6 class="mb-0">Last Name</h6>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Phone</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>{{$customers->phone}}</p>
-                                            </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="text" class="form-control" name="lname" value="{{$customer->lname}}">
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Gender</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>{{$customers->gender}}</p>
-                                            </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3" style="margin-top: 2%;">
+                                            <h6 class="mb-0">Age</h6>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Age</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>{{$customers->age}}</p>
-                                            </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="text" class="form-control" name="age" value="{{$customer->age}}">
                                         </div>
-                            </div>
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Experience</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Expert</p>
-                                            </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3" style="margin-top: 2%;">
+                                            <h6 class="mb-0">Phone</h6>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Hourly Rate</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>10$/hr</p>
-                                            </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="text" class="form-control" id="phone" name="phone" value="{{$customer->phone}}">
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Total Projects</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>230</p>
-                                            </div>
+                                    </div>
+                               
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3" style="margin-top: 2%;">
+                                            <h6 class="mb-0">Address Line 1</h6>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>English Level</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Expert</p>
-                                            </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="text" class="form-control" name="addline1" value="{{$address->address_line_1}}">
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Availability</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>6 months</p>
-                                            </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3" style="margin-top: 2%;">
+                                            <h6 class="mb-0">Address Line 2</h6>
                                         </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label>Your Bio</label><br/>
-                                        <p>Your detail description</p>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="text" class="form-control" name="addline2" value="{{$address->address_line_2}}">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3" style="margin-top: 2%;">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">City</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="text" class="form-control" name="city" value="{{$address->city}}">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3" style="margin-top: 2%;">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Zip Code</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="text" class="form-control" name="zipcode" value="{{$address->zip_code}}">
+                                        </div>
+                                    </div>
+                                
+                                    <div class="row">
+                                        <div class="col-sm-3"></div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input  type="submit" id="submit" name="submit" class="btn btn-primary px-4" value="Save Changes">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+
+                        </form>
+                
                     </div>
                 </div>
-            </form>           
+            </div>
         </div>
+@include('customerViews.footer.footer2')
+@endsection
+@section('jsScript')
+    <script src="{{ URL::asset('js/customer/profile.js') }}"></script>
 @endsection

@@ -12,24 +12,35 @@
                 </div>
     
                 <div class="modal-body">
+
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border"style="width: 3rem; height: 3rem;" role="status" id="response_waiting_equipments" hidden>
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                    </div>
                     
-                    <div class="form-group">
+                    <div class="form-group" id="selected_equipments" hidden>
                         <label for="services">Services</label>
                             <select class="form-control" id="select_equipments" multiple name="select_equipments" style="width: 100%;">
                                 {{-- options came appended from js --}}
                            </select>  
-                           <input type="text" class="form-control" id="equipment_ids" name="equipment_ids" >
+                           <input type="text" class="form-control" id="equipment_ids" name="equipment_ids" hidden>
                     </div>
 
-                    <input type="text" class="form-control" name="package_update_filter" value="package_equipments" >
+                    <input type="text" class="form-control" name="package_update_filter" value="package_equipments" hidden>
 
-                    <input type="text" class="form-control" id="equipments_original_ids" name="equipments_original_ids" value="orig: " >
+                    <input type="text" class="form-control" id="equipments_original_ids" name="equipments_original_ids" value="orig: " hidden>
 
                 </div>
     
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" id="close_btn_equipments" data-bs-dismiss="modal">Close</button>
                     <button type="submit"class="btn btn-primary" id="update_btn_equipments">Update</button>
+
+                    <button class="btn btn-primary" type="button" id="response_waiting_equipments_update" disabled hidden>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Waiting for response . . . 
+                    </button>
                 </div>
     
             </div>

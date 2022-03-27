@@ -12,6 +12,10 @@
     {{-- jquery 3.6.0 --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    {{-- datatable --}}
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
+
     {{-- bootstrap 5.1.1 --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
@@ -28,6 +32,9 @@
     {{-- jquery growl plugin --}}
     <script src="{{ URL::asset('js/clinic/growl.js') }}"></script>
 
+    {{-- bootstrap-input-spinner plugin --}}
+    <script src="{{ URL::asset('js/clinic/input-spinner.js') }}"></script>
+
     {{-- jquery selec2 plugin --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -41,41 +48,15 @@
 
     {{-- font-awesome  --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/fontawesome.min.js" integrity="sha512-5qbIAL4qJ/FSsWfIq5Pd0qbqoZpk5NcUVeAAREV2Li4EKzyJDEGlADHhHOSSCw0tHP7z3Q4hNHJXa81P92borQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    {{-- Google Chart API --}}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
 
     @yield('extraStyle')
-
-    <style>
-        #loading-screen-bg{
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: black;
-            z-index: 50 !important;
-            opacity: 0.7;
-            visibility: hidden;
-        }
-
-        #loading-screen{
-            padding: 20px;
-            margin: 0px;
-            background: white;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-            border-radius: 20px;
-        }
-    </style>
 </head>
-<body>
-    <div id="loading-screen-bg">
-        <div class="" id="loading-screen">
-            <h4>Your patience is appreciated</h4>
-            <p>aayusin pa </p>
-            <img class="" src="{{ URL::asset('images/mrjams/Spinner-1.6s-204px.gif') }}" alt="">
-        </div>
-    </div>
-    
+<body>    
     <div class="header">
 
         {{-- <a href="" class="btn btn-secondary" id="menu-toggle"><i class="fa fa-bars" aria-hidden="true"></i></a> --}}
@@ -86,24 +67,59 @@
 
 
         <div class="header_menu">
-            <div class="dropdown">
+            <ul class="nav justify-content-end">
 
-                <button class="btn btn-secondary" type="button" id="DropdownSettings" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 100%">
-                    <i class="fa fa-caret-down" aria-hidden="true"></i>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="DropdownSettings">
-                    <li class="dropdown-item">{{Auth::user()->email}}</li>
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li>
-                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                        </form>
-                    </li>
-                    
-                </ul>
-            </div>
+                <li class="nav-item mx-3" id="ForNotifications">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary" type="button" id="notifIcon_btn" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 100%">
+                            <i class="fa fa-bell" aria-hidden="true"></i>
+                            <span id="notif_count" hidden></span>
+                        </button>
+                        
+                        <ul class="dropdown-menu" aria-labelledby="notifIcon_btn" id="notification_list">
+                            {{-- data came from js --}}
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <div class="dropdown">
+
+                        <button class="btn btn-secondary" type="button" id="DropdownSettings" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 100%">
+                            <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="DropdownSettings">
+                            <li class="dropdown-item">{{Auth::user()->email}}</li>
+                            <li>
+
+                                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#give_feedback" id="detail_modal" >
+                                    <i class="fa fa-commenting mx-2" aria-hidden="true"></i>
+                                    Give Feedback <br>
+                                    <span style="font-size: 12px">Help us improve MrJams</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('clinic.settings.index') }}">
+                                    <i class="fa fa-cog mx-2" aria-hidden="true"></i>
+                                    Settings
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="fa-solid fa-right-from-bracket mx-2"></i>
+                                    {{ __('Logout') }}
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                                </form>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+
+            
         </div>
     </div>
 
@@ -125,8 +141,19 @@
             {{-- main content end--}}
         </div>
     </div>
+
+    @include('clinicViews.layouts.feedback_modal')
     
 </body>
+
+
 <script src="{{ URL::asset('js/clinic/menu_toggle.js') }}"></script>
+<script src="{{ URL::asset('js/clinic/notifications.js') }}"></script>
+<script src="{{ URL::asset('js/clinic/feedback.js') }}"></script>
+<script>
+    $(function(){
+        $("[data-bs-toggle=tooltip").tooltip();
+    })
+</script>
 @yield('js_script')
 </html>

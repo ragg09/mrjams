@@ -1,3 +1,16 @@
+:root {
+    --varyDarkBlue: hsl(234, 12%, 34%);
+    --grayishBlue: hsl(229, 6%, 66%);
+    --veryLightGray: hsl(0, 0%, 98%);
+}
+
+#nodata_img {
+    background-color: var(--veryLightGray);
+    box-shadow: 0px 20px 30px -20px var(--grayishBlue);
+    border-top: 2px solid rgb(11, 95, 173);
+    border-radius: 5px;
+}
+
 #calendar_btn {
     width: 250px;
 }

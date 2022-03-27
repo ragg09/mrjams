@@ -20,8 +20,8 @@ class LogsController extends Controller
     {
         $user = User::where('email', '=',  Auth::user()->email)->first();
         $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
-        $data = Logs::where('user_as_clinic_id', '=',  $clinic->id)->orderBy('id','desc')->get();
-        return view('clinicViews.logs.index', ['data'=>$data]); 
+        $data = Logs::where('user_as_clinic_id', '=',  $clinic->id)->orderBy('id', 'desc')->get();
+        return view('clinicViews.logs.index', ['data' => $data]);
     }
 
     /**
@@ -53,7 +53,26 @@ class LogsController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::where('email', '=',  Auth::user()->email)->first();
+        $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
+
+        if ($id == 0) {
+
+            $notif = Logs::where('user_as_clinic_id', '=',  $clinic->id)
+                ->whereIn('remark', ["notif", "done_notif"])
+                ->limit(15)
+                ->orderBy('id', 'desc')
+                ->get();
+
+            $notif_count = Logs::where('user_as_clinic_id', '=',  $clinic->id)
+                ->where('remark', '=', "notif")
+                ->get();
+
+            return response()->json([
+                'data' => $notif ?? "",
+                'notif_count' =>  $notif_count ?? "",
+            ]);
+        }
     }
 
     /**
@@ -87,6 +106,23 @@ class LogsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::where('email', '=',  Auth::user()->email)->first();
+        $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
+
+        if ($id == 0) {
+            $logs_id = Logs::where('user_as_clinic_id', '=',  $clinic->id)
+                ->where('remark', '=', "notif")
+                ->get(["id"]);
+
+            foreach ($logs_id  as $key) {
+                $logs = Logs::find($key->id);
+                $logs->remark =  "done_notif";
+                $logs->save();
+            }
+
+            return response()->json([
+                'tester' => "success"
+            ]);
+        }
     }
 }

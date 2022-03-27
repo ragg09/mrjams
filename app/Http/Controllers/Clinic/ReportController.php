@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Clinic;
 
 use App\Http\Controllers\Controller;
+use App\Models\Billings;
+use App\Models\User;
+use App\Models\User_as_clinic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
@@ -14,7 +18,19 @@ class ReportController extends Controller
      */
     public function index()
     {
-        return view('clinicViews.report.index');
+        $user = User::where('email', '=',  Auth::user()->email)->first();
+        $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
+
+
+        //for accounting 
+        $total_paid = Billings::where('user_as_clinic_id', $clinic->id)->sum('total_paid');
+        $total_balance = Billings::where('user_as_clinic_id', $clinic->id)->sum('balance');
+
+
+        return view('clinicViews.report.index', [
+            'total_paid' => $total_paid,
+            'total_balance' => $total_balance,
+        ]);
     }
 
     /**

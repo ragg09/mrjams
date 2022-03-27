@@ -1,9 +1,14 @@
 <?php
 
-use App\Http\Controllers\admin\ClinicDetailsController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\admin\PatientDetailsController;
+
+use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\UserClinicAnalyticsController;
+use App\Http\Controllers\Admin\TablesController;
+use App\Http\Controllers\Admin\ClinicDetailsController;
+use App\Http\Controllers\Admin\PatientDetailsController;
+use App\Http\Controllers\Admin\MessageController;
+use App\Http\Controllers\Admin\ClinicTypesController;
+
 
 use App\Http\Controllers\Clinic\TestingController;
 use App\Http\Controllers\Clinic\ClinicSettingsController;
@@ -12,19 +17,23 @@ use App\Http\Controllers\Clinic\EquipmentsController;
 use App\Http\Controllers\Clinic\LogsController;
 use App\Http\Controllers\Clinic\ServicesController;
 use App\Http\Controllers\Clinic\PackagesController;
-use App\Http\Controllers\Clinic\AppointmentController;
+use App\Http\Controllers\Clinic\AppointmentController as ClinicAppointment;
 use App\Http\Controllers\Clinic\PatientController;
 use App\Http\Controllers\Clinic\BillingController;
 use App\Http\Controllers\Clinic\ReportController;
+use App\Http\Controllers\Clinic\RatingController as ClinicRating;
+use App\Http\Controllers\Clinic\PrintController;
+use App\Http\Controllers\Clinic\SendEmailController;
 
-use App\Http\Controllers\Customer\CustomerRegister;
+use App\Http\Controllers\Customer\CustomerRegisterController;
 use App\Http\Controllers\Customer\CustomerMap;
-use App\Http\Controllers\Customer\Customer;
-use App\Http\Controllers\Customer\ClinicList;
-use App\Http\Controllers\Customer\Appointment;
-use App\Http\Controllers\Customer\RelativeAppointment;
-use App\Http\Controllers\Customer\Mail;
-use App\Http\Controllers\Customer\Rating;
+use App\Http\Controllers\Customer\CustomerController;
+use App\Http\Controllers\Customer\ClinicListController;
+use App\Http\Controllers\Customer\AppointmentController as CustomerAppointment;
+use App\Http\Controllers\Customer\RelativeAppointmentController;
+use App\Http\Controllers\Customer\MailController;
+use App\Http\Controllers\Customer\RatingController;
+use App\Http\Controllers\Customer\AnnouncementController;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +44,7 @@ use App\Models\User;
 use App\Models\Logs;
 use App\Models\User_as_customer;
 use App\Models\Appointments;
-use App\Models\Rating as ModelRating;
+use App\Models\Ratings as ModelRating;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -90,13 +99,22 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role_admin'], 'as' 
         $RegUser = User_as_customer::count();
         $RegClinic = User_as_clinic::count();
         $Appointment = Appointments::count();
-        $Rating = ModelRating::avg('rating');
+        $Rating = ModelRating::where('users_id_ratee', '=', 1)->avg('rating');
+        // $Rating = Rating::avg('rating')->where('user_id_rater' , "=" , '4');
+        // $Rating = ModelRating::where('users_id_ratee' , "=" , '1')->get();
         round($Rating, 2);
 
         $latestClinic = User_as_clinic::orderBy('id', 'desc')->first();
         $latestCustomer = User_as_customer::orderBy('id', 'desc')->first();
-        // echo($latestClinic);
-        return view('adminViews.index', ['regUser' => $RegUser, 'regClinic' => $RegClinic, 'appointment' => $Appointment, 'rating' => $Rating, 'latestClinic' => $latestClinic, 'latestCustomer' => $latestCustomer]);
+
+        if ($RegUser) {
+            return view('adminViews.index', ['regUser' => $RegUser, 'regClinic' => $RegClinic, 'appointment' => $Appointment, 'rating' => $Rating, 'latestClinic' => $latestClinic, 'latestCustomer' => $latestCustomer, 'status' => '1']);
+        } else {
+
+            return view('adminViews.index', ['status' => '0']);
+        }
+
+        // return view('adminViews.index');
     });
 
     Route::get('/testing', function () {
@@ -106,7 +124,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role_admin'], 'as' 
     Route::resource('analytics', UserClinicAnalyticsController::class);
     Route::resource('clinic', ClinicDetailsController::class);
     Route::resource('patient', PatientDetailsController::class);
-    Route::resource('dashboard', DashboardController::class);
+    Route::resource('dashboard', AdminDashboard::class);
+    Route::resource('message', MessageController::class);
+    Route::resource('clinicTypes', ClinicTypesController::class);
 });
 //================================================================================================================
 //clinic routes without middleware exceptions
@@ -114,7 +134,11 @@ Route::group(['prefix' => 'clinic', 'middleware' => ['auth', 'check_user', 'role
     Route::get('/', function () {
         $user = User::where('email', '=',  Auth::user()->email)->first();
         $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
-        $data = Logs::where('user_as_clinic_id', '=',  $clinic->id)->orderBy('id', 'desc')->paginate(10);
+        $data = Logs::where('user_as_clinic_id', '=',  $clinic->id)
+            ->where('remark', '!=',  "notif")
+            ->where('remark', '!=',  "done_notif")
+            ->orderBy('id', 'desc')
+            ->paginate(10);
         return view('clinicViews.index', ['data' => $data]);
     })->name('dashobard');
 
@@ -123,10 +147,13 @@ Route::group(['prefix' => 'clinic', 'middleware' => ['auth', 'check_user', 'role
     Route::resource('logs', LogsController::class);
     Route::resource('services', ServicesController::class);
     Route::resource('packages', PackagesController::class);
-    Route::resource('appointment', AppointmentController::class);
+    Route::resource('appointment', ClinicAppointment::class);
     Route::resource('patient', PatientController::class);
     Route::resource('billing', BillingController::class);
     Route::resource('report', ReportController::class);
+    Route::resource('print', PrintController::class);
+    Route::resource('rating', ClinicRating::class);
+    Route::resource('email', SendEmailController::class);
 });
 //clinic routes with middleware exceptions
 //check_user, role_clinic middlewares are directly included in the contrller
@@ -162,16 +189,13 @@ Route::group(['prefix' => 'customer', 'middleware' => ['auth', 'check_user', 'ro
     //     return view('customerViews.profile');
     // })->name('profile');
 
-    // Route::get('/appointment/setAppointment', function () {
-    //     return view('customerViews.appointment.setAppointment');
-    // })->name('setAppointment');
-
-    Route::resource('customerinfo', Customer::class);
-    Route::resource('clinicList', ClinicList::class);
-    Route::resource('appointment', Appointment::class);
-    Route::resource('relativeappoint', RelativeAppointment::class);
-    Route::resource('mail', Mail::class);
-    Route::resource('rate', Rating::class);
+    Route::resource('customerinfo', CustomerController::class);
+    Route::resource('clinicList', ClinicListController::class);
+    Route::resource('appointment', CustomerAppointment::class);
+    Route::resource('relativeappoint', RelativeAppointmentController::class);
+    Route::resource('mail', MailController::class);
+    Route::resource('rate', RatingController::class);
+    Route::resource('announcement', AnnouncementController::class);
 
     Route::resource('customermap', CustomerMap::class);
 });
@@ -184,6 +208,6 @@ Route::group(['prefix' => 'customer', 'middleware' => ['auth', 'check_user', 'ro
 // }
 Route::group(['prefix' => 'customer', 'middleware' => ['auth'], 'as' => 'customer.'], function () {
     //
-    Route::resource('customerregister', CustomerRegister::class);
+    Route::resource('customerregister', CustomerRegisterController::class);
 });
-//================================================================================================================      
+//================================================================================================================       

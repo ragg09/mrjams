@@ -1,4 +1,4 @@
-<div class="modal fade" id="delete_modal_up" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal fade" id="delete_modal_patient" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
     
@@ -10,7 +10,7 @@
             <div class="modal-body bg-secondary text-white m-2 p-2 rounded border-dark">
                 <div class="d-flex justify-content-center ">
                     <p><strong>Please Note: </strong>Are you sure do you want to delete this user?</p>
-                    <input id="userIDDelete" hidden>
+                    <input id="userIDDeletePatient">
                    
                 </div>
                 <strong><p id="delete_packages"> </p></strong>
@@ -23,3 +23,5 @@
             </div>
         </div>
     </div>
+
+    {{-- <script src="{{ URL::asset('js/admin/patientDetails.js') }}"></script> --}}

@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title')</title>
 
+
     {{-- jquery 3.6.0 --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -28,10 +29,10 @@
     <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 
-    <!-- Charts -->
+    {{-- <!-- Charts -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script> --}}
 
     <!-- AJAX -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -45,9 +46,7 @@
             <ul>
                 <section class="home">
                     <li class="menu-item"><i class="fa fa-home"></i><a href="/admin">Dashboard</a></li>
-                    <li class="menu-item"><i class="fa fa-bar-chart" aria-hidden="true"></i><a href="{{ route('admin.analytics.index') }}">Analytics</a></li>
-                    {{-- <li class="menu-item"><i class="fa fa-bar-chart" aria-hidden="true"></i><a href="#">Analytics</a></li> --}}
-                    {{-- <li class="menu-item"><i class="fa fa-paper-plane"></i><a href="{{ route('admin.tables.index') }}">Tables</a></li> --}}
+                    {{-- <li class="menu-item"><i class="fa fa-bar-chart" aria-hidden="true"></i><a href="{{ route('admin.analytics.index') }}">Analytics</a></li> --}}
                     <li class="menu-item"><i class="fa fa-paper-plane"></i><a>Tables</a>
                         <ul aria-labelledby="navbarDropdown" id="ulol">
                             <li id="tables_drpdwn"><a href="{{ route('admin.patient.index') }}">Patient</a></li>
@@ -56,21 +55,16 @@
                             <li id="tables_drpdwn"><a href="#">Something else here</a></li> --}}
                         </ul>
                     </li>
+                    <li class="menu-item"><i class="fa fa-bullhorn" aria-hidden="true"></i><a href="{{ route('admin.message.index') }}">Announcements</a></li>
                 </section>
             </ul>
         </div>
        
     </div>
-    
 
     <div class="container-fluid">
-        
         <div class="row m-5">
             <div class="col-12">
-                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }} nasa admin master layout to</a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                        </form>
                 @yield('content')
             </div>
         </div>
@@ -79,6 +73,14 @@
 
 </body>
 
+<!-- Charts -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+
+
 @yield('extraScript')
+
+
 
 </html>

@@ -24,15 +24,35 @@
                             <span class="text-danger error-text description_error"></span>
                         </div>
     
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="price">Package Price</label>
                             <input type="text" class="form-control" id="price" name="price" placeholder="Add Price">
                             <span class="text-danger error-text price_error"></span>
+                        </div> --}}
+
+                        <div class="form-group">
+                            <label for="price">Price</label>
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="text" class="form-control" id="min_price" name="min_price" placeholder="Minimum Price">
+                                    <span class="text-danger error-text min_price_error"></span>
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="form-control" id="max_price" name="max_price" placeholder="Max Price" value="0" hidden>
+                                    <span class="text-danger error-text max_price_error"></span>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
-
+                    
                     <div style="float: right; width: 45%;" id="modal-body_right" >
+                        <div class="row">
+                            <div class="col d-flex justify-content-end">
+                                <i class="fa fa-question-circle mx-2" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Please be noted that Service and Materials are two separate entity in a package. Material in a service will not overlap in this package.">
+                                </i>
+                            </div>
+                        </div>
                         <div  id="modal-body_right_service">
                             <div class="form-group">
                                 <label for="services">Services</label>
@@ -45,7 +65,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="equipments">Equipments</label>
+                                <label for="equipments">Materials</label>
                                     <select class="form-control" id="equipment_multiple" multiple name="equipment_multiple" style="width: 100%;">
                                         @foreach ($equipments as $row)
                                             <option value="{{$row->id}}">{{$row->name}}</option>     

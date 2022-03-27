@@ -9,6 +9,6 @@ class Packages extends Model
 {
     use HasFactory;
     protected $table = 'packages';
-    protected $fillable = ['name','description','price','user_as_clinic_id'];
+    protected $fillable = ['name', 'description', 'min_price', 'max_price', 'user_as_clinic_id'];
     public $timestamps = false;
 }

@@ -7,78 +7,54 @@
     <link rel="icon" href="{{asset('./images/mrjams/mr-jams-logo.png')}}">
     <title>MR. JAMS</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Raleway" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{{asset('./css/customer/index_one.css')}}">
-    <link rel="stylesheet" href="{{asset('./css/customer/map.css')}}">
-    <link rel="stylesheet" href="{{asset('./css/customer/infowindow.css')}}">
-    <link rel="stylesheet" href="{{asset('./css/customer/customer.css')}}">
-  <!-- <link rel="stylesheet" href="{{asset('./css/customer/modal.css')}}"> -->
+    <!-- {{-- jquery 3.6.0 --}} -->
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <!-- {{-- bootstrap 5.1.1 --}} -->
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
+
+    <!-- {{-- jquery selec2 plugin --}} -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    {{-- jquery growl plugin --}}
+    <script src="{{ URL::asset('js/customer/growl.js') }}"></script>
+
+     <!-- {{-- js moment --}} -->
+
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+
+    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Raleway" rel="stylesheet"> --}}
+
+    {{-- date picker --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    {{-- theme --}}
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    
+    @yield('specificStyle')
 
 </head>
 <body>
-
-
-        <header>
-          <!-- <h2><img src="{{ URL::asset('images/mrjams/logowithname.png') }}" class="logotitle"></h2> -->
-
-          <nav>
-            <h2><img src="{{ URL::asset('images/mrjams/logowithname.PNG') }}" class="logotitle"></h2>
-
-            <!-- <input type="text" name="user_as_customer_id" value="{{Auth::user()->id}}"> 
-             -->
-            <li><a href="/" style="text-decoration: none; color:black;">Home</a></li>
-            <li><a href="{{route('customer.clinicList.index')}}" style="text-decoration: none; color:black;">Clinics</a></li>
-            <li><a href="{{route('customer.about')}}" style="text-decoration: none; color:black;">About</a></li>
-            <li><a href="{{route('customer.contact')}}" style="text-decoration: none; color:black;">Contact</a></li>
-            <li><a href="{{route('customer.mail.index')}}" style="text-decoration: none; color:black;">Mail</a></li>
-            <li><a href="/customer/customerinfo/{{Auth::user()->id}}" style="text-decoration: none; color:black;">Account</a></li>
-
-            <!-- <li><select id="ClinicType" style="background-color: transparent; border: none; font-weight: bold;">
-                                  <option value="">Account</option> 
-                                  <option value="1">Dental</option> 
-                                  <option value="2">Medical</option> 
-            </select></li>  -->
-            <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i></a>
-                              <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                              @csrf
-                              </form>
-                            </li>
-                            
-            <!-- <img class="sticky" src="{{ Auth::user()->avatar }}" alt="sticky-div"> -->
-        
-        </nav>
-        </header>
-
 
         <main>
             @yield('content')
         </main>
 
         
-        <footer>
-          <p>MR. JAMS</p>
-          <p>Created with <i class="fa fa-heart"></i> by TUPT - BSIT 4A | 2018-2022</p>
-          <ul>
-            <li><a href="#"><i class="fa fa-twitter-square fa-2x"></i></a></li>
-            <li><a href="#"><i class="fa fa-facebook-square fa-2x"></i></a></li>
-            <li><a href="#"><i class="fa fa-snapchat-square fa-2x"></i></a></li>
-          </ul>
-        </footer> 
+       
     
 </body>
 
-    {{-- <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7wni7IkDlhVh0eYj1v1A2S7UXFpqRGB4&callback=initMap"></script> --}}
-
-    <script async src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places">
-    </script>
-
-    <script src="{{ URL::asset('js/customer/map.js') }}"></script>
-    <!-- <script src="{{ URL::asset('js/customer/appointment.js') }}"></script> -->
+  @yield('jsScript')
 
 </html>

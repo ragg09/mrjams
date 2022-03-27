@@ -1,7 +1,7 @@
 $(function(){
     let data_count = 0;
     //calling reusable script
-    $.getScript("/js/clinic/reusableFunction.js");
+    $.getScript("../../js/clinic/reusableFunction.js");
 
     // polling technique
     var timer = setInterval( reload_table, 5000);
@@ -77,7 +77,12 @@ $(function(){
         $.ajax({
             type: "GET",
             url: "/clinic/appointment/" + id,
-            success: function(data){
+            beforeSend: function(){
+                $("#detail_modal_body").empty();
+                $("#response_waiting").removeAttr("hidden");
+            },
+            success: function(data) {
+                $("#response_waiting").attr("hidden", true);
 
                 //console.log(data);
 
@@ -85,7 +90,11 @@ $(function(){
 
                 $("#for_ro_id").val(id);
 
-                $("#detail_modal_body").append('<div class="col-lg-5" style="border-right: 1px solid black"><div class="row d-flex align-items-baseline"><div class="col-lg-4 col-md-4 col-sm-4"><img class="rounded-circle" src="'+data.data.user_avatar+'"></div><div class="col-lg-8 col-md-8 col-sm-8 align-bottom"><span>'+data.data.user_contact+'<br>'+data.data.user_email+'</span></div></div><div class="row mt-4 mx-4"><p><i class="fas fa-user-tag mx-3"></i> '+data.data.user_name+'</p><p><i class="fas fa-venus-mars mx-3"></i>'+data.data.user_gender+' <span class="mx-3"></span> <i class="fas fa-calendar-day mx-3"></i>'+data.data.user_age+' y/o </p><p><i class="fas fa-address-book mx-3"></i> '+data.data.user_address+' </p></div></div><div class="col-lg-7 mt-md-5 mt-sm-5 mt-lg-0"><div class="row"><h2>Patient</h2><div class="col-lg-4 d-flex align-items-center justify-content-center"><i class="fas fa-briefcase-medical" style="font-size: 60px"></i></div><div class="col-lg-8"><h4 class="mx-4">&#x2022;'+data.data.ro_package_name+'</h4></div></div><div class="row mt-5 mx-2"><p><i class="fas fa-user-tag mx-3"></i> '+data.data.patient_name+' </p><p><i class="fas fa-venus-mars mx-3"></i>'+data.data.patient_gender+' <span class="mx-3"></span> <i class="fas fa-calendar-day mx-3"></i>'+data.data.patient_age+' y/o </p><p><i class="fas fa-address-book mx-3"></i> '+data.data.patient_address+' </p></div></div>');
+                
+                // $("#accept_app_btn").attr('data-id', id);
+
+
+                $("#detail_modal_body").append('<div class="col-lg-5" style="border-right: 1px solid black"><div class="row d-flex align-items-baseline"><div class="col-lg-4 col-md-4 col-sm-4"><img class="rounded-circle" src="'+data.data.user_avatar+'"></div><div class="col-lg-8 col-md-8 col-sm-8 align-bottom"><span>'+data.data.user_contact+'<br>'+data.data.user_email+'</span></div></div><div class="row mt-4 mx-4"><p><i class="fas fa-user-tag mx-3"></i> '+data.data.user_name+'</p><p><i class="fas fa-venus-mars mx-3"></i>'+data.data.user_gender+' <span class="mx-3"></span> <i class="fas fa-calendar-day mx-3"></i>'+data.data.user_age+' y/o </p><p><i class="fas fa-address-book mx-3"></i> '+data.data.user_address+' </p></div></div><div class="col-lg-7 mt-md-5 mt-sm-5 mt-lg-0"><div class="row"><h2>Patient</h2><div class="col-lg-4 d-flex align-items-center justify-content-center"><i class="fas fa-briefcase-medical" style="font-size: 60px"></i></div><div class="col-lg-8"><h4 class="mx-4">&#x2022;'+data.data.ro_package_name+data.data.ro_services_name+'</h4></div></div><div class="row mt-5 mx-2"><p><i class="fas fa-user-tag mx-3"></i> '+data.data.patient_name+' </p><p><i class="fas fa-venus-mars mx-3"></i>'+data.data.patient_gender+' <span class="mx-3"></span> <i class="fas fa-calendar-day mx-3"></i>'+data.data.patient_age+' y/o </p><p><i class="fas fa-address-book mx-3"></i> '+data.data.patient_address+' </p></div></div>');
 
                 
             },
@@ -100,17 +109,34 @@ $(function(){
     $("#accept_app_btn").on('click', function(e){
         e.preventDefault();
         var id =  document.getElementById("for_ro_id").value;
+        // console.log(id);
         var today = new Date();
-        
-        
         $.ajax({
             type: "GET",
             url: "/clinic/appointment/" + id,
-            success: function(data){   
-                console.log(data);
-
+            beforeSend: function(){
+                // $("#detail_modal_body").empty();
+                $("#response_waiting_accept").removeAttr("hidden");
+                $("#specialist_div").empty();
+                $("#flatpicker").attr("hidden", true);
+            },
+            success: function(data) {
+                $("#response_waiting_accept").attr("hidden", true);
+                // $("#detail_modal_body").empty();
+                // console.log(data);
+                $("#flatpicker").removeAttr("hidden");
+                $("#specialist_div").empty();
+                $("#accept_modal_flatpicker").empty();
+                if(data.specialists.length > 0){
+                        $("#specialist_div").append('<select class="form-control" id="specialist" name="specialist" style="width: 100%;">');
+                    $.each(data.specialists, function(key, val){
+                        $("#specialist").append('<option value="'+val.fullname+'">'+val.fullname+ " | "+ val.specialization+'</option>');
+                    });
+                    
+                }
                 $("#customer_email").append('<input type="text" id="customer_email" name="customer_email" hidden value="'+data.data.user_email+'">');
                 $("#accept_appointment_form").attr('action', "/clinic/appointment/"+id);
+                
                 $("#accept_modal_flatpicker").flatpickr({
                     enableTime: true,
                     dateFormat: "Y-m-d H:i",
@@ -118,6 +144,8 @@ $(function(){
                     minDate: today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(),
                     defaultDate: data.data.app_appointed_at + " " + data.data.time , 
                 });
+
+                $("#accept_modal_flatpicker").val(data.data.app_appointed_at + " " + data.data.time);
 
                 
             },
@@ -138,23 +166,43 @@ $(function(){
             url: $(this).attr('action'),
             data: $('#accept_appointment_form').serialize(),
             beforeSend: function(){
-                $("#accept_modal_up").modal('toggle');
-                $("#loading-screen-bg").css("visibility", "visible");
-                $(document).find('span.error-text').text('');
+                // $("#accept_modal_up").modal('toggle');
+                // $("#loading-screen-bg").css("visibility", "visible");
                 
+                
+               
+                $("#confirm_accept_btn_confirm").attr("hidden", true);
+                $("#confirm_accept_btn_cancel").attr("hidden", true);
+                $("#response_waiting_accepting_appointment").removeAttr("hidden");
 
-
+                $(document).find('span.error-text').text('');
             },
             success: function(data) {
-                console.log(data);
+                //console.log(data);
+
+                $("#confirm_accept_btn_confirm").removeAttr("hidden");
+                $("#confirm_accept_btn_cancel").removeAttr("hidden");
+                $("#response_waiting_accepting_appointment").attr("hidden", true);
+
                 if(data.status == 0){
+                    $('#calendar_btn').removeAttr('hidden');
                     $('span.datetime_error').text(data.datetime);
                 }else{
-                    // $("#appointment_table").load(window.location + " #appointment_table");
-                    //$("#accept_modal_up").modal('toggle');
-                    bootstrapAlert(data.message, "success", 250);
-                    setInterval( reload_page, 2000);
+                    // if(data.count_app == 0){
+                    //     location.reload();
+                    // }else{
+                    //     $("#appointment_table").load(window.location + " #appointment_table");
+                    //     $("#accept_modal_up").modal('toggle');
+                    //     bootstrapAlert(data.message, "success", 250);
+                    // }
 
+                    $("#appointment_table").load(window.location + " #appointment_table");
+                    $("#accept_modal_up").modal('toggle');
+
+                    bootstrapAlert(data.message, "success", 250);
+
+                    
+                    setInterval( reload_page, 2000);
                     function reload_page(){
                         location.reload()
                     }
@@ -171,7 +219,7 @@ $(function(){
         e.preventDefault();
         var id =  document.getElementById("for_ro_id").value;
         
-        console.log(id);
+        //console.log(id);
 
         $("#decline_appointment").empty();
         $("#decline_appointment").append('<input type="text" class="form-control" id="delete_ro_id" value="'+id+'" hidden>');
@@ -180,9 +228,9 @@ $(function(){
 
     
 
-    $("#confirm_decline_appointment").on('click', function(e){
+    $("#confirm_decline_appointment_decline").on('click', function(e){
         var id =  document.getElementById("delete_ro_id").value;
-        console.log(id);
+        //console.log(id);
 
         $.ajax({
             type: "DELETE",
@@ -190,8 +238,20 @@ $(function(){
             data:{
                 _token: $("input[name=_token]").val()
             },
+            beforeSend: function(){
+                $("#confirm_decline_appointment_cancel").attr("hidden", true);
+                $("#confirm_decline_appointment_decline").attr("hidden", true);
+                $("#response_waiting_decline").removeAttr("hidden");
+            },
             success: function(data) {
-                console.log(data);
+                //console.log(data);
+
+                $("#confirm_decline_appointment_cancel").removeAttr("hidden");
+                $("#confirm_decline_appointment_decline").removeAttr("hidden");
+                $("#response_waiting_decline").attr("hidden", true);
+
+
+
                 $("#appointment_table").load(window.location + " #appointment_table");
                 $("#decline_modal_up").modal('toggle');
                 // $("#equipment_table").load(window.location + " #equipment_table");
@@ -211,17 +271,30 @@ $(function(){
     $(document).on('click', 'a#accepted_view_detail_modal', function(e) {
         e.preventDefault();
         var id = $(this).data('id');
-        console.log(id);
+        // console.log(id);
         $.ajax({
             type: "GET",
             url: "/clinic/appointment/" + id,
-            success: function(data){
+            beforeSend: function(){
+                $("#accepted_detail_modal_body").empty();
+                $("#response_waiting_accepted_details").removeAttr("hidden");
+            },
+            success: function(data) {
+                $("#response_waiting_accepted_details").attr("hidden", true);
+                // console.log(data);
 
-                //console.log(data);
+                $("#ro_id_done").val(id);
 
+                $("#proceed_billing").attr('href', "/clinic/billing/"+id);
                 $("#accepted_detail_modal_body").empty();
 
-                $("#accepted_detail_modal_body").append('<div class="col-lg-5" style="border-right: 1px solid black"><div class="row d-flex align-items-baseline"><div class="col-lg-4 col-md-4 col-sm-4"><img class="rounded-circle" src="'+data.data.user_avatar+'"></div><div class="col-lg-8 col-md-8 col-sm-8 align-bottom"><span>'+data.data.user_contact+'<br>'+data.data.user_email+'</span></div></div><div class="row mt-4 mx-4"><p><i class="fas fa-user-tag mx-3"></i> '+data.data.user_name+'</p><p><i class="fas fa-venus-mars mx-3"></i>'+data.data.user_gender+' <span class="mx-3"></span> <i class="fas fa-calendar-day mx-3"></i>'+data.data.user_age+' y/o </p><p><i class="fas fa-address-book mx-3"></i> '+data.data.user_address+' </p></div></div><div class="col-lg-7 mt-md-5 mt-sm-5 mt-lg-0"><div class="row"><h2>Patient</h2><div class="col-lg-4 d-flex align-items-center justify-content-center"><i class="fas fa-briefcase-medical" style="font-size: 60px"></i></div><div class="col-lg-8"><h4 class="mx-4">&#x2022;'+data.data.ro_package_name+'</h4></div></div><div class="row mt-5 mx-2"><p><i class="fas fa-user-tag mx-3"></i> '+data.data.patient_name+' </p><p><i class="fas fa-venus-mars mx-3"></i>'+data.data.patient_gender+' <span class="mx-3"></span> <i class="fas fa-calendar-day mx-3"></i>'+data.data.patient_age+' y/o </p><p><i class="fas fa-address-book mx-3"></i> '+data.data.patient_address+' </p></div></div>');
+                $("#accepted_detail_modal_body").append('<div class="col-lg-5" style="border-right: 1px solid black"><div class="row d-flex align-items-baseline"><div class="col-lg-4 col-md-4 col-sm-4"><img class="rounded-circle" src="'+data.data.user_avatar+'"></div><div class="col-lg-8 col-md-8 col-sm-8 align-bottom"><span>'+data.data.user_contact+'<br>'+data.data.user_email+'</span></div></div><div class="row mt-4 mx-4"><p><i class="fas fa-user-tag mx-3"></i> '+data.data.user_name+'</p><p><i class="fas fa-venus-mars mx-3"></i>'+data.data.user_gender+' <span class="mx-3"></span> <i class="fas fa-calendar-day mx-3"></i>'+data.data.user_age+' y/o </p><p><i class="fas fa-address-book mx-3"></i> '+data.data.user_address+' </p></div></div><div class="col-lg-7 mt-md-5 mt-sm-5 mt-lg-0"><div class="row"><h2>Patient</h2><div class="col-lg-4 d-flex align-items-center justify-content-center"><i class="fas fa-briefcase-medical" style="font-size: 60px"></i></div><div class="col-lg-8"><h4 class="mx-4">&#x2022;'+data.data.ro_package_name+data.data.ro_services_name+'</h4></div></div><div class="row mt-5 mx-2"><p><i class="fas fa-user-tag mx-3"></i> '+data.data.patient_name+' </p><p><i class="fas fa-venus-mars mx-3"></i>'+data.data.patient_gender+' <span class="mx-3"></span> <i class="fas fa-calendar-day mx-3"></i>'+data.data.patient_age+' y/o </p><p><i class="fas fa-address-book mx-3"></i> '+data.data.patient_address+' </p></div></div>');
+
+                if(data.data.app_status == 5){
+                    $("#proceed_billing").attr('hidden', true)
+                }else{
+                    $("#proceed_billing").removeAttr('hidden')
+                }
 
                 
             },
@@ -230,6 +303,34 @@ $(function(){
                 alert("error");
             }
         });
+    });
+
+    //DONE APPOINTMENT MODAL CONFIRMATION, edit the status || I USED DELETE FUNCTION
+    $("#done_appointment_form").on('submit', function(e){
+        e.preventDefault();
+
+        // console.log("ito nga");
+
+        // var id =  document.getElementById("ro_id_done").value;
+        // console.log(id + " DONE");
+
+        // $.ajax({
+        //     type: "DELETE",
+        //     url: "/clinic/appointment/"+ id + " DONE",
+        //     data:{
+        //         _token: $("input[name=_token]").val()
+        //     },
+        //     success: function(data) {
+        //         console.log(data);
+        //         $("#appointment_table_accepted").load(window.location + " #appointment_table_accepted");
+        //         $("#accepted_view_detail_modal_up").modal('toggle');
+        //         bootstrapAlert(data.message, "success", 200);
+        //     },
+        //     error: function(error) {
+        //       console.log('error');
+        //     }
+        // });
+
     });
 
     $("#calendar_btn").on('click', function(e){

@@ -19,7 +19,8 @@
                         </h1>
                         </a>
                         <p>{{ $row->description }}</p>
-                        <p>{{ $row->price }}</p>
+                        {{-- <p>&#8369;{{$row->min_price}} - &#8369;{{$row->max_price}}</p> --}}
+                        <p>Price: &#8369;{{$row->min_price}}</p>
                 @endforeach
                 
                 <img src="https://assets.codepen.io/2301174/icon-karma.svg" alt="" id="box_img">

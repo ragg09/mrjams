@@ -1,43 +1,187 @@
-@extends('customerViews.layouts.customerlayout1')
+@extends('customerViews.layouts.customerlayout')
 @section('specificStyle')
     <link rel="stylesheet" href="{{asset('./css/customer/mail-info-content.css')}}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="{{asset('./css/customer/rating.css')}}">
 @endsection
 @section('content')     
+@include('customerViews.header.header3')
     <section>
-        <div class="card-container">
+
+
+        <div class="container bootstrap snippets bootdey" style="margin-top: 20px;">
+            <div class="row ng-scope" id="appoint_info">
+                <div class="col-md-4">
+                    <div class="panel panel-default" style="padding: 30px;">
+                        <div class="panel-body text-center">
+                            <div class="pv-lg"><i class="fa fa-calendar fa-5x" aria-hidden="true" style="color: #6497B1; margin-bottom: 25px;"></i></div>
+                            <h3 class="m0 text-bold" style="margin-top: -15px;"><b>{{$clinic_info->name}}</b></h3>
+                            <div class="mv-lg" style="margin-top: 15px;">
+                                <p>Hello, I'm a just a dummy contact in your contact list and this is my presentation text. Have fun!</p>
+                                {{-- <p><b>Email: </b> mr.jams1822@gmail.com</p>
+                                <p><b>Phone: </b> +63 1234567890</p>
+                                <p><b>Telephone: </b> +63 1234567890</p> --}}
+
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    {{-- rating --}}
+                    <div class="panel panel-default hidden-xs hidden-sm" style="padding: 10px;">
+                        <div class="panel-heading">
+                            <div class="panel-title text-center">
+                                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#rate-modal"><i class="fa fa-star" aria-hidden="true"></i><b> : How would you rate our Clinic?</b></button>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                           
+                        </div>
+                    </div>
+
+                   
+                </div>
+                <div class="col-md-8">
+                    <div class="panel panel-default">
+                        <div class="panel-body" style="padding: 20px;">
+
+                            
+               
+                    <div class="col-lg-12 m-15px-tb">
+
+
+                        <div class="resume-box">
+                            <ul>
+                                
+                                <li>
+                                    
+                                    <div class="icon">
+                                        <i class="fa fa-calendar-check-o fa-lg" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <h5 style="color: #6497B1; font-size:20px;"><b>Appointment Information:</b></h5> 
+                                        </div>
+                                            
+                                        <div class="col d-flex justify-content-end">
+                                            <button class="btn btn-light" ><i class="fa fa-download fa-lg" aria-hidden="true" onclick="printPage()"></i></button>
+                                        </div>
+                                    </div>
+                                   
+                                    
+                                  
+
+                                    <p>Date Created: {{ date("M j, Y", strtotime($appointment_data->created_at))}}</p>
+                                    <p>Appointment Date: {{ date("M j, Y", strtotime($appointment_data->appointed_at))}}</p>
+                                    <p>Time: {{  date("h:i A", strtotime($appointment_data->time)) }}</p>
+                                    <p>Appointment Status: <i class="fa fa-star text-{{$status->remark}}" aria-hidden="true"></i> {{$status->status}}</p>
+                                    <p>Customer Name:  {{$name[0]}}</p>
+                                </li>
+                                <li>
+                                    <div class="icon">
+                                        <i class="fa fa-user-md fa-lg" aria-hidden="true"></i>
+                                    </div>
+                                    <h5 style="color: #6497B1; font-size:18px;"><b>Clinic Information:</b></h5>
+                                    <p>Address: {{$clinic_address->address_line_1}}, {{$clinic_address->address_line_2}}</p>
+                                    <p>Phone: {{$clinic_info->phone}}</p>
+                                    <p>Telephone: {{$clinic_info->telephone}}</p>
+                                    
+                                </li>
+                                <li>
+                                    <div class="icon">
+                                        <i class="fa fa-archive fa-lg" aria-hidden="true"></i>
+                                    </div>
+                                    <h5 style="color: #6497B1; font-size:18px;"><b>Packages and Services:</b></h5>
+
+                                    @if(isset($package))
+                                        <p><b>Package :</b> {{$package->name}}</p>
+                                       
+                                    @endif
+                                    
+                                   
+                                             @if(isset($services_all))
+                                                <p><b>Services : </b></p>
+                                                @foreach ($services_all as $services)
+                                                    <p>- {{$services->name}}</p>
+                                                @endforeach
+                                            @endif
+                                    
+                                        
+                                   
+
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+               
+            
+        
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+          {{-- modal rating --}}
+        <form action="/customer/appointment" method="POST" id="main_form">
+            @csrf
+            <div class="modal fade" id="rate-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"  data-bs-backdrop="static" data-bs-keyboard="false" style="text-align: center">
+
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-user-md " aria-hidden="true" style="color: #6497B1;"></i> <b>{{$clinic_info->name}}</b></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                
+                        <div class="modal-body" style="align-items: center; justify-content: center;">
+                            <p><b>Enjoying This Clinic? </b></p>
+                            <p>Tap a star to rate it. </p>
+                            
+                                    <input type="hidden" name="rater_id" value="{{Auth::user()->id}}">
+                                    <input type="hidden" name="ratee_id" value="{{$clinic_info->id}}">
+                                    <div class="rating"> 
+                                        <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label> 
+                                        <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label> 
+                                        <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label> 
+                                        <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label> 
+                                        <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
+                                    </div>
+                            
+                        </div>
+                
+                        <div class="modal-footer">
+                            {{-- mga button --}}
+                            <button type="submit" class="btn btn-warning" data-bs-dismiss="modal" aria-label="Submit">Submit</button>
+        
+                        </div>
+
+                    
+                
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+        
 
         
        
-            <div class="row">
-                <div class="col">
-                    <div class="card-body">
-                        <span class="card-author subtle"><strong>Date Created:  </strong>{{$appointment_data->created_at}}</span>
-                        <span class="card-author subtle"><strong>Date Appointment:  </strong> {{$appointment_data->appointed_at}}</span>
-                        <span class="card-author subtle"><strong>Time:  </strong>{{$appointment_data->time}}</span>
-                        <h2 class="card-title">{{$clinic_info->name}}</h2>
-                        <span class="card-author subtle"><strong>Phone & Telephone:  </strong>{{$clinic_info->phone}} <strong>&</strong> {{$clinic_info->telephone}}</span>
-                        
-                        <span class="card-author subtle"><strong>Address: </strong>{{$clinic_address->address_line_1}}, {{$clinic_address->address_line_2}}</span>
-                        <span class="card-author subtle"><strong>Appointment Status: </strong>{{$status->status}}</span>
-                        <span class="card-author subtle"><strong>Services: </strong>{{$service->name}}</span>
-                        <span class="card-author subtle"><strong>Packages: </strong>{{$package->name}}</span>
-                        <br>
-                        <!-- <div class="card-read"><a href="#demo-modal">Get Appointment</a></div> -->
-                        <!-- <span class="card-tag card-circle subtle">C</span> -->
-                    </div>
-                </div>
-
-                <div class="col text-center">
-                    <img src="/images/mrjams/appoint-info.png" alt="" width="320px" height="400px" style="padding-top: 80px;"/>
-                </div>
-                
-            </div>
             
-     
-        </div>
     </section>
+@include('customerViews.footer.footer2')
+@endsection
+@section('jsScript')
+    <script src="{{ URL::asset('js/customer/clinic_rating.js') }}"></script> 
+    {{-- <script src="{{ URL::asset('js/customer/print.js') }}"></script> --}}
+    <script>
+        function printPage(){
+            window.print();
+        }
+    </script>
 @endsection

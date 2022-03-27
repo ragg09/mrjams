@@ -19,15 +19,41 @@
 
                     <div class="form-group">
                         <label for="price">Price</label>
-                        <input type="text" class="form-control" id="price" name="price" placeholder="Price">
-                        <span class="text-danger error-text price_error"></span>
+                        <i class="fa fa-question-circle mx-2" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Please insert your expected price range for this service."></i>
+                        <div class="row">
+                            <div class="col">
+                                <input type="text" class="form-control" id="min_price" name="min_price" placeholder="Minimum Price">
+                                <span class="text-danger error-text min_price_error"></span>
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" id="max_price" name="max_price" placeholder="Max Price">
+                                <span class="text-danger error-text max_price_error"></span>
+                            </div>
+                        </div>
                     </div>
+
+                    {{-- <div class="form-group">
+                        <label for="price">Max Price</label>
+                        <input type="text" class="form-control" id="max_price" name="max_price" placeholder="Price">
+                        <span class="text-danger error-text max_price_error"></span>
+                    </div> --}}
 
                     <div class="form-group">
                         <label for="quantity">Description</label>
                         <input type="text" class="form-control" id="description" name="description" placeholder="Add Description">
                         <span class="text-danger error-text description_error"></span>
                     </div>
+
+                    <div class="form-group">
+                        <label for="equipments">Consumable or Equipments</label>
+                            <select class="form-control" id="equipment_multiple" multiple name="equipment_multiple" style="width: 100%;">
+                                @foreach ($equipments as $row)
+                                    <option value="{{$row->id}}">{{$row->name}}</option>     
+                                @endforeach
+                           </select>  
+                           <input type="text" class="form-control" id="equipment_ids" name="equipment_ids" hidden>
+                    </div>
+
                     
                 </div>
     
@@ -41,3 +67,4 @@
     </div>
     
 </form>
+

@@ -22,12 +22,17 @@ a {
 }
 
 html {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; */
+  background-color: #fff;
+  height: 100%;
 }
 
 body {
   font-family: "Roboto", sans-serif;
+  background-color: white;
+  /* max-height: 100%; */
+  min-height: 100%;
 }
 
 .sr-only {
@@ -144,13 +149,19 @@ body {
 
 /* Logo */
 .logotitle {
-  display: block;
+  /* display: block; */
   margin-left: 0px;
   /* margin-right: auto; */
-  width: 18%;
+  width: 15%;
+  /* height: 7%; */
 }
 
 /*Footer Section*/
+.text-center {
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
 
 /*content */
 html {

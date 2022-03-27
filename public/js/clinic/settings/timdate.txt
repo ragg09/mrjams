@@ -1,0 +1,105 @@
+$(function(){
+
+    //calling reusable script
+    $.getScript("/js/clinic/reusableFunction.js");
+
+    var days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+    var summary_mon = [];
+    
+
+    $.each(days, function(key, val){
+
+        //for add time modal
+        $("#timepicker_"+val).flatpickr({
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+        });
+
+        for (let i = 1; i < parseInt($("#data_count_"+val).val()) + 1; i++) { 
+            var this_data = String(val) + String(i)
+            $("#time_"+this_data).flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+            });
+        }
+        var time_inputs = $("#data_of_"+val).find($("input:text"));
+        //map each inputs of 
+        $("#div_"+val).map(function(){
+            $(this).find('input').on('change', function(e){
+                $("#auto_sched_btn").removeAttr("disabled");
+
+                if($("#status_"+val).find('input:checkbox').is(':checked')){
+                    var this_status = "on"
+                }else{
+                    var this_status = "off"
+                }
+                
+                var inputs_data = "";
+                
+
+                for (let i = 1; i < parseInt(time_inputs.length) + 1; i++) { 
+                    if($("#status_mon"+i).is(':checked')){
+                        inputs_data = inputs_data + "&" +  $("#time_mon"+i).val() + "*" + "on";
+                    }else{
+                        inputs_data = inputs_data + "&" +  $("#time_mon"+i).val() + "*" + "off";
+                    }
+                }
+            
+                $("#final_data_"+val).val(this_status+inputs_data);
+
+            });
+        })
+
+         //buttons for toggle
+         $('#add_auto_time_'+val).on('click', function(){
+            var count = parseInt(time_inputs.length) + 1
+
+            $('#data_of_'+val).append('<div class="col-sm-6 col-md-6 col-lg-12 p-2"><div class="input-group"><div class="form-group" id="flatpickr"><input type="text" class="form-control" aria-describedby="status_'+val+count+'" id="time_'+val+count+'" name="time_'+val+count+'" value=""></div><button class="btn btn-link w-25" type="button" ><div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" id="status_'+val+count+'"></div></button></div></div>')
+
+
+        });
+
+
+        //buttons for toggle
+        $('#btn_'+val).on('click', function(){
+            $('#div_'+val).slideToggle('fast');
+        });
+    });
+
+
+
+    for (let i = 0; i < 8; i++) { 
+        $("#min_time"+i).flatpickr({
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+        });
+    
+        $("#max_time"+i).flatpickr({
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+        });
+    }
+
+    $("#edit_timedate_form").map(function(){
+        $(this).find('input').on('change', function(e){
+            $("#timedata_btn").prop("disabled", false);
+        });
+    })
+
+    $("#edit_timedate_form").on('submit', function(e){
+        e.preventDefault();
+        $.ajax({
+            type: $(this).attr('method'),
+            url: $(this).attr('action'),
+            data: $('#edit_timedate_form').serialize(),
+            success: function(data) {
+                bootstrapAlert(data.message, "success", 300);
+                $("#timedata_btn").prop("disabled", true);
+            }
+        });
+    });
+})

@@ -49,55 +49,57 @@ class DashbaordController extends Controller
             $customer = User_as_customer::where('id', '=',   $key->user_as_customer_id)->first();
             $customer_root_data = User::where('id', '=',   $customer->users_id)->first();
 
-            if ($appointments) {
+            // if ($appointments) {
 
-                //checking validity of appointment || expiration date
-                if (date("Y-m-d") > $appointments->appointed_at) {
-                    $up_app = Appointments::find($appointments->id);
-                    $up_app->appointment_status_id =  6; //6 is the id for expired
-                    $up_app->save();
+            //     //checking validity of appointment || expiration date
+            //     if (date("Y-m-d") > $appointments->appointed_at) {
+            //         $up_app = Appointments::find($appointments->id);
+            //         $up_app->appointment_status_id =  6; //6 is the id for expired
+            //         $up_app->save();
 
-                    //checking logs limit 5000
-                    if ($logs_count == 5000) {
-                        Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
-                    }
-                    $logs = new Logs();
-                    $logs->message = "An Appointment has been expired with Receipt Order No: " . $appointments->id;
-                    $logs->remark = "danger";
-                    $logs->date =  date("Y/m/d");
-                    $logs->time = date("h:i:sa");
-                    $logs->user_as_clinic_id = $clinic->id;
-                    $logs->save();
-                } else {
-                    $complete_appointment_data[] = (object) array(
-                        "user_email" => $customer_root_data->email,
-                        "user_avatar" => $customer_root_data->avatar,
+            //         //checking logs limit 5000
+            //         if ($logs_count == 5000) {
+            //             Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+            //         }
+            //         $logs = new Logs();
+            //         $logs->message = "An Appointment has been expired with Receipt Order No: " . $appointments->id;
+            //         $logs->remark = "danger";
+            //         $logs->date =  date("Y/m/d");
+            //         $logs->time = date("h:i:sa");
+            //         $logs->user_as_clinic_id = $clinic->id;
+            //         $logs->save();
+            //     } else {
 
-                        "app_id" =>  $appointments->id, //galing sa appointmnent table
-                        "app_created_at" =>  $appointments->created_at, //galing sa appointmnent table
-                        "time" =>  $appointments->time, //galing sa appointmnent table
-                        "app_appointed_at" =>  $appointments->appointed_at, //galing sa appointmnent table
-                        "app_status" =>  $appointments->appointment_status_id, //galing sa appointmnent table
+            //     }
+            // }
 
-                        "ro_id" =>  $receipts[$count]->id, //galing sareceipts table
-                        "ro_package_name" =>  $package->name, //galing sareceipts table
-                        "ro_customer_id" =>  $receipts[$count]->user_as_customer_id, //galing sareceipts table
-                        "ro_patient_details" =>  $receipts[$count]->patient_details, //galing sareceipts table
-                        "ro_patient_address" =>  $receipts[$count]->patient_address, //galing sareceipts table
-                    );
-                    $count_app++;
-                }
-            }
+            $complete_appointment_data[] = (object) array(
+                "user_email" => $customer_root_data->email,
+                "user_avatar" => $customer_root_data->avatar,
+
+                "app_id" =>  $appointments->id ?? "", //galing sa appointmnent table
+                "app_created_at" =>  $appointments->created_at ?? "", //galing sa appointmnent table
+                "time" =>  $appointments->time ?? "", //galing sa appointmnent table
+                "app_appointed_at" =>  $appointments->appointed_at ?? "", //galing sa appointmnent table
+                "app_status" =>  $appointments->appointment_status_id ?? "", //galing sa appointmnent tabl
+
+                "ro_id" =>  $receipts[$count]->id ?? "", //galing sareceipts table
+                "ro_package_name" =>  $package->name ?? "", //galing sareceipts table
+                "ro_services_name" => $services_summary ?? "",
+                "ro_customer_id" =>  $receipts[$count]->user_as_customer_id ?? "", //galing sareceipts table
+                "ro_patient_details" =>  $receipts[$count]->patient_details ?? "", //galing sareceipts table
+                "ro_patient_address" =>  $receipts[$count]->patient_address ?? "", //galing sareceipts table
+            );
             $count++;
         }
-
+        return response()->json(['status' => 1, "data" => $complete_appointment_data ?? ""]);
         //echo $complete_appointment_data;
 
-        if ($count_app > 0) {
-            return response()->json(['status' => 1, "data" => $complete_appointment_data]);
-        } else {
-            return response()->json(['status' => 0]);
-        }
+        // if (count($appointments) > 0) {
+        //     return response()->json(['status' => 1, "data" => $complete_appointment_data]);
+        // } else {
+        //     return response()->json(['status' => 0]);
+        // }
 
         // if (count($appointments) > 0) {
         //     return response()->json(['data' => $data]);

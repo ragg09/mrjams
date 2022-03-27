@@ -1,6 +1,6 @@
 @extends('adminViews.layouts.master')
 
-@section('title', 'Analytics')
+@section('title', 'Patient')
 
 
 @section('extraStyle')
@@ -20,7 +20,7 @@
                   <span>Home</span>
               </li>
               <li class="breadcrumb-item active">
-                  <span>Analytics</span>
+                  <span>Patient</span>
               </li>
           </ol>
       </nav>
@@ -77,7 +77,7 @@
                                 <td><a href="/admin/patient/{{$patients['id']}}"><button class="btn btn-primary" id="viewPatient"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a></td>
                                 {{-- <td><button class="btn btn-primary" id="viewPatient"><i class="fa fa-eye" aria-hidden="true"></i> View</button></td> --}}
                                 <td><a href="/admin/patient/{{$patients['id']}}/edit" class="btn btn-warning" id="editUser" ><i class="fa fa-pencil-square-o" aria-hidden="true" data-id="{{$patients['id']}}"></i> Edit</a></td>
-                                <td><a class="btn btn-danger" id="dltbtnPatient" data-id="{{$patients['id']}}" data-bs-target="#delete_modal_up" data-bs-toggle="modal"><i class="fa fa-trash" aria-hidden="true" ></i> Delete</a></td>
+                                {{-- <td><a class="btn btn-danger" id="dltbtnPatient" data-id="{{$patients['id']}}" data-bs-target="#delete_modal_patient" data-bs-toggle="modal"><i class="fa fa-trash" aria-hidden="true" ></i> Delete</a></td> --}}
                             </tr>
                         @endforeach
                     </tbody>

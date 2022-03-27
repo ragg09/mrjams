@@ -1,6 +1,6 @@
 @extends('adminViews.layouts.master')
 
-@section('title', 'Clinic')
+@section('title', 'Patient')
 
 
 @section('extraStyle')
@@ -17,7 +17,7 @@
                   <span>Home</span>
               </li>
               <li class="breadcrumb-item active">
-                  <span>Clinic</span>
+                  <span>Patient</span>
               </li>
           </ol>
       </nav>
@@ -29,34 +29,40 @@
     <div class="container-lg">
         <div class="row">
             <div class="col">
-                <form>
+                <form action="/admin/patient/{{$patient->id}}" method="POST">
+                  @csrf
+                  {{method_field('PUT')}}
+                    <div class="mb-3">
+                        <label class="form-label">ID</label>
+                        <input type="text" class="form-control" id="userID" name="userID" value="{{$patient->id}}">
+                    </div>
                     <div class="mb-3">
                       <label class="form-label">First Name</label>
-                      <input type="text" class="form-control" id="userName" value="{{$patient->fname}}">
+                      <input type="text" class="form-control" id="userName" name="userName" value="{{$patient->fname}}">
                     </div>
                     <div class="mb-3">
                       <label class="form-label">Middle Name</label>
-                      <input type="text" class="form-control" id="mname" value="{{$patient->mname}}">
+                      <input type="text" class="form-control" id="mname" name="mname" value="{{$patient->mname}}">
                     </div>
                     <div class="mb-3">
                       <label class="form-label">Last Name</label>
-                      <input type="text" class="form-control" id="lname" value="{{$patient->lname}}">
+                      <input type="text" class="form-control" id="lname" name="lname" value="{{$patient->lname}}">
                     </div>
                     <div class="mb-3">
                       <label class="form-label">Age</label>
-                      <input type="text" class="form-control" id="userTelephone" value="{{$patient->age}}">
+                      <input type="text" class="form-control" id="userTelephone" name="age" value="{{$patient->age}}">
                     </div>
-                    <select class="form-select" aria-label="Default select example">
-                      <option selected value="{{$patient->gender}}">{{$patient->gender}}</option>
+                    <select class="form-select" aria-label="Default select example" name="userGender">
+                      <option selected name="userGender" value="{{$patient->gender}}">{{$patient->gender}}</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
                       <option value="Other">Other</option>
                     </select>
                     <div class="mb-3">
                         <label class="form-label">Cellphone Number</label>
-                        <input type="text" class="form-control" id="userTelephone" value="{{$patient->phone}}">
+                        <input type="text" class="form-control" id="userTelephone" name="phone" value="{{$patient->phone}}">
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" id="updatePatient" class="btn btn-primary">Submit</button>
                   </form>
             </div>
       </div>

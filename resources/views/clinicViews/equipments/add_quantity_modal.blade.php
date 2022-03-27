@@ -6,14 +6,14 @@
             <div class="modal-content">
     
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Equipment</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Add Material's Quantity</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
     
                 <div class="modal-body">
 
                     <div class="form-group">
-                        <label for="name">Tools or Equipment</label>
+                        <label for="name">Consumables or Equipments</label>
                         <input type="text" class="form-control" id="edit_name" name="name" placeholder="Equipment" value="ACCEPTED" hidden>
                             <select class="form-select" id="data_select">
                                 @foreach ($data_all as $row)
@@ -24,7 +24,7 @@
 
                     <div class="form-group">
                         <label for="quantity">Quantity</label>
-                        <input type="text" class="form-control" id="edit_quantity" name="quantity" placeholder="please enter equipment's quantity to add">
+                        <input type="text" class="form-control" id="edit_quantity" name="quantity" placeholder="please enter quantity to add">
                         <span class="text-danger error-text quantity_error"></span>
                     </div>
 

@@ -5,7 +5,7 @@ let map, marker, autocomplete;
 
     function initMap() {
         map = new google.maps.Map(document.getElementById("map"), {
-            center: { lat: parseFloat(latitude), lng: parseFloat(longitude) },
+            //center: { lat: parseFloat(latitude), lng: parseFloat(longitude) },
             zoom: 10,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
         });
@@ -50,7 +50,7 @@ let map, marker, autocomplete;
         
         autocomplete.addListener("place_changed", () => {
             document.getElementById('mapModal').click();
-            document.getElementById('address').style.visibility="visible";
+            //document.getElementById('address').style.visibility="visible";
             const place = autocomplete.getPlace();
 
             //console.log(place);
@@ -70,21 +70,38 @@ let map, marker, autocomplete;
             });
 
             marker.addListener("dragend", () => {
-            document.getElementById("latitude").value = marker.getPosition().lat();    
-            document.getElementById("longitude").value = marker.getPosition().lng();
+                document.getElementById("latitude").value = marker.getPosition().lat();    
+                document.getElementById("longitude").value = marker.getPosition().lng();
+                
+                let input = document.querySelector("#latitude");
+                let button = document.querySelector("#get_location_btn");
 
-            console.log('lat: ' + marker.getPosition().lat() + ', lng: ' + marker.getPosition().lng());
-            
-            //get address using api 
-            $.ajax({
-                url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+marker.getPosition().lat()+','+marker.getPosition().lng()+'&key=AIzaSyCLGt1NI04qMdTtPkL3KAiHYf4pNTx7cF0',
-                dataType: 'json',
-                type: 'GET',
-                success: function(data){
-                    console.log(data);
-                }
-            
-            });
+
+                button.disabled = false;
+                // var allowDrinksCheckbox = document.getElementById("allow-drinks");
+                // var drinkSelect = document.getElementById("drink-select");
+
+                // allowDrinksCheckbox.addEventListener("change", function(event) {
+                // if (event.target.checked) {
+                //     drinkSelect.disabled = false;
+                // } else {
+                //     drinkSelect.disabled = true;
+                // }
+                // }, false);
+                
+
+                // console.log('lat: ' + marker.getPosition().lat() + ', lng: ' + marker.getPosition().lng());
+                
+                //get address using api 
+                $.ajax({
+                    url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+marker.getPosition().lat()+','+marker.getPosition().lng()+'&key=AIzaSyCLGt1NI04qMdTtPkL3KAiHYf4pNTx7cF0',
+                    dataType: 'json',
+                    type: 'GET',
+                    success: function(data){
+                        // console.log("asdasda: " +data);
+                    }
+                
+                });
 
             });
             

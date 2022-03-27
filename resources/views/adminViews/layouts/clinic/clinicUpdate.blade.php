@@ -30,74 +30,35 @@
     <div class="container-lg">
         <div class="row">
             <div class="col">
-                <form>
+                <form action="/admin/clinic/{{$clinic->id}}" method="POST">
+                    @csrf
+                    {{method_field('PUT')}}
+                    <div class="mb-3">
+                        <label class="form-label">Clinic Name</label>
+                        <input type="text" class="form-control" id="clinicID" name="clinicID"value="{{$clinic->id}}" hidden>
+                      </div>
                     <div class="mb-3">
                       <label class="form-label">Clinic Name</label>
-                      <input type="text" class="form-control" id="userName" value="{{$clinic->name}}">
+                      <input type="text" class="form-control" id="clinicname" name="clinicname" value="{{$clinic->name}}">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Cellphone Number</label>
-                        <input type="text" class="form-control" id="userTelephone" value="{{$clinic->phone}}">
+                        <input type="text" class="form-control" id="clinicphone" name="clinicphone" value="{{$clinic->phone}}">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Telephone Number</label>
-                        <input type="text" class="form-control" id="userTelephone" value="{{$clinic->telephone}}">
+                        <input type="text" class="form-control" id="clinictelephone" name="clinictelephone" value="{{$clinic->telephone}}">
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                  </form>
+                    <button type="submit" id="updateClinic" class="btn btn-primary">Submit</button>
+                </form>
             </div>
-      </div>
-  </div>
-
-  {{-- <div class="modal" id="editModalUser" role="dialog" style="display:none">
-    <div class="modal-dialog modal-lg" >
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-prod">Update Prod</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-body">
-          <form id="updateformprod" method="#" action="#" >
-          <input type="hidden" name="_token" value="{{ csrf_token() }}">
-          <input type="hidden" name="_method" value="PUT">
-
-          <div class="form-group">
-            <label for="name" class="control-label">Name</label>
-            <input type="text" class="form-control" id="name" name="name"  >
-            @if($errors->has('name'))
-         <small>{{ $errors->first('name') }}</small>
-         @endif
-          </div>
-          <div class="form-group"> 
-            <label for="email" class="control-label">Email</label>
-            <input type="text" class="form-control" id="email" name="email" >
-             @if($errors->has('email'))
-         <small>{{ $errors->first('email') }}</small>
-         @endif
-          </div>
-          <div class="form-group"> 
-            <label for="website" class="control-label">Website</label>
-            <input type="text" class="form-control" id="website" name="website" >
-             @if($errors->has('website'))
-         <small>{{ $errors->first('website') }}</small>
-         @endif
-          </div> 
-        </div>
-        </form> 
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button id="updatebtnprod" type="submit" class="btn btn-primary">Update</button>
         </div>
     </div>
 </div>
-</div>
-</div> --}}
-
 @endsection
 
 @section('extraScript')
 
-{{-- <script src="{{ URL::asset('js/admin/patientDetails.js') }}"></script> --}}
+<script src="{{ URL::asset('js/admin/patientDetails.js') }}"></script>
 
 @endsection

@@ -10,9 +10,9 @@
 
   <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Raleway" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="{{asset('./css/customer/index_one.css')}}">
+  <link rel="stylesheet" href="{{asset('./css/customer/index_one_public.css')}}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 
 </head>
 <body>
@@ -54,77 +54,106 @@
 
   
   <section class="hero">
-    <div class="background-image"></div>
+    <div class="background-image" style="background-image: url(/images/mrjams/index_one.jpg); background-size: cover;"></div>
     <div class="hero-content-area">
       <h1>Your Health is our Priority!</h1>
       <h3>Just a Reminder, It's Time For Your Appointment</h3>
 
-      <a href="#appoint" class="btn">Get Appointment</a>
+      <a href="{{ route('login') }}" class="btn">Get Appointment</a>
     </div>
   </section>
 
   <section >
-            <div style="width:1100px;padding-bottom:50px;">
-              <div class="row">
-              <div class="col" style="background-color:transparent;">
-                    <img src="/images/mrjams/steps1.png" alt="" width="100%" height="300px"/>
-                    <!-- <p>hello</p> -->
-                  </div>
-                  <div class="col" style="background-color:transparent;">
-                  <br></br>
-                  <center><h2><b>Guide for Making Appointments</b></h2></center>
-                  <br></br>
-                  <p><b>Step 1: Navigate to the Mapping section and select the clinic where you'd want to schedule an appointment.</b> Customers can schedule an appointment in one of two ways: first, go to the maps and select a clinic, or second, go to the clinic tab and search for the clinic they wish to visit. There's also a category search to help you discover the clinic you're looking for more quickly. </p>
+
+    <div class="container">
+      <div class="row align-items-center">
+          <div class="col-lg-6 mb-4 mb-lg-0">
+              <div class="mx-auto text-center">
+                <img src="/images/mrjams/steps1.png" alt="" width="100%" height="300px"/>
               </div>
+          </div>
+          <div class="col-lg-6">
+              <div class="ps-lg-6 ps-xl-10 w-lg-90">
+  
+                <br>
+                <p style="font-size: 30px;"><b>Guide for Making Appointments</b></p>
+                <p><b>Step 1: Navigate to the Mapping section and select the clinic where you'd want to schedule an appointment.</b> Customers can schedule an appointment in one of two ways: first, go to the maps and select a clinic, or second, go to the clinic tab and search for the clinic they wish to visit. There's also a category search to help you discover the clinic you're looking for more quickly. </p>
+                     
+                     
+              </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row align-items-center">
+         
+
+          <div class="col-lg-6">
+              <div class="ps-lg-6 ps-xl-10 w-lg-90">
+  
+              <br>
+              <br>
+              <!-- <h1>Column 1</h1> -->
+              <p><b>Step 2: When you click "View More," all of the clinic's information will show.</b> Then you will see the clinic's contact information, such as phone and fax numbers. There's also the clinic's address, as well as the clinic's packages and services. You can also make an appointment on this page if you see a package or service that you want at that clinic. </p>
+                     
               </div>
           </div>
 
-          <div style="width:1100px;padding-bottom:50px;">
-                <div class="row">
-                <div class="col" style="background-color:transparent;">
-                <br></br>
-                <!-- <h1>Column 1</h1> -->
-                <p><b>Step 2: When you click "View More," all of the clinic's information will show.</b> Then you will see the clinic's contact information, such as phone and fax numbers. There's also the clinic's address, as well as the clinic's packages and services. You can also make an appointment on this page if you see a package or service that you want at that clinic. </p>
+          <div class="col-lg-6 mb-4 mb-lg-0">
+            <div class="mx-auto text-center">
+              <img src="/images/mrjams/steps2.png" alt="" width="100%" height="300px"/>
+            </div>
+        </div>
+      </div>
+    </div>
 
-
-                </div>
-                <div class="col" style="background-color:transparent;">
-                  <img src="/images/mrjams/steps2.png" alt="" width="100%" height="300px"/>
-                </div>
-                </div>
-          </div>
-
-          <div style="width:1100px;padding-bottom:50px;">
-              <div class="row">
-              <div class="col" style="background-color:transparent;">
+    <div class="container">
+      <div class="row align-items-center">
+          <div class="col-lg-6 mb-4 mb-lg-0">
+              <div class="mx-auto text-center">
                 <img src="/images/mrjams/steps3.png" alt="" width="100%" height="300px"/>
               </div>
-              <div class="col" style="background-color:transparent;">
-                <br></br>
+          </div>
+          <div class="col-lg-6">
+              <div class="ps-lg-6 ps-xl-10 w-lg-90">
+  
+                <br>
+                <br>
               <p><b>Step 3: After clicking "Get Appointment," you'll be asked if this appointment is for you or for someone else, such as a relative or friend. </b>It is important for the clinic you choose to know if this appointment is for you or not. Because the clinic requires the patient's details in order to schedule an appointment</p>
-
-
+                     
+                     
               </div>
+          </div>
+      </div>
+    </div>
+
+
+    <div class="container" style="margin-bottom: 40px;">
+      <div class="row align-items-center">
+         
+
+          <div class="col-lg-6">
+              <div class="ps-lg-6 ps-xl-10 w-lg-90">
+  
+                <br>
+                <br>
+                <p><b>Step 4: After you've answered the question, you'll be directed to the appointment page, where you may fill out the necessary details. </b>Personal information such as name, age, address, and other details must be filled in. There's also one for the service or package you choose. After you've completed all of the required fields, you can submit your request and wait for confirmation from the clinic of your choice.</p>
+                     
               </div>
           </div>
 
-          <div style="width:1100px;padding-bottom:50px;">
-                <div class="row">
-                
-                <div class="col" style="background-color:transparent;">
-         
-                <br></br>
-                <p><b>Step 4: After you've answered the question, you'll be directed to the appointment page, where you may fill out the necessary details. </b>Personal information such as name, age, address, and other details must be filled in. There's also one for the service or package you choose. After you've completed all of the required fields, you can submit your request and wait for confirmation from the clinic of your choice.</p>
-
-
-                </div>
-                <div class="col" style="background-color:transparent;">
-                  <img src="/images/mrjams/steps4.png" alt="" width="100%" height="300px"/>
-                </div>
+          <div class="col-lg-6 mb-4 mb-lg-0">
+            <div class="mx-auto text-center">
+              <img src="/images/mrjams/steps4.png" alt="" width="100%" height="300px"/>
             </div>
-          </div>  
+        </div>
+      </div>
+    </div>
 
-    </section>
+
+</section>
+
 
   
  
@@ -158,9 +187,9 @@
     <p>MR. JAMS</p>
     <p>Created with <i class="fa fa-heart"></i> by TUPT - BSIT 4A | 2018-2022</p>
     <ul>
-      <li><a href="#"><i class="fa fa-twitter-square fa-2x"></i></a></li>
-      <li><a href="#"><i class="fa fa-facebook-square fa-2x"></i></a></li>
-      <li><a href="#"><i class="fa fa-snapchat-square fa-2x"></i></a></li>
+      <li><a href="https://twitter.com/?lang=en"><i class="fa fa-twitter-square fa-2x text-black"></i></a></li>
+      <li><a href="https://www.facebook.com/"><i class="fa fa-facebook-square fa-2x text-black"></i></a></li>
+      <li><a href="https://www.google.com/"><i class="fa fa-google-plus-square fa-2x text-black"></i></a></li>
     </ul>
   </footer>
     

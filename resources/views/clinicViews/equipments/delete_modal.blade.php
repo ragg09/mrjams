@@ -8,16 +8,22 @@
             </div>
 
             <div class="modal-body bg-secondary text-white m-2 p-2 rounded border-dark">
+
                 <div class="d-flex justify-content-center ">
-                    <p><strong>Please Note: </strong>Deleting this equipment will make changes to the following packages:</p>
+                    <p><strong>Please Note: </strong>Deleting this equipment will make changes to the following packages and services:</p>
                    
                 </div>
                 <strong><p id="delete_packages"> </p></strong>
             </div>
     
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-danger" id="confirm_delete">Delete</button>
+                <button id="delete_equipment_close" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button id="delete_equipment_delete" type="submit" class="btn btn-danger">Delete</button>
+
+                <button class="btn btn-danger" type="button" id="response_waiting_equipment_delete_btn" disabled hidden>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Waiting for response . . . 
+                </button>
             </div>
     
             </div>

@@ -4,6 +4,8 @@ $(function(){
     google.load('visualization', '1.0', {'packages':['corechart']});
     // google.charts.setOnLoadCallback(drawChart);
 
+    
+
     $.ajax({
         type: "GET",
         url: "/admin/analytics/1",
@@ -49,7 +51,7 @@ $(function(){
         url: "/admin/analytics/1",
         success: function (response) {
             // console.log(response.user);
-            console.log(response);
+            // console.log(response);
             // console.log('shit');
 
             var data_users = [
@@ -88,7 +90,7 @@ $(function(){
         url: "/admin/analytics/1",
         success: function (response) {
             // console.log(response.user);
-            console.log(response);
+            // console.log(response);
             // console.log('shit');
 
             var data_users = [
@@ -111,6 +113,45 @@ $(function(){
             var figure = google.visualization.arrayToDataTable(data_users);
 
             var chart = new google.visualization.LineChart(document.getElementById('linechartCustomer'));
+            chart.draw(figure, options);
+
+        },
+        error: function(){
+            console.log('AJAX load did not work');
+            alert("error");
+        }
+        
+
+    });
+
+    $.ajax({
+        type: "GET",
+        url: "/admin/analytics/1",
+        success: function (response) {
+            // console.log(response.user);
+            // console.log(response);
+            // console.log('shit');
+
+            var data_users = [
+                ['Month', 'Total'],
+
+            ];
+
+            $.each(response.appointment, function (index,value) {
+                data_users.push([index, value]);
+            });
+
+            // console.log(data_users);
+
+            var options = {
+                title: 'Appointments per Month',
+                curveType: 'function',
+                legend: { position: 'bottom' }
+            };
+
+            var figure = google.visualization.arrayToDataTable(data_users);
+
+            var chart = new google.visualization.LineChart(document.getElementById('appPerMonth'));
             chart.draw(figure, options);
 
         },

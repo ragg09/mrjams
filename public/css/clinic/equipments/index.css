@@ -1,13 +1,26 @@
-#create_div button{
+:root {
+    --varyDarkBlue: hsl(234, 12%, 34%);
+    --grayishBlue: hsl(229, 6%, 66%);
+    --veryLightGray: hsl(0, 0%, 98%);
+}
+
+#nodata_img {
+    background-color: var(--veryLightGray);
+    box-shadow: 0px 20px 30px -20px var(--grayishBlue);
+    border-top: 2px solid rgb(11, 95, 173);
+    border-radius: 5px;
+}
+
+#create_div button {
     margin-top: 20px;
     margin-bottom: 5px;
     float: right;
 }
 
-#search{
+#search {
     float: right;
-    margin-top: 20px; 
-    margin-right: 10px; 
+    margin-top: 20px;
+    margin-right: 10px;
     margin-bottom: 5px;
     height: 38px;
 }
