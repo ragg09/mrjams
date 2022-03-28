@@ -4,7 +4,7 @@ var map, marker, autocomplete;
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
         zoom: 14,
-        center: { lat: parseFloat(4.50453805256329), lng: parseFloat(121.05283152757798) }, //papalitan to ng location ng user.
+        center: { lat: 4.50453805256329, lng: 121.05283152757798 }, //papalitan to ng location ng user.
     });
 
     //initial mapping
