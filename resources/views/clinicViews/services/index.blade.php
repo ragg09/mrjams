@@ -21,8 +21,6 @@
 
     @if (count($data) > 0)
         <div class="col-lg-12 bg-white rounded" id="service_table">
-            <h1>PRODUCTION TESTING</h1>
-
             <table class="table">
                 <thead>
                     <tr id="services_table_head">

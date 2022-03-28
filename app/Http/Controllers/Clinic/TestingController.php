@@ -97,13 +97,13 @@ class TestingController extends Controller
 
         $getID_myequipments = Services_has_equipments::all();
 
-        $sequipments = new Services_has_equipments();
-        $sequipments->clinic_services_id = 1;
-        $sequipments->clinic_equipments_id = 1;
-        $sequipments->user_as_clinic_id = 1;
-        $sequipments->save();
+        // $sequipments = new Services_has_equipments();
+        // $sequipments->clinic_services_id = 1;
+        // $sequipments->clinic_equipments_id = 1;
+        // $sequipments->user_as_clinic_id = 1;
+        // $sequipments->save();
 
-        echo $getID_myequipments;
+        // echo $getID_myequipments;
 
         //return view('clinicViews.testing.index');
 
