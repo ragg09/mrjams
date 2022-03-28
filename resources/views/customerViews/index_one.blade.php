@@ -179,9 +179,10 @@ var map, marker, autocomplete;
             console.log(data);
             
               $.each(data.data, function(key, val){
-                  // console.log(val.latitude);
+                  console.log(val.latitude);
+
                     new google.maps.Marker({
-                        position: { lat: parseFloat(val.latitude), lng: parseFloat(val.longitude) },
+                        position: { lat: parseFloat(4.50453805256329), lng: parseFloat(121.05283152757798) },
                         map,
                         icon: {
                             url: "/images/mrjams/mr-jams-logo.png",
