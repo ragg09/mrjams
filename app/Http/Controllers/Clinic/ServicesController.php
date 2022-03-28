@@ -228,7 +228,7 @@ class ServicesController extends Controller
                 ]);
             } else {
                 return response()->json([
-                    'tester' => 'withouth',
+                    'tester' => $getID_myequipments,
                     'services' => $services,
                     'myequipments' => $myequipments ?? "",
                     'myequipments_orig_ids' =>  $myequipments_orig_ids,
