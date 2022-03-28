@@ -64,13 +64,13 @@ class LoginController extends Controller
 
         //RETURN ROUTE LOGIC
         if (!$user_as_customer && !$user_as_clinic) {
-            if (Auth::user()->email == env('GOOGLE_ACCOUNT_EMAIL')) {
+            if (Auth::user()->email == 'mrjams1822@gmail.com') {
                 return redirect('/admin');
             } else {
                 return redirect('/role');
             }
         } else {
-            if (Auth::user()->email == env('GOOGLE_ACCOUNT_EMAIL')) {
+            if (Auth::user()->email == 'mrjams1822@gmail.com') {
                 return redirect('/admin');
             }
 
