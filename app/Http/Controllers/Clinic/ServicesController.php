@@ -219,6 +219,7 @@ class ServicesController extends Controller
                         ->get();
                 }
                 return response()->json([
+                    'tester' => 'if package exists',
                     'services' => $services,
                     'packages' => $packages,
                     'myequipments' => $myequipments,
@@ -227,8 +228,9 @@ class ServicesController extends Controller
                 ]);
             } else {
                 return response()->json([
+                    'tester' => 'withouth',
                     'services' => $services,
-                    'myequipments' => $myequipments,
+                    'myequipments' => $myequipments ?? "",
                     'myequipments_orig_ids' =>  $myequipments_orig_ids,
                     'allequipments' => $allequipments
                 ]);
