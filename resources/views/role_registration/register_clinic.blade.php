@@ -167,6 +167,9 @@
         </div>
 
         <div class="col-7 bg-black p-2 bg-opacity-25" id="blur">
+
+            <div class="row"></div>
+
             <div class="text-white mt-5">
                 
                 <div class="row">

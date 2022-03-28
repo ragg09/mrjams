@@ -141,8 +141,8 @@ $(function(){
                $("#equipments_original_ids").attr('value', data.myequipments_orig_ids);
                 
             },
-            error: function(){
-                console.log('AJAX load did not work');
+            error: function(e){
+                console.log(e);
                 alert("error");
             }
         });
