@@ -118,11 +118,11 @@ $(function(){
         $("#select_equipments").empty();
         e.preventDefault();
         var id = $(this).data('id');
-        $.ajax({
+        $.ajax({ 
             type: "GET",
             url: "/clinic/services/" + id + "/edit",
             success: function(data){
-                // console.log(data);
+                console.log(data);
                 $("#edit_name").val(data.services.name);
                 $("#edit_min_price").val(data.services.min_price);
                 $("#edit_max_price").val(data.services.max_price);
