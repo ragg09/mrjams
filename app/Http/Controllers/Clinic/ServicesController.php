@@ -192,7 +192,7 @@ class ServicesController extends Controller
                 ->first();
 
             $getID_myequipments = Services_has_equipments::where('clinic_services_id', '=',  $id)
-                ->where('user_as_clinic_id', '=',  $clinic->id)
+                //->where('user_as_clinic_id', '=',  $clinic->id)
                 ->get();
 
             $myequipments_orig_ids = [];
