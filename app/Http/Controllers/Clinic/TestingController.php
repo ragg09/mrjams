@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Clinic;
 use App\Http\Controllers\Controller;
 use App\Mail\EmailNotification;
 use App\Models\Appointments;
+use App\Models\Clinic_equipments;
+use App\Models\Clinic_services;
 use App\Models\Clinic_types;
 use Illuminate\Http\Request;
 
@@ -58,9 +60,42 @@ class TestingController extends Controller
 
         // echo (Messages::whereIn('receiver', ['all', 'patient'])->get());
 
-        $getID_myequipments = Services_has_equipments::all();
+        // $sequipments = new Services_has_equipments();
+        // $sequipments->clinic_services_id = 3;
+        // $sequipments->clinic_equipments_id = 4;
+        // $sequipments->user_as_clinic_id = 3;
+        // $sequipments->save();
 
-        echo $getID_myequipments;
+        $clinic = User_as_clinic::all();
+        $service = Clinic_services::all();
+        $equip = Clinic_equipments::all();
+
+
+        foreach ($clinic as $key) {
+            echo $key;
+            echo "<br>";
+        }
+
+        echo "<br><br>";
+
+
+        foreach ($service as $key) {
+            echo $key;
+            echo "<br>";
+        }
+
+        echo "<br><br>";
+
+
+        foreach ($equip as $key) {
+            echo $key;
+            echo "<br>";
+        }
+
+
+        //$getID_myequipments = Services_has_equipments::all();
+
+        // echo $equip;
 
         //return view('clinicViews.testing.index');
 

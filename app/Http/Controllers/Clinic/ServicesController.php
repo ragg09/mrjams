@@ -92,15 +92,15 @@ class ServicesController extends Controller
                 $service->user_as_clinic_id = $clinic->id;
                 $service->save();
 
-                // $equipment_ids = request('equipment_ids'); //Gettinng string of ids
-                // $equipment_ids_array = explode(',', $equipment_ids); //splitting string into sepratae string using the comma
-                // foreach ($equipment_ids_array as $key) {
-                //     $sequipments = new Services_has_equipments();
-                //     $sequipments->clinic_services_id = $service->id;
-                //     $sequipments->clinic_equipments_id = $key;
-                //     $sequipments->user_as_clinic_id = $clinic->id;
-                //     $sequipments->save();
-                // }
+                $equipment_ids = request('equipment_ids'); //Gettinng string of ids
+                $equipment_ids_array = explode(',', $equipment_ids); //splitting string into sepratae string using the comma
+                foreach ($equipment_ids_array as $key) {
+                    $sequipments = new Services_has_equipments();
+                    $sequipments->clinic_services_id = $service->id;
+                    $sequipments->clinic_equipments_id = $key;
+                    $sequipments->user_as_clinic_id = $clinic->id;
+                    $sequipments->save();
+                }
 
                 //checking logs limit 5000
                 $logs_count = Logs::where('user_as_clinic_id', '=',  $user->id)->count();
