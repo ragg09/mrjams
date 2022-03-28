@@ -4,7 +4,7 @@ var map, marker, autocomplete;
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
         zoom: 14,
-        center: { lat: parseInt(14.50453805256329), lng: parseInt(121.05283152757798) }, //papalitan to ng location ng user.
+        //center: { lat:  , lng: 121.05283152757798 }, //papalitan to ng location ng user.
     });
 
     //initial mapping
@@ -12,7 +12,7 @@ function initMap() {
         type: "GET", 
         url: "/customer/customermap/create",
         success: function(data){
-        // console.log(data);
+        console.log(data);
         
           $.each(data.data, function(key, val){
               // console.log(val.latitude);
