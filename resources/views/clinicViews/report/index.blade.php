@@ -13,13 +13,17 @@
             box-shadow: 0px 20px 40px -10px var(--grayishBlue);
             border-top: 2px solid rgb(11, 95, 173);
             border-radius: 5px;
-            height: 150px;
+            min-height: 150px;
             overflow: hidden;
         }
+        
     </style>
 @endsection
 @section('content')
     @include('clinicViews.report.accounting')
+    @include('clinicViews.report.appointment_statistic')
+    @include('clinicViews.report.top_services_and_packages')
+    @include('clinicViews.report.top_materials_and_customer')
 @endsection
 
 @section('js_script')

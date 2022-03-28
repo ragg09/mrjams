@@ -1,7 +1,7 @@
 <div class="">
     <div class="row p-1">
 
-        <div class="col-sm-12 col-md-12 col-lg-4  p-3">
+        <div class="col-sm-12 col-md-4 col-lg-4  p-3">
             <div class="p-2" id="accounting_box">
                 <div class="row">
                     <div class="col d-flex justify-content-center my-auto">
@@ -25,7 +25,7 @@
         </div>
 
 
-        <div class="col-sm-12 col-md-12 col-lg-4  p-3">
+        <div class="col-sm-12 col-md-4 col-lg-4  p-3">
             <div class="p-2" id="accounting_box">
                 <div class="row">
                     <div class="col d-flex justify-content-center my-auto">
@@ -49,7 +49,7 @@
         </div>
 
 
-        <div class="col-sm-12 col-md-12 col-lg-4  p-3">
+        <div class="col-sm-12 col-md-4 col-lg-4  p-3">
             <div class="p-2" id="accounting_box">
                 <div class="row">
                     <div class="col d-flex justify-content-center my-auto">
