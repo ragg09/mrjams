@@ -4,7 +4,7 @@ var map, marker, autocomplete;
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
         zoom: 14,
-        center: { lat: parseInt(4.50453805256329), lng: parseInt(121.05283152757798) }, //papalitan to ng location ng user.
+        center: { lat: parseFloat(4.50453805256329), lng: parseFloat(121.05283152757798) }, //papalitan to ng location ng user.
     });
 
     //initial mapping
@@ -12,12 +12,12 @@ function initMap() {
         type: "GET", 
         url: "/customer/customermap/create",
         success: function(data){
-        // console.log(data);
+        console.log(data);
         
           $.each(data.data, function(key, val){
               // console.log(val.latitude);
                 new google.maps.Marker({
-                    position: { lat: parseInt(val.latitude), lng: parseInt(val.longitude) },
+                    position: { lat: parseFloat(val.latitude), lng: parseFloat(val.longitude) },
                     map,
                     icon: {
                         url: "/images/mrjams/mr-jams-logo.png",
@@ -111,7 +111,7 @@ function initMap() {
                 $.each(data.data, function(key, val){
                     // console.log(val.latitude);
                     new google.maps.Marker({
-                        position: { lat: parseInt(val.latitude), lng: parseInt(val.longitude) },
+                        position: { lat: parseFloat(val.latitude), lng: parseFloat(val.longitude) },
                         map,
                         icon: {
                             url: "/images/mrjams/mr-jams-logo.png",
