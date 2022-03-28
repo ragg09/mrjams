@@ -14,10 +14,9 @@ class CreateReceiptOrdersHasClinicServicesTable extends Migration
     public function up()
     {
         Schema::create('receipt_orders_has_clinic_services', function (Blueprint $table) {
+            $table->integer('id', true);
             $table->integer('receipt_orders_id')->index('fk_receipt_orders_has_clinic_services_receipt_orders1_idx');
             $table->integer('clinic_services_id')->index('fk_receipt_orders_has_clinic_services_clinic_services1_idx');
-
-            $table->primary(['receipt_orders_id', 'clinic_services_id']);
         });
     }
 
