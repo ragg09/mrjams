@@ -16,6 +16,7 @@ use App\Models\Logs;
 use App\Models\Messages;
 use App\Models\Packages;
 use App\Models\Ratings;
+use App\Models\Services_has_equipments;
 use App\Models\User_as_clinic;
 use App\Models\User_as_customer;
 use Illuminate\Support\Facades\App;
@@ -57,7 +58,11 @@ class TestingController extends Controller
 
         // echo (Messages::whereIn('receiver', ['all', 'patient'])->get());
 
-        return view('clinicViews.testing.index');
+        $getID_myequipments = Services_has_equipments::all();
+
+        echo $getID_myequipments;
+
+        //return view('clinicViews.testing.index');
 
         //para kay lags, para less query loading
         //return User_address::get(['latitude', 'longitude']);
