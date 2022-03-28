@@ -120,6 +120,7 @@ class ServicesController extends Controller
 
                 return response()->json([
                     'message' => request('name') . ' added successfully',
+                    'tester' => request('equipment_ids'),
                     'keys' => $service,
                     'dataCount' => count(Clinic_services::where('user_as_clinic_id', '=',  $clinic->id)->get()),
                 ]);
