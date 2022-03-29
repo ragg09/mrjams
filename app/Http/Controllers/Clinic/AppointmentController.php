@@ -510,16 +510,16 @@ class AppointmentController extends Controller
             $logs->user_as_clinic_id = $clinic->id;
             $logs->save();
 
-            //sending email notification
-            $details = [
-                'clinic' => $clinic->name,
-                'address' =>  $clinic_add->address_line_1 . " " . $clinic_add->address_line_2 . " " . $clinic_add->city,
-                'contact' => $clinic->phone,
-                'title' => 'Appointment Negotiation',
-                'body' => 'Your appointment has been changed to ' . $date . " " . date("g:i a", strtotime($time)) . '. Please confirm if you are available on the adjusted time, and cancel if not. Your patience is appreciated.',
-            ];
-            // Mail::to('ragunayon@gmail.com')->send(new EmailNotification($details)); //testing purposes email
-            Mail::to($customer_email)->send(new EmailNotification($details));
+            // //sending email notification
+            // $details = [
+            //     'clinic' => $clinic->name,
+            //     'address' =>  $clinic_add->address_line_1 . " " . $clinic_add->address_line_2 . " " . $clinic_add->city,
+            //     'contact' => $clinic->phone,
+            //     'title' => 'Appointment Negotiation',
+            //     'body' => 'Your appointment has been changed to ' . $date . " " . date("g:i a", strtotime($time)) . '. Please confirm if you are available on the adjusted time, and cancel if not. Your patience is appreciated.',
+            // ];
+            // // Mail::to('ragunayon@gmail.com')->send(new EmailNotification($details)); //testing purposes email
+            // Mail::to($customer_email)->send(new EmailNotification($details));
 
 
             return response()->json(['message' => "Appointment is now under Negotiation", 'tester' => "negotiating na"]);
