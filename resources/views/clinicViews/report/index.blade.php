@@ -27,4 +27,8 @@
 @endsection
 
 @section('js_script')
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="{{ URL::asset('js/clinic/reports/services.js') }}"></script>
+
+@endsection
    

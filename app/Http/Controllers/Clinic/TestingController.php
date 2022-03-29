@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Clinic;
 use App\Http\Controllers\Controller;
 use App\Mail\EmailNotification;
 use App\Models\Appointments;
+use App\Models\Billings;
 use App\Models\Clinic_equipments;
 use App\Models\Clinic_services;
 use App\Models\Clinic_types;
@@ -34,6 +35,60 @@ class TestingController extends Controller
      */
     public function index()
     {
+
+
+        $services = Clinic_services::all(['name']);
+        foreach ($services as $key) {
+            $services_array[] = $key->name;
+        }
+
+        //get price summary in billing first CHANGE ID TO USER ID
+        $billing_summary = Billings::where('user_as_clinic_id', 1)->get(['price_summary']);
+
+        foreach ($billing_summary as $key) {
+            $this_summary = explode(",", $key->price_summary);
+
+            foreach ($this_summary as $k) {
+                $this_summary_2nd = explode(":", $k);
+
+                // echo $this_summary_2nd[0];
+                // echo "<br><br>";
+
+                if (in_array($this_summary_2nd[0], $services_array)) {
+                    // echo "PASOK sa if";
+                    $counter = 1;
+
+                    if (isset($services_stats)) {
+                        foreach ($services_stats as $kk) {
+
+                            if ($kk->name == $this_summary_2nd[0]) {
+                                $kk->count++;
+                            } else if (count($services_stats) == $counter) {
+                                $services_stats[] = (object) array(
+                                    'name' => $this_summary_2nd[0],
+                                    'count' => 1,
+                                );
+                            }
+
+                            $counter++;
+                        }
+                    } else {
+
+                        $services_stats[] = (object) array(
+                            'name' => $this_summary_2nd[0],
+                            'count' => 1,
+                        );
+                    }
+                }
+            }
+        }
+
+
+        echo json_encode($services_stats);
+
+
+
+
 
         // $clinics = DB::table('ratings')->distinct()->get(['users_id_ratee']); //root id used
         // foreach ($clinics as $key) {
@@ -66,36 +121,36 @@ class TestingController extends Controller
         // $sequipments->user_as_clinic_id = 3;
         // $sequipments->save();
 
-        $clinic = User_as_clinic::all();
-        $service = Clinic_services::all();
-        $equip = Clinic_equipments::all();
+        // $clinic = User_as_clinic::all();
+        // $service = Clinic_services::all();
+        // $equip = Clinic_equipments::all();
 
 
-        foreach ($clinic as $key) {
-            echo $key;
-            echo "<br>";
-        }
+        // foreach ($clinic as $key) {
+        //     echo $key;
+        //     echo "<br>";
+        // }
 
-        echo "<br><br>";
-
-
-        foreach ($service as $key) {
-            echo $key;
-            echo "<br>";
-        }
-
-        echo "<br><br>";
+        // echo "<br><br>";
 
 
-        foreach ($equip as $key) {
-            echo $key;
-            echo "<br>";
-        }
+        // foreach ($service as $key) {
+        //     echo $key;
+        //     echo "<br>";
+        // }
 
-        echo "<br><br>";
+        // echo "<br><br>";
 
 
-        $getID_myequipments = Services_has_equipments::all();
+        // foreach ($equip as $key) {
+        //     echo $key;
+        //     echo "<br>";
+        // }
+
+        // echo "<br><br>";
+
+
+        // $getID_myequipments = Services_has_equipments::all();
 
         // $sequipments = new Services_has_equipments();
         // $sequipments->clinic_services_id = 1;
