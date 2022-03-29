@@ -409,7 +409,7 @@ class AppointmentController extends Controller
                 'body' => 'Your appointment has been set, see you on ' . $date . " " . date("g:i a", strtotime($time)),
             ];
             // Mail::to('ragunayon@gmail.com')->send(new EmailNotification($details)); //testing purposes email
-            Mail::to($customer_email)->send(new EmailNotification($details));
+            // Mail::to($customer_email)->send(new EmailNotification($details));
 
             //checking if there is a data left
             $count_app = Appointments::where('appointment_status_id', '=', 2)->get();
@@ -611,7 +611,7 @@ class AppointmentController extends Controller
                 'body' => 'Your appointment is done. See you again.',
             ];
             // Mail::to('ragunayon@gmail.com')->send(new EmailNotification($details)); //testing purposes email
-            Mail::to($customer_root->email)->send(new EmailNotification($details));
+            // Mail::to($customer_root->email)->send(new EmailNotification($details));
 
             DB::table('appointments')
                 ->where('receipt_orders_id', $getid[0])
@@ -644,7 +644,7 @@ class AppointmentController extends Controller
                 'body' => 'Your appointment has been declined, this is due to the following reasons: Clinic is out of service for a while, Your doctor is not avaialable, or unexpected activities occurs',
             ];
             // Mail::to('ragunayon@gmail.com')->send(new EmailNotification($details)); //testing purposes email
-            Mail::to($customer_root->email)->send(new EmailNotification($details));
+            // Mail::to($customer_root->email)->send(new EmailNotification($details));
 
             DB::table('appointments')
                 ->where('receipt_orders_id', $id)

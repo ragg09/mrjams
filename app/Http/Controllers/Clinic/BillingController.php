@@ -417,7 +417,7 @@ class BillingController extends Controller
                         'body' => 'We are pleased to announce you that your billing is now fully paid.',
                     ];
                     // Mail::to('ragunayon@gmail.com')->send(new EmailNotification($details)); //testing purposes email
-                    Mail::to($cus_root->email)->send(new EmailNotification($details));
+                    // Mail::to($cus_root->email)->send(new EmailNotification($details));
                 } else {
                     //email kung ilan pa utang nya
 
@@ -442,7 +442,7 @@ class BillingController extends Controller
                         'body' => 'Thank you for paying your bills, your current balance now is ₱' . $new_bal . '.',
                     ];
                     // Mail::to('ragunayon@gmail.com')->send(new EmailNotification($details)); //testing purposes email
-                    Mail::to($cus_root->email)->send(new EmailNotification($details));
+                    // Mail::to($cus_root->email)->send(new EmailNotification($details));
                 }
 
 
@@ -587,7 +587,7 @@ class BillingController extends Controller
             }
 
             //Mail::to('ragunayon@gmail.com')->send(new EmailNotification($details)); //testing purposes email
-            Mail::to($customer_root->email)->send(new EmailNotification($details));
+            // Mail::to($customer_root->email)->send(new EmailNotification($details));
 
 
             //checking logs limit 5000

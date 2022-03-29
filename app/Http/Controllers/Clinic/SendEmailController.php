@@ -81,7 +81,7 @@ class SendEmailController extends Controller
                 'body' => $request->message . ". Receipt order: " . $request->ro_id,
             ];
             // Mail::to('ragunayon@gmail.com')->send(new EmailNotification($details)); //testing purposes email
-            Mail::to($request->email)->send(new EmailNotification($details));
+            // Mail::to($request->email)->send(new EmailNotification($details));
 
             return response()->json([
                 'tester' => $request->all(),
