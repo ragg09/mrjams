@@ -409,7 +409,7 @@ class AppointmentController extends Controller
                 'body' => 'Your appointment has been set, see you on ' . $date . " " . date("g:i a", strtotime($time)),
             ];
             // Mail::to('ragunayon@gmail.com')->send(new EmailNotification($details)); //testing purposes email
-            // Mail::to($customer_email)->send(new EmailNotification($details));
+            Mail::to($customer_email)->send(new EmailNotification($details));
 
             //checking if there is a data left
             $count_app = Appointments::where('appointment_status_id', '=', 2)->get();
@@ -510,16 +510,16 @@ class AppointmentController extends Controller
             $logs->user_as_clinic_id = $clinic->id;
             $logs->save();
 
-            // //sending email notification
-            // $details = [
-            //     'clinic' => $clinic->name,
-            //     'address' =>  $clinic_add->address_line_1 . " " . $clinic_add->address_line_2 . " " . $clinic_add->city,
-            //     'contact' => $clinic->phone,
-            //     'title' => 'Appointment Negotiation',
-            //     'body' => 'Your appointment has been changed to ' . $date . " " . date("g:i a", strtotime($time)) . '. Please confirm if you are available on the adjusted time, and cancel if not. Your patience is appreciated.',
-            // ];
-            // // Mail::to('ragunayon@gmail.com')->send(new EmailNotification($details)); //testing purposes email
-            // Mail::to($customer_email)->send(new EmailNotification($details));
+            //sending email notification
+            $details = [
+                'clinic' => $clinic->name,
+                'address' =>  $clinic_add->address_line_1 . " " . $clinic_add->address_line_2 . " " . $clinic_add->city,
+                'contact' => $clinic->phone,
+                'title' => 'Appointment Negotiation',
+                'body' => 'Your appointment has been changed to ' . $date . " " . date("g:i a", strtotime($time)) . '. Please confirm if you are available on the adjusted time, and cancel if not. Your patience is appreciated.',
+            ];
+            // Mail::to('ragunayon@gmail.com')->send(new EmailNotification($details)); //testing purposes email
+            Mail::to($customer_email)->send(new EmailNotification($details));
 
 
             return response()->json(['message' => "Appointment is now under Negotiation", 'tester' => "negotiating na"]);
@@ -611,7 +611,7 @@ class AppointmentController extends Controller
                 'body' => 'Your appointment is done. See you again.',
             ];
             // Mail::to('ragunayon@gmail.com')->send(new EmailNotification($details)); //testing purposes email
-            // Mail::to($customer_root->email)->send(new EmailNotification($details));
+            Mail::to($customer_root->email)->send(new EmailNotification($details));
 
             DB::table('appointments')
                 ->where('receipt_orders_id', $getid[0])
@@ -644,7 +644,7 @@ class AppointmentController extends Controller
                 'body' => 'Your appointment has been declined, this is due to the following reasons: Clinic is out of service for a while, Your doctor is not avaialable, or unexpected activities occurs',
             ];
             // Mail::to('ragunayon@gmail.com')->send(new EmailNotification($details)); //testing purposes email
-            // Mail::to($customer_root->email)->send(new EmailNotification($details));
+            Mail::to($customer_root->email)->send(new EmailNotification($details));
 
             DB::table('appointments')
                 ->where('receipt_orders_id', $id)
