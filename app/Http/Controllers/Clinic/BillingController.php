@@ -545,7 +545,6 @@ class BillingController extends Controller
             }
 
 
-
             if ($request->payment_method == "fully paid") {
                 $bill = new Billings();
                 $bill->total_paid = $request->total_price_input;
