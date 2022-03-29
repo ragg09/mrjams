@@ -587,7 +587,7 @@ class BillingController extends Controller
             }
 
             //Mail::to('ragunayon@gmail.com')->send(new EmailNotification($details)); //testing purposes email
-            // Mail::to($customer_root->email)->send(new EmailNotification($details));
+            Mail::to($customer_root->email)->send(new EmailNotification($details));
 
 
             //checking logs limit 5000
