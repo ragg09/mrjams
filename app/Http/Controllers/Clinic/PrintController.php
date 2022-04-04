@@ -70,9 +70,9 @@ class PrintController extends Controller
             $customer = User_as_customer::where('id', '=',  $ro->user_as_customer_id)->first();
             $customer_root = User::where('id', '=',  $customer->users_id)->first();
 
-            $appointment = Appointments::where('receipt_orders_id', '=',  $id)->first();
+            $appointment = Appointments::where('receipt_orders_id', '=',  $ro->id)->first();
 
-            $bill = Billings::where('receipt_orders_id', '=',  $id)->first();
+            $bill = Billings::where('receipt_orders_id', '=',  $ro->id)->first();
 
             $service = explode(",", $bill->price_summary);
 

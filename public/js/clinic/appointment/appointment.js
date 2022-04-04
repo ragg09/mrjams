@@ -135,6 +135,7 @@ $(function(){
 
                 if(timedate[1] >= data.specialist.min_time && timedate[1] <= data.specialist.max_time){
                     console.log("SAKOP NG ORAS NI DR! PROCEED SA TRAPPING LOGIC");
+                    $("#confirm_accept_btn_confirm").prop("disabled", false);
                     //Within Specialist Time Range
 
                     if(data.specialist_appointments != ""){ //check if clinic has any appointments
