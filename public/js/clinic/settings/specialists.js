@@ -46,6 +46,8 @@ $(function(){
 
                 $("#edit_specialist_fullname").val(data.specialist.fullname);
                 $("#edit_specialist_specialization").val(data.specialist.specialization);
+                $("#edit_specialist_min_time").val(data.specialist.min_time);
+                $("#edit_specialist_max_time").val(data.specialist.max_time);
 
                 $("#edit_specialist_form").attr('action', "/clinic/settings/"+id +"_EditSpecialists"); 
                 

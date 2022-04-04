@@ -97,6 +97,7 @@ $(function(){
                 $("#edit_name").val(data.equipment.name);
                 $("#edit_quantity").val(data.equipment.quantity);
                 $("#edit_unit").val(data.equipment.unit);
+                $("#edit_type").val(data.equipment.type);
                 $("#edit_main_form").attr('action', "/clinic/equipments/"+id); 
             },
             error: function(){

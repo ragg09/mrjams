@@ -407,6 +407,274 @@ $(function(){
     });
 
 
+    //STEP 1 PAYMENT
+    $(document).on('click', '#cash_payment', function(e) {
+        
+        if($(this).is(':checked')){
+            $("#paid_in_cash_div").attr("hidden", false);
+        }else{
+            $('#paid_in_cash').val(0);
+            var paid_in_card = $('#paid_in_card').val(); 
+            var current_total = $('#total_price_input').val();
+            $("#paid_in_cash_div").attr("hidden", true);
+
+           
+            if(parseInt($("#total_paid").val()) == 0){
+                console.log("wala pang input");
+                $('#success-outlined').prop("checked",false);
+                $('#danger-outlined').prop("checked",false);
+                $("#payment_method").val("");
+                $("#for_installment").hide();
+                $("#finish_appointment").attr("disabled", true);
+            }else{
+                // console.log("may input na siguro sa card");
+                $("#finish_appointment").attr("disabled", false);
+
+                if($('#card_payment').is(':checked')){
+                    var balance =  parseInt(current_total) - parseInt(paid_in_card);
+                    $('#total_paid').val(parseInt(paid_in_card));
+
+                    //console.log(balance);
+                    if(balance == 0){
+                        console.log("Wala na balance check mo ung fully paid button");
+                        $('#success-outlined').prop("checked", true );
+                        $("#for_installment").hide();
+                        $("#payment_paid").text(parseInt(paid_in_card));
+                        $("#payment_balance").text(balance);
+                        $("#balance").val(balance);
+                        $("#payment_method").val("fully paid");
+                    }else if(parseInt(paid_in_card) > current_total){
+                        $("#finish_appointment").attr("disabled", true);
+                        $("#input_exceeds").attr("hidden", false);  
+                        $('#success-outlined').prop("checked",false);
+                        $('#danger-outlined').prop("checked",false);
+                    }else{
+                        console.log("may balance dapat mag kalaman ung balance input ");
+                        $('#danger-outlined').prop("checked", true );
+                        $("#for_installment").show();
+                        $("#payment_paid").text(parseInt(paid_in_card));
+                        $("#payment_balance").text(balance);
+                        $("#balance").val(balance);
+                        $("#payment_method").val("installment");
+                    }
+
+                }else{
+                    $("#balance").val(0);
+                    $("#payment_paid").text(0);
+                    $("#payment_balance").text(0);
+                    $('#total_paid').val(0)
+                    $("#payment_method").val("");
+
+                    $("#finish_appointment").attr("disabled", true); 
+                    $('#success-outlined').prop("checked",false);
+                    $('#danger-outlined').prop("checked",false);    
+                }
+                
+                
+            }
+            
+        }
+    });
+
+    $(document).on('click', '#card_payment', function(e) {
+       
+        if($(this).is(':checked')){
+            $("#select_card").attr("hidden", false);
+        }else{
+            $('#paid_in_card').val(0);
+            $("#paid_in_card_div").attr("hidden", true);
+            $("#select_card").attr("hidden", true);
+            var paid_in_cash = $('#paid_in_cash').val(); 
+            var current_total = $('#total_price_input').val();
+
+           
+            if(parseInt($("#total_paid").val()) == 0){
+                // console.log("wala pang input");
+                $('#success-outlined').prop("checked",false);
+                $('#danger-outlined').prop("checked",false);
+                $("#payment_method").val("");
+                $("#for_installment").hide();
+                $("#finish_appointment").attr("disabled", true);
+            }else{
+                // console.log("may input na siguro sa cash");
+                $("#finish_appointment").attr("disabled", false);
+
+                if($('#cash_payment').is(':checked')){
+                    var balance =  parseInt(current_total) - parseInt(paid_in_cash);
+                    $('#total_paid').val(parseInt(paid_in_cash));
+
+                    //console.log(balance);
+                    if(balance == 0){
+                        // console.log("Wala na balance check mo ung fully paid button");
+                        $('#success-outlined').prop("checked", true );
+                        $("#for_installment").hide();
+                        $("#payment_paid").text(parseInt(paid_in_cash));
+                        $("#payment_balance").text(balance);
+                        $("#balance").val(balance);
+                        $("#payment_method").val("fully paid");
+                    }else if(parseInt(paid_in_cash) > current_total){
+                        $("#finish_appointment").attr("disabled", true);
+                        $("#input_exceeds").attr("hidden", false);  
+                        $('#success-outlined').prop("checked",false);
+                        $('#danger-outlined').prop("checked",false);
+                    }else{
+                        // console.log("may balance dapat mag kalaman ung balance input ");
+                        $('#danger-outlined').prop("checked", true );
+                        $("#for_installment").show();
+                        $("#payment_paid").text(parseInt(paid_in_cash));
+                        $("#payment_balance").text(balance);
+                        $("#balance").val(balance);
+                        $("#payment_method").val("installment");
+                    }
+
+                }else{
+                    $("#balance").val(0);
+                    $("#payment_paid").text(0);
+                    $("#payment_balance").text(0);
+                    $('#total_paid').val(0)
+                    $("#payment_method").val("");
+
+                    $("#finish_appointment").attr("disabled", true); 
+                    $('#success-outlined').prop("checked",false);
+                    $('#danger-outlined').prop("checked",false);    
+                }
+                
+                
+            }
+            
+        }
+    });
+
+    $(document).on('change', '#select_card', function(e) {
+        if($(this).val() != ""){
+            $("#paid_in_card_div").attr("hidden", false);
+        }else{
+            $("#paid_in_card_div").attr("hidden", true);
+        }
+    });
+
+    //^^STEP 1 PAYMENT
+        
+
+    //for payment method computation CASH
+    $('#paid_in_cash').on('keyup', function(){
+        var input = $(this).val(); 
+        var paid_in_card = $('#paid_in_card').val(); 
+        var current_total = $('#total_price_input').val();
+
+        $("#payment_paid").text(0);
+        $("#payment_balance").text(0);
+        $('#total_paid').val(0);
+        $("#input_exceeds").attr("hidden", true); 
+        $('#success-outlined').prop("checked",false);
+        $('#danger-outlined').prop("checked",false);
+       
+        if(digits_only(input) || input == ''){
+            if(input == ''){
+                    $(this).val(0);
+                    input = 0;
+                    $("#payment_method").val("");
+                    $("#finish_appointment").attr("disabled", true);
+                    
+            }else{
+                $("#finish_appointment").attr("disabled", false);
+                var balance =  parseInt(current_total) - (parseInt(input) + parseInt(paid_in_card));
+
+                $('#total_paid').val(parseInt(input) + parseInt(paid_in_card));
+                //console.log(balance);
+                if(balance == 0){
+                    // console.log("Wala na balance check mo ung fully paid button");
+                    $('#success-outlined').prop("checked", true );
+                    $("#for_installment").hide();
+                    $("#payment_paid").text(parseInt(input) + parseInt(paid_in_card));
+                    $("#payment_balance").text(balance);
+                    $("#balance").val(balance);
+                    $("#payment_method").val("fully paid");
+                }else if(parseInt(input) + parseInt(paid_in_card) > current_total){
+                    $("#finish_appointment").attr("disabled", true);
+                    $("#input_exceeds").attr("hidden", false);  
+                    $('#success-outlined').prop("checked",false);
+                    $('#danger-outlined').prop("checked",false);
+                }else{
+                    // console.log("may balance dapat mag kalaman ung balance input ");
+                    $('#danger-outlined').prop("checked", true );
+                    $("#for_installment").show();
+                    $("#payment_paid").text(parseInt(input) + parseInt(paid_in_card));
+                    $("#payment_balance").text(balance);
+                    $("#balance").val(balance);
+                    $("#payment_method").val("installment");
+                }
+                    
+            }
+    
+        }else{
+            input = input.substr(0,input.length-1);
+            $(this).val(input);
+        }
+
+        $(this).val(parseInt(input));
+    });
+
+    //for payment method computation CARD
+    $('#paid_in_card').on('keyup', function(){
+        var input = $(this).val(); 
+        var paid_in_cash = $('#paid_in_cash').val(); 
+        var current_total = $('#total_price_input').val();
+
+        $("#payment_paid").text(0);
+        $("#payment_balance").text(0);
+        $('#total_paid').val(0);
+        $("#input_exceeds").attr("hidden", true); 
+        $('#success-outlined').prop("checked",false);
+        $('#danger-outlined').prop("checked",false);
+       
+        if(digits_only(input) || input == ''){
+            if(input == ''){
+                    $(this).val(0);
+                    input = 0;
+                    $("#payment_method").val("");
+                    $("#finish_appointment").attr("disabled", true);
+                    
+            }else{
+                $("#finish_appointment").attr("disabled", false);
+                var balance =  parseInt(current_total) - (parseInt(input) + parseInt(paid_in_cash));
+
+                $('#total_paid').val(parseInt(input) + parseInt(paid_in_cash));
+                //console.log(balance);
+                if(balance == 0){
+                    // console.log("Wala na balance check mo ung fully paid button");
+                    $('#success-outlined').prop("checked", true );
+                    $("#for_installment").hide();
+                    $("#payment_paid").text(parseInt(input) + parseInt(paid_in_cash));
+                    $("#payment_balance").text(balance);
+                    $("#balance").val(balance);
+                    $("#payment_method").val("fully paid");
+                }else if(parseInt(input) + parseInt(paid_in_cash) > current_total){
+                    $("#finish_appointment").attr("disabled", true);
+                    $("#input_exceeds").attr("hidden", false);  
+                    $('#success-outlined').prop("checked",false);
+                    $('#danger-outlined').prop("checked",false);
+                }else{
+                    // console.log("may balance dapat mag kalaman ung balance input ");
+                    $('#danger-outlined').prop("checked", true );
+                    $("#for_installment").show();
+                    $("#payment_paid").text(parseInt(input) + parseInt(paid_in_cash));
+                    $("#payment_balance").text(balance);
+                    $("#balance").val(balance);
+                    $("#payment_method").val("installment");
+                }
+                    
+            }
+    
+        }else{
+            input = input.substr(0,input.length-1);
+            $(this).val(input);
+        }
+
+        $(this).val(parseInt(input));
+    });
+
+
 
 
 

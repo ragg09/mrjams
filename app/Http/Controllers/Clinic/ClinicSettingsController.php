@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Clinic;
 
 use App\Http\Controllers\Controller;
+use App\Models\Appointments;
 use App\Models\Clinic_auto_scheduling;
 use App\Models\Clinic_specialists;
 use App\Models\Clinic_time_availability;
+use App\Models\Receipt_orders;
 use App\Models\User_address;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -299,8 +301,31 @@ class ClinicSettingsController extends Controller
         $user = User::where('email', '=',  Auth::user()->email)->first();
         $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
 
+        //used to retrieve data for update purpose
+        //+
+        //showing the availability in accept modal of appointment
         if (strpos($id, "specialist")) {
             $getid = explode("_", $id);
+
+            $get_ro_id = Receipt_orders::where("specialist_id", $getid[0])->get(['id']);
+
+            if (count($get_ro_id) > 0) {
+                foreach ($get_ro_id as $key) {
+                    $this_app = Appointments::where('receipt_orders_id', $key->id)
+                        ->where('appointment_status_id', 4)
+                        ->first();
+
+                    if ($this_app) {
+                        $app_datetime[] = (object) array(
+                            "datetime" => $this_app->appointed_at . " " . $this_app->time,
+                            "date" => $this_app->appointed_at,
+                            "time" => $this_app->time,
+
+                        );
+                    }
+                }
+            }
+
 
             $specialists = Clinic_specialists::where('id', '=',  $getid[0])
                 ->where('user_as_clinic_id', '=',  $clinic->id)
@@ -308,7 +333,10 @@ class ClinicSettingsController extends Controller
 
             return response()->json([
                 // 'message' => 'Time Availability Updated Succesfully',
+                'tester' => $id,
                 'specialist' => $specialists,
+                'specialist_appointments' => $app_datetime ?? "",
+                'testet' => $app_datetime ?? "",
             ]);
         }
     }
@@ -402,6 +430,8 @@ class ClinicSettingsController extends Controller
             $validator = Validator::make($request->all(), [
                 'fullname' => 'required',
                 'specialization' => 'required',
+                'min_time' => 'required',
+                'max_time' => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -410,6 +440,8 @@ class ClinicSettingsController extends Controller
                 $specialists = new Clinic_specialists();
                 $specialists->fullname = $request->fullname;
                 $specialists->specialization = $request->specialization;
+                $specialists->min_time = $request->min_time;
+                $specialists->max_time = $request->max_time;
                 $specialists->user_as_clinic_id = $getid[0];
                 $specialists->save();
 
@@ -426,6 +458,8 @@ class ClinicSettingsController extends Controller
             $validator = Validator::make($request->all(), [
                 'fullname' => 'required',
                 'specialization' => 'required',
+                'min_time' => 'required',
+                'max_time' => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -434,6 +468,8 @@ class ClinicSettingsController extends Controller
                 $specialists = Clinic_specialists::find($getid[0]);
                 $specialists->fullname = $request->fullname;
                 $specialists->specialization = $request->specialization;
+                $specialists->min_time = $request->min_time;
+                $specialists->max_time = $request->max_time;
                 $specialists->save();
 
                 return response()->json([

@@ -38,6 +38,12 @@
                             <input type="text" class="form-control" id="payment_update" name="payment_update" placeholder="Amount to pay">
                             <span class="text-danger error-text payment_update_error"></span>
                         </div>
+
+                        <div class="form-group">
+                            <label for="name">Comment</label>
+                            <input type="text" class="form-control" id="payment_comment" name="payment_comment" placeholder="Optional . . .">
+                            <span class="text-danger error-text payment_comment_error"></span>
+                        </div>
                     </div>
 
                 </div>

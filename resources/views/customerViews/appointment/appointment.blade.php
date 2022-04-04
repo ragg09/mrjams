@@ -212,17 +212,32 @@
                                                     <tr>
                                                         <td>
                                                             <div class="margin-10px-top font-size14">{{  date("h:i A", strtotime($avail[0]->min)) }}-{{  date("h:i A", strtotime($avail[0]->max)) }}</div>
-                                                            <div class="font-size13 text-muted">Status : {{$avail[0]->status}}</div>
+                                                            {{-- <div class="font-size13 text-muted">Status : {{$avail[0]->status}}</div> --}}
+                                                            @if ($avail[0]->status == "on")
+                                                                <div class="font-size13 text-muted">Status : Open</div>
+                                                            @else
+                                                                <div class="font-size13 text-muted">Status : Close</div>
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             {{-- <span class="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Dance</span> --}}
                                                             <div class="margin-10px-top font-size14">{{  date("h:i A", strtotime($avail[1]->min)) }}-{{  date("h:i A", strtotime($avail[1]->max)) }}</div>
-                                                            <div class="font-size13 text-muted">Status : {{$avail[1]->status}}</div>
+                                                            {{-- <div class="font-size13 text-muted">Status : {{$avail[1]->status}}</div> --}}
+                                                            @if ($avail[1]->status == "on")
+                                                                <div class="font-size13 text-muted">Status : Open</div>
+                                                            @else
+                                                                <div class="font-size13 text-muted">Status : Close</div>
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             
                                                             <div class="margin-10px-top font-size14">{{  date("h:i A", strtotime($avail[2]->min)) }}-{{  date("h:i A", strtotime($avail[2]->max)) }}</div>
-                                                            <div class="font-size13 text-muted">Status : {{$avail[2]->status}}</div>
+                                                            {{-- <div class="font-size13 text-muted">Status : {{$avail[2]->status}}</div> --}}
+                                                            @if ($avail[2]->status == "on")
+                                                                <div class="font-size13 text-muted">Status : Open</div>
+                                                            @else
+                                                                <div class="font-size13 text-muted">Status : Close</div>
+                                                            @endif
                                                            
                                                         </td>
                         

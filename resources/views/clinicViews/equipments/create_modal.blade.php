@@ -27,10 +27,23 @@
                     <div class="form-group">
                         <label for="unit">Unit</label>
                         <select class="form-select" name="unit" id="unit">
+                            <option value=""></option>
                             <option value="pcs">pcs</option>
                             <option value="bottle">bottle</option>
                             <option value="box">box</option>
                         </select>
+                        <span class="text-danger error-text unit_error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="type">Type</label>
+                        <select class="form-select" name="type" id="type">
+                            <option value=""></option>
+                            <option value="consumable">consumable</option>
+                            <option value="equipment">equipment</option>
+                            <option value="medicine">medicine</option>
+                        </select>
+                        <span class="text-danger error-text type_error"></span>
                     </div>
                     
                 </div>

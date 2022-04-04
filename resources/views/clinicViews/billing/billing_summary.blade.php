@@ -30,7 +30,7 @@
                         <p>{{ $complete_summary->address }}</p>
                     </div>
 
-                    <h6><i class="fa fa-wrench" aria-hidden="true"></i> Tools & Equipments</h6>
+                    <h6><i class="fa fa-wrench" aria-hidden="true"></i> Tools & Equipments<p class="mx-5" style="font-size: 13px">(Please double check this portion for accurate inventory management.)</p></h6>
                     <div class="mx-auto w-75">
                         <div class="row">
                             <div class="col"><h6>Name</h6></div>
@@ -42,7 +42,7 @@
                                 @foreach ($complete_equipments as $row)
                                     <div class="row">
                                         <div class="col"><p>{{ $row->name }} ({{ $row->unit }})</p></div>
-                                        <div class="col"><input type="number" class=" positive-numeric-only" min="1" max="{{ $row->max_quantity }}" value="{{ $row->min_quantity }}" id="equipment_values" name="equipment_values" ></div>
+                                        <div class="col"><input type="number" class=" positive-numeric-only" min="0" max="{{ $row->max_quantity }}" value="{{ $row->min_quantity }}" id="equipment_values" name="equipment_values" ></div>
                                     </div>
                                 @endforeach
 
@@ -91,7 +91,7 @@
                                     <div class="col">
                                         {{-- <p>&#8369;{{  $package->price}}</p> --}}
 
-                                        <input type="text" class="w-75" value="{{  $package->max_price }}">
+                                        <input type="text" class="w-75" value="{{  $package->min_price }}">
                                     </div>
                                     <div class="col">
                                         <input class="form-check-input" type="checkbox" value="" id="" checked>
@@ -109,23 +109,88 @@
                         </button>
                     </div>
 
-                    <h6><i class="fa fa-credit-card-alt" aria-hidden="true"></i> Payment Method <p class="mx-5" style="font-size: 12px">(Cash Basis)</p></h6>
+                    <h6><i class="fa fa-credit-card-alt" aria-hidden="true"></i> Payment Method</h6>
                     <div class="mx-auto w-75">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="payment_method" name="payment_method" hidden>
+                            <p>Step 1: <span class="mx-1" style="font-size: 13px">(can be both)</span></p>
+                            
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" class="btn-check" id="cash_payment" name="z_cash_payment" autocomplete="off">
+                                <label class="btn btn-outline-primary" for="cash_payment"> <i class="fa fa-money-bill mx-2" aria-hidden="true"></i>Cash Payment</label>
 
-                            <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" autocomplete="off" >
-                            <label class="btn btn-outline-primary" for="success-outlined">Fully paid</label>
-                            <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" autocomplete="off">
-                            <label class="btn btn-outline-info" for="danger-outlined">Installment</label>
+                                <input type="checkbox" class="btn-check" id="card_payment" name="z_card_payment" autocomplete="off">
+                                <label class="btn btn-outline-primary" for="card_payment"><i class="fa fa-credit-card mx-2" aria-hidden="true"></i>Card Payment</label>
 
-                            <input type="text" class="form-control mt-1" id="total_paid" name="total_paid" value="0" placeholder="Please enter amount paid" hidden>
-                            <span class="text-danger error-text total_paid_error"></span>
+                                <div class="form-floating mt-1" id="paid_in_cash_div" hidden>
+                                    <input type="text" class="form-control" id="paid_in_cash" name="z_paid_in_cash" value="0">
+                                    <label for="paid_in_cash">Amount paid in cash</label>
+                                </div>
 
-                            <div class="form-group mt-1">
-                                <input type="text" class="form-control w-50" id="promo_code" name="promo_code" placeholder="promo code || for future function" disabled hidden>
-                                <span class="text-danger error-text promo_code_error"></span>
+                                <select class="form-select mt-1" id="select_card" name="z_select_card" hidden>
+                                    <option selected value="">Select Health Card</option>
+                                    <option value="Asalus Corporation (Intellicare)">Asalus Corporation (Intellicare)</option>
+                                    <option value="Asiancare Health Systems, Inc.">Asiancare Health Systems, Inc.</option>
+                                    <option value="Avega Managed Care, Inc.">Avega Managed Care, Inc.</option>
+                                    <option value="CareHealth Plus Systems International, Inc.">CareHealth Plus Systems International, Inc.</option>
+                                    <option value="Carewell Health Systems, Inc.">Carewell Health Systems, Inc.</option>
+                                    <option value="Caritas Health Shield, Inc.">Caritas Health Shield, Inc.</option>
+                                    <option value="Cooperative Health Management Federation (CHMF)">Cooperative Health Management Federation (CHMF)</option>
+                                    <option value="Dynamic Care Corporation (DCC)">Dynamic Care Corporation (DCC)</option>
+                                    <option value="EastWest Healthcare, Inc.">EastWest Healthcare, Inc.</option>
+                                    <option value="Fortune Medicare, Inc.">Fortune Medicare, Inc.</option>
+                                    <option value="Getwell Health Systems, Inc.">Getwell Health Systems, Inc.</option>
+                                    <option value="Health Care & Dev Corp of the Philippines (HC&D)">Health Care & Dev Corp of the Philippines (HC&D)</option>
+                                    <option value="Health Maintenance, Inc. (HMI)">Health Maintenance, Inc. (HMI)</option>
+                                    <option value="Health Plan Philippines, Inc. (HPPI)">Health Plan Philippines, Inc. (HPPI)</option>
+                                    <option value="IMS Wellth Care, Inc. (IWC)">IMS Wellth Care, Inc. (IWC)</option>
+                                    <option value="Insular Health Care, Inc.">Insular Health Care, Inc.</option>
+                                    <option value="Kaiser International Healthgroup, Inc.">Kaiser International Healthgroup, Inc.</option>
+                                    <option value="Life & Health HMP, Inc.">Life & Health HMP, Inc.</option>
+                                    <option value="Marzan Health Care, Inc. (MHC)">Marzan Health Care, Inc. (MHC)</option>
+                                    <option value="Maxicare Healthcare Corporation">Maxicare Healthcare Corporation</option>
+                                    <option value="MediCard Philippines, Inc.">MediCard Philippines, Inc.</option>
+                                    <option value="Medicare Plus, Inc.">Medicare Plus, Inc.</option>
+                                    <option value="MEDOCare Health Systems, Inc.">MEDOCare Health Systems, Inc.</option>
+                                    <option value="Metrocare Health Systems, Inc.">Metrocare Health Systems, Inc.</option>
+                                    <option value="Optimum Medical and Healthcare Services, Inc.">Optimum Medical and Healthcare Services, Inc.</option>
+                                    <option value="Pacific (Blue) Cross Health Care, Inc.">Pacific (Blue) Cross Health Care, Inc.</option>
+                                    <option value="Philhealth Care, Inc. (PhilCare)">Philhealth Care, Inc. (PhilCare)</option>
+                                    <option value="Stotsenberg Healthcare System, Inc.">Stotsenberg Healthcare System, Inc.</option>
+                                    <option value="Transnational Medical & Diagnostic Center, Inc. (TDMC)">Transnational Medical & Diagnostic Center, Inc. (TDMC)</option>
+                                    <option value="Value Care Health Systems, Inc. (ValuCare)">Value Care Health Systems, Inc. (ValuCare)</option>
+                        
+                                </select>
+
+                                <div class="form-floating mt-1" id="paid_in_card_div" hidden>
+                                    <input type="text" class="form-control" id="paid_in_card" name="z_paid_in_card" value="0" >
+                                    <label for="paid_in_card">Amount paid using card</label>
+                                </div>
                             </div>
+
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <p>Step 2:</p>
+
+                            <div class="form-check form-check-inline">
+                                <input type="text" class="form-control" id="payment_method" name="payment_method" hidden>
+
+                                <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" autocomplete="off" disabled>
+                                <label class="btn btn-outline-primary" for="success-outlined" ><i class="fa fa-check-circle mx-2" aria-hidden="true"></i>Fully paid</label>
+
+                                <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" autocomplete="off" disabled>
+                                <label class="btn btn-outline-info" for="danger-outlined" ><i class="fa fa-times-circle mx-2" aria-hidden="true"></i>Installment</label>
+
+                                <input type="text" class="form-control mt-1" id="total_paid" name="total_paid" value="0" placeholder="Please enter amount paid" hidden>
+                                <span class="text-danger error-text total_paid_error"></span>
+
+                                <div class="form-group mt-1">
+                                    <input type="text" class="form-control w-50" id="promo_code" name="promo_code" placeholder="promo code || for future function" disabled hidden>
+                                    <span class="text-danger error-text promo_code_error"></span>
+                                </div>
+                            </div>
+
+                            
                         </div>
                     </div>
 
@@ -159,6 +224,7 @@
 
                     <div class="row w-50 mx-auto mt-4 mb-3">
                         <button type="submit"class="btn btn-success float-lg-right" id="finish_appointment" disabled>Finish appointment</button>
+                        <p class="" id="input_exceeds" style="font-size: 13px" hidden>The sum of payments can not be more than the total bill.</p>
                     </div>
                 </div>
 

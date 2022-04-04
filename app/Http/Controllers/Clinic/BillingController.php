@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\EmailNotification;
 use App\Models\Appointments;
 use App\Models\Billings;
+use App\Models\Billings_history;
 use App\Models\Clinic_equipments;
 use App\Models\Clinic_services;
 use App\Models\Logs;
@@ -227,10 +228,10 @@ class BillingController extends Controller
             $equipmnts_ids = array();
             //$get_equipmnts = array();
 
-            if (!(is_null($receipt->packages_id))) { // checking if there is a package
+            if ($receipt->packages_id != NULL) { // checking if there is a package
                 $package = Packages::where('id', '=',  $receipt->packages_id)->first(); //to show
 
-                $this_equipmnts = Packages_has_equipments::where('clinic_equipments_id', '=', 2)->get();
+                $this_equipmnts = Packages_has_equipments::where('packages_id', '=', $package->id)->get();
                 //getting equipments from this package
                 foreach ($this_equipmnts as $k) {
                     $get_equipmnts[] = (object) array(
@@ -242,6 +243,8 @@ class BillingController extends Controller
 
                 $total += $package->price;
             }
+
+            // echo $this_equipmnts;
 
             if (count($service_ids) > 0) { //checking if there is a service
                 foreach ($service_ids as $key) {
@@ -264,10 +267,13 @@ class BillingController extends Controller
             //echo json_encode($get_equipmnts);
 
             //logic to get all of the equipments from all of the services availed
-            foreach ($get_equipmnts as $keys) {
-                //echo $keys->clinic_equipments_id;
-                array_push($equipmnts_ids, $keys->clinic_equipments_id);
+            if (isset($get_equipmnts)) {
+                foreach ($get_equipmnts as $keys) {
+                    //echo $keys->clinic_equipments_id;
+                    array_push($equipmnts_ids, $keys->clinic_equipments_id);
+                }
             }
+
 
             // echo $key;
 
@@ -319,6 +325,7 @@ class BillingController extends Controller
 
             //$clinic_packages = Packages::where('user_as_clinic_id', '=',  $clinic->id)->get();
 
+            // echo $receipt->packages_id;
 
             return view('clinicViews.billing.billing_summary', [
                 'complete_summary' => $complete_summary,
@@ -341,13 +348,30 @@ class BillingController extends Controller
      */
     public function edit($id)
     {
-        $billing = Billings::where('id', '=',  $id)->first();
-        $customer = User_as_customer::where('id', '=',  $billing->user_as_customer_id)->first();
+        if (strpos($id, "updateView")) {
+            $getid = explode("_", $id);
 
-        return response()->json([
-            'billing' => $billing,
-            'customer' => $customer,
-        ]);
+            $billing = Billings::where('id', '=',   $getid[0])->first();
+            $customer = User_as_customer::where('id', '=',  $billing->user_as_customer_id)->first();
+
+            return response()->json([
+                'billing' => $billing,
+                'customer' => $customer,
+            ]);
+        }
+
+        if (strpos($id, "historyView")) {
+            $getid = explode("_", $id);
+
+            $bill = Billings::where("id", $getid[0])->first();
+            $customer = User_as_customer::where("id", $bill->user_as_customer_id)->first();
+            $history = Billings_history::where("billings_id", $getid[0])->get();
+            return response()->json([
+                'history' => $history,
+                'customer' => $customer,
+
+            ]);
+        }
     }
 
     /**
@@ -379,10 +403,17 @@ class BillingController extends Controller
                 $new_bal = $request->edit_balance - $request->payment_update;
                 $new_total = ($request->edit_total - $request->edit_balance) + $request->payment_update;
 
-                $up_Bill = Billings::find($id);
+                $up_Bill = Billings::find($getid[0]);
                 $up_Bill->total_paid = $new_total;
                 $up_Bill->balance = $new_bal;
                 $up_Bill->save();
+
+                //adding billing history
+                $bill_history = new Billings_history();
+                $bill_history->paid = $request->payment_update;
+                $bill_history->comment = $request->payment_comment ?? "No Comment.";
+                $bill_history->billings_id = $getid[0];
+                $bill_history->save();
 
                 $cus = User_as_customer::where('id', '=', $up_Bill->user_as_customer_id)->first();
                 $cus_root = User::where('id', '=', $cus->users_id)->first();
@@ -494,6 +525,12 @@ class BillingController extends Controller
                     $num2 = (int)$equipment_values_array[$count];
                     $total =  $num1 - $num2;
 
+                    for ($x = 0; $x <= $num2; $x++) {
+                        $materials_summary[] = $this_equipments->name;
+                    }
+
+
+
                     $up_equipment = Clinic_equipments::find($keys);
                     $up_equipment->quantity =  $total;
                     $up_equipment->save();
@@ -544,18 +581,41 @@ class BillingController extends Controller
                 }
             }
 
+            if ($request->z_cash_payment == "on" && $request->z_card_payment == "on") {
+                $payment_summary = "Cash:" . $request->z_paid_in_cash . "," . $request->z_select_card . ":" . $request->z_paid_in_card;
+                $payment_summary_history = "Paid using Cash and " . $request->z_select_card;
+            }
+            if ($request->z_cash_payment == "on" && $request->z_paid_in_card == 0) {
+                $payment_summary = "Cash:" . $request->z_paid_in_cash . ",n/a:n/a";
+                $payment_summary_history = "Paid using Cash only";
+            }
+            if ($request->z_card_payment == "on" && $request->z_paid_in_cash == 0) {
+                $payment_summary = "n/a:n/a," . $request->z_select_card . ":" . $request->z_paid_in_card;
+                $payment_summary_history = "Paid using " . $request->z_select_card;
+            }
 
+
+            $mat_sum = implode(",", $materials_summary);
 
             if ($request->payment_method == "fully paid") {
                 $bill = new Billings();
                 $bill->total_paid = $request->total_price_input;
                 $bill->balance = 0;
+                $bill->payment_summary = $payment_summary;
                 $bill->price_summary = $request->pricing_summary;
+                $bill->materials_summary = $mat_sum;
                 $bill->receipt_orders_id = $id;
                 $bill->user_as_clinic_id = $clinic->id;
                 $bill->user_as_customer_id = $request->customer_id;
                 $bill->billing_status_id = 1; //billing status 1 = fully paid
                 $bill->save();
+
+                //creating billing history
+                $bill_history = new Billings_history();
+                $bill_history->paid = $request->total_price_input;
+                $bill_history->comment = "First Payment. " . $payment_summary_history;
+                $bill_history->billings_id = $bill->id;
+                $bill_history->save();
 
                 //sending email notification
                 $details = [
@@ -569,12 +629,21 @@ class BillingController extends Controller
                 $bill = new Billings();
                 $bill->total_paid = $request->total_paid;
                 $bill->balance = $request->balance;
+                $bill->payment_summary = $payment_summary;
                 $bill->price_summary = $request->pricing_summary;
+                $bill->materials_summary = $mat_sum;
                 $bill->receipt_orders_id = $id;
                 $bill->user_as_clinic_id = $clinic->id;
                 $bill->user_as_customer_id = $request->customer_id;
                 $bill->billing_status_id = 2;
                 $bill->save();
+
+                //creating billing history
+                $bill_history = new Billings_history();
+                $bill_history->paid = $request->total_paid;
+                $bill_history->billings_id = $bill->id;
+                $bill_history->comment = "First Payment. " . $payment_summary_history;
+                $bill_history->save();
 
                 //sending email notification
                 $details = [
@@ -588,7 +657,6 @@ class BillingController extends Controller
 
             //Mail::to('ragunayon@gmail.com')->send(new EmailNotification($details)); //testing purposes email
             Mail::to($customer_root->email)->send(new EmailNotification($details));
-
 
             //checking logs limit 5000
             if ($logs_count == 5000) {

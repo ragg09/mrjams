@@ -7,6 +7,7 @@
 
 
     <div class="col-lg-12" id="create_div">
+        
         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#create_modal">
             <i class="fa fa-plus" aria-hidden="true"></i> Add
         </button>
@@ -20,6 +21,12 @@
                 <input id="search" type="text" placeholder="Search here . . . ">
             </form>
         @endif
+
+        <div class="m-3">
+            <a href="/clinic/print/{{ date("FY") }}_inventory" class="btn btn-primary" id="" target="_blank" title="Print Inventory">
+                Print <i class="fa fa-print" aria-hidden="true"></i>
+            </a>
+        </div>
         
     </div>
 
@@ -30,7 +37,8 @@
                     <tr id="equipment_table_head">
                         <th scope="col">Materials <i class="fa fa-sort" aria-hidden="true" style="font-size: 13px;" id="EquipSortIcon" hidden></i></th>
                         <th scope="col">Quantity <i class="fa fa-sort" aria-hidden="true" style="font-size: 13px;" id="EquipSortIcon2" hidden></i></th>
-                        <th scope="col">Action</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">{{-- Action --}}</th> 
                     </tr>
                 </thead>
                 <tbody  id="equipment_table_body">
@@ -39,6 +47,7 @@
                         <tr>
                             <td>{{$row->name}}</td>
                             <td>{{$row->quantity}} {{$row->unit}}</td>
+                            <td>{{$row->type}}</td>
                             <td>    
                                 <a href="" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#edit_modal_up" id="edit_modal" data-id="{{$row->id}}" title="Edit {{$row->name}}">
                                     <i class="fa fa-pencil" aria-hidden="true" ></i>

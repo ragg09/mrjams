@@ -24,7 +24,7 @@
             <table class="table">
                 <thead>
                     <tr id="services_table_head">
-                        <th scope="col">#</th>
+                        {{-- <th scope="col">#</th> --}}
                         <th scope="col">Name</th>
                         <th scope="col">Price</th>
                         <th scope="col">Description</th>
@@ -35,8 +35,8 @@
                     {{-- 15 max --}}
                     @foreach ($data as $row)
                         <tr>
-                            <th scope="row">{{$row->id}}</th>
-                            <td>{{$row->name}}</td>
+                            {{-- <th scope="row">{{$row->id}}</th> --}}
+                            <th scope="row">{{$row->name}}</th>
                             <td>&#8369;{{$row->min_price}} - &#8369;{{$row->max_price}}</td>
                             <td>{{$row->description}}</td>
                             <td> 

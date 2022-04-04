@@ -20,15 +20,23 @@
     </style>
 @endsection
 @section('content')
+    <div class="row">
+        <div class="col d-flex justify-content-end">
+            <a href="/clinic/print/{{ date("FY") }}_summary" class="btn btn-primary" id="" target="_blank" title="Print Summary">
+                Print Summary <i class="fa fa-print" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
     @include('clinicViews.report.accounting')
     @include('clinicViews.report.appointment_statistic')
     @include('clinicViews.report.top_services_and_packages')
-    @include('clinicViews.report.top_materials_and_customer')
+    @include('clinicViews.report.top_materials')
 @endsection
 
 @section('js_script')
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="{{ URL::asset('js/clinic/reports/services.js') }}"></script>
-
+    <script src="{{ URL::asset('js/clinic/reports/reports.js') }}"></script>
 @endsection
+
+
    

@@ -9,6 +9,6 @@ class Clinic_equipments extends Model
 {
     use HasFactory;
     protected $table = 'clinic_equipments';
-    protected $fillable = ['name', 'quantity', 'unit', 'user_as_clinic_id'];
+    protected $fillable = ['name', 'quantity', 'unit', 'type', 'user_as_clinic_id'];
     public $timestamps = false;
 }

@@ -38,7 +38,7 @@ $(function(){
 
         $.ajax({
             type: "GET",
-            url: "/clinic/billing/"+id+"/edit",
+            url: "/clinic/billing/"+id+"_updateView/edit",
             beforeSend: function(){
                 $("#update_billing_name").text("");
                 $("#edit_total").val("");
@@ -175,6 +175,40 @@ $(function(){
               console.log(error);
             }
         });
+
+    });
+
+
+    // display of data in update modal, I used billing edit function
+    $(document).on('click', 'a#bill_history_btn', function(e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+
+        $.ajax({
+            type: "GET",
+            url: "/clinic/billing/"+id+"_historyView/edit",
+            beforeSend: function(){
+                $('#bill_history').empty();
+                $('#response_waiting_billing_history').attr("hidden", false);
+            },
+            success: function(data) {
+                console.log(data);
+
+                $('#response_waiting_billing_history').attr("hidden", true);
+
+                $('#billing_history_name').text(data.customer.fname + " " + data.customer.lname);
+
+                $.each(data.history, function(key, val){
+                    $('#bill_history').append('<p><span class="fw-bold">Price:</span> '+ val.paid +' <br> <span class="fw-bold">Comment:</span> '+ val.comment +' <br> <span class="fw-bold">Date:</span> '+ moment(val.created_at).format('LL') +' <br> <span class="fw-bold">Time:</span> '+ moment(val.created_at).format('h:mm a') +'</p>');
+               });
+                
+    
+            },
+            error: function(error) {
+              console.log(error);
+            }
+        });
+
 
     });
 

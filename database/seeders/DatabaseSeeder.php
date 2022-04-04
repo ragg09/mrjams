@@ -28,10 +28,10 @@ class DatabaseSeeder extends Seeder
 
         DB::table('clinic_types')->insert([
             [
-                'type_of_clinic' => "dental",
+                'type_of_clinic' => "Dental",
             ],
             [
-                'type_of_clinic' => "medical",
+                'type_of_clinic' => "Medical",
             ],
 
         ]);
@@ -59,11 +59,15 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'status' => "expired",
-                'remark' => "danger",
+                'remark' => "dark",
             ],
             [
                 'status' => "deleted",
                 'remark' => "danger",
+            ],
+            [
+                'status' => "cancelled",
+                'remark' => "secondary",
             ],
         ]);
 

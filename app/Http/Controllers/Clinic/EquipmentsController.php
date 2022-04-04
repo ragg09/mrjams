@@ -71,6 +71,8 @@ class EquipmentsController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'quantity' => 'required|numeric',
+            'unit' => 'required',
+            'type' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -111,6 +113,7 @@ class EquipmentsController extends Controller
                     $equipment->name = $request->name;
                     $equipment->quantity = $request->quantity;
                     $equipment->unit = $request->unit;
+                    $equipment->type = $request->type;
                     $equipment->user_as_clinic_id = $clinic->id;
                     $equipment->save();
 
@@ -139,6 +142,7 @@ class EquipmentsController extends Controller
                 $equipment->name = $request->name;
                 $equipment->quantity = $request->quantity;
                 $equipment->unit = $request->unit;
+                $equipment->type = $request->type;
                 $equipment->user_as_clinic_id = $clinic->id;
                 $equipment->save();
 
@@ -287,6 +291,7 @@ class EquipmentsController extends Controller
                 $equipment->name = request('name');
                 $equipment->quantity = request('quantity');
                 $equipment->unit = request('unit');
+                $equipment->type = request('type');
                 $equipment->save();
 
                 //creating logs

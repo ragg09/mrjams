@@ -20,10 +20,11 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        
+                    
 
+                    <div class="form-group mt-1">
                         <div id="specialist_div">
+                            <label for="">Select Specialist</label>
                             {{-- <label for="personel">Select Specialist</label> --}}
                             {{-- <select class="form-control" id="specialist" name="specialist" style="width: 100%;">
                                 <option value="0">Please Select Doctor || BABAGUHIN PA</option>
@@ -35,6 +36,40 @@
                         </div>
                     </div>
 
+                    <div class="row mt-2" id="accept_specialist_with_warning" hidden>
+                        <div class="col-12 w-100 mx-auto rounded" style="background: rgb(245, 62, 6)">
+                            <div class="mx-auto">
+                                <p class="text-white mt-1 ">
+                                    <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
+                                    Reminder: <br> This specialist have appointment on <span class="text-white" id="reminder_time"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-1" id="accept_specialist_with_error" hidden>
+                        <div class="col-12 w-100 mx-auto rounded" style="background: rgb(245, 6, 6)">
+                            <div class="mx-auto">
+                                <p class="text-white mt-1 ">
+                                    <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
+                                    Looks like the spcecialist already have appointment on the selected time. Please check your calendar for reference.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-1" id="accept_specialist_with_not_within_range" hidden>
+                        <div class="col-12 w-100 mx-auto rounded" style="background: rgb(245, 6, 6)">
+                            <div class="mx-auto">
+                                <p class="text-white mt-1 ">
+                                    <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
+                                    The selected specialist is not available on the selected time
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <div class="form-group d-flex justify-content-center mt-2" id="flatpickr">
                         <input type="text" class="" id="accept_modal_flatpicker" name="datetime" hidden>
                     </div>
@@ -43,12 +78,13 @@
                     </div>
 
                     <span class="text-danger error-text datetime_error fw-bold mt-3"></span>
-                    
-                    <div class="row d-flex justify-content-center">
+
+                    <div class="row d-flex justify-content-center mt-2">
                         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#accepted_view_calendar_up" id="calendar_btn" hidden>
                             <i class="fa fa-calendar mx-2" aria-hidden="true"> Your Calendar</i>
                         </button>
                     </div>
+                
                     
                 </div>
     

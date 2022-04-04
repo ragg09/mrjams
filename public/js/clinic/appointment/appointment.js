@@ -105,11 +105,112 @@ $(function(){
         });
     });
 
+
+    //USED IN  $("#accept_app_btn").on('click', function(e){
+    //check Specialist availability
+    function CheckSpeciistAppointments(timedate, specialist_id) {
+        $.ajax({
+            type: "GET",
+            url: "/clinic/settings/" + specialist_id + "_specialist/edit",
+            beforeSend: function(){
+                $("#confirm_accept_btn_confirm").attr("hidden", true);
+                $("#confirm_accept_btn_cancel").attr("hidden", true);
+                $("#response_waiting_accepting_appointment").removeAttr("hidden");
+
+                $("#accept_specialist_with_warning").attr("hidden", true);
+                $("#accept_specialist_with_error").attr("hidden", true);
+                $("#calendar_btn").attr("hidden", true);
+
+                $(document).find('span.error-text').text('');
+            },
+            success: function(data){
+                $("#confirm_accept_btn_confirm").removeAttr("hidden");
+                $("#confirm_accept_btn_cancel").removeAttr("hidden");
+                $("#response_waiting_accepting_appointment").attr("hidden", true);
+
+                var count_data = 0;
+
+                console.log(data);
+                // console.log(moment(timedate[0]+"," +timedate[1]).add(5, 'hours').format('h:mm a'));
+
+                if(timedate[1] >= data.specialist.min_time && timedate[1] <= data.specialist.max_time){
+                    console.log("SAKOP NG ORAS NI DR!");
+                    //Within Specialist Time Range
+
+                    if(data.specialist_appointments != ""){ //check if clinic has any appointments
+                        $.each(data.specialist_appointments, function(key, val){
+                            count_data++
+    
+                            var plus_one_hour = moment(val.date + "," + val.time).add(1, 'hours').format('YYYY-MM-DD h:mm a');
+                            var minus_one_hour = moment(val.date + "," + val.time).subtract(1, 'hours').format('YYYY-MM-DD h:mm a');
+                            var selected_datetime = moment(timedate[0]+"," +timedate[1]).format('YYYY-MM-DD h:mm a');
+                            
+                            if($("#accept_modal_flatpicker").val() == val.datetime ){
+                                //disable button ng submit
+                                console.log($("#accept_modal_flatpicker").val() + " | " + val.datetime);
+    
+                                console.log("ito ung nakuha na ung exact date at time");
+                                
+                                $("#calendar_btn").attr("hidden", false);
+                                $("#accept_specialist_with_error").attr("hidden", false);
+                                $("#confirm_accept_btn_confirm").prop("disabled", true);
+                            }else {
+                                if(selected_datetime > minus_one_hour && selected_datetime < plus_one_hour){
+                                    console.log("warning na ipapakita ung date na may appointment si dr pero pwede padin iaccept");
+                                    console.log(val.datetime);
+                                    console.log(selected_datetime);
+                                    $("#accept_specialist_with_warning").attr("hidden", false);
+    
+                                    $("#reminder_time").text(moment(val.datetime).format('LL HH:mmA'));
+                                    $("#confirm_accept_btn_confirm").prop("disabled", false);
+                                    
+                                }else{
+                                    var get_last = count_data - 1;
+    
+                                    if(count_data == data.specialist_appointments.length){
+                                        
+                                        if(timedate[0] != moment().format('YYYY-MM-DD')){
+                                            // if no issue at all after looping through all of data in array
+                                            console.log("All goods lang");
+                                            $("#accept_specialist_with_warning").attr("hidden", true);
+                                            $("#accept_specialist_with_error").attr("hidden", true);
+                                            $("#calendar_btn").attr("hidden", true);
+                                            $("#confirm_accept_btn_confirm").prop("disabled", false);
+                                            //console.log(data.specialist_appointments.length);
+                                        }     
+                                    }
+                                    
+                                }
+                            }
+    
+                            
+                        });
+                    }else{
+                        console.log("ITO NGA PUTANG INA!");
+                        //No appointment at all
+                        $("#confirm_accept_btn_confirm").prop("disabled", false);
+                    }
+                    
+
+                }else{
+                    console.log("HINDI NA SAKOP NG ORAS NI SPECIALIST");
+
+                    $("#confirm_accept_btn_confirm").prop("disabled", true);
+                }
+                
+            },
+            error: function(){
+                console.log('AJAX load did not work');
+                alert("error");
+            }
+        });
+    }
+
     //ACCEPT APPOINTMENT MODAL
     $("#accept_app_btn").on('click', function(e){
         e.preventDefault();
         var id =  document.getElementById("for_ro_id").value;
-        // console.log(id);
+        console.log(id);
         var today = new Date();
         $.ajax({
             type: "GET",
@@ -117,23 +218,39 @@ $(function(){
             beforeSend: function(){
                 // $("#detail_modal_body").empty();
                 $("#response_waiting_accept").removeAttr("hidden");
+                $("#accept_specialist_with_warning").attr("hidden", true);
+                $("#accept_specialist_with_error").attr("hidden", true);
                 $("#specialist_div").empty();
                 $("#flatpicker").attr("hidden", true);
+                $("#calendar_btn").attr("hidden", true);
             },
             success: function(data) {
                 $("#response_waiting_accept").attr("hidden", true);
                 // $("#detail_modal_body").empty();
-                // console.log(data);
+                console.log(data);
                 $("#flatpicker").removeAttr("hidden");
                 $("#specialist_div").empty();
                 $("#accept_modal_flatpicker").empty();
+
                 if(data.specialists.length > 0){
-                        $("#specialist_div").append('<select class="form-control" id="specialist" name="specialist" style="width: 100%;">');
+                    console.log(("nagana"));
+                    $("#confirm_accept_btn_confirm").prop("disabled", true);
+
+                    $("#specialist_div").append('<select class="form-control" id="specialist" name="specialist" style="width: 100%;">');
+                    $("#specialist").append('<option value="">Select here</option>');
                     $.each(data.specialists, function(key, val){
-                        $("#specialist").append('<option value="'+val.fullname+'">'+val.fullname+ " | "+ val.specialization+'</option>');
+                        $("#specialist").append('<option value="'+val.id+'">'+val.fullname+ " | "+ val.specialization+ " | "+ moment("2018-01-01,"+val.min_time ).format('h:mm a')  +' - '+  moment("2018-01-01,"+val.max_time ).format('h:mm a') +'</option>');
                     });
+
+                    $("#specialist").on('change', function(e){ //GET SPECIALIST TIME AVAILABITY
+                        var timedate = $("#accept_modal_flatpicker").val().split(" "); // 0 = date | 1 = time
+                        var specialist_id = $("#specialist").val();
+                        CheckSpeciistAppointments(timedate, specialist_id);
+                       
+                    })
                     
                 }
+
                 $("#customer_email").append('<input type="text" id="customer_email" name="customer_email" hidden value="'+data.data.user_email+'">');
                 $("#accept_appointment_form").attr('action', "/clinic/appointment/"+id);
                 
@@ -142,7 +259,16 @@ $(function(){
                     dateFormat: "Y-m-d H:i",
                     inline: true,
                     minDate: today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(),
-                    defaultDate: data.data.app_appointed_at + " " + data.data.time , 
+                    defaultDate: data.data.app_appointed_at + " " + data.data.time,
+                    onChange: function(selectedDates, dateStr, instance) {//GET SPECIALIST TIME AVAILABITY
+                        if(data.specialists.length > 0){
+                            var timedate = $("#accept_modal_flatpicker").val().split(" "); // 0 = date | 1 = time
+                            var specialist_id = $("#specialist").val();
+                            if(specialist_id != ""){
+                                CheckSpeciistAppointments(timedate, specialist_id);
+                            }
+                        }
+                    }
                 });
 
                 $("#accept_modal_flatpicker").val(data.data.app_appointed_at + " " + data.data.time);
@@ -179,6 +305,9 @@ $(function(){
             },
             success: function(data) {
                 //console.log(data);
+
+                $("#confirm_accept_btn_confirm").prop("disabled", false); //need to remove if specialist exists
+
 
                 $("#confirm_accept_btn_confirm").removeAttr("hidden");
                 $("#confirm_accept_btn_cancel").removeAttr("hidden");
@@ -308,7 +437,7 @@ $(function(){
     //DONE APPOINTMENT MODAL CONFIRMATION, edit the status || I USED DELETE FUNCTION
     $("#done_appointment_form").on('submit', function(e){
         e.preventDefault();
-
+        //I AM NOT USING THIS FUNCTION ANYMORE
         // console.log("ito nga");
 
         // var id =  document.getElementById("ro_id_done").value;

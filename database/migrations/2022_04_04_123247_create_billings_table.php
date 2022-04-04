@@ -22,6 +22,8 @@ class CreateBillingsTable extends Migration
             $table->integer('user_as_customer_id')->index('fk_billings_user_as_customer1_idx');
             $table->integer('billing_status_id')->index('fk_billings_billing_status1_idx');
             $table->text('price_summary')->nullable();
+            $table->text('payment_summary');
+            $table->text('materials_summary');
             $table->timestamps();
         });
     }

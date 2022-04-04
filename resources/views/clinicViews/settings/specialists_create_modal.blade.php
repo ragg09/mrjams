@@ -22,6 +22,25 @@
                         <input type="text" class="form-control" id="specialization" name="specialization" placeholder="Please Enter Specialization">
                         <span class="text-danger error-text specialization_error"></span>
                     </div>
+
+                    <div class="row mt-2">
+                        <label for=""> Time Availability</label>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="min_time">Min</label>
+                                <input class="form-control" type="time" id="min_time" name="min_time">
+                                <span class="text-danger error-text min_time_error"></span>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="max_time">Max</label>
+                                <input class="form-control" type="time" id="max_time" name="max_time">
+                                <span class="text-danger error-text max_time_error"></span>
+                            </div>
+                        </div>
+                    </div>
                     
                 </div>
     

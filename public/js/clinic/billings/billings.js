@@ -2,12 +2,14 @@ $(function(){
     $("input[type='number']").inputSpinner();
 
 
+
+    //STEP 2 PAYMENT
     $("#for_installment").hide();
 
     $(document).on('click', '#success-outlined', function(e) {
         $("#payment_method").val("fully paid");
         $("#finish_appointment").removeAttr("disabled");
-        $("#total_paid").attr("hidden", "true");
+        // $("#total_paid").attr("hidden", "true");
         $("#for_installment").hide();
 
         $('#payment_paid').text("0");
@@ -18,10 +20,13 @@ $(function(){
     $(document).on('click', '#danger-outlined', function(e) {
         $("#payment_method").val("installment");
         $("#finish_appointment").removeAttr("disabled");
-        $("#total_paid").removeAttr("hidden", "false");
+        // $("#total_paid").removeAttr("hidden", "false");
         $("#for_installment").show();
 
     });
+
+    //^^STEP 2 PAYMENT
+
 
     $(document).on('change', '#equipment_values', function(e) {
         equipment_values = []
@@ -68,8 +73,11 @@ $(function(){
                 $(document).find('span.error-text').text('');
             },
             success: function(data) {
-                // console.log(data);
+
                 window.location.href = "/clinic/billing";
+
+                // console.log(data);
+                
                 // if(data.status == 0){
                 //     $.each(data.error, function(key, val){
                 //         $('span.'+key+'_error').text(val[0]);

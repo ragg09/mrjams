@@ -38,7 +38,7 @@
                                 <p style="font-size: 30px; font-weight: bold; margin-right: 20px">&#8369;{{ number_format($total_balance, 0) }}</p>
                             </div>
                             <div class="col-12  d-flex justify-content-end ">
-                                <p style="margin-right: 20px">Total Balance</p>
+                                <p class="text-muted" style="margin-right: 20px">Expected Payment</p>
                             </div>
                         </div>
 
@@ -62,7 +62,7 @@
                                 <p style="font-size: 30px; font-weight: bold; margin-right: 20px">&#8369;{{ number_format($total_paid + $total_balance, 0) }}</p>
                             </div>
                             <div class="col-12  d-flex justify-content-end ">
-                                <p style="margin-right: 20px">Expected Revenue</p>
+                                <p class="text-muted" style="margin-right: 20px">Revenue (Raw)</p>
                             </div>
                         </div>
 

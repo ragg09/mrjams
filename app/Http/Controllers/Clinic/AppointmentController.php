@@ -363,18 +363,22 @@ class AppointmentController extends Controller
         if ($appointments->appointed_at == $date && $appointments->time == $time) {
             //ACCEPT PATIENT'S TIME & DATE
 
-            //verify date time if already taken
-            foreach ($receipts as $key) {
-                $this_app = Appointments::where('receipt_orders_id', '=', $key->id)->first();
+            //verify date time if already taken IF NO OTHER DOCTORS (NO SPECIALIST ON SETTINGS)
+            $specialists = Clinic_specialists::where('user_as_clinic_id', '=', $clinic->id)->get();
+            if (is_null($specialists)) {
+                foreach ($receipts as $key) {
+                    $this_app = Appointments::where('receipt_orders_id', '=', $key->id)->first();
 
-                if ($this_app->appointed_at == $date && $this_app->time == $time && $this_app->appointment_status_id == 4) {
-                    return response()->json([
-                        'status' => 0,
-                        'datetime' => "You have already set an appointment on this given time and date, please check your calendar for reference.",
-                        'tester' => "error message"
-                    ]);
+                    if ($this_app->appointed_at == $date && $this_app->time == $time && $this_app->appointment_status_id == 4) {
+                        return response()->json([
+                            'status' => 0,
+                            'datetime' => "You have already set an appointment on this given time and date, please check your calendar for reference.",
+                            'tester' => "error message"
+                        ]);
+                    }
                 }
             }
+
 
             //IF TIME AND DATE PASSES VERIFICATION
             //accepted || accept customer's time request
@@ -385,7 +389,7 @@ class AppointmentController extends Controller
                 ]);
 
             $ro_update = Receipt_orders::find($id);
-            $ro_update->specialist = $request->specialist ?? NULL;
+            $ro_update->specialist_id = $request->specialist ?? NULL;
             $ro_update->save();
 
             //checking logs limit 5000
@@ -419,68 +423,22 @@ class AppointmentController extends Controller
                 'count_app' => count($count_app),
                 'tester' => "Accepted"
             ]);
-
-
-            // return response()->json(['tester' => $receipts]);
-
-            // $receipts = Receipt_orders::where('user_as_clinic_id', '=',  $clinic->id)->get();
-            // $count = 0;
-            // foreach ($receipts as $key) {
-            //     $count++;
-            //     $this_app = Appointments::where('receipt_orders_id', '=', $key->id)->first();
-            //     if ($this_app) {
-            //         if ($this_app->appointed_at == $date && $this_app->time == $time && $this_app->appointment_status == 4) {
-            //             //error message || checking if an time and date is already taken
-            //             return response()->json(['status' => 0, 'datetime' => "Time and Date already taken", 'tester' => "error message"]);
-            //         } else if ($count == count($receipts)) {
-            //             //accepted || accept customer's time request
-            //             DB::table('appointments')
-            //                 ->where('receipt_orders_id', $id)
-            //                 ->update([
-            //                     'appointment_status_id' =>  4, //4 is the id for accepted
-            //                 ]);
-
-            //             $ro_update = Receipt_orders::find($id);
-            //             $ro_update->specialist = $request->specialist ?? NULL;
-            //             $ro_update->save();
-
-            //             //checking logs limit 5000
-            //             if ($logs_count == 5000) {
-            //                 Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
-            //             }
-            //             $logs = new Logs();
-            //             $logs->message = "Appointmen has been set with Receipt Order No: " . $id;
-            //             $logs->remark = "success";
-            //             $logs->date =  date("Y/m/d");
-            //             $logs->time = date("h:i:sa");
-            //             $logs->user_as_clinic_id = $clinic->id;
-            //             $logs->save();
-
-            //             //sending email notification
-            //             $details = [
-            //                 'title' => 'Appointment Accepted',
-            //                 'body' => 'Your appointment has been set, see you on ' . $date . " " . date("g:i a", strtotime($time)),
-            //             ];
-            //             // Mail::to('ragunayon@gmail.com')->send(new EmailNotification($details)); //testing purposes email
-            //             Mail::to($customer_email)->send(new EmailNotification($details));
-
-            //             return response()->json(['message' => 'Appointmnent Accepted with Reciept Order ' . $id, 'tester' => "Accepted"]);
-            //         }
-            //     }
-            // }
         } else {
             //NEGOTIATION
 
-            //verify date time if already taken
-            foreach ($receipts as $key) {
-                $this_app = Appointments::where('receipt_orders_id', '=', $key->id)->first();
+            //verify date time if already taken IF NO OTHER DOCTORS (NO SPECIALIST ON SETTINGS)
+            $specialists = Clinic_specialists::where('user_as_clinic_id', '=', $clinic->id)->get();
+            if (is_null($specialists)) {
+                foreach ($receipts as $key) {
+                    $this_app = Appointments::where('receipt_orders_id', '=', $key->id)->first();
 
-                if ($this_app->appointed_at == $date && $this_app->time == $time && $this_app->appointment_status_id == 4) {
-                    return response()->json([
-                        'status' => 0,
-                        'datetime' => "You have already set an appointment on this given time and date, please check your calendar for reference.",
-                        'tester' => "error message"
-                    ]);
+                    if ($this_app->appointed_at == $date && $this_app->time == $time && $this_app->appointment_status_id == 4) {
+                        return response()->json([
+                            'status' => 0,
+                            'datetime' => "You have already set an appointment on this given time and date, please check your calendar for reference.",
+                            'tester' => "error message"
+                        ]);
+                    }
                 }
             }
 
@@ -495,7 +453,7 @@ class AppointmentController extends Controller
                 ]);
 
             $ro_update = Receipt_orders::find($id);
-            $ro_update->specialist = $request->specialist ?? NULL;
+            $ro_update->specialist_id = $request->specialist ?? NULL;
             $ro_update->save();
 
             //checking logs limit 5000
@@ -523,61 +481,6 @@ class AppointmentController extends Controller
 
 
             return response()->json(['message' => "Appointment is now under Negotiation", 'tester' => "negotiating na"]);
-
-            // $receipts = Receipt_orders::where('user_as_clinic_id', '=',  $clinic->id)->get();
-
-            // $count = 0;
-            // foreach ($receipts as $key) {
-            //     $count++;
-            //     $this_app = Appointments::where('receipt_orders_id', '=', $key->id)->first();
-
-            //     if ($this_app) {
-            //         if ($this_app->appointed_at == $date && $this_app->time == $time  && $this_app->appointment_status == 4) {
-            //             //error message
-            //             return response()->json(['status' => 0, 'datetime' => "Time and Date already taken", 'tester' => "error message"]);
-            //         } else if ($count == count($receipts)) {
-
-            //             //$this_receipt = Receipt_orders::where('user_as_clinic_id', '=',  $clinic->id)->get();
-
-            //             //go to negotiating status
-            //             DB::table('appointments')
-            //                 ->where('receipt_orders_id', $id)
-            //                 ->update([
-            //                     'appointed_at' =>  $date,
-            //                     'time' =>  $time,
-            //                     'appointment_status_id' =>  5, //5 is the id for negotiating
-            //                 ]);
-
-            //             $ro_update = Receipt_orders::find($id);
-            //             $ro_update->specialist = $request->specialist ?? NULL;
-            //             $ro_update->save();
-
-            //             //checking logs limit 5000
-            //             if ($logs_count == 5000) {
-            //                 Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
-            //             }
-            //             $logs = new Logs();
-            //             $logs->message = "Appointment is in a negotiation state with Receipt Order No: " . $id;
-            //             $logs->remark = "warning";
-            //             $logs->date =  date("Y/m/d");
-            //             $logs->time = date("h:i:sa");
-            //             $logs->user_as_clinic_id = $clinic->id;
-            //             $logs->save();
-
-            //             //sending email notification
-            //             $details = [
-            //                 'title' => 'Appointment Negotiation',
-            //                 'body' => 'Your appointment has been changed to ' . $date . " " . date("g:i a", strtotime($time)) . '. Please confirm it if you are available, and cancel if not.',
-            //             ];
-            //             // Mail::to('ragunayon@gmail.com')->send(new EmailNotification($details)); //testing purposes email
-            //             Mail::to($customer_email)->send(new EmailNotification($details));
-
-
-            //             return response()->json(['message' => "Appointment is now under Negotiation", 'tester' => "negotiating na"]);
-            //         }
-            //     }
-            // }
-
         }
     }
 

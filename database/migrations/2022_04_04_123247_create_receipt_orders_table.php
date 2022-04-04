@@ -20,7 +20,7 @@ class CreateReceiptOrdersTable extends Migration
             $table->text('patient_details');
             $table->text('patient_address');
             $table->integer('packages_id')->nullable()->index('fk_receipt_orders_packages1_idx');
-            $table->string('specialist', 45)->nullable();
+            $table->integer('specialist_id')->nullable();
         });
     }
 

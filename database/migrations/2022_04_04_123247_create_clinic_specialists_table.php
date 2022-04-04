@@ -18,6 +18,8 @@ class CreateClinicSpecialistsTable extends Migration
             $table->string('fullname', 45)->nullable();
             $table->string('specialization')->nullable();
             $table->integer('user_as_clinic_id')->index('fk_clinic_personnels_user_as_clinic1_idx');
+            $table->string('min_time', 45);
+            $table->string('max_time', 45);
         });
     }
 

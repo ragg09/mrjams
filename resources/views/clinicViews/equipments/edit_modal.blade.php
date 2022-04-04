@@ -39,6 +39,16 @@
                                 <option value="box">box</option>
                             </select>
                         </div>
+
+                        <div class="form-group">
+                            <label for="type">Type</label>
+                            <select class="form-select" name="type" id="edit_type">
+                                <option value="consumable">consumable</option>
+                                <option value="equipment">equipment</option>
+                                <option value="medicine">medicine</option>
+                            </select>
+                            <span class="text-danger error-text type_error"></span>
+                        </div>
                     </div>
         
                 </div>

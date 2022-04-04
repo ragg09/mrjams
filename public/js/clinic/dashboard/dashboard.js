@@ -3,6 +3,19 @@ $(function () {
     //to load charts
     //google.load('visualization', '1.0', {'packages':['corechart']});
 
+    var resizeTimer;
+    $(window).on('resize', function(e) {
+
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+
+            console.log("DONE!");
+            dashboard();
+                    
+        }, 250);
+
+    });
+
     $("#dashboard_table").load(window.location + " #dashboard_table");
     
     dashboard();

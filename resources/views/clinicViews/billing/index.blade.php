@@ -14,6 +14,79 @@
             border-top: 2px solid rgb(11, 95, 173);
             border-radius: 5px;
         }
+
+        #bill_history{
+            width: 90%;
+            margin: auto;
+        }
+
+#bill_history p{
+  border-top: 2px dashed;
+  border-color: blue !important;
+  margin:0; 
+  padding: 30px;
+  counter-increment: section;
+  position: relative;
+}
+
+
+
+#bill_history p:nth-child(even):before {
+  content: counter(section);
+  right: 100%; 
+  margin-right: -20px;
+  position: absolute;
+  border-radius: 50%;
+  padding: 5px;
+  height: 40px;
+  width: 40px;
+  background-color: blue;
+  text-align:center;
+  color: white;
+  font-size: 110%;
+}
+
+#bill_history p:nth-child(odd):before {
+  content: counter(section);
+  left: 100%; 
+  margin-left: -20px;
+  position: absolute;
+  border-radius: 50%;
+  padding: 5px;
+  height: 40px;
+  width: 40px;
+  background-color: blue;
+  text-align:center;
+  color: white;
+  font-size: 110%;
+}
+
+#bill_history p:nth-child(even) {
+  border-left: 2px dashed;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  margin-right: 30px; 
+  padding-right: 0;
+}
+
+#bill_history p:nth-child(odd) {
+  border-right: 2px dashed;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  margin-left: 30px; 
+  padding-left: 0;
+}
+
+#bill_history p:first-child {
+  border-top: 0;
+  border-top-right-radius:0;
+  border-top-left-radius:0;
+}
+
+#bill_history p:last-child {
+  border-bottom-right-radius:0;
+  border-bottom-left-radius:0;
+}
     </style>
 @endsection
 @section('content')
@@ -64,24 +137,44 @@
                             <td class="align-middle text-center">{{date('F d, Y', strtotime($customers[$x]->created_at))}}</td>
                             <td class="align-middle text-center">{{date('F d, Y', strtotime($customers[$x]->updated_at))}}</td>
                             <td class="align-middle text-center">    
-                                <a href="" class="btn btn-outline-primary" data-id="{{$customers[$x]->ro_id}}" data-bs-toggle="modal" data-bs-target="#view_bill_details" id="view_billing_detail_btn">
+                                <a 
+                                class="btn btn-outline-primary mt-1" 
+                                data-id="{{$customers[$x]->ro_id}}" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#view_bill_details" 
+                                id="view_billing_detail_btn">
                                     <i class="fa fa-eye" aria-hidden="true" ></i>
                                 </a>
+
+                                <a 
+                                id="bill_history_btn" 
+                                data-id="{{$customers[$x]->bill_id}}"
+                                data-bs-target="#bill_history_modal" 
+                                class="btn btn-outline-success mt-1" 
+                                data-bs-toggle="modal">
+                                    <i class="fa fa-list" aria-hidden="true"></i>
+                                </a>   
                             
                                 @if ($customers[$x]->total != $customers[$x]->paid)
-                                    <a href="" data-id="{{$customers[$x]->bill_id}}" id="view_billing_update_btn" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#update_bill_view">
-                                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                                    </a>
+                                    <br >
 
                                     <a 
-                                        data-name="{{$customers[$x]->name}}"  
-                                        data-email="{{$customers[$x]->email}}" 
-                                        data-ro_id="{{$customers[$x]->ro_id}}"
-                                        id="send_email_btn" 
-                                        data-bs-target="#send_email_modal" 
-                                        class="btn btn-outline-danger" 
-                                        data-bs-toggle="modal">
-                                        
+                                    data-id="{{$customers[$x]->bill_id}}" 
+                                    id="view_billing_update_btn" 
+                                    class="btn btn-outline-warning mt-1" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#update_bill_view">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </a>
+                                   
+                                    <a 
+                                    data-name="{{$customers[$x]->name}}"  
+                                    data-email="{{$customers[$x]->email}}" 
+                                    data-ro_id="{{$customers[$x]->ro_id}}"
+                                    id="send_email_btn" 
+                                    data-bs-target="#send_email_modal" 
+                                    class="btn btn-outline-danger mt-1" 
+                                    data-bs-toggle="modal">
                                         <i class="fa fa-envelope" aria-hidden="true"></i>
                                     </a>
                                 @endif
@@ -96,6 +189,7 @@
         </div>
 
         @include('clinicViews.billing.detail_modal')
+        @include('clinicViews.billing.history_modal')
         @include('clinicViews.billing.update_bill')
         @include('clinicViews.billing.send_email')
     @else
