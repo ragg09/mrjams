@@ -11,6 +11,9 @@
         <div class="container bootstrap snippets bootdey" style="margin-top: 20px;">
             <div class="row ng-scope" id="appoint_info">
                 <div class="col-md-4">
+
+                    <input type="hidden" name="clinic_id" id="clinic_id" value="{{$clinic_info->id}}">
+
                     <div class="panel panel-default" style="padding: 30px;">
                         <div class="panel-body text-center">
                             <div class="pv-lg"><i class="fa fa-calendar fa-5x" aria-hidden="true" style="color: #6497B1; margin-bottom: 25px;"></i></div>
@@ -31,6 +34,34 @@
                         <div class="panel-heading">
                             <div class="panel-title text-center">
                                 <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#rate-modal"><i class="fa fa-star" aria-hidden="true"></i><b> : How would you rate our Clinic?</b></button>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                           
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default hidden-xs hidden-sm" style="padding: 10px;">
+                        <div class="panel-heading">
+                            <div class="panel-title text-center">
+                              
+                                <div id="map" style="width:100%;height:250px;"></div>
+                                {{-- <div id="msg"></div> --}}
+
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                           
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default hidden-xs hidden-sm" style="padding: 10px;">
+                        <div class="panel-heading">
+                            <div class="panel-title text-center">
+                              
+                              
+                                <div id="msg"></div>
+
                             </div>
                         </div>
                         <div class="panel-body">
@@ -67,23 +98,68 @@
                                         </div>
                                     </div>
                                    
-                                    
+                                    <table class="table">
+                                        <tbody>
+                                          <tr>
+                                            <th scope="row">Date Created: </th>
+                                            <td> {{ date("M j, Y", strtotime($appointment_data->created_at))}}</td>
+                                           
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">Appointment Date: </th>
+                                            <td>{{ date("M j, Y", strtotime($appointment_data->appointed_at))}}</td>
+                                           
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">Time: </th>
+                                            <td>{{  date("h:i A", strtotime($appointment_data->time)) }}</td>
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">Appointment Status: </th>
+                                            <td><i class="fa fa-star text-{{$status->remark}}" aria-hidden="true"></i> {{$status->status}}</td>
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">Customer Name:  </th>
+                                            <td>{{$name[0]}}</td>
+                                          </tr>
+                                        </tbody>
+                                    </table>
+
                                   
 
-                                    <p>Date Created: {{ date("M j, Y", strtotime($appointment_data->created_at))}}</p>
+                                    {{-- <p>Date Created: {{ date("M j, Y", strtotime($appointment_data->created_at))}}</p>
                                     <p>Appointment Date: {{ date("M j, Y", strtotime($appointment_data->appointed_at))}}</p>
                                     <p>Time: {{  date("h:i A", strtotime($appointment_data->time)) }}</p>
                                     <p>Appointment Status: <i class="fa fa-star text-{{$status->remark}}" aria-hidden="true"></i> {{$status->status}}</p>
-                                    <p>Customer Name:  {{$name[0]}}</p>
+                                    <p>Customer Name:  {{$name[0]}}</p> --}}
                                 </li>
                                 <li>
                                     <div class="icon">
                                         <i class="fa fa-user-md fa-lg" aria-hidden="true"></i>
                                     </div>
                                     <h5 style="color: #6497B1; font-size:18px;"><b>Clinic Information:</b></h5>
-                                    <p>Address: {{$clinic_address->address_line_1}}, {{$clinic_address->address_line_2}}</p>
+                                    <table class="table">
+                                        <tbody>
+                                          <tr>
+                                            <th scope="row">Address:  </th>
+                                            <td> {{$clinic_address->address_line_1}}, {{$clinic_address->address_line_2}}</td>
+                                           
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">Phone:</th>
+                                            <td>{{$clinic_info->phone}}</td>
+                                           
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">Telephone: </th>
+                                            <td>{{$clinic_info->telephone}}</td>
+                                          </tr>
+                                        </tbody>
+                                    </table>
+
+                                    {{-- <p>Address: {{$clinic_address->address_line_1}}, {{$clinic_address->address_line_2}}</p>
                                     <p>Phone: {{$clinic_info->phone}}</p>
-                                    <p>Telephone: {{$clinic_info->telephone}}</p>
+                                    <p>Telephone: {{$clinic_info->telephone}}</p> --}}
                                     
                                 </li>
                                 <li>
@@ -92,18 +168,41 @@
                                     </div>
                                     <h5 style="color: #6497B1; font-size:18px;"><b>Packages and Services:</b></h5>
 
-                                    @if(isset($package))
-                                        <p><b>Package :</b> {{$package->name}}</p>
-                                       
-                                    @endif
+                                  
                                     
+
+                                    <table class="table">
+                                        <tbody>
+                                            @if(isset($services_all))
+                                                <tr>
+                                                    <th scope="row">Services : </th>
+                                                    @foreach ($services_all as $services)
+                                                        <td> - {{$services->name}}</td>
+                                                    @endforeach
+                                                </tr>
+                                            @endif
+
+                                            @if(isset($package))
+                                            <tr>
+                                                <th scope="row">Package : </th>
+                                                <td> - {{$package->name}}</td>
+                                               
+                                            </tr>
+                                          
+                                           
+                                            @endif
+
+
+                                        </tbody>
+                                    </table>
+
                                    
-                                             @if(isset($services_all))
+                                             {{-- @if(isset($services_all))
                                                 <p><b>Services : </b></p>
                                                 @foreach ($services_all as $services)
                                                     <p>- {{$services->name}}</p>
                                                 @endforeach
-                                            @endif
+                                            @endif --}}
                                     
                                         
                                    
@@ -177,6 +276,9 @@
 @include('customerViews.footer.footer2')
 @endsection
 @section('jsScript')
+    <script async src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places"></script>
+    <script src="{{ URL::asset('js/customer/mail_map.js') }}"></script>
+
     <script src="{{ URL::asset('js/customer/clinic_rating.js') }}"></script> 
     {{-- <script src="{{ URL::asset('js/customer/print.js') }}"></script> --}}
     <script>

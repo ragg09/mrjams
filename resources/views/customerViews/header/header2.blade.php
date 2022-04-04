@@ -10,7 +10,7 @@
 
               <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown"  style="font-weight:bold; margin-left: 50%">
+            <div class="collapse navbar-collapse" id="navbarNavDropdown"  style="font-weight:bold; margin-left: 580px">
               <ul class="navbar-nav" >
                 <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="/">Home</a>
@@ -22,7 +22,7 @@
                   <a class="nav-link active" href="{{route('customer.clinicList.index')}}">Clinics</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" href="{{route('customer.mail.index')}}">Mail</a>
+                  <a class="nav-link active" href="{{route('customer.mail.index')}}">Appointments</a> 
                 </li>
                 <li class="nav-item dropdown">
                   {{-- <p id="customerName"></p> --}}
@@ -36,7 +36,7 @@
                     </a>
                   
                   <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item" href="/customer/customerinfo/create"><i class="fa fa-user" aria-hidden="true" style="margin-right: 10%;"></i> Account</a></li>
+                    <li><a class="dropdown-item" href="/customer/customerinfo/create"><i class="fa fa-user" aria-hidden="true" style="margin-right: 10%;"></i> Profile</a></li>
 
                     <li><a class="dropdown-item" href="{{route('customer.announcement.index')}}"><i class="fa fa-bullhorn" aria-hidden="true" style="margin-right: 10%;"></i>Announcement</a></li>
 

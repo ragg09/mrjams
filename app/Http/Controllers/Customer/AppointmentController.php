@@ -20,6 +20,7 @@ use App\Models\Receipt_orders_has_clinic_services;
 use App\Models\Ratings;
 use App\Models\Clinic_time_availability;
 use App\Models\Logs;
+use App\Models\Clinic_specialists;
 
 
 class AppointmentController extends Controller
@@ -258,6 +259,7 @@ class AppointmentController extends Controller
         foreach ($split_data as $key) {
             $this_data = explode("*", $key);
             $count++;
+
             $availability[] = (object) array(
                 "day" => $this_data[0],
                 "min" => $this_data[1],
@@ -266,9 +268,11 @@ class AppointmentController extends Controller
             );
         }
 
-        //  echo json_encode($availability);
-        // echo($services);
-        return view('customerViews.appointment.appointment', ['avail' => $availability, 'customer' => $customer, 'rate' => $rate, 'clinic_data' => $clinic_data, 'clinic_type' => $clinic_type, 'clinic_address' => $clinic_address, 'services' => $services, 'packages' => $packages]);
+        $doctor = Clinic_specialists::where('user_as_clinic_id', '=', $clinic_data->id)->get();
+
+        //  echo json_encode($doctor);
+        // echo($doctor);
+        return view('customerViews.appointment.appointment', ['doctor'=> $doctor, 'avail' => $availability, 'customer' => $customer, 'rate' => $rate, 'clinic_data' => $clinic_data, 'clinic_type' => $clinic_type, 'clinic_address' => $clinic_address, 'services' => $services, 'packages' => $packages]);
     }
 
     /**
@@ -285,6 +289,8 @@ class AppointmentController extends Controller
         $customer = User_as_customer::where('users_id', '=', $user->id)->first();
 
         $clinic_id = $id;
+        $clinic_data = User_as_clinic::where('id', '=', $clinic_id)->first();
+
         $customer_add = User_address::where('id', '=', $customer->user_address_id)->first();
         $service = Clinic_services::where('user_as_clinic_id', '=', $id)->get();
         $package = Packages::where('user_as_clinic_id', '=', $id)->get();
@@ -306,7 +312,7 @@ class AppointmentController extends Controller
         }
 
         // echo json_encode($availability);
-        return view('customerViews.appointment.setAppointment', ['avail' => $availability, 'customer' => $customer, 'customer_add' => $customer_add, 'package' => $package, 'service' => $service, 'clinic_id' => $clinic_id]);
+        return view('customerViews.appointment.setAppointment', ['clinic_data' => $clinic_data,'avail' => $availability, 'customer' => $customer, 'customer_add' => $customer_add, 'package' => $package, 'service' => $service, 'clinic_id' => $clinic_id]);
     }
 
     /**

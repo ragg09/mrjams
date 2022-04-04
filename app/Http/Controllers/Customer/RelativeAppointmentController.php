@@ -15,6 +15,7 @@ use App\Models\Clinic_services;
 use App\Models\Receipt_orders;
 use App\Models\Appointments;
 use App\Models\Clinic_time_availability;
+use App\Models\Logs;
 
 
 class RelativeAppointmentController extends Controller
@@ -97,11 +98,12 @@ class RelativeAppointmentController extends Controller
         $user = User::where('email', '=',  Auth::user()->email)->first();
         $customer = User_as_customer::where('users_id', '=', $user->id)->first();
         $clinic_id = $id;
+        $clinic_data = User_as_clinic::where('id', '=', $clinic_id)->first();
         $customer_add = User_address::where('id', '=', $customer->user_address_id)->first();
         $service = Clinic_services::where('user_as_clinic_id', '=', $id)->get();
         $package = Packages::where('user_as_clinic_id', '=', $id)->get();
     //    echo($clinic_id);
-        return view('customerViews.appointment.relativeAppointment',['customer'=>$customer, 'customer_add'=>$customer_add,'package'=>$package, 'service'=>$service, 'clinic_id'=>$clinic_id]);
+        return view('customerViews.appointment.relativeAppointment',['clinic_data' => $clinic_data,'customer'=>$customer, 'customer_add'=>$customer_add,'package'=>$package, 'service'=>$service, 'clinic_id'=>$clinic_id]);
     }
 
     /**
@@ -124,6 +126,31 @@ class RelativeAppointmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //Cancel Appointment
+        $appointment = Appointments::find($id);
+        $appointment->appointment_status_id = 8;
+        $appointment->save();
+
+        $user = User::where('email', '=',  Auth::user()->email)->first();
+        $customer = User_as_customer::where('users_id', '=', $user->id)->first();
+
+        $receipt = Receipt_orders::where('id', '=', $appointment->receipt_orders_id)->first();
+
+
+        //checking logs limit 5000
+        $logs_count = Logs::where('user_as_clinic_id', '=', $receipt->user_as_clinic_id)->count();
+        if ($logs_count == 5000) {
+            Logs::where('user_as_clinic_id', '=', $receipt->user_as_clinic_id)->first()->delete();
+        }
+        //creating logs
+        $logs = new Logs();
+        $logs->message = $customer->fname . ' ' . $customer->lname . " cancelled the appointment day and time.";
+        $logs->remark = "notif";
+        $logs->date =  date("Y/m/d");
+        $logs->time = date("h:i:sa");
+        $logs->user_as_clinic_id =  $receipt->user_as_clinic_id;
+        $logs->save();
+
+        return response()->json(['all' => $appointment, 'status' => 'OK']);
     }
 }

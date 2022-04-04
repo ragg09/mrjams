@@ -113,6 +113,7 @@ class CustomerController extends Controller
     public function update(Request $request, $id)
     {
         // Update Customer Info
+        //echo json_encode($request->all());
 
         $fname = $request->fname;
         // $mname = $request->mname;
@@ -144,7 +145,7 @@ class CustomerController extends Controller
 
 
         return response()->json(['all'=>$user_customer, 'add'=>$customer_add]);
-        // return view('customerViews.profile');
+        // return view('customerViews.profile'); //tama ba ung blade fileoo
     }
 
     /**

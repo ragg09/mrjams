@@ -11,112 +11,75 @@
         <div class="container bootstrap snippets bootdey" style="margin-top: 20px;">
             <div class="row ng-scope">
                 <div class="col-md-4">
-                    <div class="panel panel-default" style="padding: 10px;">
-                        <div class="panel-body text-center">
-                            <div class="pv-lg"><i class="fa fa-user-md fa-5x" aria-hidden="true" style="color: #6497B1; margin-bottom: 20px;"></i></div>
-                            <h3 class="m0 text-bold" style="margin-top: -15px; font-size: 35px;"><b>{{$clinic_data->name}}</b></h3>
-
-                            {{-- <h4 class="m0 text-bold">Rating: {{$rate}}</h4> --}}
-                            <span id=stars></span><br>
-                            <span class="stars" value="{{$rate}}">
+                    {{-- <div class="sticky-top"> --}}
+                        <div class="panel panel-default" style="padding: 10px;">
+                            <div class="panel-body text-center">
+                                <div class="pv-lg"><i class="fa fa-user-md fa-5x" aria-hidden="true" style="color: #6497B1; margin-bottom: 20px;"></i></div>
+                                <h3 class="m0 text-bold" style="margin-top: -15px; font-size: 35px;"><b>{{$clinic_data->name}}</b></h3>
+    
+                                {{-- <h4 class="m0 text-bold">Rating: {{$rate}}</h4> --}}
+                                <span id=stars></span><br>
+                                <span class="stars" value="{{$rate}}">
+                                    
+                                </span>
+                                <b>Rating: {{number_format($rate,2)}}</b>
                                 
-                            </span>
-                            <b>Rating: {{number_format($rate,2)}}</b>
-                            
-                            <input type="hidden" name="rates" value="{{$rate}}">  
-                            
-                        
-                            <div class="mv-lg" style="margin-top: 15px;">
-                                <p>Hello, I'm a just a dummy contact in your contact list and this is my presentation text. Have fun!</p>
-
-                            </div>
-                            
-                        </div>
-                    </div>
-
-                     {{-- appointment --}}
-                     <div class="panel panel-default hidden-xs hidden-sm" style="padding: 10px;">
-                        <div class="panel-heading">
-                            <div class="panel-title text-center">
-                    
-                                <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#demo-modal" style="margin-bottom: 5px;"><i class="fa fa-calendar-check-o" aria-hidden="true"></i><b> : Get Appointment from this Clinic</b></button>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                           
-                        </div>
-                    </div>
-
-                    {{-- <div class="panel panel-default hidden-xs hidden-sm" style="padding: 10px;">
-                        <div class="panel-heading">
-                            <div class="panel-title text-center">
+                                <input type="hidden" name="rates" value="{{$rate}}">  
                                 
-                                <div class="container">
-                                    <div class="timetable-img text-center">
-                                        <img src="img/content/timetable.png" alt="">
-                                    </div>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered text-center">
-                                            <thead>
-                                                <tr class="">
-                                             
-                                                    <th class="text-uppercase" style="background-color: #AAE3A7">M</th>
-                                                    <th class="text-uppercase" style="background-color: #F2F1D1">T</th>
-                                                    <th class="text-uppercase" style="background-color: #F1C0A0">W</th>
-                                                    <th class="text-uppercase" style="background-color: #86B6C9">Th</th>
-                                                    <th class="text-uppercase" style="background-color: #FCFC99">F</th>
-                                                    <th class="text-uppercase" style="background-color: #FFCED4">Sa</th>
-                                                    <th class="text-uppercase" style="background-color: #D0E5FA">S</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div class="margin-10px-top font-size14">9:00-10:00</div>
-                                                    </td>
-                                                    <td>
-                                                      
-                                                        <div class="margin-10px-top font-size14">9:00-10:00</div>
-                                                       
-                                                    </td>
-                                                    <td>
-                                                        
-                                                        <div class="margin-10px-top font-size14">9:00-10:00</div>
-                                                       
-                                                    </td>
-                    
-                                                    <td>
-                                                    
-                                                        <div class="margin-10px-top font-size14">9:00-10:00</div>
-                                                      
-                                                    </td>
-                                                    <td>
-                                                       
-                                                        <div class="margin-10px-top font-size14">9:00-10:00</div>
-                                                        
-                                                    </td>
-                                                    <td>
-                                                       
-                                                        <div class="margin-10px-top font-size14">9:00-10:00</div>
-                                                       
-                                                    </td>
-                                                    <td>
-                                                        
-                                                        <div class="margin-10px-top font-size14">9:00-10:00</div>
-                                                        
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                            
+                                <div class="mv-lg" style="margin-top: 15px;">
+                                    <p>Hello, I'm a just a dummy contact in your contact list and this is my presentation text. Have fun!</p>
+    
                                 </div>
                                 
                             </div>
                         </div>
+    
+                         {{-- appointment --}}
+                         <div class="panel panel-default hidden-xs hidden-sm" style="padding: 10px;">
+                            <div class="panel-heading">
+                                <div class="panel-title text-center">
+                        
+                                    <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#demo-modal" style="margin-bottom: 5px;"><i class="fa fa-calendar-check-o" aria-hidden="true"></i><b> : Get Appointment from this Clinic</b></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                               
+                            </div>
+                        </div>
+                    {{-- </div> --}}
+
+                   {{-- mapping --}}
+                    <div class="panel panel-default hidden-xs hidden-sm" style="padding: 10px;">
+                        <div class="panel-heading">
+                            <div class="panel-title text-center">
+                              
+                                <div id="map" style="width:100%;height:500px;"></div>
+                                {{-- <div id="msg"></div> --}}
+
+                            </div>
+                        </div>
                         <div class="panel-body">
                            
                         </div>
-                    </div> --}}
+                    </div>
+
+
+                    {{-- distance --}}
+                    <div class="panel panel-default hidden-xs hidden-sm" style="padding: 10px;">
+                        <div class="panel-heading">
+                            <div class="panel-title text-center">
+                              
+                              
+                                <div id="msg"></div>
+
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                        </div>
+                    </div>
+                
+                  
 
                    
                     
@@ -142,29 +105,111 @@
                                                 <i class="fa fa-info fa-lg" aria-hidden="true"></i>
                                             </div>
                                             <h5 style="color: #6497B1; font-size:20px; font-weight: semibold;">Clinic Information</h5>
-                                            <p>Type: {{$clinic_type->type_of_clinic}} Clinic</p>
+
+                                            <table class="table">
+                                                <tbody>
+                                                  <tr>
+                                                    <th scope="row">Type:</th>
+                                                    <td> {{$clinic_type->type_of_clinic}} Clinic</td>
+                                                   
+                                                  </tr>
+                                                  <tr>
+                                                    <th scope="row">Address: </th>
+                                                    <td>{{$clinic_address->address_line_1}}, {{$clinic_address->address_line_2}}</td>
+                                                   
+                                                  </tr>
+                                                  <tr>
+                                                    <th scope="row">Phone: </th>
+                                                    <td>{{$clinic_data->phone}}</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <th scope="row">Telephone: </th>
+                                                    <td>{{$clinic_data->telephone}}</td>
+                                                  </tr>
+                                                </tbody>
+                                            </table>
+
+
+                                            {{-- <p>Type: {{$clinic_type->type_of_clinic}} Clinic</p>
                                             <p>Address: {{$clinic_address->address_line_1}}, {{$clinic_address->address_line_2}}</p>
                                             <p>Phone: {{$clinic_data->phone}}</p>
-                                            <p>Telephone: {{$clinic_data->telephone}}</p>
+                                            <p>Telephone: {{$clinic_data->telephone}}</p> --}}
                                         </li>
                                         <li>
                                             <div class="icon">
                                                 <i class="fa fa-medkit fa-lg" aria-hidden="true"></i>
                                             </div>
-                                            <h5 style="color: #6497B1; font-size:20px; font-weight: semibold;">Clinic Services:</h5>
-                                            @foreach($services as $service)
+                                            <h5 style="color: #6497B1; font-size:18px; font-weight: semibold;">Clinic Services:</h5>
+
+                                            <table class="table">
+                                                <tbody>
+                                                    @foreach($services as $service)
+                                                        <tr>
+                                                            <th scope="row">- {{ $service->name }}</th>
+                                                            <td> <b>Price:</b> {{ $service->min_price }} - {{ $service->max_price }}</td>
+                                                        
+                                                        </tr>
+                                                    @endforeach
+
+                                                </tbody>
+                                            </table>
+
+
+                                            {{-- @foreach($services as $service)
                                                 <p>- {{ $service->name }} | <b>Price:</b> {{ $service->min_price }} - {{ $service->max_price }}</p>
-                                            @endforeach
+                                            @endforeach --}}
                                             
                                         </li>
                                         <li>
                                             <div class="icon">
                                                 <i class="fa fa-archive fa-lg" aria-hidden="true"></i>
                                             </div>
-                                            <h5 style="color: #6497B1; font-size:19px; font-weight: semibold;">Clinic Packages:</h5>
-                                            @foreach($packages as $package)
+                                            <h5 style="color: #6497B1; font-size:18px; font-weight: semibold;">Clinic Packages:</h5>
+
+                                            <table class="table">
+                                                <tbody>
+                                                    @foreach($packages as $package)
+
+                                                        <tr>
+                                                            <th scope="row">- {{ $package->name }}</th>
+                                                            <td> <b>Price:</b> {{ $package->min_price }}</td>
+                                                        
+                                                        </tr>
+                                                    @endforeach
+
+                                                </tbody>
+                                            </table>
+
+
+                                            {{-- @foreach($packages as $package)
                                                 <p>- {{ $package->name }} | <b>Price:</b> {{ $package->min_price }}</p>
-                                            @endforeach
+                                            @endforeach --}}
+                                        </li>
+
+                                        <li>
+                                            <div class="icon">
+                                                <i class="fa fa-user-md fa-lg" aria-hidden="true"></i>
+                                            </div>
+                                            <h5 style="color: #6497B1; font-size:18px; font-weight: semibold;">Clinic Doctors:</h5>
+
+                                            <table class="table">
+                                                <tbody>
+                                                    @foreach($doctor as $doctors)
+                                                    <tr>
+                                                        <th scope="row">- {{ $doctors->fullname }}</th>
+                                                        <td> <b>Time Availability :</b> {{  date("h:i A", strtotime($doctors->min_time)) }} - {{  date("h:i A", strtotime($doctors->max_time)) }}</td>
+                                                    
+                                                        
+                                                    </tr>
+                                                    @endforeach
+
+                                                </tbody>
+                                            </table>
+
+
+                                            {{-- @foreach($packages as $package)
+                                                <p>- {{ $package->name }} | <b>Price:</b> {{ $package->min_price }}</p>
+                                            @endforeach --}}
                                         </li>
                                     </ul>
                                 </div>
@@ -209,34 +254,33 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                   
                                                     <tr>
                                                         <td>
                                                             <div class="margin-10px-top font-size14">{{  date("h:i A", strtotime($avail[0]->min)) }}-{{  date("h:i A", strtotime($avail[0]->max)) }}</div>
                                                             {{-- <div class="font-size13 text-muted">Status : {{$avail[0]->status}}</div> --}}
                                                             @if ($avail[0]->status == "on")
-                                                                <div class="font-size13 text-muted">Status : Open</div>
+                                                                <div class="font-size13 text-muted"><b>Status: Open</b></div>
                                                             @else
-                                                                <div class="font-size13 text-muted">Status : Close</div>
+                                                                <div class="font-size13 text-muted"><b>Status: Close</b></div>
                                                             @endif
                                                         </td>
                                                         <td>
                                                             {{-- <span class="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Dance</span> --}}
                                                             <div class="margin-10px-top font-size14">{{  date("h:i A", strtotime($avail[1]->min)) }}-{{  date("h:i A", strtotime($avail[1]->max)) }}</div>
-                                                            {{-- <div class="font-size13 text-muted">Status : {{$avail[1]->status}}</div> --}}
                                                             @if ($avail[1]->status == "on")
-                                                                <div class="font-size13 text-muted">Status : Open</div>
+                                                                <div class="font-size13 text-muted"><b>Status: Open</b></div>
                                                             @else
-                                                                <div class="font-size13 text-muted">Status : Close</div>
+                                                                <div class="font-size13 text-muted"><b>Status: Close</b></div>
                                                             @endif
                                                         </td>
                                                         <td>
                                                             
                                                             <div class="margin-10px-top font-size14">{{  date("h:i A", strtotime($avail[2]->min)) }}-{{  date("h:i A", strtotime($avail[2]->max)) }}</div>
-                                                            {{-- <div class="font-size13 text-muted">Status : {{$avail[2]->status}}</div> --}}
                                                             @if ($avail[2]->status == "on")
-                                                                <div class="font-size13 text-muted">Status : Open</div>
+                                                                <div class="font-size13 text-muted"><b>Status: Open</b></div>
                                                             @else
-                                                                <div class="font-size13 text-muted">Status : Close</div>
+                                                                <div class="font-size13 text-muted"><b>Status: Close</b></div>
                                                             @endif
                                                            
                                                         </td>
@@ -244,25 +288,41 @@
                                                         <td>
                                                         
                                                             <div class="margin-10px-top font-size14">{{  date("h:i A", strtotime($avail[3]->min)) }}-{{  date("h:i A", strtotime($avail[3]->max)) }}</div>
-                                                            <div class="font-size13 text-muted">Status : {{$avail[3]->status}}</div>
+                                                            @if ($avail[3]->status == "on")
+                                                                <div class="font-size13 text-muted"><b>Status: Open</b></div>
+                                                            @else
+                                                                <div class="font-size13 text-muted"><b>Status: Close</b></div>
+                                                            @endif
                                                           
                                                         </td>
                                                         <td>
                                                            
                                                             <div class="margin-10px-top font-size14">{{  date("h:i A", strtotime($avail[4]->min)) }}-{{  date("h:i A", strtotime($avail[4]->max)) }}</div>
-                                                            <div class="font-size13 text-muted">Status : {{$avail[4]->status}}</div>
+                                                            @if ($avail[4]->status == "on")
+                                                                <div class="font-size13 text-muted"><b>Status: Open</b></div>
+                                                            @else
+                                                                <div class="font-size13 text-muted"><b>Status: Close</b></div>
+                                                            @endif
                                                             
                                                         </td>
                                                         <td>
                                                            
                                                             <div class="margin-10px-top font-size14">{{  date("h:i A", strtotime($avail[5]->min)) }}-{{  date("h:i A", strtotime($avail[5]->max)) }}</div>
-                                                            <div class="font-size13 text-muted">Status : {{$avail[5]->status}}</div>
+                                                            @if ($avail[5]->status == "on")
+                                                                <div class="font-size13 text-muted"><b>Status: Open</b></div>
+                                                            @else
+                                                                <div class="font-size13 text-muted"><b>Status: Close</b></div>
+                                                            @endif
                                                            
                                                         </td>
                                                         <td>
                                                             
                                                             <div class="margin-10px-top font-size14">{{  date("h:i A", strtotime($avail[6]->min)) }}-{{  date("h:i A", strtotime($avail[6]->max)) }}</div>
-                                                            <div class="font-size13 text-muted">Status : {{$avail[6]->status}}</div>
+                                                            @if ($avail[6]->status == "on")
+                                                                <div class="font-size13 text-muted"><b>Status: Open</b></div>
+                                                            @else
+                                                                <div class="font-size13 text-muted"><b>Status: Close</b></div>
+                                                            @endif
                                                             
                                                         </td>
                                                     </tr>
@@ -365,6 +425,8 @@
 @endsection
 @section('jsScript')
     <script src="{{ URL::asset('js/customer/clinic_rate.js') }}"></script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places"></script>
+    <script src="{{ URL::asset('js/customer/mail_map.js') }}"></script>
 @endsection
 
 

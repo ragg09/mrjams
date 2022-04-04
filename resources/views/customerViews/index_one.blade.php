@@ -33,6 +33,14 @@
             <label for="floatingInput">Search landmark near to your location</label>
           </div>
 
+          {{-- <select id="ClinicType" style="margin: 10px; background-color: #B3CDE0; padding:5px;">
+            <option value="ClinicTypes">Clinic Types</option> 
+            <option value="1">Dental</option> 
+            <option value="2">Medical</option> 
+          </select> --}}
+
+
+
           <div id="map"></div>
         </div>
           <br><br>
@@ -155,13 +163,38 @@
     </section>
 
 @include('customerViews.footer.footer1')
+{{-- 
+<button onclick="getLocation()">Try It</button>
+
+<p id="demo"></p>
+<p id="demos"></p> --}}
+
+
 @endsection
 @section('jsScript')
-
-<script async src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places">
-</script>
-  
+  <script async src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places"></script>
   <script src="{{ URL::asset('js/customer/map.js') }}"></script>
+
+  {{-- <script>
+    var x = document.getElementById("demo");
+    var y = document.getElementById("demos");
+    
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else { 
+        x.innerHTML = "Geolocation is not supported by this browser.";
+        y.innerHTML = "Geolocation is not supported by this browsers.";
+      }
+    }
+    
+    function showPosition(position) {
+      x.innerHTML = "Latitude: " + position.coords.latitude;
+      y.innerHTML ="Longitude: " + position.coords.longitude;
+
+    }
+  </script> --}}
+
 @endsection
 
 

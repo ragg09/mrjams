@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Messages;
 use App\Models\User_address;
 use App\Models\User_as_customer;
+use App\Models\User_as_clinic;
 use App\Models\User;
+use App\Models\Clinic_types;
 
 use DateTime;
 
@@ -23,7 +25,7 @@ class AnnouncementController extends Controller
     {
         // Admins Announcement to Patient and All
 
-        $announcePatient = Messages::whereIn('receiver', ['all', 'patient'])->get();
+        $announcePatient = Messages::whereIn('receiver', ['all', 'patient'])->orderBy('id', 'desc')->get();
 
         $user = User::where('email', '=',  Auth::user()->email)->first();
         $customer = User_as_customer::where('users_id', '=', $user->id)->first();
@@ -85,7 +87,25 @@ class AnnouncementController extends Controller
      */
     public function edit($id)
     {
-        //
+        //Direction API
+
+        $clinic = User_As_clinic::where('id', '=', $id)->first();
+        $clinic_type = Clinic_types::where('id', '=', $clinic->clinic_types_id)->first();
+        $clinic_add = User_address::where('id', '=', $clinic->user_address_id)->first();
+   
+        $clinic_data[] = (object) array(  
+                    "id" => $clinic->id, 
+                    "name" => $clinic->name,
+                    "type" => $clinic_type->type_of_clinic,
+                    "longitude" => $clinic_add->longitude,
+                    "latitude"=> $clinic_add->latitude,
+                    "city" => $clinic_add->city,
+                    "zip_code" => $clinic_add->zip_code
+        );
+
+        // echo json_encode($data);
+
+        return response()->json(['clinic_data'=>$clinic_data]);
     }
 
     /**

@@ -21,8 +21,10 @@ $(function(){
                     });
                 }else{      
                     // window.location.href = "/customer/announcement"; 
-                    $("#announce").load(window.location + " #announce");
                     $("#rate-modal").modal('toggle');
+                    $("#main_form").trigger('reset');
+                    $("#announce").load(window.location + " #announce");
+                     
                     bootstrapAlert("Your Rating to System is Successfully Created!", "warning", 400);
                 }
             }

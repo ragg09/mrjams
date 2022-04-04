@@ -64,6 +64,33 @@ class ClinicListController extends Controller
                 );
 
                 $count++;
+            }elseif($clinics &&  isset($service)){
+                $all[] = (object) array(
+                    "id" => $key->id,
+                    "name" => $key->name,
+                    "phone" => $key->phone,
+                    "telephone" => $key->telephone,
+                    "type_of_clinic" => $clinic_types->type_of_clinic,
+                    "address_line_1" => $clinic_address->address_line_1,
+                    "address_line_2" => $clinic_address->address_line_2,
+                    "package" => "no packages",
+                    "service" => $service->name
+                );
+
+                $count++;
+            }elseif ($clinics &&  isset($package)){
+                $all[] = (object) array(
+                    "id" => $key->id,
+                    "name" => $key->name,
+                    "phone" => $key->phone,
+                    "telephone" => $key->telephone,
+                    "type_of_clinic" => $clinic_types->type_of_clinic,
+                    "address_line_1" => $clinic_address->address_line_1,
+                    "address_line_2" => $clinic_address->address_line_2,
+                    "package" => $package->name,
+                );
+
+                $count++;
             }
         }
 
@@ -85,20 +112,6 @@ class ClinicListController extends Controller
      */
     public function store(Request $request)
     {
-
-
-        // $user = User::where('email', '=',  Auth::user()->email)->first();
-        // $clinic = User_as_clinic::where('users_id', '=', $user->id)->first();
-
-        // if ($request->ajax()) {
-        //     $query = $request->get('query');
-        //     $data = User_as_clinic::query()->where('name', 'LIKE', "%{$query}%")
-        //         ->where('id', '=', $clinic->id)
-        //         ->get();
-
-        // }
-
-        // return  response()->json(['all' =>  $query]);
 
 
     }
@@ -131,16 +144,43 @@ class ClinicListController extends Controller
                         $package = Packages::where('user_as_clinic_id', '=', $key->id)->first();
                         $service = Clinic_services::where('user_as_clinic_id', '=', $key->id)->first();
 
-                        $ClinicAdd[] = (object) array(
-                            "id" => $key->id,
-                            "name" => $data[$count]->name,
-                            "addLine1" => $address->address_line_1,
-                            "addLine2" => $address->address_line_2,
-                            "type" => $type->type_of_clinic,
-                            "package" => $package->name,
-                            "service" => $service->name
-                        );
-                        $count++;
+                        if ($data &&  isset($package) && isset($service)) {
+                            $ClinicAdd[] = (object) array(
+                                "id" => $key->id,
+                                "name" => $data[$count]->name,
+                                "addLine1" => $address->address_line_1,
+                                "addLine2" => $address->address_line_2,
+                                "type" => $type->type_of_clinic,
+                                "package" => $package->name,
+                                "service" => $service->name
+                            );
+                            $count++;
+                        }elseif($data &&  isset($package)){
+                            $ClinicAdd[] = (object) array(
+                                "id" => $key->id,
+                                "name" => $data[$count]->name,
+                                "addLine1" => $address->address_line_1,
+                                "addLine2" => $address->address_line_2,
+                                "type" => $type->type_of_clinic,
+                                "package" => $package->name
+                               
+                            );
+                            $count++;
+                        }elseif($data && isset($service)){
+                            $ClinicAdd[] = (object) array(
+                                "id" => $key->id,
+                                "name" => $data[$count]->name,
+                                "addLine1" => $address->address_line_1,
+                                "addLine2" => $address->address_line_2,
+                                "type" => $type->type_of_clinic,
+                                "service" => $service->name
+                            );
+                            $count++;
+                        }
+                        
+
+
+
                     }
 
 
@@ -210,6 +250,7 @@ class ClinicListController extends Controller
     public function edit($id)
     {
         //
+        
     }
 
     /**

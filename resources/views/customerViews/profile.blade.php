@@ -7,8 +7,8 @@
 @section('content')
 @include('customerViews.header.header3')
 
-        <div class="container" style="margin-top: 20px; ">
-            <div class="main-body" id="profile" >
+        <div class="container" style="margin-top: 20px; " id="profile">
+            <div class="main-body">
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="card" style="padding:30px;">
@@ -31,9 +31,11 @@
                     </div>
                     <div class="col-lg-8">
 
-                        <form action="/customer/customerinfo/{{Auth::user()->id }}" method="POST" id="main_form">
+                        <form action="/customer/customerinfo/{{Auth::user()->id}}" method="POST" id="main_form">
                             @csrf
                             {{method_field('PUT')}}
+
+                            {{-- san js bka wala namn talga problema lags, try mo mag clear cache route config --}}
 
                             <div class="card" style="padding:30px;">
                                 <div class="card-body" style="width: 100%">
@@ -122,5 +124,7 @@
 @include('customerViews.footer.footer2')
 @endsection
 @section('jsScript')
+
+{{-- san ung controllert --}}
     <script src="{{ URL::asset('js/customer/profile.js') }}"></script>
 @endsection

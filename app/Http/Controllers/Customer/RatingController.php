@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User_as_customer;
 use App\Models\User;
 use App\Models\User_as_clinic;
+use App\Models\Appointments;
+use App\Models\Receipt_orders;
+use App\Models\Appointment_status;
 
 
 use Illuminate\Support\Facades\Validator;
@@ -56,10 +59,13 @@ class RatingController extends Controller
                 return response()->json(['status' => 0, 'error' => $validator->errors()->toArray(), 'request' => $request->all()]);
             } else {
 
+            $getAdmin = User::where("role", "=", "admin")->first();
+            $adminID = $getAdmin->id;
+
             $rating = new Ratings();
             $rating->rating = $request->rating;
             $rating->comment =  "FEEDBACK ~~ " . $request->area . ' ~@~' . $request->message;
-            $rating->users_id_ratee = 1;
+            $rating->users_id_ratee = $adminID;
             $rating->users_id_rater = $request->rater_id;
             $rating->save();
             

@@ -36,6 +36,72 @@ class MailController extends Controller
      */
     public function create(Request $request)
     {
+        // echo("hello");
+        // // Search Clinic Appointment
+
+        $user = User::where('email', '=',  Auth::user()->email)->first();
+        $customer = User_as_customer::where('users_id', '=', $user->id)->first();
+
+        // echo($customer);
+
+
+        if ($request->ajax()) {
+           
+            $user_id = $customer->id;
+            $query = $request->get('query');
+            $data = User_as_clinic::query()->where('name', 'LIKE', "%{$query}%")->first();
+
+            // $clinic_id = $data;
+            if($data){
+
+                $receipt_data = Receipt_orders::where('user_as_clinic_id', '=', $data->id)
+                    ->where('user_as_customer_id', '=',  $user_id)
+                    ->orderBy('id', 'desc')
+                    ->get();
+
+                // echo($receipt_data);
+                $count = 0;
+                if (count($receipt_data) > 0) {
+                    foreach ($receipt_data as $key) {
+                        $all_appointments = Appointments::where('receipt_orders_id', '=',  $key->id)->first();
+
+                        if ($all_appointments->appointment_status_id != 7) {
+                            $all_clinics = User_as_clinic::where('id', '=',  $key->user_as_clinic_id)->first();
+                            $stat_id =  $all_appointments->appointment_status_id;
+                            $stat = Appointment_status::where('id', '=', $stat_id)->first();
+        
+                            // if($all_appointments){
+                            $all[] = [
+                                "created_at" =>  $all_appointments->created_at, //galing sa appointment table
+                                "appointed_at" => $all_appointments->appointed_at,
+                                "time" =>  $all_appointments->time,
+                                "status" =>  $all_appointments->appointment_status_id,
+                                "remark" => $stat->status,
+                                "name" => $all_clinics->name, //galing sa clinic table
+                                "id" =>  $all_appointments->id
+                            ];
+                            $count++;
+                            // }
+        
+                        }
+                    }
+
+
+                    if ($count > 0) {
+                        return response()->json(['all' => $all, 'status' => 1]);
+                    } else {
+                        return response()->json(['status' => 0]);
+                    } 
+                }
+            }
+
+               
+
+            // }
+
+            
+        }
+
     }
 
     /**
@@ -46,8 +112,7 @@ class MailController extends Controller
      */
     public function store(Request $request)
     {
-        //
-
+       
     }
 
     /**
@@ -151,7 +216,12 @@ class MailController extends Controller
             } else {
                 return response()->json(['status' => 0, 'customer' => $customer]);
             }
-        } else {
+        } else if (strpos($id, "clinic")){
+            // echo("hello");
+
+            
+
+        }else {
 
             // Details of Appointment
 
@@ -200,6 +270,11 @@ class MailController extends Controller
      */
     public function edit($id)
     {
+
+        
+         
+ 
+
     }
 
     /**
@@ -211,6 +286,7 @@ class MailController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
     }
 
     /**

@@ -3,7 +3,7 @@ var map, marker, autocomplete;
 
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 14,
+        zoom: 13,
         center: { lat: 14.50453805256329, lng: 121.05283152757798 }, //papalitan to ng location ng user.
     });
 
@@ -12,12 +12,47 @@ function initMap() {
         type: "GET", 
         url: "/customer/customermap/create",
         success: function(data){
-        console.log(data);
+        // console.log(data);
+
+          infoWindow = new google.maps.InfoWindow();
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
+
+                var pointAlat = position.coords.latitude;
+                var pointAlng = position.coords.longitude;
+
+                markerA = new google.maps.Marker({
+                    position: {lat: parseFloat(pointAlat), lng: parseFloat(pointAlng)},
+                    map: map,
+                    title: "Hello World!",
+                });
+                
+
+                // infoWindow.setPosition(pos);
+                // infoWindow.setContent("Your Location.");
+                infoWindow.open(map);
+                map.setCenter(pos);
+
+                console.log(pointAlat);
+            },
+            () => {
+                handleLocationError(true, infoWindow, marker, map.getCenter());
+            }
+            );
+        }
+            
+            
         
           $.each(data.data, function(key, val){
               // console.log(val.latitude);
                 new google.maps.Marker({
-                    position: { lat: parseFloat(val.latitude), lng: parseFloat(val.longitude) },
+                    position: { lat: parseInt(val.latitude), lng: parseInt(val.longitude) },
                     map,
                     icon: {
                         url: "/images/mrjams/mr-jams-logo.png",
@@ -30,7 +65,7 @@ function initMap() {
                 });
   
                 var marker = new google.maps.Marker({
-                    position: { lat: parseFloat(val.latitude), lng: parseFloat(val.longitude) },
+                    position: { lat: val.latitude, lng: val.longitude },
                     map:map,
                     icon: {
                         url: "/images/mrjams/mr-jams-logo.png",
@@ -111,7 +146,7 @@ function initMap() {
                 $.each(data.data, function(key, val){
                     // console.log(val.latitude);
                     new google.maps.Marker({
-                        position: { lat: parseFloat(val.latitude), lng: parseFloat(val.longitude) },
+                        position: { lat: parseInt(val.latitude), lng: parseInt(val.longitude) },
                         map,
                         icon: {
                             url: "/images/mrjams/mr-jams-logo.png",
@@ -124,7 +159,7 @@ function initMap() {
                     });
         
                     var marker = new google.maps.Marker({
-                        position: { lat: parseFloat(val.latitude), lng: parseFloat(val.longitude) },
+                        position: { lat: val.latitude, lng: val.longitude },
                         map:map,
                         icon: {
                             url: "/images/mrjams/mr-jams-logo.png",
@@ -157,5 +192,6 @@ function initMap() {
             });
       
     });
+
    
 }

@@ -8,7 +8,7 @@
       <li style="padding-top:15px;"><a href="{{route('customer.clinicList.index')}}" style="text-decoration: none; color:black;">Clinics</a></li>
    
       {{-- <li style="padding-top:15px;"><a href="{{route('customer.contact')}}" style="text-decoration: none; color:black;">Contact</a></li> --}}
-      <li style="padding-top:15px;"><a href="{{route('customer.mail.index')}}" style="text-decoration: none; color:black;">Mail</a></li>
+      <li style="padding-top:15px;"><a href="{{route('customer.mail.index')}}" style="text-decoration: none; color:black;">Appointments</a></li>
 
       <li style="padding-top:8px;"><a href="/customer/customerinfo/create" style="text-decoration: none; color:black;">
         {{-- {{ $customer->lname }},{{ $customer->fname }} --}}
@@ -25,4 +25,6 @@
                       
   
   </nav>
+  
 </header>
+
