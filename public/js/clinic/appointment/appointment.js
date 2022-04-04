@@ -134,7 +134,7 @@ $(function(){
                 // console.log(moment(timedate[0]+"," +timedate[1]).add(5, 'hours').format('h:mm a'));
 
                 if(timedate[1] >= data.specialist.min_time && timedate[1] <= data.specialist.max_time){
-                    console.log("SAKOP NG ORAS NI DR!");
+                    console.log("SAKOP NG ORAS NI DR! PROCEED SA TRAPPING LOGIC");
                     //Within Specialist Time Range
 
                     if(data.specialist_appointments != ""){ //check if clinic has any appointments
@@ -147,14 +147,12 @@ $(function(){
                             
                             if($("#accept_modal_flatpicker").val() == val.datetime ){
                                 //disable button ng submit
-                                console.log($("#accept_modal_flatpicker").val() + " | " + val.datetime);
+                                //console.log($("#accept_modal_flatpicker").val() + " | " + val.datetime);
     
-                                console.log("ito ung nakuha na ung exact date at time");
+                                console.log("ito ung nakuha na ung exact date at time|| RED ERROR MESSAGE");
                                 
                                 $("#calendar_btn").attr("hidden", false);
-                                $("#calendar_btn").removeAttr("hidden");
                                 $("#accept_specialist_with_error").attr("hidden", false);
-                                $("#accept_specialist_with_error").removeAttr("hidden");
                                 $("#confirm_accept_btn_confirm").prop("disabled", true);
                             }else {
                                 if(selected_datetime > minus_one_hour && selected_datetime < plus_one_hour){
@@ -162,11 +160,9 @@ $(function(){
                                     console.log(val.datetime);
                                     console.log(selected_datetime);
                                     $("#accept_specialist_with_warning").attr("hidden", false);
-                                    $("#accept_specialist_with_warning").removeAttr("hidden");
     
                                     $("#reminder_time").text(moment(val.datetime).format('LL HH:mmA'));
                                     $("#confirm_accept_btn_confirm").prop("disabled", false);
-                                    $("#confirm_accept_btn_confirm").removeAttr("disabled");
                                     
                                 }else{
                                     var get_last = count_data - 1;
@@ -175,12 +171,11 @@ $(function(){
                                         
                                         if(timedate[0] != moment().format('YYYY-MM-DD')){
                                             // if no issue at all after looping through all of data in array
-                                            console.log("All goods lang");
+                                            console.log("All goods || no issue at all");
                                             $("#accept_specialist_with_warning").attr("hidden", true);
                                             $("#accept_specialist_with_error").attr("hidden", true);
                                             $("#calendar_btn").attr("hidden", true);
                                             $("#confirm_accept_btn_confirm").prop("disabled", false);
-                                            $("#confirm_accept_btn_confirm").removeAttr("disabled");
                                             //console.log(data.specialist_appointments.length);
                                         }     
                                     }
@@ -194,7 +189,6 @@ $(function(){
                         console.log("ITO NGA PUTANG INA!");
                         //No appointment at all
                         $("#confirm_accept_btn_confirm").prop("disabled", false);
-                        $("#confirm_accept_btn_confirm").removeAttr("disabled");
                     }
                     
 
