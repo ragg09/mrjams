@@ -152,7 +152,9 @@ $(function(){
                                 console.log("ito ung nakuha na ung exact date at time");
                                 
                                 $("#calendar_btn").attr("hidden", false);
+                                $("#calendar_btn").removeAttr("hidden");
                                 $("#accept_specialist_with_error").attr("hidden", false);
+                                $("#accept_specialist_with_error").removeAttr("hidden");
                                 $("#confirm_accept_btn_confirm").prop("disabled", true);
                             }else {
                                 if(selected_datetime > minus_one_hour && selected_datetime < plus_one_hour){
@@ -160,9 +162,11 @@ $(function(){
                                     console.log(val.datetime);
                                     console.log(selected_datetime);
                                     $("#accept_specialist_with_warning").attr("hidden", false);
+                                    $("#accept_specialist_with_warning").removeAttr("hidden");
     
                                     $("#reminder_time").text(moment(val.datetime).format('LL HH:mmA'));
                                     $("#confirm_accept_btn_confirm").prop("disabled", false);
+                                    $("#confirm_accept_btn_confirm").removeAttr("disabled");
                                     
                                 }else{
                                     var get_last = count_data - 1;
@@ -176,6 +180,7 @@ $(function(){
                                             $("#accept_specialist_with_error").attr("hidden", true);
                                             $("#calendar_btn").attr("hidden", true);
                                             $("#confirm_accept_btn_confirm").prop("disabled", false);
+                                            $("#confirm_accept_btn_confirm").removeAttr("disabled");
                                             //console.log(data.specialist_appointments.length);
                                         }     
                                     }
@@ -189,6 +194,7 @@ $(function(){
                         console.log("ITO NGA PUTANG INA!");
                         //No appointment at all
                         $("#confirm_accept_btn_confirm").prop("disabled", false);
+                        $("#confirm_accept_btn_confirm").removeAttr("disabled");
                     }
                     
 
