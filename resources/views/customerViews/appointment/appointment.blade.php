@@ -196,7 +196,7 @@
                                                 <tbody>
                                                     @foreach($doctor as $doctors)
                                                     <tr>
-                                                        <th scope="row">- {{ $doctors->fullname }}</th>
+                                                        <th scope="row">- {{ $doctors->specialization }} : {{ $doctors->fullname }}</th>
                                                         <td> <b>Time Availability :</b> {{  date("h:i A", strtotime($doctors->min_time)) }} - {{  date("h:i A", strtotime($doctors->max_time)) }}</td>
                                                     
                                                         

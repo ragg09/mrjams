@@ -22,11 +22,13 @@
             </form>
         @endif
 
-        <div class="m-3">
-            <a href="/clinic/print/{{ date("FY") }}_inventory" class="btn btn-primary" id="" target="_blank" title="Print Inventory">
-                Print <i class="fa fa-print" aria-hidden="true"></i>
-            </a>
-        </div>
+        @if (count($data) > 0)
+            <div class="m-3">
+                <a href="/clinic/print/{{ date("FY") }}_inventory" class="btn btn-primary" id="" target="_blank" title="Print Inventory">
+                    Print <i class="fa fa-print" aria-hidden="true"></i>
+                </a>
+            </div>
+        @endif
         
     </div>
 
