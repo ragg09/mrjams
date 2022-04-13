@@ -32,7 +32,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h3>Please put <i class="fa fa-map-marker" aria-hidden="true" style="color:red"></i> to your location</h3>  
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
                 </div>
                 
                 <div class="modal-body" id="map">
@@ -87,7 +87,7 @@
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="" placeholder="Clinic Name" name="name">
                         <label for="floatingInput">Clinic Name</label>
-                        <span class="text-danger error-text name_error"></span>
+                        <span class="text-warning error-text name_error"></span>
                     </div>
 
                     <div class="row">
@@ -95,14 +95,14 @@
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control " id="" placeholder="Phone Number" name="phone">
                                 <label for="floatingInput">Phone Number</label>
-                                <span class="text-danger error-text phone_error"></span>
+                                <span class="text-warning error-text phone_error"></span>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="" placeholder="Telephone (optional)" name="telephone">
                                 <label for="floatingInput">Telephone (optional)</label>
-                                <span class="text-danger error-text telephone_error"></span>
+                                <span class="text-warning error-text telephone_error"></span>
                             </div>
                         </div>
                     </div>
@@ -114,7 +114,7 @@
                                 <option value="{{$row->id}}">{{$row->type_of_clinic}}</option>
                             @endforeach
                         </select>
-                        <span class="text-danger error-text clinic_type_id_error"></span>
+                        <span class="text-warning error-text clinic_type_id_error"></span>
                     </div>
 
                     <div class="form-floating mb-3">
@@ -126,13 +126,13 @@
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="" placeholder="Address line 1" name="address_line_1">
                             <label for="floatingInput">Address line 1</label>
-                            <span class="text-danger error-text address_line_1_error"></span>
+                            <span class="text-warning error-text address_line_1_error"></span>
                         </div>
 
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="" placeholder="Address line 2" name="address_line_2">
                             <label for="floatingInput">Address line 2</label>
-                            <span class="text-danger error-text address_line_2_error"></span>
+                            <span class="text-warning error-text address_line_2_error"></span>
                         </div>
 
                         <div class="row">
@@ -140,7 +140,7 @@
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="" placeholder="City" name="city">
                                     <label for="floatingInput">City</label>
-                                    <span class="text-danger error-text city_error"></span>
+                                    <span class="text-warning error-text city_error"></span>
                                 </div>
                             </div>
 
@@ -148,10 +148,20 @@
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="" placeholder="Zipcode" name="zip_code">
                                     <label for="floatingInput">Zipcode</label>
-                                    <span class="text-danger error-text zip_code_error"></span>
+                                    <span class="text-warning error-text zip_code_error"></span>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row mt-2 mb-2" hidden id="put_location_first">
+                            <div class="col-12 w-75 mx-auto rounded" style="background: rgb(207, 0, 0)">
+                                <div class=" mx-auto p-1">
+                                    <p class="text-white text-center">
+                                        Search a land mark first and put pin on your location. Thank you.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>  
 
                         <div class="row">
                             <div class="col-lg-6">
@@ -172,6 +182,8 @@
                                     <button type="submit" class="form-control btn btn-primary" disabled id="register_btn">Register</button>
                                 </div>
                             </div>
+
+                            
                         </div>
 
                     </div>
@@ -192,19 +204,6 @@
 </script>
 
 <script src="{{ URL::asset('js/registration/clinic.js') }}">  
-</script>
-
-<script>
-    $(function(){
-        $('#terms_conditions').on('click', function(e){
-        
-        if ($(this).is(':checked')) {
-            $("#register_btn").prop("disabled", false);
-         }else{
-            $("#register_btn").prop("disabled", true);
-         }
-    });
-    })
 </script>
 
 </html>

@@ -25,6 +25,13 @@ class PatientDetailsController extends Controller
     {
         // $user = User::where('role','=',"clinic")->get();
         $patient = User_as_customer::all();
+
+        // if ($patient == 0) {
+        //     return view('adminViews.tablesPatient', ['patient' => 0]);
+        // } else {
+        //     return view('adminViews.tablesPatient', ['patient' => $patient]);
+        // }
+
         return view('adminViews.tablesPatient', ['patient' => $patient]);
 
         // return view('adminViews.tables');
@@ -109,7 +116,9 @@ class PatientDetailsController extends Controller
             //get data
             $patient = User_as_customer::findOrFail($id);
 
-            return response()->json(['patients' => $patient, 'avgRatingApps' => $avgRatingApp, 'appReceipt' => $appReceipt]);
+            $patientAdd = User_address::where('id','=', $patient->user_address_id)->first();
+
+            return response()->json(['patients' => $patient,'patientAdd' => $patientAdd, 'avgRatingApps' => $avgRatingApp, 'appReceipt' => $appReceipt]);
         } else {
             //get all appointments
             $getUserCustomer = User_as_customer::where('id', '=', $id)->first();
@@ -123,7 +132,9 @@ class PatientDetailsController extends Controller
             //get data
             $patient = User_as_customer::findOrFail($id);
 
-            return view('adminViews.layouts.user.userView', ['patient' => $patient, 'avgRatingApps' => $avgRatingApp, 'appReceipt' => $appReceipt]);
+            $patientAdd = User_address::where('id','=', $patient->user_address_id)->first();
+
+            return view('adminViews.layouts.user.userView', ['patient' => $patient,'patientAdd' => $patientAdd, 'avgRatingApps' => $avgRatingApp, 'appReceipt' => $appReceipt]);
         }
     }
 

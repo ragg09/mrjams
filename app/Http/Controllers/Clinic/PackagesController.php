@@ -33,7 +33,14 @@ class PackagesController extends Controller
         $equipments = Clinic_equipments::where('user_as_clinic_id', '=',  $clinic->id)->get();
         $data = Packages::where('user_as_clinic_id', '=',  $clinic->id)->get();
 
-        return view('clinicViews.packages.index', ['data' => $data, 'services' => $services, 'equipments' => $equipments]);
+        $logs = Logs::where('user_as_clinic_id', '=',  $clinic->id)
+            ->where('remark', '!=',  "notif")
+            ->where('remark', '!=',  "done_notif")
+            ->orderBy('id', 'desc')
+            ->take(10)
+            ->get();
+
+        return view('clinicViews.packages.index', ['data' => $data, 'services' => $services, 'equipments' => $equipments, 'logs' => $logs]);
     }
 
     /**
@@ -96,9 +103,9 @@ class PackagesController extends Controller
             }
 
             //checking logs limit 5000
-            $logs_count = Logs::where('user_as_clinic_id', '=',  $user->id)->count();
+            $logs_count = Logs::where('user_as_clinic_id', '=',  $clinic->id)->count();
             if ($logs_count == 5000) {
-                Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+                Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
             }
             //creating logs
             $logs = new Logs();
@@ -223,10 +230,10 @@ class PackagesController extends Controller
 
                 //creating logs
                 if (!($package_last_name->name == request('name'))) {
-                    $logs_count = Logs::where('user_as_clinic_id', '=',  $user->id)->count();
+                    $logs_count = Logs::where('user_as_clinic_id', '=',  $clinic->id)->count();
                     //checking logs limit 5000
                     if ($logs_count == 5000) {
-                        Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+                        Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
                     }
                     $logs = new Logs();
                     $logs->message = '"' . $package_last_name->name . '"' . " has changed into " . '"' . request('name') . '".';
@@ -238,10 +245,10 @@ class PackagesController extends Controller
                 }
 
                 if (!($package_last_name->min_price == request('min_price')) || !($package_last_name->max_price == request('max_price'))) {
-                    $logs_count = Logs::where('user_as_clinic_id', '=',  $user->id)->count();
+                    $logs_count = Logs::where('user_as_clinic_id', '=',  $clinic->id)->count();
                     //checking logs limit 5000
                     if ($logs_count == 5000) {
-                        Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+                        Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
                     }
                     $logs = new Logs();
                     $logs->message = $package_last_name->name . '\'s price: changed into' . ' "' . request('min_price') . ' - ' . request('max_price') . '"';
@@ -253,10 +260,10 @@ class PackagesController extends Controller
                 }
 
                 if (!($package_last_name->description == request('description'))) {
-                    $logs_count = Logs::where('user_as_clinic_id', '=',  $user->id)->count();
+                    $logs_count = Logs::where('user_as_clinic_id', '=',  $clinic->id)->count();
                     //checking logs limit 5000
                     if ($logs_count  == 5000) {
-                        Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+                        Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
                     }
                     $logs = new Logs();
                     $logs->message = '"' . $package_last_name->description . '"' . " has changed into " . '"' . request('description') . '".';
@@ -360,9 +367,9 @@ class PackagesController extends Controller
         $package->delete();
 
         //checking logs limit 5000
-        $logs_count = Logs::where('user_as_clinic_id', '=',  $user->id)->count();
+        $logs_count = Logs::where('user_as_clinic_id', '=',  $clinic->id)->count();
         if ($logs_count == 5000) {
-            Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+            Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
         }
         //creating logs
         $logs = new Logs();

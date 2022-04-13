@@ -31,7 +31,7 @@
                     <tr>
                     
                         {{-- <td class="align-middle">{{$row->ro_id}}</td> --}}
-                        <td class="align-middle text-center"><img class="rounded-circle" src="{{$row->user_avatar}}" alt="{{$row->user_avatar}}"></td>
+                        <td class="align-middle text-center"><img class="rounded-circle" src="{{$row->user_avatar}}" alt="&#9829;"></td>
                         <td class="align-middle text-center">{{$row->user_email}}</td>
                         <td class="align-middle text-center">{{date('M d, Y', strtotime($row->app_appointed_at)) }} {{ date('h:i A', strtotime($row->time))}}</td>
                         <td class="align-middle text-center">{{$row->ro_package_name}} {{ $row->ro_services_name  }}</td>

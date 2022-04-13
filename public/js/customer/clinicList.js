@@ -1,6 +1,7 @@
 $(function(){
     clinic_data();
 
+    // clinic List
     function clinic_data() {
         //alert('try');
         var id = 0;
@@ -9,7 +10,7 @@ $(function(){
             type: "GET",
             url: "/customer/clinicList/create",
             success: function(data){
-                console.log(data);
+                // console.log(data);
 
                 $('#customerName').text(data.customer.lname+', '+data.customer.fname);
 
@@ -104,12 +105,7 @@ $(function(){
                  url: "/customer/clinicList/"+id,
                  data: {query:query},
                  success: function(data){
-                     // console.log(data);
-                    
-                        //  $("#info").empty();
-                        //  $.each(data.ClinicAdd, function(index, val){
-                        //      $("#info").append('<div style="width:60%; margin-left: 20%; margin-right: 20%; padding-top:20px;"><h5 class="card-header" style="background-color:#B3CDE0; font-size: 15px; font-weight:bold;">'+val.type+' Clinic | Address: '+val.addLine1+', '+val.addLine2+'</h5><div class="card-body" style="text-align:center; width:100%; border-bottom: 5px solid #B3CDE0;"><h5 class="card-title" style="font-size: 45px;">'+val.name+'</h5><p class="card-text"><strong>Packages: </strong>'+val.package+'... | <strong>Services: </strong>'+val.service+'...</p><br><a href="/customer/appointment/'+val.id+'"  class="btn btn-primary" style="background-color:#6497B1; margin-top: 5px;">View More</a></div></div>');
-                        // });
+                    //  console.log(data);
 
                         if(data.status == 1){
 

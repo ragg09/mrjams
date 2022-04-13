@@ -10,8 +10,8 @@ use Illuminate\Http\Request;
 
 class Role_clinic
 {
-    
-    
+
+
     /**
      * Handle an incoming request.
      *
@@ -21,11 +21,16 @@ class Role_clinic
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::user()->role != "clinic"){
+        if (Auth::user()->role != "clinic") {
             //abort(403);
             return redirect()->back();
         }
-        
+
+        // if clinic is not verified
+        if (Auth::user()->status == "verifying") {
+            return redirect('/clinic_verification/verifying');
+        }
+
         return $next($request);
     }
 }

@@ -52,6 +52,7 @@
                                 @endforeach
                            </select>  
                            <input type="text" class="form-control" id="equipment_ids" name="equipment_ids" hidden>
+                           <span class="text-danger error-text equipment_ids_error"></span>
                     </div>
 
                     

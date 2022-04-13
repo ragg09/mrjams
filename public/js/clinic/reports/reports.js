@@ -19,10 +19,9 @@ $(function(){
             url: "/clinic/report/create",
             success: function(data){
                 console.log(data);
-                
 
                 //TOP APPOINTMENTS
-                if(data.appointment_stats.length >= 5){
+                if(data.appointment_stats && data.appointment_stats.length >= 5){
 
                     var total_incoming = 0;
                     var total_done = 0;
@@ -67,7 +66,7 @@ $(function(){
                 //^^TOP APPOINTMENTS
                 
                 //TOP SERVICES
-                if(data.services_stats.length >= 5){
+                if(data.services_stats && data.services_stats.length >= 5){
                     var sorted_services = data.services_stats;
                     sorted_services.sort(function(a, b){
                         var a1= a.count, b1= b.count;
@@ -117,7 +116,7 @@ $(function(){
                 //^^TOP SERVICES
 
                 //TOP PACKAGE
-                if(data.packages_stats.length >= 5){
+                if(data.packages_stats && data.packages_stats.length >= 5){
                     var sorted_packages = data.packages_stats;
                     sorted_packages.sort(function(a, b){
                         var a1= a.count, b1= b.count;
@@ -167,7 +166,15 @@ $(function(){
                 //^^TOP PACKAGE
 
                 //TOP MATERIAL
-                if(data.materials_stats.length >= 10){
+                if(data.materials_stats && data.materials_stats.length >= 10){
+
+                    //print summary visbility of condition passes
+                    if(data.appointment_stats.length >= 5 && data.services_stats.length >= 5 && data.packages_stats.length >= 5 &&data.materials_stats.length >= 10){
+                        $('#print_summary').removeAttr("hidden");
+                    }
+                    //print invetory visbility of condition passes
+                    $('#print_inventory').removeAttr("hidden");
+
                     var sorted_materials = data.materials_stats;
                     sorted_materials.sort(function(a, b){
                         var a1= a.count, b1= b.count;
@@ -225,5 +232,41 @@ $(function(){
             }
         });
     }
+    
+    var report_date = "";
+
+    $("#material_modal_flatpicker").flatpickr({
+        dateFormat: "Y-m-d",
+        inline: true,
+        mode: "range",
+        onChange: function(selectedDates, dateStr, instance) {
+            //console.log(dateStr);
+            report_date = dateStr;
+            $("#generate_report").attr("disabled", false)
+        }
+
+    });
+
+    // $(document).on('click', '#generate_report', function(e) {
+    //     e.preventDefault();
+    //     // alert("Asdasd")
+    //     //console.log(report_date)
+
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "/clinic/report/" + report_date,
+    //         beforeSend: function(){
+               
+    //         },
+    //         success: function(data) {
+    //           console.log(data);
+    //         },
+    //         error: function(error){
+    //             console.log('AJAX load did not work');
+    //             alert(error);
+    //         }
+    //     });
+
+    // });
 
 });

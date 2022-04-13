@@ -7,7 +7,7 @@
     
 @endsection
 
-{{ $message->message}}
+{{-- {{ $message->message}} --}}
 
 @section('content')
 <header class="header header-sticky mb-4"> 
@@ -38,7 +38,7 @@
 
                   {{-- <input class="form-control" id="disabledInput" type="text" disabled> --}}
                   <label class="form-label">Message/Announcement</label>
-                  <textarea class="form-control" id="messageBody" name="messageBody" rows="3">{{ $message->message}}</textarea>
+                  <textarea class="form-control" id="messageBody" name="messageBody" rows="3" disabled>{{ $message->message}}</textarea>
                   <label class="form-label">Reply</label>
                   <textarea class="form-control" id="messageReply" name="messageReply" rows="3"></textarea>
                   {{-- <input type="text" class="form-control" id="messageBody" aria-describedby="emailHelp"> --}}

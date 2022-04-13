@@ -58,6 +58,17 @@
                         </div>
                     </div>
 
+                    <div class="row mt-1" id="negotiation_specialist_with_error" hidden>
+                        <div class="col-12 w-100 mx-auto rounded" style="background: rgb(245, 6, 6)">
+                            <div class="mx-auto">
+                                <p class="text-white mt-1 ">
+                                    <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
+                                    Looks like the selected spcecialist is under negotiation of appointment on the selected time. Please select again.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row mt-1" id="accept_specialist_with_not_within_range" hidden>
                         <div class="col-12 w-100 mx-auto rounded" style="background: rgb(245, 6, 6)">
                             <div class="mx-auto">

@@ -16,6 +16,7 @@ use App\Models\Clinic_services;
 use App\Models\Packages;
 use App\Models\Appointment_status;
 use App\Models\Receipt_orders_has_clinic_services;
+use App\Models\Customer_logs;
 
 class MailController extends Controller
 {
@@ -48,7 +49,7 @@ class MailController extends Controller
         if ($request->ajax()) {
            
             $user_id = $customer->id;
-            $query = $request->get('query');
+            $query = strtoupper($request->get('query'));
             $data = User_as_clinic::query()->where('name', 'LIKE', "%{$query}%")->first();
 
             // $clinic_id = $data;
@@ -302,6 +303,28 @@ class MailController extends Controller
         $appointment = Appointments::find($id);
         $appointment->appointment_status_id = 7;
         $appointment->save();
+
+        $user = User::where('email', '=',  Auth::user()->email)->first();
+        $customer = User_as_customer::where('users_id', '=', $user->id)->first();
+
+        $receipt = Receipt_orders::where('id', '=', $appointment->receipt_orders_id)->first();
+
+        // customer logs
+        $customer_logs_count = Customer_logs::where('user_as_customer_id', '=',  $customer->id)->count();
+        if ($customer_logs_count == 5000) {
+            Customer_logs::where('user_as_customer_id', '=',  $customer->id)->first()->delete();
+        }
+
+        $clinic_name = User_as_clinic::where('id', '=', $receipt->user_as_clinic_id)->first();
+
+         //creating logs
+         $c_log = new Customer_logs();
+         $c_log->message = "You deleted an appointment from " . $clinic_name->name;
+         $c_log->remark = "notif";
+         $c_log->date =  date("m/d/Y");
+         $c_log->time = date("h:i a");
+         $c_log->user_as_customer_id = $customer->id;
+         $c_log->save();
 
         return response()->json(['all' => $appointment, 'status' => 'OK']);
     }

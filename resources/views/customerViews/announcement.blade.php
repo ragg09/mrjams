@@ -20,13 +20,13 @@
                             <div class="pv-lg"><img class="center-block img-responsive img-thumbnail thumb96" src="/images/mrjams/mr-jams-logo.png" alt="Contact"></div>
                             <h3 class="m0 text-bold" style="margin-top: -15px;"><img src="/images/mrjams/nameSystem.png" alt="" width="150" height="85"></h3>
                             <div class="mv-lg" style="margin-top: -15px;">
-                                <p>Hello, I'm a just a dummy contact in your contact list and this is my presentation text. Have fun!</p>
+                                <p>Appointment and Management System for Dental and Medical Clinics with Location-Based Mapping</p>
                                 <p><b>Email: </b> mr.jams1822@gmail.com</p>
                                 <p><b>Phone: </b> +63 1234567890</p>
                                 <p><b>Telephone: </b> +63 1234567890</p>
 
                             </div>
-                            {{-- <div class="text-center"><a class="btn btn-primary" href="">Send message</a></div> --}}
+                            
                         </div>
                     </div>
 
@@ -34,9 +34,6 @@
                     <div class="panel panel-default hidden-xs hidden-sm" style="padding: 10px;">
                         <div class="panel-heading">
                             <div class="panel-title text-center">
-                                {{-- <a href="#" data-toggle="modal" data-target="#rate-modal">
-                                <i class="fa fa-star" aria-hidden="true"></i><b> : How would you rate our System?</b>
-                                </a> --}}
                                 <button class="btn btn-transparent" data-bs-toggle="modal" data-bs-target="#rate-modal"><i class="fa fa-star" aria-hidden="true"></i><b> : How would you rate our System?</b></button>
                             </div>
                         </div>
@@ -45,7 +42,7 @@
                         </div>
                     </div>
 
-
+                    {{-- message admin --}}
                     <form action="/customer/announcement" method="POST" id="contact_form">
                         @csrf
                         <div class="panel panel-default hidden-xs hidden-sm" style="padding: 15px;">
@@ -53,9 +50,9 @@
                                 <div class="panel-title text-center" style="margin-bottom: 5px;"><i class="fa fa-envelope" aria-hidden="true"></i><b> : Want to Know More?? Drop Us a Mail</b></div>
                             </div>
                             <div class="panel-body" style="border-top: 5px solid #B3CDE0;">
-                                {{-- @foreach($customer as $customers) --}}
+                                
                                 <div class="form-group" style="margin-top: 15px;">
-                                    {{-- <label class="col-sm-2 control-label" for="inputContact1">Name</label> --}}
+                                    
                                     <div class="col-sm-12">
                                         <input class="form-control" id="inputContact1" type="text" placeholder="Name: {{$customer->fname}} {{$customer->lname}}" readonly>
                                     </div>
@@ -72,7 +69,7 @@
                                         <input class="form-control" id="inputContact1" type="text" placeholder="Phone: {{$customer->phone}}" readonly>
                                     </div>
                                 </div>
-                                {{-- @endforeach --}}
+                           
 
                                 <input type="text" name="users_id" value="{{Auth::user()->id}}" hidden>
     
@@ -90,6 +87,8 @@
                    
                     
                 </div>
+
+                {{-- Announcement List --}}
                 <div class="col-md-8">
                     <div class="panel panel-default">
                         <div class="panel-body" style="padding: 20px;">
@@ -128,7 +127,7 @@
         </div>
 
 
-
+        {{-- Rating System --}}
         <form action="/customer/rate" method="POST" id="main_form">
             @csrf
             <div class="modal fade" id="rate-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"  data-bs-backdrop="static" data-bs-keyboard="false">

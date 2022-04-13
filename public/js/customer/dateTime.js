@@ -2,9 +2,7 @@ $(function(){
 
     clinic_availability();
 
-
     // services multiselect
-
     $("#service_multiple").select2({ 
         dropdownParent: $('#services_multi'),
         placeholder: "Select Services",
@@ -21,7 +19,6 @@ $(function(){
     });
 
     // checkbox for packages
-
     var check = $("#CPackage");
     $("#CPackage").on('click',checkStatus);
 
@@ -180,8 +177,10 @@ $(function(){
                         onChange: function(selectedDates, dateStr, instance) {
                             //console.log(moment($("#accept_modal_flatpicker").val()).format('dddd'));
                             this_day = moment($("#accept_modal_flatpicker").val()).format('dddd');
+
+                            // if($("#CPackage").is(':checked') || ($("#CService").is(':checked') && ($("#service_ids").val() != ""))){
                             
-                            if($("#CPackage").is(':checked') || $("#CService").is(':checked')){
+                            if(($("#CPackage").is(':checked')) || ($("#CService").is(':checked') && ($("#service_ids").val() != ""))){
                                 $("#appointment_b").removeAttr("disabled");
                             }
     

@@ -18,7 +18,7 @@ class CreateClinicEquipmentsTable extends Migration
             $table->string('name', 45)->nullable();
             $table->string('quantity', 45)->nullable();
             $table->string('unit', 45)->nullable();
-            $table->string('type', 45);
+            $table->string('type', 45)->nullable();
             $table->integer('user_as_clinic_id')->index('fk_clinic_equipments_user_as_clinic1_idx');
         });
     }

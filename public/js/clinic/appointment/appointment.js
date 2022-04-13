@@ -119,6 +119,7 @@ $(function(){
 
                 $("#accept_specialist_with_warning").attr("hidden", true);
                 $("#accept_specialist_with_error").attr("hidden", true);
+                $("#negotiation_specialist_with_error").attr("hidden", true);
                 $("#calendar_btn").attr("hidden", true);
 
                 $(document).find('span.error-text').text('');
@@ -156,7 +157,7 @@ $(function(){
                                 $("#accept_specialist_with_error").attr("hidden", false);
                                 $("#confirm_accept_btn_confirm").prop("disabled", true);
                             }else {
-                                if(selected_datetime > minus_one_hour && selected_datetime < plus_one_hour){
+                                if(selected_datetime >= minus_one_hour && selected_datetime <= plus_one_hour){
                                     console.log("warning na ipapakita ung date na may appointment si dr pero pwede padin iaccept");
                                     console.log(val.datetime);
                                     console.log(selected_datetime);
@@ -186,8 +187,23 @@ $(function(){
     
                             
                         });
+
+                        
+                        
+                    }else if(data.specialist_nego != ""){
+                        //checking if specialist has negotion on selected time
+                        
+                        $.each(data.specialist_nego, function(key, val){ 
+                            
+                            if($("#accept_modal_flatpicker").val() == val.datetime ){
+                                // console.log("negotiation");
+                                $("#negotiation_specialist_with_error").attr("hidden", false);
+                                $("#confirm_accept_btn_confirm").prop("disabled", true);
+                            } 
+                        });
                     }else{
-                        console.log("ITO NGA PUTANG INA!");
+                        //console.log("ITO NGA PUTANG INA!");
+                        console.log("NO APPOINTMENT AT ALL");
                         //No appointment at all
                         $("#confirm_accept_btn_confirm").prop("disabled", false);
                     }
@@ -224,6 +240,8 @@ $(function(){
                 $("#specialist_div").empty();
                 $("#flatpicker").attr("hidden", true);
                 $("#calendar_btn").attr("hidden", true);
+
+                $('span.datetime_error').text("");
             },
             success: function(data) {
                 $("#response_waiting_accept").attr("hidden", true);
@@ -317,6 +335,10 @@ $(function(){
                 if(data.status == 0){
                     $('#calendar_btn').removeAttr('hidden');
                     $('span.datetime_error').text(data.datetime);
+                }
+                else if(data.status == 5){
+                    $('span.datetime_error').text(data.datetime);
+                    
                 }else{
                     // if(data.count_app == 0){
                     //     location.reload();
@@ -384,9 +406,11 @@ $(function(){
 
                 $("#appointment_table").load(window.location + " #appointment_table");
                 $("#decline_modal_up").modal('toggle');
-                // $("#equipment_table").load(window.location + " #equipment_table");
-                // $("#delete_modal_up").modal('toggle');
-                // bootstrapAlert(data.message, "danger", 200);
+                bootstrapAlert(data.message, "danger", 200);
+                setInterval( reload_page, 2000);
+                    function reload_page(){
+                        location.reload()
+                    }
             },
             error: function(error) {
               console.log('error');

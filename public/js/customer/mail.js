@@ -1,9 +1,14 @@
+
+
 $(function(){
     appointment_data();
 
      //calling reusable script
      $.getScript("../../js/customer/reusableFunction.js");
 
+    
+
+    // Appointment list
     function appointment_data() {
         //alert('try');
         var id = 0;
@@ -18,7 +23,6 @@ $(function(){
             url: "/customer/mail/"+id,
             success: function(data){
                 // console.log(data);
-                // console.log(data.customer);
                 $('#customerName').text(data.customer.lname+', '+data.customer.fname);
                 
 
@@ -33,6 +37,8 @@ $(function(){
 
 
                 }else{
+
+
 
                     $.each(data.all, function(index, val){
 
@@ -57,7 +63,7 @@ $(function(){
                             var d = date_appoint.getDate();
                             var m = strArray[date_appoint.getMonth()];
                             var y = date_appoint.getFullYear();
-                            return '' + (d <= 9 ? '0' + d : d) + '-' + m + '-' + y;
+                            return '' + m + '-' +(d <= 9 ? '0' + d : d) + '-' + y;
                         }
                         // console.log(dateToYMD(new Date(date_appoint)));
 
@@ -68,7 +74,7 @@ $(function(){
                             var d = create_appoint.getDate();
                             var m = strArray[create_appoint.getMonth()];
                             var y = create_appoint.getFullYear();
-                            return '' + (d <= 9 ? '0' + d : d) + '-' + m + '-' + y;
+                            return '' + m + '-' +(d <= 9 ? '0' + d : d) + '-' + y;
                         }
                         // console.log(datesToYMD(new Date(create_appoint)));
 
@@ -91,28 +97,36 @@ $(function(){
                             color = "danger";
                         }
 
-                        // $("#info").append('<tr><td class="view-message ">'+val.id+'</td><td class="inbox-small-cells"><i class="fa fa-star text-'+color+'" style="padding-left: 50px;"></i></td><td class="view-message "><b>'+val.name+'</b></td><td class="view-message "><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;">Your appointment is scheduled on <b>'+dateToYMD(new Date(date_appoint))+'</b> at <b>'+tConv24(time_appoint)+'</b>...</a></td><td class="view-message ">'+datesToYMD(new Date(create_appoint))+'</td><td class="view-message "><a href="#" id="deleteStat" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');
-                        // console.log(val.status);
-
                         if(val.status == 5){
-                            $("#info").append('<tr><th scope="row">'+val.id+'</th> <td><i class="fa fa-star text-'+color+'"style="padding-left: 50px;"></i></td> <td ><b>'+val.name+'</b></td> <td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;"> The clinic would like to reschedule you on <b>'+dateToYMD(new Date(date_appoint))+'</b> at <b>'+tConv24(time_appoint)+'</b>...</a></td> <td><button type="" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#accept_modal_up" id="accept_modal" data-id="'+val.id+'" ><i class="fa fa-check" aria-hidden="true"></i> </button> <button type="" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#decline_modal_up" id="decline_modal" data-id="'+val.id+'" ><i class="fa fa-times" aria-hidden="true"></i> </button></td> <td>'+datesToYMD(new Date(create_appoint))+'</td> <td><a href="#" data-bs-toggle="modal" data-bs-target="#cancel_modal_up" id="cancel_modal" data-id="'+val.id+'" ><i class="fa fa-ban text-danger" aria-hidden="true"></i></a></td> <td><a href="#" data-bs-toggle="modal" data-bs-target="#delete_modal_up" id="delete_modal" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');
+                            $("#info").append('<tr><th class="text-center"><i class="fa fa-star text-'+color+'"></i></th><td><b>'+val.name+'</b></td> <td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;"> The clinic would like to reschedule you on <b>'+dateToYMD(new Date(date_appoint))+'</b> at <b>'+tConv24(time_appoint)+'</b>...</a></td> <td class="text-center"><button type="" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#accept_modal_up" id="accept_modal" data-id="'+val.id+'" ><i class="fa fa-check" aria-hidden="true"></i> </button> <button type="" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#decline_modal_up" id="decline_modal" data-id="'+val.id+'" ><i class="fa fa-times" aria-hidden="true"></i> </button></td> <td class="text-center">'+datesToYMD(new Date(create_appoint))+'</td> <td class="text-center"><a href="#" data-bs-toggle="modal" data-bs-target="#cancel_modal_up" id="cancel_modal" data-id="'+val.id+'" ><i class="fa fa-ban text-danger" aria-hidden="true"></i></a></td></tr>');
 
                         }else if(val.status == 1){
-                            $("#info").append('<tr><th scope="row">'+val.id+'</th><td class="inbox-small-cells"><i class="fa fa-star text-'+color+'" style="padding-left: 50px;"></i></td><td><b>'+val.name+'</b></td><td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;">This clinic has completed your appointment....</a></td><td><button class="btn btn-'+color+'" id="stat" style="border-radius: 15px;">'+val.remark+'</button></td><td>'+datesToYMD(new Date(create_appoint))+'</td><td></td> <td><a href="#" data-bs-toggle="modal" data-bs-target="#delete_modal_up" id="delete_modal" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');
+                            $("#info").append('<tr><th class="text-center"><i class="fa fa-star text-'+color+'"></i><td><b>'+val.name+'</b></td><td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;">This clinic has completed your appointment....</a></td><td class="text-center"><button class="btn btn-'+color+' center" id="stat" style="border-radius: 8px;">'+val.remark+'</button></td><td class="text-center">'+datesToYMD(new Date(create_appoint))+'</td> <td class="text-center"><a href="#" data-bs-toggle="modal" data-bs-target="#delete_modal_up" id="delete_modal" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');
                         }else if(val.status == 8){
 
-                            $("#info").append('<tr><th scope="row">'+val.id+'</th><td class="inbox-small-cells"><i class="fa fa-star text-'+color+'" style="padding-left: 50px;"></i></td><td><b>'+val.name+'</b></td><td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;">Your appointment on <b>'+dateToYMD(new Date(date_appoint))+'</b> at <b>'+tConv24(time_appoint)+'</b> was <b>Cancelled</b>...</a></td><td><button class="btn btn-'+color+'" id="stat" style="border-radius: 15px;">'+val.remark+'</button></td><td>'+datesToYMD(new Date(create_appoint))+'</td><td></td> <td><a href="#" data-bs-toggle="modal" data-bs-target="#delete_modal_up" id="delete_modal" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');
+                            $("#info").append('<tr><th class="text-center"><i class="fa fa-star text-'+color+'"></i></th><td><b>'+val.name+'</b></td><td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;">Your appointment on <b>'+dateToYMD(new Date(date_appoint))+'</b> at <b>'+tConv24(time_appoint)+'</b> was <b>Cancelled</b>...</a></td><td class="text-center"><button class="btn btn-'+color+'" id="stat" style="border-radius: 8px;">'+val.remark+'</button></td><td class="text-center">'+datesToYMD(new Date(create_appoint))+'</td> <td class="text-center"><a href="#" data-bs-toggle="modal" data-bs-target="#delete_modal_up" id="delete_modal" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');
 
                         }else if(val.status == 6){
 
-                            $("#info").append('<tr><th scope="row">'+val.id+'</th><td class="inbox-small-cells"><i class="fa fa-star text-'+color+'" style="padding-left: 50px;"></i></td><td><b>'+val.name+'</b></td><td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;">Your Appointment from this Clinic has been <b>Expired</b>....</a></td><td><button class="btn btn-'+color+'" id="stat" style="border-radius: 15px;">'+val.remark+'</button></td><td>'+datesToYMD(new Date(create_appoint))+'</td><td></td> <td><a href="#" id="deleteStat" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');
+                            $("#info").append('<tr><th class="text-center"><i class="fa fa-star text-'+color+'"></i><td><b>'+val.name+'</b></td><td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;">Your Appointment from this Clinic has been <b>Expired</b>....</a></td><td class="text-center"><button class="btn btn-'+color+'" id="stat" style="border-radius: 8px;">'+val.remark+'</button></td><td class="text-center">'+datesToYMD(new Date(create_appoint))+'</td> <td class="text-center"><a href="#" id="deleteStat" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');
 
                         }else{
-                            $("#info").append('<tr><th scope="row">'+val.id+'</th><td class="inbox-small-cells"><i class="fa fa-star text-'+color+'" style="padding-left: 50px;"></i></td><td><b>'+val.name+'</b></td><td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;">Your appointment is scheduled on <b>'+dateToYMD(new Date(date_appoint))+'</b> at <b>'+tConv24(time_appoint)+'</b>...</a></td><td><button class="btn btn-'+color+'" id="stat" style="border-radius: 15px;">'+val.remark+'</button></td><td>'+datesToYMD(new Date(create_appoint))+'</td><td><a href="#" data-bs-toggle="modal" data-bs-target="#cancel_modal_up" id="cancel_modal" data-id="'+val.id+'" ><i class="fa fa-ban text-danger" aria-hidden="true"></i></a></td> <td><a href="#" data-bs-toggle="modal" data-bs-target="#delete_modal_up" id="delete_modal" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');
+                            $("#info").append('<tr><th class="text-center"><i class="fa fa-star text-'+color+'"></i><td><b>'+val.name+'</b></td><td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;">Your appointment is scheduled on <b>'+dateToYMD(new Date(date_appoint))+'</b> at <b>'+tConv24(time_appoint)+'</b>...</a></td><td class="text-center"><button class="btn btn-'+color+'" id="stat" style="border-radius: 8px;">'+val.remark+'</button></td><td class="text-center">'+datesToYMD(new Date(create_appoint))+'</td><td class="text-center"><a href="#" data-bs-toggle="modal" data-bs-target="#cancel_modal_up" id="cancel_modal" data-id="'+val.id+'" ><i class="fa fa-ban text-danger" aria-hidden="true"></i></a></tr>');
                         }
     
+                       
                         
                    });
+
+                   $("#mailTable").DataTable({
+                    "ordering": true,
+                    
+                    "pageLength": 10,
+                    "pagingType": "simple_numbers",
+                    "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+                    "info": true,
+                    
+                    });
 
                 }
 
@@ -124,11 +138,12 @@ $(function(){
         });
     }
 
-     // display of data in cancel modal, cancel_modal
+    // Actions: Appointments
+    
      $(document).on('click', '#cancel_modal[data-id]', function(e) {
         e.preventDefault();
         var id = $(this).data('id');
-        console.log(id);
+        // console.log(id);
         $.ajax({
             type: "GET",
             url: "/customer/mail/" + id,
@@ -170,12 +185,11 @@ $(function(){
             }
         });
     });
-
-    // display of data in delete modal, delete_modal
+   
     $(document).on('click', '#delete_modal[data-id]', function(e) {
         e.preventDefault();
         var id = $(this).data('id');
-        console.log(id);
+        // console.log(id);
         $.ajax({
             type: "GET",
             url: "/customer/mail/" + id,
@@ -192,12 +206,11 @@ $(function(){
             }
         });
     });
-
-    //delete appointment
+   
     $(document).on('click', '#confirm_delete', function(e) {
         e.preventDefault();
         var id = $("input#deleteStat").val();
-        console.log(id);
+        // console.log(id);
         // $("#aStatus-Delete").attr('action', "/customer/mail/"+id);
         $.ajax({
             method: "DELETE",
@@ -220,11 +233,10 @@ $(function(){
         });
     });
 
-     // display of data in accept modal, accept_modal
      $(document).on('click', '#accept_modal[data-id]', function(e) {
         e.preventDefault();
         var id = $(this).data('id');
-        console.log(id);
+        // console.log(id);
         $.ajax({
             type: "GET",
             url: "/customer/mail/" + id,
@@ -273,7 +285,7 @@ $(function(){
     $(document).on('click', '#decline_modal[data-id]', function(e) {
         e.preventDefault();
         var id = $(this).data('id');
-        console.log(id);
+        // console.log(id);
         $.ajax({
             type: "GET",
             url: "/customer/mail/" + id,
@@ -320,6 +332,7 @@ $(function(){
     });
 
 
+    // Dropdown Filter
     $('#appointStatus').click(function(){
         // e.preventDefault();
         var id = $(this).val();
@@ -336,7 +349,7 @@ $(function(){
                  type: "GET",
                  url: "/customer/mail/"+id+" status",
                  success: function(data){
-                    console.log(data.all);
+                    // console.log(data.all);
 
                     // $('#customerName').text(data.customer.lname+', '+data.customer.fname);
                     
@@ -412,17 +425,17 @@ $(function(){
                             $("#info").append('<tr><th scope="row">'+val.id+'</th> <td><i class="fa fa-star text-'+color+'"style="padding-left: 50px;"></i></td> <td ><b>'+val.name+'</b></td> <td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;"> The clinic would like to reschedule you on <b>'+dateToYMD(new Date(dates_appoint))+'</b> at <b>'+tConv24(times_appoint)+'</b>...</a></td> <td><button type="" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#accept_modal_up" id="accept_modal" data-id="'+val.id+'" ><i class="fa fa-check" aria-hidden="true"></i> </button> <button type="" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#decline_modal_up" id="decline_modal" data-id="'+val.id+'" ><i class="fa fa-times" aria-hidden="true"></i> </button></td> <td>'+datesToYMD(new Date(creates_appoint))+'</td> <td><a href="#" data-bs-toggle="modal" data-bs-target="#cancel_modal_up" id="cancel_modal" data-id="'+val.id+'" ><i class="fa fa-ban text-danger" aria-hidden="true"></i></a></td> <td><a href="#" data-bs-toggle="modal" data-bs-target="#delete_modal_up" id="delete_modal" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');
 
                         }else if(val.status == 1){
-                            $("#info").append('<tr><th scope="row">'+val.id+'</th><td class="inbox-small-cells"><i class="fa fa-star text-'+color+'" style="padding-left: 50px;"></i></td><td><b>'+val.name+'</b></td><td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;">This clinic has completed your appointment....</a></td><td><button class="btn btn-'+color+'" id="stat" style="border-radius: 15px;">'+val.remark+'</button></td><td>'+datesToYMD(new Date(creates_appoint))+'</td><td></td> <td><a href="#" data-bs-toggle="modal" data-bs-target="#delete_modal_up" id="delete_modal" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');
+                            $("#info").append('<tr><th scope="row">'+val.id+'</th><td class="inbox-small-cells"><i class="fa fa-star text-'+color+'" style="padding-left: 50px;"></i></td><td><b>'+val.name+'</b></td><td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;">This clinic has completed your appointment....</a></td><td><button class="btn btn-'+color+'" id="stat" style="border-radius: 15px;">'+val.remark+'</button></td><td>'+datesToYMD(new Date(creates_appoint))+'</td> <td><a href="#" data-bs-toggle="modal" data-bs-target="#delete_modal_up" id="delete_modal" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');
                         }else if(val.status == 8){
 
-                            $("#info").append('<tr><th scope="row">'+val.id+'</th><td class="inbox-small-cells"><i class="fa fa-star text-'+color+'" style="padding-left: 50px;"></i></td><td><b>'+val.name+'</b></td><td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;">Your appointment on <b>'+dateToYMD(new Date(dates_appoint))+'</b> at <b>'+tConv24(times_appoint)+'</b> was <b>Cancelled</b>...</a></td><td><button class="btn btn-'+color+'" id="stat" style="border-radius: 15px;">'+val.remark+'</button></td><td>'+datesToYMD(new Date(creates_appoint))+'</td><td></td> <td><a href="#" data-bs-toggle="modal" data-bs-target="#delete_modal_up" id="delete_modal" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');
+                            $("#info").append('<tr><th scope="row">'+val.id+'</th><td class="inbox-small-cells"><i class="fa fa-star text-'+color+'" style="padding-left: 50px;"></i></td><td><b>'+val.name+'</b></td><td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;">Your appointment on <b>'+dateToYMD(new Date(dates_appoint))+'</b> at <b>'+tConv24(times_appoint)+'</b> was <b>Cancelled</b>...</a></td><td><button class="btn btn-'+color+'" id="stat" style="border-radius: 15px;">'+val.remark+'</button></td><td>'+datesToYMD(new Date(creates_appoint))+'</td> <td><a href="#" data-bs-toggle="modal" data-bs-target="#delete_modal_up" id="delete_modal" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');
 
                         }else if(val.status == 6){
 
-                            $("#info").append('<tr><th scope="row">'+val.id+'</th><td class="inbox-small-cells"><i class="fa fa-star text-'+color+'" style="padding-left: 50px;"></i></td><td><b>'+val.name+'</b></td><td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;">Your Appointment from this Clinic has been <b>Expired</b>....</a></td><td><button class="btn btn-'+color+'" id="stat" style="border-radius: 15px;">'+val.remark+'</button></td><td>'+datesToYMD(new Date(creates_appoint))+'</td><td></td> <td><a href="#" id="deleteStat" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');
+                            $("#info").append('<tr><th scope="row">'+val.id+'</th><td class="inbox-small-cells"><i class="fa fa-star text-'+color+'" style="padding-left: 50px;"></i></td><td><b>'+val.name+'</b></td><td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;">Your Appointment from this Clinic has been <b>Expired</b>....</a></td><td><button class="btn btn-'+color+'" id="stat" style="border-radius: 15px;">'+val.remark+'</button></td><td>'+datesToYMD(new Date(creates_appoint))+'</td> <td><a href="#" id="deleteStat" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');
 
                         }else{
-                            $("#info").append('<tr><th scope="row">'+val.id+'</th><td class="inbox-small-cells"><i class="fa fa-star text-'+color+'" style="padding-left: 50px;"></i></td><td><b>'+val.name+'</b></td><td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;">Your appointment is scheduled on <b>'+dateToYMD(new Date(dates_appoint))+'</b> at <b>'+tConv24(times_appoint)+'</b>...</a></td><td><button class="btn btn-'+color+'" id="stat" style="border-radius: 15px;">'+val.remark+'</button></td><td>'+datesToYMD(new Date(creates_appoint))+'</td><td><a href="#" data-bs-toggle="modal" data-bs-target="#cancel_modal_up" id="cancel_modal" data-id="'+val.id+'" ><i class="fa fa-ban text-danger" aria-hidden="true"></i></a></td> <td><a href="#" data-bs-toggle="modal" data-bs-target="#delete_modal_up" id="delete_modal" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');
+                            $("#info").append('<tr><th scope="row">'+val.id+'</th><td class="inbox-small-cells"><i class="fa fa-star text-'+color+'" style="padding-left: 50px;"></i></td><td><b>'+val.name+'</b></td><td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;">Your appointment is scheduled on <b>'+dateToYMD(new Date(dates_appoint))+'</b> at <b>'+tConv24(times_appoint)+'</b>...</a></td><td><button class="btn btn-'+color+'" id="stat" style="border-radius: 15px;">'+val.remark+'</button></td><td>'+datesToYMD(new Date(creates_appoint))+'</td><td><a href="#" data-bs-toggle="modal" data-bs-target="#cancel_modal_up" id="cancel_modal" data-id="'+val.id+'" ><i class="fa fa-ban text-danger" aria-hidden="true"></i></a></td> </tr>');
                         }
 
                         });
@@ -443,6 +456,7 @@ $(function(){
     });
 
 
+    // Search Appointment
     $('#search').on('keyup', function(){
         // e.preventDefault();
         var query = $(this).val();
@@ -455,7 +469,7 @@ $(function(){
                 data: {query:query},
                 success: function(data){
 
-                console.log(data);
+                // console.log(data);
 
                 if(data.status == 1){
 
@@ -521,14 +535,14 @@ $(function(){
                                 $("#info").append('<tr><th scope="row">'+val.id+'</th> <td><i class="fa fa-star text-'+color+'"style="padding-left: 50px;"></i></td> <td ><b>'+val.name+'</b></td> <td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;"> The clinic would like to reschedule you on <b>'+dateToYMD(new Date(date_appoint))+'</b> at <b>'+tConv24(time_appoint)+'</b>...</a></td> <td><button type="" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#accept_modal_up" id="accept_modal" data-id="'+val.id+'" ><i class="fa fa-check" aria-hidden="true"></i> </button> <button type="" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#decline_modal_up" id="decline_modal" data-id="'+val.id+'" ><i class="fa fa-times" aria-hidden="true"></i> </button></td> <td>'+datesToYMD(new Date(create_appoint))+'</td> <td><a href="#" data-bs-toggle="modal" data-bs-target="#cancel_modal_up" id="cancel_modal" data-id="'+val.id+'" ><i class="fa fa-ban text-danger" aria-hidden="true"></i></a></td> <td><a href="#" data-bs-toggle="modal" data-bs-target="#delete_modal_up" id="delete_modal" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');
     
                             }else if(val.status == 1){
-                                $("#info").append('<tr><th scope="row">'+val.id+'</th><td class="inbox-small-cells"><i class="fa fa-star text-'+color+'" style="padding-left: 50px;"></i></td><td><b>'+val.name+'</b></td><td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;">This clinic has completed your appointment....</a></td><td><button class="btn btn-'+color+'" id="stat" style="border-radius: 15px;">'+val.remark+'</button></td><td>'+datesToYMD(new Date(create_appoint))+'</td><td></td> <td><a href="#" data-bs-toggle="modal" data-bs-target="#delete_modal_up" id="delete_modal" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');
+                                $("#info").append('<tr><th scope="row">'+val.id+'</th><td class="inbox-small-cells"><i class="fa fa-star text-'+color+'" style="padding-left: 50px;"></i></td><td><b>'+val.name+'</b></td><td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;">This clinic has completed your appointment....</a></td><td><button class="btn btn-'+color+'" id="stat" style="border-radius: 15px;">'+val.remark+'</button></td><td>'+datesToYMD(new Date(create_appoint))+'</td> <td><a href="#" data-bs-toggle="modal" data-bs-target="#delete_modal_up" id="delete_modal" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');
                             }else if(val.status == 8){
     
-                                $("#info").append('<tr><th scope="row">'+val.id+'</th><td class="inbox-small-cells"><i class="fa fa-star text-'+color+'" style="padding-left: 50px;"></i></td><td><b>'+val.name+'</b></td><td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;">Your appointment on <b>'+dateToYMD(new Date(date_appoint))+'</b> at <b>'+tConv24(time_appoint)+'</b> was <b>Cancelled</b>...</a></td><td><button class="btn btn-'+color+'" id="stat" style="border-radius: 15px;">'+val.remark+'</button></td><td>'+datesToYMD(new Date(create_appoint))+'</td><td></td> <td><a href="#" data-bs-toggle="modal" data-bs-target="#delete_modal_up" id="delete_modal" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');
+                                $("#info").append('<tr><th scope="row">'+val.id+'</th><td class="inbox-small-cells"><i class="fa fa-star text-'+color+'" style="padding-left: 50px;"></i></td><td><b>'+val.name+'</b></td><td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;">Your appointment on <b>'+dateToYMD(new Date(date_appoint))+'</b> at <b>'+tConv24(time_appoint)+'</b> was <b>Cancelled</b>...</a></td><td><button class="btn btn-'+color+'" id="stat" style="border-radius: 15px;">'+val.remark+'</button></td><td>'+datesToYMD(new Date(create_appoint))+'</td><td><a href="#" data-bs-toggle="modal" data-bs-target="#delete_modal_up" id="delete_modal" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');
     
                             }else if(val.status == 6){
     
-                                $("#info").append('<tr><th scope="row">'+val.id+'</th><td class="inbox-small-cells"><i class="fa fa-star text-'+color+'" style="padding-left: 50px;"></i></td><td><b>'+val.name+'</b></td><td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;">Your Appointment from this Clinic has been <b>Expired</b>....</a></td><td><button class="btn btn-'+color+'" id="stat" style="border-radius: 15px;">'+val.remark+'</button></td><td>'+datesToYMD(new Date(create_appoint))+'</td><td></td> <td><a href="#" id="deleteStat" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');
+                                $("#info").append('<tr><th scope="row">'+val.id+'</th><td class="inbox-small-cells"><i class="fa fa-star text-'+color+'" style="padding-left: 50px;"></i></td><td><b>'+val.name+'</b></td><td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;">Your Appointment from this Clinic has been <b>Expired</b>....</a></td><td><button class="btn btn-'+color+'" id="stat" style="border-radius: 15px;">'+val.remark+'</button></td><td>'+datesToYMD(new Date(create_appoint))+'</td><td><a href="#" id="deleteStat" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');
     
                             }else{
                                 $("#info").append('<tr><th scope="row">'+val.id+'</th><td class="inbox-small-cells"><i class="fa fa-star text-'+color+'" style="padding-left: 50px;"></i></td><td><b>'+val.name+'</b></td><td><a href="/customer/mail/'+val.id+'" style="color:black; text-decoration: none;">Your appointment is scheduled on <b>'+dateToYMD(new Date(date_appoint))+'</b> at <b>'+tConv24(time_appoint)+'</b>...</a></td><td><button class="btn btn-'+color+'" id="stat" style="border-radius: 15px;">'+val.remark+'</button></td><td>'+datesToYMD(new Date(create_appoint))+'</td><td><a href="#" data-bs-toggle="modal" data-bs-target="#cancel_modal_up" id="cancel_modal" data-id="'+val.id+'" ><i class="fa fa-ban text-danger" aria-hidden="true"></i></a></td> <td><a href="#" data-bs-toggle="modal" data-bs-target="#delete_modal_up" id="delete_modal" data-id="'+val.id+'" ><i class="fa fa-trash text-dark" aria-hidden="true"></i></a></td></tr>');

@@ -15,6 +15,7 @@ use App\Models\Packages;
 use App\Models\Appointments;
 use App\Models\Logs;
 use App\Models\Receipt_orders;
+use App\Models\Customer_logs;
 
 class ClinicListController extends Controller
 {
@@ -49,8 +50,17 @@ class ClinicListController extends Controller
             $package = Packages::where('user_as_clinic_id', '=', $key->id)->first();
             $service = Clinic_services::where('user_as_clinic_id', '=', $key->id)->first();
 
+            if (isset($package) || isset($service)) {
 
-            if ($clinics &&  isset($package) && isset($service)) {
+                if(isset($package)){
+                    $packname =  $package->name;
+                    // $ClinicAdd["package"] = $package->name;
+                }
+                if(isset($service)){
+                    $sername = $service->name;
+                    // $ClinicAdd["service"] = $service->name;
+                }
+
                 $all[] = (object) array(
                     "id" => $key->id,
                     "name" => $key->name,
@@ -59,39 +69,13 @@ class ClinicListController extends Controller
                     "type_of_clinic" => $clinic_types->type_of_clinic,
                     "address_line_1" => $clinic_address->address_line_1,
                     "address_line_2" => $clinic_address->address_line_2,
-                    "package" => $package->name,
-                    "service" => $service->name
+                    "package" => $packname ?? "no data",
+                    "service" => $sername ?? "no data"
                 );
-
-                $count++;
-            }elseif($clinics &&  isset($service)){
-                $all[] = (object) array(
-                    "id" => $key->id,
-                    "name" => $key->name,
-                    "phone" => $key->phone,
-                    "telephone" => $key->telephone,
-                    "type_of_clinic" => $clinic_types->type_of_clinic,
-                    "address_line_1" => $clinic_address->address_line_1,
-                    "address_line_2" => $clinic_address->address_line_2,
-                    "package" => "no packages",
-                    "service" => $service->name
-                );
-
-                $count++;
-            }elseif ($clinics &&  isset($package)){
-                $all[] = (object) array(
-                    "id" => $key->id,
-                    "name" => $key->name,
-                    "phone" => $key->phone,
-                    "telephone" => $key->telephone,
-                    "type_of_clinic" => $clinic_types->type_of_clinic,
-                    "address_line_1" => $clinic_address->address_line_1,
-                    "address_line_2" => $clinic_address->address_line_2,
-                    "package" => $package->name,
-                );
-
+                
                 $count++;
             }
+
         }
 
         if ($count > 0) {
@@ -133,7 +117,7 @@ class ClinicListController extends Controller
 
             if ($request->ajax()) {
                 // $info = "hello";
-                $query = $request->get('query');
+                $query = strtoupper($request->get('query'));
                 $data = User_as_clinic::query()->where('name', 'LIKE', "%{$query}%")->get();
 
                 $count = 0;
@@ -144,37 +128,27 @@ class ClinicListController extends Controller
                         $package = Packages::where('user_as_clinic_id', '=', $key->id)->first();
                         $service = Clinic_services::where('user_as_clinic_id', '=', $key->id)->first();
 
-                        if ($data &&  isset($package) && isset($service)) {
+                        if (isset($package) || isset($service)) {
+
+                            if(isset($package)){
+                                $packname =  $package->name;
+                                // $ClinicAdd["package"] = $package->name;
+                            }
+                            if(isset($service)){
+                                $sername = $service->name;
+                                // $ClinicAdd["service"] = $service->name;
+                            }
+
                             $ClinicAdd[] = (object) array(
                                 "id" => $key->id,
                                 "name" => $data[$count]->name,
                                 "addLine1" => $address->address_line_1,
                                 "addLine2" => $address->address_line_2,
                                 "type" => $type->type_of_clinic,
-                                "package" => $package->name,
-                                "service" => $service->name
+                                "package" => $packname ?? "no data",
+                                "service" => $sername ?? "no data"
                             );
-                            $count++;
-                        }elseif($data &&  isset($package)){
-                            $ClinicAdd[] = (object) array(
-                                "id" => $key->id,
-                                "name" => $data[$count]->name,
-                                "addLine1" => $address->address_line_1,
-                                "addLine2" => $address->address_line_2,
-                                "type" => $type->type_of_clinic,
-                                "package" => $package->name
-                               
-                            );
-                            $count++;
-                        }elseif($data && isset($service)){
-                            $ClinicAdd[] = (object) array(
-                                "id" => $key->id,
-                                "name" => $data[$count]->name,
-                                "addLine1" => $address->address_line_1,
-                                "addLine2" => $address->address_line_2,
-                                "type" => $type->type_of_clinic,
-                                "service" => $service->name
-                            );
+                            
                             $count++;
                         }
                         
@@ -192,12 +166,6 @@ class ClinicListController extends Controller
                 }
             }
 
-
-            // if ($count > 0) {
-            //     return response()->json(['all' => $ClinicAdd]);
-            // } else {
-            //     return response()->json(['status' => 0]);
-            // }
         } else {
 
             // Search Clinic (Categorial Search)
@@ -217,19 +185,33 @@ class ClinicListController extends Controller
                         $service = Clinic_services::where('user_as_clinic_id', '=', $key->id)->first();
 
 
-                        if (isset($package) && isset($service)) {
+                        if (isset($package) || isset($service)) {
+
+                            if(isset($package)){
+                                $packname =  $package->name;
+                                // $ClinicAdd["package"] = $package->name;
+                            }
+                            if(isset($service)){
+                                $sername = $service->name;
+                                // $ClinicAdd["service"] = $service->name;
+                            }
+
                             $ClinicAdd[] = (object) array(
                                 "id" => $key->id,
                                 "name" => $data[$count]->name,
                                 "addLine1" => $address->address_line_1,
                                 "addLine2" => $address->address_line_2,
                                 "type" => $type->type_of_clinic,
-                                "package" => $package->name,
-                                "service" => $service->name
+                                "package" => $packname ?? "no data",
+                                "service" => $sername ?? "no data"
                             );
+                            
                             $count++;
                         }
                     }
+
+                    // echo($package);
+                
 
                     if ($count > 0) {
                         return  response()->json(['ClinicAdd' => $ClinicAdd, 'status' => 1]);
@@ -294,9 +276,26 @@ class ClinicListController extends Controller
         $logs->message = $customer->fname . ' ' . $customer->lname . " declined to the suggested appointment day and time.";
         $logs->remark = "notif";
         $logs->date =  date("Y/m/d");
-        $logs->time = date("h:i:sa");
+        $logs->time = date("h:i:s a");
         $logs->user_as_clinic_id =  $receipt->user_as_clinic_id;
         $logs->save();
+
+        // customer logs
+        $customer_logs_count = Customer_logs::where('user_as_customer_id', '=',  $customer->id)->count();
+        if ($customer_logs_count == 5000) {
+            Customer_logs::where('user_as_customer_id', '=',  $customer->id)->first()->delete();
+        }
+
+        $clinic_name = User_as_clinic::where('id', '=', $receipt->user_as_clinic_id)->first();
+
+         //creating logs
+         $c_log = new Customer_logs();
+         $c_log->message = "You declined the scheduled appointment from " . $clinic_name->name;
+         $c_log->remark = "notif";
+         $c_log->date =  date("m/d/Y");
+         $c_log->time = date("h:i a");
+         $c_log->user_as_customer_id = $customer->id;
+         $c_log->save();
 
         return response()->json(['all' => $appointment, 'status' => 'OK']);
     }

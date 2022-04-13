@@ -12,23 +12,18 @@ var pointBlng = "";
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
         zoom: 13,
-        center: { lat: 14.50453805256329, lng: 121.05283152757798 }, //papalitan to ng location ng user.
+        // center: { lat: 14.50453805256329, lng: 121.05283152757798 }, //papalitan to ng location ng user.
        
     });
 
-   
     var id = $('#clinic_id').val();
     // console.log(id);
-
-   
-    
-
 
      $.ajax({
             type: "GET", 
             url: "/customer/announcement/"+id+"/edit",
             success: function(data){
-                console.log(data); 
+                // console.log(data); 
 
                  
 
@@ -38,7 +33,7 @@ function initMap() {
                     pointBlat = val.latitude;
                     pointBlng = val.longitude;
 
-                    
+        
                       var marker = new google.maps.Marker({
                           position: { lat: parseFloat(val.latitude), lng: parseFloat(val.longitude) },
                           map:map,
@@ -94,7 +89,7 @@ function initMap() {
                         infoWindow.open(map);
                         map.setCenter(pointA);
 
-                console.log("hello "+pointA.lat);
+                // console.log("hello "+pointA.lat);
 
                 var pointALatitude = parseFloat(pointA.lat);
                 var pointBLatitude = parseFloat(pointBlat);

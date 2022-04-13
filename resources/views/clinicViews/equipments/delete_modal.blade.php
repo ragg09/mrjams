@@ -10,7 +10,7 @@
             <div class="modal-body bg-secondary text-white m-2 p-2 rounded border-dark">
 
                 <div class="d-flex justify-content-center ">
-                    <p><strong>Please Note: </strong>Deleting this equipment will make changes to the following packages and services:</p>
+                    <p><strong>Please Note: </strong>Deleting this material will remove all of its record and will make changes to the following packages and services  :</p>
                    
                 </div>
                 <strong><p id="delete_packages"> </p></strong>

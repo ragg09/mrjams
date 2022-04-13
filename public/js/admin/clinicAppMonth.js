@@ -1,45 +1,47 @@
-$(function () {
-    var_id = $("#clinicID").val();
-    google.load("visualization", "1.0", { packages: ["corechart"] });
+$(function(){
+    var_id = $('#clinicID').val();
+    google.load('visualization', '1.0', {'packages':['corechart']});
     // alert($var_id);
     $.ajax({
         type: "GET",
-        url: "/admin/clinic/create?id=" + var_id,
+        url: "/admin/clinic/create?id="+ var_id,
         success: function (response) {
             // console.log(response.user);
             console.log(response);
 
             // google.charts.load('current', {'packages':['corechart']});
             // google.charts.setOnLoadCallback(drawChart);
-
-            var data = [
-                ["Month", "Total"],
+      
+              var data = [
+                ['Month', 'Total'],
                 // ['Feb', '1'],
                 // ['Mar', '2'],
-            ];
+              ];
 
-            $.each(response.appMonth, function (index, value) {
+            $.each(response.appMonth, function (index,value) {
                 data.push([index, value]);
             });
 
             console.log(data);
+      
+              var options = {
+                title: 'Company Performance',
+                curveType: 'function',
+                legend: { position: 'bottom' }
+              };
 
-            var options = {
-                title: "Company Performance",
-                curveType: "function",
-                legend: { position: "bottom" },
-            };
+              var figure = google.visualization.arrayToDataTable(data);
 
-            var figure = google.visualization.arrayToDataTable(data);
-
-            var chart = new google.visualization.LineChart(
-                document.getElementById("appMonthClinic")
-            );
-            chart.draw(figure, options);
+              var chart = new google.visualization.LineChart(document.getElementById('appMonthClinic'));
+              chart.draw(figure, options);
         },
-        error: function () {
-            console.log("AJAX load did not work");
+        error: function(){
+            console.log('AJAX load did not work');
             alert("error");
-        },
+        }
+        
+
     });
 });
+
+

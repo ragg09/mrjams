@@ -8,8 +8,9 @@ use App\Models\User;
 use App\Models\User_as_customer;
 use App\Models\User_as_clinic;
 use App\Models\Appointments;
-use Illuminate\Support\Facades\DB;
+use DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class UserClinicAnalyticsController extends Controller
 {
@@ -59,7 +60,7 @@ class UserClinicAnalyticsController extends Controller
         //     ->orderBy('created_at', 'asc')
         //     ->get();
 
-        $data = User::select(DB::raw('count(id) as `total`'), DB::raw('MONTH(created_at) month'))
+        $data = User::select(FacadesDB::raw('count(id) as `total`'), FacadesDB::raw('MONTH(created_at) month'))
             ->groupby('month')
             ->orderBy('created_at', 'asc')
             ->get();
@@ -73,7 +74,7 @@ class UserClinicAnalyticsController extends Controller
         }
 
         $dataClinic = User::where('role', '=', 'clinic')
-            ->select(DB::raw('count(id) as `total`'), DB::raw('MONTH(created_at) month'))
+            ->select(FacadesDB::raw('count(id) as `total`'), FacadesDB::raw('MONTH(created_at) month'))
             ->groupby('month')
             ->orderBy('created_at', 'asc')
             ->get();
@@ -86,7 +87,7 @@ class UserClinicAnalyticsController extends Controller
         }
 
         $dataCustomer = User::where('role', '=', 'customer')
-            ->select(DB::raw('count(id) as `total`'), DB::raw('MONTH(created_at) month'))
+            ->select(FacadesDB::raw('count(id) as `total`'), FacadesDB::raw('MONTH(created_at) month'))
             ->groupby('month')
             ->orderBy('created_at', 'asc')
             ->get();
@@ -111,6 +112,18 @@ class UserClinicAnalyticsController extends Controller
             return $v > 0;
         });
 
+        if (!isset($formatted_data)) {
+            $formatted_data = [];
+        }
+        if (!isset($formatted_data_clinic)) {
+            $formatted_data_clinic = [];
+        }
+        if (!isset($formatted_data_customer)) {
+            $formatted_data_customer = [];
+        }
+        if (!isset($appMonth)) {
+            $appMonth = [];
+        }
 
         return response()->json(['data' => $formatted_data, 'clinic' => $formatted_data_clinic, 'customer' => $formatted_data_customer, 'appointment' => $appMonth]);
         // return response()->json(['data' => $formatted_data, 'clinic' => $formatted_data_clinic, 'customer' => $formatted_data_customer]);

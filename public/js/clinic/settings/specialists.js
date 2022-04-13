@@ -3,28 +3,38 @@ $(function(){
     //calling reusable script
     $.getScript("/js/clinic/reusableFunction.js");
 
+    
+
+
     //ADD
     $("#add_specialist_form").on('submit', function(e){
         e.preventDefault();
-        $.ajax({
-            type: $(this).attr('method'),
-            url: $(this).attr('action'),
-            data: $('#add_specialist_form').serialize(),
-            beforeSend: function(){
-                $(document).find('span.error-text').text('');
-            },
-            success: function(data) {
-                if(data.status == 0){
-                    $.each(data.error, function(key, val){
-                         $('span.'+key+'_error').text(val[0]);
-                    });
-                }else{
-                    $("#specialists_table").load(window.location + " #specialists_table");
-                    $("#create_specialists_modal").modal('toggle');
-                    bootstrapAlert(data.message, "success", 200);
+
+        if( $("#max_time").val() <= $("#min_time").val()){
+            $("#min_max_time_error").attr("hidden", false);
+        }else{
+            $("#min_max_time_error").attr("hidden", true);
+            $.ajax({
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                data: $('#add_specialist_form').serialize(),
+                beforeSend: function(){
+                    $(document).find('span.error-text').text('');
+                },
+                success: function(data) {
+                    if(data.status == 0){
+                        $.each(data.error, function(key, val){
+                             $('span.'+key+'_error').text(val[0]);
+                        });
+                    }else{
+                        $("#specialists_table").load(window.location + " #specialists_table");
+                        $("#create_specialists_modal").modal('toggle');
+                        bootstrapAlert(data.message, "success", 200);
+                    }
                 }
-            }
-        });
+            });
+        }
+       
     });
 
 
@@ -62,26 +72,33 @@ $(function(){
     //EDIT, edit_modal
     $("#edit_specialist_form").on('submit', function(e){
         e.preventDefault();
-        $.ajax({
-            type: $(this).attr('method'),
-            url: $(this).attr('action'),
-            data: $('#edit_specialist_form').serialize(),
-            beforeSend: function(){
-                $(document).find('span.error-text').text('');
-            },
-            success: function(data) {
-                if(data.status == 0){
-                    $.each(data.error, function(key, val){
-                        $('span.'+key+'_error').text(val[0]);
-                    });
-                }else{
-                    //console.log(data);
-                    $("#specialists_table").load(window.location + " #specialists_table");
-                    $("#edit_specialists_modal").modal('toggle');
-                    bootstrapAlert(data.message, "info", 200);
+        if( $("#edit_specialist_max_time").val() <= $("#edit_specialist_min_time").val()){
+            $("#min_max_time_error_edit").attr("hidden", false);
+        }else{
+            $("#min_max_time_error_edit").attr("hidden", true);
+            $.ajax({
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                data: $('#edit_specialist_form').serialize(),
+                beforeSend: function(){
+                    $(document).find('span.error-text').text('');
+                },
+                success: function(data) {
+                    if(data.status == 0){
+                        $.each(data.error, function(key, val){
+                            $('span.'+key+'_error').text(val[0]);
+                        });
+                    }else{
+                        //console.log(data);
+                        $("#specialists_table").load(window.location + " #specialists_table");
+                        $("#edit_specialists_modal").modal('toggle');
+                        bootstrapAlert(data.message, "info", 200);
+                    }
                 }
-            }
-        });
+            });
+        }
+
+        
     });
 
 

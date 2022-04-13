@@ -23,24 +23,24 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $RegUser = User_as_customer::count();
-        $RegClinic = User_as_clinic::count();
-        $Appointment = Appointments::count();
-        //all goods yan , bali dito rin ung need mong query? oo , pag ka load ng index sabay sabay na 
-        //pano itsura ng data ung need mo pano mo ba gnwa yung dati? wait
-        $Rating = Ratings::where('users_id_ratee', '=', 1)->avg('rating');
-        round($Rating, 2);
+        // $RegUser = User_as_customer::count();
+        // $RegClinic = User_as_clinic::count();
+        // $Appointment = Appointments::count();
+        // //all goods yan , bali dito rin ung need mong query? oo , pag ka load ng index sabay sabay na 
+        // //pano itsura ng data ung need mo pano mo ba gnwa yung dati? wait
+        // $Rating = ModelRating::where('users_id_ratee', '=', 1)->avg('rating');
+        // round($Rating, 2);
 
-        $latestClinic = User_as_clinic::orderBy('id', 'desc')->first();
-        $latestCustomer = User_as_customer::orderBy('id', 'desc')->first();
+        // $latestClinic = User_as_clinic::orderBy('id', 'desc')->first();
+        // $latestCustomer = User_as_customer::orderBy('id', 'desc')->first();
 
 
-        if ($RegUser) {
-            return view('adminViews.index', ['regUser' => $RegUser, 'regClinic' => $RegClinic, 'appointment' => $Appointment, 'rating' => $Rating, 'latestClinic' => $latestClinic, 'latestCustomer' => $latestCustomer, 'status' => '1']);
-        } else {
+        // if ($RegUser) {
+        //     return view('adminViews.index', ['regUser' => $RegUser, 'regClinic' => $RegClinic, 'appointment' => $Appointment, 'rating' => $Rating, 'latestClinic' => $latestClinic, 'latestCustomer' => $latestCustomer, 'status' => '1']);
+        // } else {
 
-            return view('adminViews.index', ['status' => '0']);
-        }
+        //     return view('adminViews.index', ['status' => '0']);
+        // }
     }
 
     /**
@@ -144,11 +144,21 @@ class DashboardController extends Controller
             );
         }
 
+        if (!isset($clinic_complete)) {
+            $clinic_complete = [];
+        }
+        if (!isset($top5Clinic_App)) {
+            $top5Clinic_App = [];
+        }
+        if (!isset($top5Customer_App)) {
+            $top5Customer_App = [];
+        }
+
         return response()->json([
             'tester' => 'ito',
             'clinic_complete' => $clinic_complete,
-            'regMonth' => $regMonth,
             'clinic_ids' => $clinic_ids,
+            'regMonth' => $regMonth,
             'top5Clinic_App' =>  $top5Clinic_App,
             'top5Customer_App' =>  $top5Customer_App,
         ]);

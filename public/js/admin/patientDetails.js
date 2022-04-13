@@ -1,4 +1,18 @@
+
+    $("#patientShow").DataTable({
+        "ordering": true,
+        "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+        "info": true,
+        // "responsive": true,
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    });
+
 $(document).on('click', 'button#updatePatient', function(e) {
+    
+
     var id = $('input#userID').val();
     console.log(data);
     $.ajax({
@@ -42,7 +56,7 @@ $(document).on('click', 'button#confirm_delete', function(e) {
     var id = $("input#userIDDeletePatient").val();
 
     console.log(id);
-
+ //hmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm asan master mo?
     $.ajax({
         type: "DELETE",
         url: "/admin/patient/"+ id,
@@ -60,6 +74,15 @@ $(document).on('click', 'button#confirm_delete', function(e) {
         }
       });
 });
+
+// $(function(){
+//     $("#patientShow").DataTable({
+//         "ordering": false,
+//         "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+//         "info": false,
+//     });
+// })
+
 
 //nagets mo ba gnwa ko? hindi wait
 

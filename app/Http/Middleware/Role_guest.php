@@ -19,20 +19,19 @@ class Role_guest
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!Auth::user()){
+        if (!Auth::user()) {
             return $next($request);
-        }else{
+        } else {
             $user = User::where('email', '=',  Auth::user()->email)->first();
-            if($user->role == "clinic"){
-                return redirect('/clinic');  
+            if ($user->role == "clinic") {
+                return redirect('/clinic');
             }
-            if($user->role == "customer"){
-                return redirect('/customer');  
+            if ($user->role == "customer") {
+                return redirect('/customer');
             }
-            if(Auth::user()->email == "mrjams.tup@gmail.com"){
-                return redirect('/admin'); 
+            if (Auth::user()->email == "mrjams.tup@gmail.com") {
+                return redirect('/admin');
             }
         }
-        
     }
 }

@@ -46,12 +46,4 @@ $(function(){
     
     }
 
-    // var rate =  $("#rates");
-       
-    // $.fn.stars = function() {
-    //     return $("rates").each(function() {
-    //         $("rates").html($('<span />').width(Math.max(0, (Math.min(5, parseFloat($("rates").html())))) * 16));
-    //     });
-    // }
-
 })

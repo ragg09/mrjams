@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="{{asset('./css/customer/map.css')}}">
     <link rel="stylesheet" href="{{asset('./css/customer/infowindow.css')}}">
     <link rel="stylesheet" href="{{asset('./css/customer/customer.css')}}">
+  
 @endsection
 @section('content')
 @include('customerViews.header.header1')
@@ -21,31 +22,24 @@
       
       <section class="mapcontain">
 
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="mapModal" hidden>
-        </button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="mapModal" hidden></button>
 
-       
+            <div class="container" id="map_locate">
 
-        <div class="container" id="map_locate">
+              {{-- search landmark --}}
+              <div class="form-floating mb-3" >
+                <input class="form-control" type="text" id="searchInput" placeholder="" >
+                <label for="floatingInput">Search landmark near to your location</label>
+              </div>
 
-          <div class="form-floating mb-3" >
-            <input class="form-control" type="text" id="searchInput" placeholder="" >
-            <label for="floatingInput">Search landmark near to your location</label>
-          </div>
+              {{-- map --}}
+              <div id="map"></div>
 
-          {{-- <select id="ClinicType" style="margin: 10px; background-color: #B3CDE0; padding:5px;">
-            <option value="ClinicTypes">Clinic Types</option> 
-            <option value="1">Dental</option> 
-            <option value="2">Medical</option> 
-          </select> --}}
-
-
-
-          <div id="map"></div>
-        </div>
-          <br><br>
+            </div>
+              <br><br>
       </section>
 
+      {{-- Guides in making appointment --}}
       <section >
 
                 <div class="container">
@@ -137,6 +131,7 @@
 
     </section>
 
+    {{-- Features of MR. JAMS --}}
     <section class="packages">
       <ul class="grid">
         <li>
@@ -162,39 +157,13 @@
       <br><br>
     </section>
 
-@include('customerViews.footer.footer1')
-{{-- 
-<button onclick="getLocation()">Try It</button>
-
-<p id="demo"></p>
-<p id="demos"></p> --}}
-
-
+  @include('customerViews.footer.footer1')
 @endsection
 @section('jsScript')
+  
   <script async src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places"></script>
+  {{-- <script defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places"></script> --}}
   <script src="{{ URL::asset('js/customer/map.js') }}"></script>
-
-  {{-- <script>
-    var x = document.getElementById("demo");
-    var y = document.getElementById("demos");
-    
-    function getLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-      } else { 
-        x.innerHTML = "Geolocation is not supported by this browser.";
-        y.innerHTML = "Geolocation is not supported by this browsers.";
-      }
-    }
-    
-    function showPosition(position) {
-      x.innerHTML = "Latitude: " + position.coords.latitude;
-      y.innerHTML ="Longitude: " + position.coords.longitude;
-
-    }
-  </script> --}}
-
 @endsection
 
 

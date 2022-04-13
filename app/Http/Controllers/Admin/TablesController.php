@@ -1,11 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Clinic;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\User_as_customer;
+use App\Models\User_as_clinic;
+use DB;
 
-class SettingsController extends Controller
+class TablesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +18,13 @@ class SettingsController extends Controller
      */
     public function index()
     {
-        // return view('clinicViews.settings.index');
+        // $user = User::where('role','=',"clinic")->get();
+        $user = User_as_clinic::all();
+        // $userCustomer = User_as_customer::all();
+        // return view('adminViews.tables' , ['user'=>$user, 'customer'=>$userCustomer]);
+        return view('adminViews.tables', ['user' => $user]);
+
+        // return view('adminViews.tables');
     }
 
     /**
@@ -46,7 +56,10 @@ class SettingsController extends Controller
      */
     public function show($id)
     {
-        //
+        $clinic = User_as_clinic::findOrFail($id);
+        // $customer = User_as_customer::findOrFail($id);
+        //return view('adminViews.layouts.clinic.clinicView' , ['clinic'=>$clinic, 'customer'=>$customer]);
+        return view('adminViews.layouts.clinic.clinicView', ['clinic' => $clinic]);
     }
 
     /**
@@ -80,6 +93,8 @@ class SettingsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // $producers = Producer::findOrFail($id);
+        // $producers->delete();
+        // return json_encode(["producers" => $producers]);
     }
 }

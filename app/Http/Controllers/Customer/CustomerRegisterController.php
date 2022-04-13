@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User_address;
 use App\Models\User_as_customer;
 use App\Models\User;
+use App\Models\Customer_logs;
 
 class CustomerRegisterController extends Controller
 {
@@ -87,6 +88,21 @@ class CustomerRegisterController extends Controller
             $customer->users_id = $user_table->id;
             $customer->user_address_id = $address->id;
             $customer->save();
+
+            // customer logs
+            $customer_logs_count = Customer_logs::where('user_as_customer_id', '=',  $customer->id)->count();
+            if ($customer_logs_count == 5000) {
+                Customer_logs::where('user_as_customer_id', '=',  $customer->id)->first()->delete();
+            }
+
+            //creating logs
+            $c_log = new Customer_logs();
+            $c_log->message = "Welcome to MR. JAMS";
+            $c_log->remark = "notif";
+            $c_log->date =  date("m/d/Y");
+            $c_log->time = date("h:i a");
+            $c_log->user_as_customer_id = $customer->id;
+            $c_log->save();
 
           
             return response()->json(['message' => "check mo na db"]);

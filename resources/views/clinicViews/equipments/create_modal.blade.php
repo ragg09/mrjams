@@ -6,14 +6,14 @@
     
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Add Material</h5>
-                    <i class="fa fa-question-circle mx-2" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Adding an existing material will automatically add quantity given that the unit is the same. It is a prevention for duplications.">
+                    <i class="fa fa-question-circle mx-2" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Adding an existing material will automatically add quantity given that the unit and type is the same. It is a prevention for duplications, but be informed that expiration date segerates the materials quantity count.">
                     </i>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
     
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="name">Consumables or Equipments</label>
+                        <label for="name">Material</label>
                         <input type="text" class="form-control" id="name" name="name" placeholder="Material Name">
                         <span class="text-danger error-text name_error"></span>
                     </div>
@@ -22,6 +22,12 @@
                         <label for="quantity">Quantity</label>
                         <input type="text" class="form-control" id="quantity" name="quantity" placeholder="please enter quantity">
                         <span class="text-danger error-text quantity_error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="supplier">Supplier</label>
+                        <input type="text" class="form-control" id="supplier" name="supplier" placeholder="please enter supplier">
+                        <span class="text-danger error-text supplier_error"></span>
                     </div>
 
                     <div class="form-group">
@@ -44,6 +50,24 @@
                             <option value="medicine">medicine</option>
                         </select>
                         <span class="text-danger error-text type_error"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="acquired">Acquired</label>
+                                <input type="date" class="form-control" id="acquired" name="acquired" placeholder="Date Aquired">
+                                <span class="text-danger error-text acquired_error"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="expiration">Expiration</label> <i class="fa fa-question-circle mx-2" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Please be noted that the system will deduct quantity from the earliest date. Please manage your materials specially the consumable and medicine accordingly. If you are adding an equipment, please indicate its life expectancy in expiration date.">
+                                </i>
+                                <input type="date" class="form-control" id="expiration" name="expiration" placeholder="Expiration Date">
+                                <span class="text-danger error-text expiration_error"></span>
+                            </div>
+                        </div>
                     </div>
                     
                 </div>

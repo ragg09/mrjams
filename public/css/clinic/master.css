@@ -80,6 +80,29 @@ body {
     transition: 0.1s;
 }
 
+#dashboard_table_div {
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+#dashboard_table_div a {
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+}
+
+#dashboard_table_div a:hover {
+    text-shadow: 1px 1px rgb(61, 55, 55);
+}
+
+#nodata_img {
+    background-color: var(--veryLightGray);
+    box-shadow: 0px 20px 30px -20px var(--grayishBlue);
+    border-top: 2px solid rgb(11, 95, 173);
+    border-radius: 5px;
+}
+
 #content-wrapper {
     width: 100%;
     position: absolute;

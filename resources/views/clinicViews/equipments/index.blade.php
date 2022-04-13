@@ -13,9 +13,11 @@
         </button>
 
         @if (count($data) > 0)
-            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#add_quantity_modal_up" style="margin-right: 5px;">
+
+            {{-- add quantity feature disabled due to refactored logic, might change later --}}
+            {{-- <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#add_quantity_modal_up" style="margin-right: 5px;">
                 <i class="fa fa-plus" aria-hidden="true"></i> Quantity
-            </button>
+            </button> --}}
             
             <form action="{{ route('clinic.equipments.create') }}" method="GET" id="search_form">
                 <input id="search" type="text" placeholder="Search here . . . ">
@@ -37,8 +39,8 @@
             <table class="table display" id="EquipmentDataTable" >
                 <thead>
                     <tr id="equipment_table_head">
-                        <th scope="col">Materials <i class="fa fa-sort" aria-hidden="true" style="font-size: 13px;" id="EquipSortIcon" hidden></i></th>
-                        <th scope="col">Quantity <i class="fa fa-sort" aria-hidden="true" style="font-size: 13px;" id="EquipSortIcon2" hidden></i></th>
+                        <th scope="col">Materials </th>
+                        <th scope="col">Quantity </th>
                         <th scope="col">Type</th>
                         <th scope="col">{{-- Action --}}</th> 
                     </tr>
@@ -50,7 +52,10 @@
                             <td>{{$row->name}}</td>
                             <td>{{$row->quantity}} {{$row->unit}}</td>
                             <td>{{$row->type}}</td>
-                            <td>    
+                            <td>
+                                <a href="" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#view_modal_up" id="view_modal" data-id="{{$row->id}}" title="View {{$row->name}}">
+                                    <i class="fa fa-list" aria-hidden="true"></i>
+                                </a>    
                                 <a href="" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#edit_modal_up" id="edit_modal" data-id="{{$row->id}}" title="Edit {{$row->name}}">
                                     <i class="fa fa-pencil" aria-hidden="true" ></i>
                                 </a>
@@ -78,7 +83,7 @@
     @endif
 
     
-
+    @include('clinicViews.equipments.view_modal')
     @include('clinicViews.equipments.create_modal')
     @include('clinicViews.equipments.edit_modal')
     @include('clinicViews.equipments.delete_modal')

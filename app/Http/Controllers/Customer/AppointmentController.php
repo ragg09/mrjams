@@ -21,6 +21,7 @@ use App\Models\Ratings;
 use App\Models\Clinic_time_availability;
 use App\Models\Logs;
 use App\Models\Clinic_specialists;
+use App\Models\Customer_logs;
 
 
 class AppointmentController extends Controller
@@ -137,9 +138,28 @@ class AppointmentController extends Controller
             $logs->message = $customer->fname . ' ' . $customer->lname . " requested an appointment.";
             $logs->remark = "notif";
             $logs->date =  date("Y/m/d");
-            $logs->time = date("h:i:sa");
+            $logs->time = date("h:i:s a");
             $logs->user_as_clinic_id = $request->clinic_id;
             $logs->save();
+
+
+            // customer logs
+            $customer_logs_count = Customer_logs::where('user_as_customer_id', '=',  $customer->id)->count();
+            if ($customer_logs_count == 5000) {
+                Customer_logs::where('user_as_customer_id', '=',  $customer->id)->first()->delete();
+            }
+
+            $clinic_name = User_as_clinic::where('id', '=', $request->clinic_id)->first();
+
+             //creating logs
+             $c_log = new Customer_logs();
+             $c_log->message = "You requested an appointment to " . $clinic_name->name;
+             $c_log->remark = "notif";
+             $c_log->date =  date("m/d/Y");
+             $c_log->time = date("h:i a");
+             $c_log->user_as_customer_id = $customer->id;
+             $c_log->save();
+
         } else {
 
 
@@ -221,10 +241,27 @@ class AppointmentController extends Controller
                 $logs->message = $customer->fname . ' ' . $customer->lname . " requested an appointment.";
                 $logs->remark = "notif";
                 $logs->date =  date("Y/m/d");
-                $logs->time = date("h:i:sa");
+                $logs->time = date("h:i:s a");
                 $logs->user_as_clinic_id = $request->clinic_id;
                 $logs->save();
-            }
+
+                // customer logs
+                $customer_logs_count = Customer_logs::where('user_as_customer_id', '=',  $customer->id)->count();
+                if ($customer_logs_count == 5000) {
+                    Customer_logs::where('user_as_customer_id', '=',  $customer->id)->first()->delete();
+                }
+
+                $clinic_name = User_as_clinic::where('id', '=', $request->clinic_id)->first();
+
+                //creating logs
+                $c_log = new Customer_logs();
+                $c_log->message = "You requested an appointment to " . $clinic_name->name;
+                $c_log->remark = "notif";
+                $c_log->date =  date("m/d/Y");
+                $c_log->time = date("h:i a");
+                $c_log->user_as_customer_id = $customer->id;
+                $c_log->save();
+                }
         }
     }
 
@@ -324,22 +361,7 @@ class AppointmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $clinic_id = $id;
-        // $availability_data = Clinic_time_availability::where('user_as_clinic_id', '=', $clinic_id)->first();
-
-        // $split_data = explode("&", $availability_data->summary);
-        // $count = 0;
-        // foreach ($split_data as $key) {
-        //     $this_data = explode("*", $key);
-        //     $count++;
-        //     $availability[] = (object) array(
-        //         "day" => $this_data[0],
-        //         "min" => $this_data[1],
-        //         "max" =>  $this_data[2],
-        //         "status" =>  $this_data[3],
-        //     );
-        // }
-
+        
 
     }
 
@@ -372,9 +394,26 @@ class AppointmentController extends Controller
         $logs->message = $customer->fname . ' ' . $customer->lname . " agreed to the suggested appointment day and time.";
         $logs->remark = "notif";
         $logs->date =  date("Y/m/d");
-        $logs->time = date("h:i:sa");
+        $logs->time = date("h:i:s a");
         $logs->user_as_clinic_id =  $receipt->user_as_clinic_id;
         $logs->save();
+
+        // customer logs
+        $customer_logs_count = Customer_logs::where('user_as_customer_id', '=',  $customer->id)->count();
+        if ($customer_logs_count == 5000) {
+            Customer_logs::where('user_as_customer_id', '=',  $customer->id)->first()->delete();
+        }
+
+        $clinic_name = User_as_clinic::where('id', '=', $receipt->user_as_clinic_id)->first();
+
+         //creating logs
+         $c_log = new Customer_logs();
+         $c_log->message = "You accepted the scheduled appointment from " . $clinic_name->name;
+         $c_log->remark = "notif";
+         $c_log->date =  date("m/d/Y");
+         $c_log->time = date("h:i a");
+         $c_log->user_as_customer_id = $customer->id;
+         $c_log->save();
 
 
         return response()->json(['all' => $appointment, 'status' => 'OK']);

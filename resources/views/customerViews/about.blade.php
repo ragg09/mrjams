@@ -9,92 +9,25 @@
 @section('content')
 @include('customerViews.header.header1')
 
-  <section class="hero">
+<section class="hero">
     <div class="background-image1"></div>
     <div class="hero-content-area1">
       <h1>Your Health is our Priority!</h1>
-      <h3>Just a Remember, It's Time For Your Appointment</h3>
+      <h3>Just a Reminder, It's Time For Your Appointment</h3>
       <a href="#" class="btn">Download Now</a>
     </div>
-  </section>
+</section>
 
  
-  <section class="about">
-    <br><br>
-    <h3 class="title">About MR. JAMS</h3>
-    <hr>
-    <p class="subtitle">MISSION</p>
-    <p class="parag">Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
-    <br><br>
-    <p class="subtitle">VISION</p>
-    <p class="parag">Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
-    <br><br>
-    <p class="subtitle">COMPANY PROFILE</p>
-    <p class="parag">Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
+<section class="about">
+    <br>
+    <h3 class="title" style="color: #116895">About MR. JAMS</h3>
+    <br>
+    {{-- <p class="subtitle">MISSION</p> --}}
+    <h5 style="padding: 0px 100px 0px 100px; text-align:justify; font-family: 'Roboto', sans-serif"> MR. JAMS is a web and mobile application that allows users to schedule appointments with clinics that have registered for the system. You may also find out which clinic is nearest to your present location by using this website. You will also get the information a user requires at that clinic, such as the clinic's address, phone number, services, packages, clinic schedules, doctors, clinic rate, and the clinic's distance from your current location. Clinics who registered in this web application will gain access to a management system that will allow them to keep track of their supplies, equipment, services, packages, reports, incoming appointments, doctor availability, patient records, and much more. To assist them in their regular tasks.</h5>
+    
     <br><br><br><br>
-  </section>
-
-
-  {{-- <section>
-
-    <div class="container">
-      <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4">
-        <div class="col">
-          <div class="card radius-15" style="margin-bottom: 40px;">
-            <div class="card-body text-center">
-              <div class="p-4 border radius-15">
-                <img src="{{ asset('images/mrjams/gunayon.jpg') }}" width="120" height="120" class="rounded-circle shadow" alt="">
-                <h5 class="mb-0 mt-5">Rene Angelo G. Gunayon</h5>
-                <p class="mb-3">Web Developer</p>
-             
-              
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card radius-15">
-            <div class="card-body text-center">
-              <div class="p-4 border radius-15">
-                <img src="{{ asset('images/mrjams/manalo.jpg') }}" width="120" height="120" class="rounded-circle shadow" alt="">
-                <h5 class="mb-0 mt-5">Julius Arnel Manalo</h5>
-                <p class="mb-3">UI Developer</p>
-               
-               
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card radius-15">
-            <div class="card-body text-center">
-              <div class="p-4 border radius-15">
-                <img src="{{ asset('images/mrjams/dagoro.jpg') }}" width="120" height="120" class="rounded-circle shadow" alt="">
-                <h5 class="mb-0 mt-5">Angela E. Dagoro</h5>
-                <p class="mb-3">Graphic Designer</p>
-                
-               
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card radius-15">
-            <div class="card-body text-center">
-              <div class="p-4 border radius-15">
-                <img src="{{ asset('images/mrjams/dollente.jpg') }}" width="120" height="120" class="rounded-circle shadow" alt="">
-                <h5 class="mb-0 mt-5">Michael John M. Dollente</h5>
-                <p class="mb-3">Android Developer</p>
-               
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </section> --}}
-
+</section>
   
 
 <div class="container">
@@ -124,7 +57,7 @@
               <!-- Team Details-->
               <div class="single_advisor_details_info">
                 <h6>Rene Angelo Gunayon</h6>
-                <p class="designation">Web Developer</p>
+                <p class="designation">BSIT 4A | 2022</p>
               </div>
             </div>
           </div>
@@ -139,7 +72,7 @@
               <!-- Team Details-->
               <div class="single_advisor_details_info">
                 <h6>Julius Arnel Manalo</h6>
-                <p class="designation">UI Developer</p>
+                <p class="designation">BSIT 4A | 2022</p>
               </div>
             </div>
           </div>
@@ -154,7 +87,7 @@
               <!-- Team Details-->
               <div class="single_advisor_details_info">
                 <h6>Angela Dagoro</h6>
-                <p class="designation">Graphic Designer</p>
+                <p class="designation">BSIT 4A | 2022</p>
               </div>
             </div>
           </div>
@@ -169,7 +102,7 @@
               <!-- Team Details-->
               <div class="single_advisor_details_info">
                 <h6>Michael John Dollente</h6>
-                <p class="designation">Android Developer</p>
+                <p class="designation">BSIT 4A | 2022</p>
               </div>
             </div>
           </div>

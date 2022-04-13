@@ -4,14 +4,14 @@ $(function(){
     
 
     //reload table first
-    // $("#equipment_table").load(window.location + " #equipment_table");
+    $("#equipment_table").load(window.location + " #equipment_table");
 
-    $("#EquipmentDataTable").DataTable({
-        "order" : [[ 0, 'asc' ], [ 1, 'asc' ]],
-        "bFilter" : false,
-        "paging":   false,
-        "info":     false,
-    });
+    // $("#EquipmentDataTable").DataTable({
+    //     "order" : [[ 0, 'asc' ], [ 1, 'asc' ]],
+    //     "bFilter" : false,
+    //     "paging":   false,
+    //     "info":     false,
+    // });
 
     $("#EquipSortIcon").removeAttr("hidden");
     $("#EquipSortIcon2").removeAttr("hidden");
@@ -70,6 +70,36 @@ $(function(){
         });
     });
 
+    // display of data in view modal, view_modal || equipment show function
+    $(document).on('click', 'a#view_modal', function(e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        $.ajax({
+            type: "GET",
+            url: "/clinic/equipments/" + id + "_inventory",
+            beforeSend: function(){
+                $("#equipments_inventory").empty();
+                $("#material_name").text("");
+                $("#response_waiting_equipment_view").removeAttr("hidden");
+                
+            },
+            success: function(data){
+                console.log(data);
+                $("#response_waiting_equipment_view").attr("hidden", true);
+
+                $("#material_name").text(data.material.name.toUpperCase());
+
+                $.each(data.data, function(key, val){
+                    $('#equipments_inventory').append('<p><span class="fw-bold">Stock:</span> '+ val.quantity +' <br> <span class="fw-bold">Supplier:</span> '+ val.supplier +' <br> <span class="fw-bold">Acquired:</span> '+ moment(val.acquired).format('LL') +' <br><span class="fw-bold">Expiration:</span> '+ moment(val.expiration).format('LL') +'</p>');
+                });
+            },
+            error: function(){
+                console.log('AJAX load did not work');
+                alert("error");
+            }
+        });
+    });
+
     // display of data in edit modal, edit_modal
     $(document).on('click', 'a#edit_modal', function(e) {
         e.preventDefault();
@@ -84,25 +114,92 @@ $(function(){
 
                 $("#edit_equipment_body").attr("hidden", true);
 
+                $("#selected_date").empty();
+                
+                // $("#edit_inventory").attr("hidden", true);
+                
+
                 $(document).find('span.error-text').text('');
+
+
             },
             success: function(data){
-                
-                
-                
+                console.log(data.inventory.length);
+
                 $("#response_waiting_equipment_edit").attr("hidden", true);
 
                 $("#edit_equipment_body").removeAttr("hidden");
 
                 $("#edit_name").val(data.equipment.name);
-                $("#edit_quantity").val(data.equipment.quantity);
+                // $("#edit_quantity").val(data.equipment.quantity);
                 $("#edit_unit").val(data.equipment.unit);
                 $("#edit_type").val(data.equipment.type);
                 $("#edit_main_form").attr('action', "/clinic/equipments/"+id); 
+
+                if(data.inventory.length > 1){
+                    console.log(data.inventory);
+
+                    $("#select_inventory_date").attr("hidden", false);
+                    // $("#selected_date").append('<option value=""></option>');
+                    $.each(data.inventory, function(key, val){
+                        if(val.quantity > 0){
+
+                        }
+                        $("#selected_date").append('<option value="'+id +'_'+val.expiration+'">'+moment(val.expiration).format('LL')+'</option>');
+                    });
+
+                    $("#edit_quantity").val(data.inventory[0].quantity);
+                    $("#edit_supplier").val(data.inventory[0].supplier);
+                    $("#edit_acquired").val(moment(data.inventory[0].acquired).format('YYYY-MM-DD'));
+                    $("#edit_expiration").val(moment(data.inventory[0].expiration).format('YYYY-MM-DD'));
+                    $("#raw_expiration_date").val(data.inventory[0].expiration);
+                    
+
+                    $("#selected_date").on('change', function(e){
+                        //$("#edit_inventory").attr("hidden", true);
+                        $("#edit_quantity").val("");
+                        $("#edit_supplier").val("");
+                        $("#edit_acquired").val("");
+                        $("#edit_expiration").val("");
+                        $("#raw_expiration_date").val("");
+
+                        if($(this).val() !== ""){
+                            //console.log($(this).val());
+                            $.ajax({
+                                type: "GET",
+                                url: "/clinic/equipments/" + $(this).val() + "_getselecteddate",
+                                success: function(data){
+                                    console.log(data);
+                                    $("#edit_inventory").attr("hidden", false);
+                                    
+                                    $("#edit_quantity").val(data.data.quantity);
+                                    $("#edit_supplier").val(data.data.supplier);
+                                    $("#edit_acquired").val(moment(data.data.acquired).format('YYYY-MM-DD'));
+                                    $("#edit_expiration").val(moment(data.data.expiration).format('YYYY-MM-DD'));
+                                    $("#raw_expiration_date").val(data.data.expiration);
+                                    
+                                },
+                                error: function(){
+                                    console.log('AJAX load did not work');
+                                    alert(error);
+                                }
+                            });
+                        }
+                    })
+                }else{
+                    $("#select_inventory_date").attr("hidden", true);
+                    $("#edit_inventory").attr("hidden", false);
+                    
+                    $("#edit_quantity").val(data.inventory[0].quantity);
+                    $("#edit_supplier").val(data.inventory[0].supplier);
+                    $("#edit_acquired").val(moment(data.inventory[0].acquired).format('YYYY-MM-DD'));
+                    $("#edit_expiration").val(moment(data.inventory[0].expiration).format('YYYY-MM-DD'));
+                    $("#raw_expiration_date").val(data.inventory[0].expiration);
+                }
             },
             error: function(){
                 console.log('AJAX load did not work');
-                alert("error");
+                alert(error);
             }
         });
     });
@@ -132,6 +229,7 @@ $(function(){
                         $('span.'+key+'_error').text(val[0]);
                     });
                 }else{
+                    console.log(data);
                     $("#equipment_table").load(window.location + " #equipment_table");
                     $("#edit_modal_up").modal('toggle');
                     bootstrapAlert(data.message, "info", 200);
@@ -265,7 +363,7 @@ $(function(){
                 },
                 success: function(data){
                     //console.log(data.data.length);
-                    if(data.data.length == 0){
+                    if(data.data_name.length == 0 && data.data_type.length == 0){
                         $('#equipment_table_head').hide();
                         $('#equipment_table_body').empty();
                         $("#equipment_table_body").append('<tr><td></p><div style="display: flex; justify-content: center; align-item: center; margin-top: 30px;"><img data-loading-text="LOADING...<span></span>" src="/images/mrjams/noData2.jpg" alt="no data available"></div><div style="display: flex; justify-content: center; align-item: center;  margin-top: 30px;"><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#create_modal">Create New Data</button></div></td></tr>');
@@ -274,8 +372,11 @@ $(function(){
                         $('#equipment_table_head').show();
                         $('#equipment_table_body').empty();
                         $('#pagination_div').css('height', '0px');
-                        $.each(data.data, function(key, val){
-                            $("#equipment_table_body").append('<tr><td>'+val.name+'</td><td>'+val.quantity+' '+val.unit+'</td><td><a href="" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#edit_modal_up" id="edit_modal" data-id="'+val.id+'" title="Edit '+val.name+'"><i class="fa fa-pencil" aria-hidden="true" ></i></a><a href="" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete_modal_up" id="delete_modal" data-id="'+val.id+'" title="Delete '+val.name+'"><i class="fa fa-trash" aria-hidden="true"></i></a></td></tr>');
+                        $.each(data.data_name, function(key, val){
+                            $("#equipment_table_body").append('<tr><td>'+val.name+'</td><td>'+val.quantity+' '+val.unit+'</td><td>'+val.type+'</td><td><a href="" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#edit_modal_up" id="edit_modal" data-id="'+val.id+'" title="Edit '+val.name+'"><i class="fa fa-pencil" aria-hidden="true" ></i></a><a href="" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete_modal_up" id="delete_modal" data-id="'+val.id+'" title="Delete '+val.name+'"><i class="fa fa-trash" aria-hidden="true"></i></a></td></tr>');
+                        });
+                        $.each(data.data_type, function(key, val){
+                            $("#equipment_table_body").append('<tr><td>'+val.name+'</td><td>'+val.quantity+' '+val.unit+'</td><td>'+val.type+'</td><td><a href="" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#edit_modal_up" id="edit_modal" data-id="'+val.id+'" title="Edit '+val.name+'"><i class="fa fa-pencil" aria-hidden="true" ></i></a><a href="" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete_modal_up" id="delete_modal" data-id="'+val.id+'" title="Delete '+val.name+'"><i class="fa fa-trash" aria-hidden="true"></i></a></td></tr>');
                         });
                     }  
                 },

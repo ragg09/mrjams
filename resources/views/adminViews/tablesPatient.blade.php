@@ -30,59 +30,31 @@
 <div class="body flex-grow-1 px-3">
     <div class="container-lg">
         <div class="row">
-            <div class="table-responsive">
-                {{-- <table class="table table-hover ">
-                    <thead class="bg-primary">
-                      <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Clinic Name</th>
-                        <th scope="col">Phone</th>
-                        <th scope="col">Telephone</th>
-                        <th scope="col"> </th>
-                        <th scope="col">Action</th>
-                        <th scope="col"> </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($user as $users)
-                            <tr>
-                                <td>{{$users['id']}}</td>
-                                <td>{{$users['name']}}</td>
-                                <td>{{$users['phone']}}</td>
-                                <td>{{$users['telephone']}}</td>
-                                <td><a href="/admin/clinic/{{$users['id']}}"><button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a></td>
-                                <td><button class="btn btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></td>
-                                <td><button class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button></td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table> --}}
-                <table class="table table-hover" id="patientShow">
-                    <thead class="bg-primary">
-                      <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Customer Name</th>
-                        <th scope="col">Phone</th>
-                        <th scope="col"> </th>
-                        <th scope="col">Action</th>
-                        <th scope="col"> </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($patient as $patients)
-                            <tr>
-                                <td>{{$patients['id']}}</td>
-                                <td>{{$patients['lname']}}</td>
-                                <td>{{$patients['phone']}}</td>
-                                <td><a href="/admin/patient/{{$patients['id']}}"><button class="btn btn-primary" id="viewPatient"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a></td>
-                                {{-- <td><button class="btn btn-primary" id="viewPatient"><i class="fa fa-eye" aria-hidden="true"></i> View</button></td> --}}
-                                <td><a href="/admin/patient/{{$patients['id']}}/edit" class="btn btn-warning" id="editUser" ><i class="fa fa-pencil-square-o" aria-hidden="true" data-id="{{$patients['id']}}"></i> Edit</a></td>
-                                {{-- <td><a class="btn btn-danger" id="dltbtnPatient" data-id="{{$patients['id']}}" data-bs-target="#delete_modal_patient" data-bs-toggle="modal"><i class="fa fa-trash" aria-hidden="true" ></i> Delete</a></td> --}}
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+            {{-- <button onclick="makePDF()">Print Report</button> --}}
+                <div class="table-responsive" id="capture">
+                    <table class="table table-hover" id="patientShow">
+                        <thead class="bg-primary">
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Customer Last Name</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($patient as $patients)
+                                <tr>
+                                    <td>{{$patients['id']}}</td>
+                                    <td>{{$patients['fname']}}</td>
+                                    <td>{{$patients['lname']}}</td>
+                                    <td>{{$patients['phone']}}</td>
+                                    <td><a href="/admin/patient/{{$patients['id']}}"><button class="btn btn-primary" id="viewPatient"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a><a href="/admin/patient/{{$patients['id']}}/edit" class="btn btn-warning" id="editUser" ><i class="fa fa-pencil-square-o" aria-hidden="true" data-id="{{$patients['id']}}"></i> Edit</a></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
         </div>
     </div>
 </div>

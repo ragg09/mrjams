@@ -33,7 +33,7 @@
             <a href="{{ route('admin.message.create') }}">Create</a>
             <a href="/admin/message/1">Sent</a>
             <div class="table-responsive">
-                <table class="table table-hover ">
+                <table class="table table-hover" id="messageTable">
                     <thead class="bg-primary">
                       <tr>
                         <th scope="col">Id</th>
@@ -59,9 +59,6 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{-- <h1>{{$details['title']}}</h1>
-                <h1>{{$details['body']}}</h1> --}}
-
             </div>
         </div>
     </div>
@@ -71,6 +68,6 @@
 
 @section('extraScript')
 
-{{-- <script src="{{ URL::asset('js/admin/userAnalytics.js') }}"></script> --}}
+<script src="{{ URL::asset('js/admin/message.js') }}"></script>
 
 @endsection

@@ -1,10 +1,17 @@
 @extends('clinicViews.layouts.settings')
 @section('title', 'Settings')
 @section('extraStyle')
-
+<style>
+    #clinic_rating{
+        border: 1px solid red;
+        width: 300px;
+        float: right !important;
+    }
+</style>
 @endsection
 
 @section('content')
+
     @include('clinicViews.settings.details')
     @include('clinicViews.settings.timedate')
     @include('clinicViews.settings.preferences')

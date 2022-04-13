@@ -8,6 +8,7 @@ use App\Mail\EmailNotification;
 use App\Models\Appointments;
 use App\Models\Billings;
 use App\Models\Billings_history;
+use App\Models\Clinic_equipment_inventory;
 use App\Models\Clinic_equipments;
 use App\Models\Clinic_services;
 use App\Models\Logs;
@@ -39,6 +40,14 @@ class BillingController extends Controller
         $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
         $bill_status = "";
 
+        $logs = Logs::where('user_as_clinic_id', '=',  $clinic->id)
+            ->where('remark', '!=',  "notif")
+            ->where('remark', '!=',  "done_notif")
+            ->orderBy('id', 'desc')
+            ->take(10)
+            ->get();
+
+
 
         if ($request->SortBy) {
             if ($request->SortBy == "balance") {
@@ -53,6 +62,7 @@ class BillingController extends Controller
                     $this_root_customer = User::where('id', '=',  $this_customer->users_id)->first();
 
                     $customers[] = (object) array(
+                        "id" =>  $this_customer->id,
                         "avatar" =>  $this_root_customer->avatar,
                         "name" =>  $this_customer->fname . " " . $this_customer->lname,
                         "email" =>  $this_root_customer->email,
@@ -75,6 +85,7 @@ class BillingController extends Controller
                             'bills',
                             'customers',
                             'bill_status',
+                            'logs',
                         ])
                     );
                 } else {
@@ -82,6 +93,7 @@ class BillingController extends Controller
                         'clinicViews.billing.index',
                         compact([
                             'bill_status',
+                            'logs',
                         ])
                     );
                 }
@@ -99,6 +111,7 @@ class BillingController extends Controller
                     $this_root_customer = User::where('id', '=',  $this_customer->users_id)->first();
 
                     $customers[] = (object) array(
+                        "id" =>  $this_customer->id,
                         "avatar" =>  $this_root_customer->avatar,
                         "name" =>  $this_customer->fname . " " . $this_customer->lname,
                         "email" =>  $this_root_customer->email,
@@ -121,6 +134,7 @@ class BillingController extends Controller
                             'bills',
                             'customers',
                             'bill_status',
+                            'logs',
                         ])
                     );
                 } else {
@@ -128,6 +142,7 @@ class BillingController extends Controller
                         'clinicViews.billing.index',
                         compact([
                             'bill_status',
+                            'logs',
                         ])
                     );
                 }
@@ -143,6 +158,7 @@ class BillingController extends Controller
                 $this_root_customer = User::where('id', '=',  $this_customer->users_id)->first();
 
                 $customers[] = (object) array(
+                    "id" =>  $this_customer->id,
                     "avatar" =>  $this_root_customer->avatar,
                     "name" =>  $this_customer->fname . " " . $this_customer->lname,
                     "email" =>  $this_root_customer->email,
@@ -166,6 +182,7 @@ class BillingController extends Controller
                         'bills',
                         'customers',
                         'bill_status',
+                        'logs',
                     ])
                 );
             } else {
@@ -173,6 +190,7 @@ class BillingController extends Controller
                     'clinicViews.billing.index',
                     compact([
                         'bill_status',
+                        'logs',
                     ])
                 );
             }
@@ -385,7 +403,7 @@ class BillingController extends Controller
     {
         $user = User::where('email', '=',  Auth::user()->email)->first();
         $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
-        $logs_count = Logs::where('user_as_clinic_id', '=',  $user->id)->count();
+        $logs_count = Logs::where('user_as_clinic_id', '=',  $clinic->id)->count();
         $clinic_add = User_address::where('id', '=',  $clinic->user_address_id)->first();
 
         if (strpos($id, "UpdateBalance")) {
@@ -429,7 +447,7 @@ class BillingController extends Controller
 
                     //checking logs limit 5000
                     if ($logs_count == 5000) {
-                        Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+                        Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
                     }
                     $logs = new Logs();
                     $logs->message = $cus->fname . ' ' . $cus->lname . '\'s billing is updated. No balance left';
@@ -454,7 +472,7 @@ class BillingController extends Controller
 
                     //checking logs limit 5000
                     if ($logs_count == 5000) {
-                        Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+                        Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
                     }
                     $logs = new Logs();
                     $logs->message = $cus->fname . ' ' . $cus->lname . '\'s billing is updated. ' . $gender . ' new balance is ₱' . $new_bal;
@@ -504,7 +522,7 @@ class BillingController extends Controller
 
             //checking logs limit 5000
             if ($logs_count == 5000) {
-                Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+                Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
             }
             $logs = new Logs();
             $logs->message = "You've finished an appointment with Receipt Order No: " . $id;
@@ -517,33 +535,102 @@ class BillingController extends Controller
             $equipment_values_array = explode(",", $request->equipment_values_final);
             $count = 0;
 
+
+
             foreach ($equipment_ids_array as $keys) {
                 if ($keys > 0) {
                     $this_equipments = Clinic_equipments::where('id', '=',  $keys)->first();
 
-                    $num1 = (int)$this_equipments->quantity;
-                    $num2 = (int)$equipment_values_array[$count];
-                    $total =  $num1 - $num2;
+
+
+                    $this_inventory = Clinic_equipment_inventory::where('clinic_equipments_id', '=',  $keys)
+                        ->where('quantity', '>', 0)
+                        ->orderBy('expiration', 'ASC')
+                        ->get();
+
+
+
+                    // //updating inveotry qunatity logic
+                    if ($this_inventory[0]->quantity > $equipment_values_array[$count]) {
+                        $num1 = (int)$this_inventory[0]->quantity; // inventory count
+                        $num2 = (int)$equipment_values_array[$count]; //used in this transaction
+                        $total =  $num1 - $num2;
+
+                        //return response()->json(['data' =>  $total]);
+
+                        //updating inventory
+                        $up_inventory = Clinic_equipment_inventory::find($this_inventory[0]->id);
+                        $up_inventory->quantity =  $total;
+                        $up_inventory->save();
+                    } else {
+
+                        $to_deduct = (int)$equipment_values_array[$count]; //used in this transaction 
+
+                        foreach ($this_inventory as $key) {
+                            if ($to_deduct != 0) {
+                                if ($to_deduct > $key->quantity) {
+                                    $to_deduct = $to_deduct - $key->quantity;
+
+                                    //updating inventory || getting deducting every stock
+                                    $this_up_inventory = Clinic_equipment_inventory::find($key->id);
+                                    $this_up_inventory->quantity =  0;
+                                    $this_up_inventory->save();
+
+                                    //checking logs limit 5000
+                                    if ($logs_count == 5000) {
+                                        Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
+                                    }
+                                    $logs = new Logs();
+                                    $logs->message = "Your stock of " . $this_equipments->name . " with expiration date of " . date('M d, Y', strtotime($this_up_inventory->expiration)) . " is now depleted, be informed that you are now using the next stock in your inventory.";
+                                    $logs->remark = "notif";
+                                    $logs->date =  date("Y/m/d");
+                                    $logs->time = date("h:i:sa");
+                                    $logs->user_as_clinic_id = $clinic->id;
+                                    $logs->save();
+                                } else {
+                                    $num1 = (int)$key->quantity; // inventory count
+                                    $num2 = $to_deduct; //used in this transaction
+                                    $total =  $num1 - $num2;
+
+                                    //updating inventory
+                                    $up_inventory = Clinic_equipment_inventory::find($key->id);
+                                    $up_inventory->quantity =  $total;
+                                    $up_inventory->save();
+
+                                    $to_deduct = 0;
+                                }
+                            }
+                        }
+                    }
+
+                    //updating root material's quantity
+                    $for_updating_root_quantity = Clinic_equipment_inventory::where('clinic_equipments_id', '=',  $keys)
+                        ->where('quantity', '>', 0)
+                        ->orderBy('expiration', 'ASC')
+                        ->get();
+                    $total_quantity = 0;
+                    foreach ($for_updating_root_quantity as $key) {
+                        $total_quantity += $key->quantity;
+                    }
+
+                    $up_equipment = Clinic_equipments::find($keys);
+                    $up_equipment->quantity =  $total_quantity;
+                    $up_equipment->save();
+
 
                     for ($x = 0; $x <= $num2; $x++) {
                         $materials_summary[] = $this_equipments->name;
                     }
 
-
-
-                    $up_equipment = Clinic_equipments::find($keys);
-                    $up_equipment->quantity =  $total;
-                    $up_equipment->save();
-
                     $count++;
 
-                    if ($total >= 15 && $total <= 20) {
+                    if ($total_quantity >= 15 && $total_quantity <= 20) {
                         //checking logs limit 5000
                         if ($logs_count == 5000) {
-                            Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+                            Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
                         }
                         $logs = new Logs();
-                        $logs->message = $this_equipments->name . " is about to run out. Stock left: " . $total;
+                        $logs->message = $this_equipments->name . " is about to run out. Stock left: " . $total_quantity;
                         $logs->remark = "notif";
                         $logs->date =  date("Y/m/d");
                         $logs->time = date("h:i:sa");
@@ -551,13 +638,13 @@ class BillingController extends Controller
                         $logs->save();
                     }
 
-                    if ($total >= 5 && $total <= 10) {
+                    if ($total_quantity >= 5 && $total_quantity <= 10) {
                         //checking logs limit 5000
                         if ($logs_count == 5000) {
-                            Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+                            Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
                         }
                         $logs = new Logs();
-                        $logs->message = $this_equipments->name . " is about to run out. Stock left: " . $total;
+                        $logs->message = $this_equipments->name . " is about to run out. Stock left: " . $total_quantity;
                         $logs->remark = "notif";
                         $logs->date =  date("Y/m/d");
                         $logs->time = date("h:i:sa");
@@ -565,10 +652,10 @@ class BillingController extends Controller
                         $logs->save();
                     }
 
-                    if ($total <= 0) {
+                    if ($total_quantity <= 0) {
                         //checking logs limit 5000
                         if ($logs_count == 5000) {
-                            Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+                            Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
                         }
                         $logs = new Logs();
                         $logs->message = $this_equipments->name . " is about to run out. No stock left ";
@@ -660,7 +747,7 @@ class BillingController extends Controller
 
             //checking logs limit 5000
             if ($logs_count == 5000) {
-                Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+                Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
             }
             $logs = new Logs();
             $logs->message = "An appointment has been finished with Receipt Order No: " . $id;

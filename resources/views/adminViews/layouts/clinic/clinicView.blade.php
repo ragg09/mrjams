@@ -7,7 +7,8 @@
     
 @endsection
 
-{{$avgRatingApp}}
+{{-- {{$clinics}}
+{{$clinicType}} --}}
 
 @section('content')
 <header class="header header-sticky mb-4"> 
@@ -20,6 +21,9 @@
               <li class="breadcrumb-item active">
                   <span>Clinic</span>
               </li>
+              <li class="breadcrumb-item active">
+                <span>{{ $clinics->name}}</span>
+            </li>
           </ol>
       </nav>
   </div>
@@ -28,28 +32,96 @@
 <div class="body flex-grow-1 px-3">
     <div class="container-lg">
         <div class="row">
-            <div class="col">
-                {{-- @php 
-                dd($clinic);
-                @endphp --}}
-                {{-- @foreach($clinic as $clinics) --}}
-                    <h3>{{ $clinics->id}}</h3> <br>
-                    <h3>Clinic Name: {{ $clinics->name}}</h3> <br>
-                    <h3>Cellphone #: {{ $clinics->phone}}</h3> <br>
-                    <h3>Telephone #: {{ $clinics->telephone}}</h3>
-                    <h3>Total Appointments Made: {{ $appReceipt}}</h3>
-                    <h3>Average Rating:(rating to ng customer sa clinic 2decimal) {{number_format($avgRatings,1)}}</h3> <br>
-                    <h3>Average Rating:(rating to ng clinic sa system) {{number_format($avgRatingApp,1)}}</h3> <br>
-                    <input type="text" id="clinicID" value="{{$clinics->id}}">
-                {{-- @endforeach  --}}
-                    {{-- <p>{{ $customer->id}}</p> <br>
-                    <p>{{ $customer->name}}</p> <br> --}}
-                    {{-- <p>{{ $clinic->phone}}</p> <br>
-                    <p>{{ $clinic->telephone}}</p> --}}
+            <div class="col"> 
+                <div class="card">
+                  <div class="card-content">
+                    <div class="card-body">
+                      <div class="media d-flex">
+                        <div class="media-body text-center">
+                          <h3 style="font-weight: bold">{{ $clinics->name}}</h3>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </div>
-      </div>
-      <div id="appMonthClinic" style="width: 900px; height: 500px"></div>
-  </div>
+            <div class="col-4"> 
+                <div class="card">
+                  <div class="card-content">
+                    <div class="card-body text-center">
+                      <div class="media d-flex">
+                        <div class="align-self-center">
+                            <i class="fa fa-medkit font-large-1 float-right" aria-hidden="true"></i>
+                        </div>
+                        <div class="media-body text-right">
+                          <h3>{{ $clinicType->type_of_clinic}} Clinic</h3>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col"> 
+                <div class="card">
+                  <div class="card-content">
+                    <div class="card-body">
+                      <div class="media d-flex">
+                        <div class="align-self-center">
+                            <i class="fa fa-users font-large-2 float-right" aria-hidden="true"></i>
+                        </div>
+                        <div class="media-body text-right">
+                          <h3>{{ $appReceipt}}</h3>
+                          <span>Total Appointments Made</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="col"> 
+                <div class="card">
+                  <div class="card-content">
+                    <div class="card-body">
+                      <div class="media d-flex">
+                        <div class="align-self-center">
+                            <i class="fa fa-star font-large-2 float-right" aria-hidden="true"></i>
+                        </div>
+                        <div class="media-body text-right">
+                          <h3>{{number_format($avgRatings,1)}}</h3>
+                          <span>Average Rating from Customer</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="col"> 
+                <div class="card">
+                  <div class="card-content">
+                    <div class="card-body">
+                      <div class="media d-flex">
+                        <div class="align-self-center">
+                            <i class="fa fa-star font-large-2 float-right" aria-hidden="true"></i>
+                        </div>
+                        <div class="media-body text-right">
+                          <h3>{{number_format($avgRatingApp,1)}}</h3>
+                          <span>Average Rating to the System</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <input type="text" id="clinicID" name="clinicID" value="{{$clinics->id}}" hidden>
+            </div>
+        </div>
+        <div id="appMonthClinic" style="width: 100%; height: 500px"></div>
+    </div>
 </div>
 
 @endsection
@@ -57,6 +129,5 @@
 @section('extraScript')
 
 <script src="{{ URL::asset('js/admin/clinicAppMonth.js') }}"></script>
-{{-- <script src="{{ URL::asset('js/admin/userAnalytics.js') }}"></script> --}}
 
 @endsection

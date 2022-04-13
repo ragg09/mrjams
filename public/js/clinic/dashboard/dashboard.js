@@ -84,7 +84,7 @@ $(function () {
                 EmptyCalendar();
             },
             success: function(data){
-                //console.log(data);
+                // console.log(data);
                 var edata = [];
                 
                 if(data.status == 0){
@@ -112,7 +112,7 @@ $(function () {
                         navLinks: true, // can click day/week names to navigate views
                         businessHours: true, // display business hours
                         //editable: true,
-                        contentHeight: 600,
+                        contentHeight: 700,
                         selectable: true,
                         events: edata,
                         eventClick: function(arg) {

@@ -71,6 +71,6 @@
 
 @section('extraScript')
 
-<script src="{{ URL::asset('js/admin/userAnalytics.js') }}"></script>
+{{-- <script src="{{ URL::asset('js/admin/userAnalytics.js') }}"></script> --}}
 
 @endsection

@@ -19,7 +19,7 @@
                             <div class="pv-lg"><i class="fa fa-calendar fa-5x" aria-hidden="true" style="color: #6497B1; margin-bottom: 25px;"></i></div>
                             <h3 class="m0 text-bold" style="margin-top: -15px;"><b>{{$clinic_info->name}}</b></h3>
                             <div class="mv-lg" style="margin-top: 15px;">
-                                <p>Hello, I'm a just a dummy contact in your contact list and this is my presentation text. Have fun!</p>
+                                <p style="padding: 0px 10px 0px 10px;">Your Health is our Priority! Just a Reminder, It's Time For Your Appointment.</p>
                                 {{-- <p><b>Email: </b> mr.jams1822@gmail.com</p>
                                 <p><b>Phone: </b> +63 1234567890</p>
                                 <p><b>Telephone: </b> +63 1234567890</p> --}}
@@ -276,7 +276,8 @@
 @include('customerViews.footer.footer2')
 @endsection
 @section('jsScript')
-    <script async src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places"></script>
+   
+    <script defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places"></script>
     <script src="{{ URL::asset('js/customer/mail_map.js') }}"></script>
 
     <script src="{{ URL::asset('js/customer/clinic_rating.js') }}"></script> 

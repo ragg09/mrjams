@@ -13,6 +13,8 @@ use App\Models\User;
 use App\Models\User_as_clinic;
 use App\Models\User_as_customer;
 
+use Laravel\Sanctum\HasApiTokens;
+
 class LoginController extends Controller
 {
     /*
@@ -26,7 +28,7 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    use AuthenticatesUsers, HasApiTokens;
 
     /**
      * Where to redirect users after login.
@@ -80,6 +82,12 @@ class LoginController extends Controller
 
             if ($user_table->role == "customer") {
                 return redirect('/customer');
+                // $this_user = User::where("id", $user_as_customer->users_id)->first();
+
+                // //$token = $logged ->createToken($request->token_name);
+                // $token = $this_user->createToken('token')->plainTextToken;
+
+                // echo $token;
             }
         }
     }

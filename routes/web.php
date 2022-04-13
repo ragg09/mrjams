@@ -1,13 +1,15 @@
 <?php
 
 
-use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\UserClinicAnalyticsController;
 use App\Http\Controllers\Admin\TablesController;
 use App\Http\Controllers\Admin\ClinicDetailsController;
 use App\Http\Controllers\Admin\PatientDetailsController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ClinicTypesController;
+use App\Http\Controllers\Admin\ClinicRegistrationController;
+use App\Http\Controllers\Admin\AdminQueryController;
 
 
 use App\Http\Controllers\Clinic\TestingController;
@@ -34,6 +36,7 @@ use App\Http\Controllers\Customer\RelativeAppointmentController;
 use App\Http\Controllers\Customer\MailController;
 use App\Http\Controllers\Customer\RatingController;
 use App\Http\Controllers\Customer\AnnouncementController;
+use App\Http\Controllers\Customer\CustomerLogsController;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -67,8 +70,26 @@ Route::get('/', function () {
     return view('publicViews.index');
 })->middleware('role_guest');
 
-Route::group(['prefix' => 'public', 'middleware' => ['role_guest'], 'as' => 'public.'], function () {
+Route::group(['prefix' => 'public', 'middleware' => ['role_public'], 'as' => 'public.'], function () {
     Route::resource('testing', TestingController::class); //testing purposes
+});
+
+Route::group(['prefix' => 'clinic_verification', 'middleware' => ['role_public'], 'as' => 'clinic_verification.'], function () {
+    Route::get('/verifying', function () {
+        $user = User::where('email', '=',  Auth::user()->email)->first();
+        $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
+
+        echo $user;
+        echo "<br>";
+        echo "<br>";
+        echo $clinic;
+        echo "<br>";
+        echo "<br>";
+        return view(
+            'publicViews.verification',
+            compact(["user", "clinic"])
+        );
+    })->name('verifying');
 });
 //================================================================================================================
 //role and registration routes
@@ -124,9 +145,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role_admin'], 'as' 
     Route::resource('analytics', UserClinicAnalyticsController::class);
     Route::resource('clinic', ClinicDetailsController::class);
     Route::resource('patient', PatientDetailsController::class);
-    Route::resource('dashboard', AdminDashboard::class);
+    Route::resource('dashboard', DashboardController::class);
     Route::resource('message', MessageController::class);
     Route::resource('clinicTypes', ClinicTypesController::class);
+    Route::resource('clinicReg', ClinicRegistrationController::class);
+    Route::resource('adminQuery', AdminQueryController::class);
 });
 //================================================================================================================
 //clinic routes without middleware exceptions
@@ -134,12 +157,13 @@ Route::group(['prefix' => 'clinic', 'middleware' => ['auth', 'check_user', 'role
     Route::get('/', function () {
         $user = User::where('email', '=',  Auth::user()->email)->first();
         $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
-        $data = Logs::where('user_as_clinic_id', '=',  $clinic->id)
+        $logs = Logs::where('user_as_clinic_id', '=',  $clinic->id)
             ->where('remark', '!=',  "notif")
             ->where('remark', '!=',  "done_notif")
             ->orderBy('id', 'desc')
-            ->paginate(10);
-        return view('clinicViews.index', ['data' => $data]);
+            ->take(10)
+            ->get();
+        return view('clinicViews.index', ['logs' => $logs]);
     })->name('dashobard');
 
     Route::resource('dashboard', DashbaordController::class);
@@ -196,7 +220,7 @@ Route::group(['prefix' => 'customer', 'middleware' => ['auth', 'check_user', 'ro
     Route::resource('mail', MailController::class);
     Route::resource('rate', RatingController::class);
     Route::resource('announcement', AnnouncementController::class);
-
+    Route::resource('customerLogs', CustomerLogsController::class);
     Route::resource('customermap', CustomerMap::class);
 });
 //customer routes with middleware exceptions

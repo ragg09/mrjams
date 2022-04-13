@@ -1,4 +1,17 @@
 $(function(){
+
+    $('#terms_conditions').on('click', function(e){
+        if ($(this).is(':checked') && $("#latitude").val() != "") {
+            $("#register_btn").prop("disabled", false);
+            $("#put_location_first").prop("hidden", true);
+         }else{
+            $("#register_btn").prop("disabled", true);
+            $("#put_location_first").prop("hidden", false);
+            $(this).prop( "checked", false );
+         }
+    });
+
+
     $("#main_form").on('submit', function(e){
         e.preventDefault();
     

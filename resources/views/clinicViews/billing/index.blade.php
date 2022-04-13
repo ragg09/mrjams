@@ -108,7 +108,7 @@
                     <tr id="services_table_head">
                         {{-- <th scope="col">Total</th> --}}
                         <th scope="col"></th>
-                        <th scope="col" class="align-middle text-center">Customer</th>
+                        <th scope="col" class="align-middle text-center">Name</th>
                         <th scope="col" class="align-middle text-center">Total</th>
                         <th scope="col" class="align-middle text-center">Paid</th>
                         <th scope="col" class="align-middle text-center">Balance</th>
@@ -122,7 +122,12 @@
                     @for ($x = 0; $x < count($bills); $x++)
     
                         <tr>
-                            <td class="align-middle text-center"><img class="rounded-circle" src="{{$customers[$x]->avatar}}" alt="{{$customers[$x]->avatar}}"></td>
+                            <td class="align-middle text-center">
+                                <a href="/clinic/patient/{{$customers[$x]->id}}" class="rounded-circle btn btn-outline-light" data-id="{{$customers[$x]->id}}" id="view_patient_details">
+                                    <img class="rounded-circle" src="{{$customers[$x]->avatar}}" alt="{{$customers[$x]->avatar}}">
+                                </a>
+                                
+                            </td>
                             <td class="align-middle text-center">{{$customers[$x]->name}}</td>
                             <td class="align-middle text-center">&#8369;{{$customers[$x]->total}}</td>
                             @if ($customers[$x]->total == $customers[$x]->paid)

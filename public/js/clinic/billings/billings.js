@@ -73,7 +73,7 @@ $(function(){
                 $(document).find('span.error-text').text('');
             },
             success: function(data) {
-
+                // console.log(data);
                 window.location.href = "/clinic/billing";
 
                 // console.log(data);

@@ -31,7 +31,6 @@ class CustomerMap extends Controller
     public function create()
     {   
         // $clinic_add = User_address::get(['latitude', 'longitude', 'address_line_1', 'address_line_2', 'city', 'zip_code']);
-
         // return response()->json(['data' => $data]);
 
         $clinics = User_as_clinic::all();
@@ -90,42 +89,42 @@ class CustomerMap extends Controller
      */
     public function show($id)
     {
-        $user = User::where('email', '=',  Auth::user()->email)->first();
+        // $user = User::where('email', '=',  Auth::user()->email)->first();
 
-        if ($request->ajax()) {
-            $query = $request->get('query');
-            $data = User_as_clinic::query()->where('clinic_types_id', 'LIKE', "%{$query}%")->get();
+        // if ($request->ajax()) {
+        //     $query = $request->get('query');
+        //     $data = User_as_clinic::query()->where('clinic_types_id', 'LIKE', "%{$query}%")->get();
 
-            $count = 0;
-            if (count($data) > 0) {
-                foreach ($data as $key) {
-                    $address = User_address::where('id', '=', $key->user_address_id)->first();
-                    $type = Clinic_types::where('id', '=', $key->clinic_types_id)->first();
-                    $package = Packages::where('user_as_clinic_id', '=', $key->id)->first();
-                    $service = Clinic_services::where('user_as_clinic_id', '=', $key->id)->first();
+        //     $count = 0;
+        //     if (count($data) > 0) {
+        //         foreach ($data as $key) {
+        //             $address = User_address::where('id', '=', $key->user_address_id)->first();
+        //             $type = Clinic_types::where('id', '=', $key->clinic_types_id)->first();
+        //             $package = Packages::where('user_as_clinic_id', '=', $key->id)->first();
+        //             $service = Clinic_services::where('user_as_clinic_id', '=', $key->id)->first();
 
 
-                    if (isset($package) && isset($service)) {
-                        $ClinicAdd[] = (object) array(
-                            "id" => $key->id,
-                            "name" => $data[$count]->name,
-                            "addLine1" => $address->address_line_1,
-                            "addLine2" => $address->address_line_2,
-                            "type" => $type->type_of_clinic,
-                            "package" => $package->name,
-                            "service" => $service->name
-                        );
-                        $count++;
-                    }
-                }
+        //             if (isset($package) && isset($service)) {
+        //                 $ClinicAdd[] = (object) array(
+        //                     "id" => $key->id,
+        //                     "name" => $data[$count]->name,
+        //                     "addLine1" => $address->address_line_1,
+        //                     "addLine2" => $address->address_line_2,
+        //                     "type" => $type->type_of_clinic,
+        //                     "package" => $package->name,
+        //                     "service" => $service->name
+        //                 );
+        //                 $count++;
+        //             }
+        //         }
 
-                if ($count > 0) {
-                    return  response()->json(['ClinicAdd' => $ClinicAdd, 'status' => 1]);
-                } else {
-                    return response()->json(['status' => 0]);
-                }
-            }
-        }
+        //         if ($count > 0) {
+        //             return  response()->json(['ClinicAdd' => $ClinicAdd, 'status' => 1]);
+        //         } else {
+        //             return response()->json(['status' => 0]);
+        //         }
+        //     }
+        // }
     }
 
     /**

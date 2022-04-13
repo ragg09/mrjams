@@ -21,16 +21,14 @@ $(function(){
                          $('span.'+key+'_error').text(val[0]);
                     });
                 }else{      
-                    // window.location.href = "/customer/announcement"; 
-                    // $("#admin-message").load(window.location + " #admin-message");
+                   
                     bootstrapAlert("Your Message to Admin is Successfully Created!", "success", 400);
                     setInterval(reloader, 1500);
 
                     function reloader(){
                         location.reload();
                     }
-                    // $("#admin-message").empty();
-                    // $("#announce").append();
+              
                   
                 }
             }

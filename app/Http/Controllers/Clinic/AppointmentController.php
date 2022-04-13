@@ -33,6 +33,8 @@ class AppointmentController extends Controller
     {
         $user = User::where('email', '=',  Auth::user()->email)->first();
         $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
+        $logs_count = Logs::where('user_as_clinic_id', '=',  $clinic->id)->count();
+
 
 
         $receipts = Receipt_orders::where('user_as_clinic_id', '=',  $clinic->id)->get();
@@ -62,58 +64,102 @@ class AppointmentController extends Controller
             $customer_root_data = User::where('id', '=',   $customer->users_id)->first();
 
             if ($appointments->appointment_status_id == 4) { //accepted appointments only
-                $complete_appointment_data[] = (object) array(
-                    "user_email" => $customer_root_data->email ?? "",
-                    "user_avatar" => $customer_root_data->avatar ?? "",
+                $dateime = $appointments->appointed_at . " " . $appointments->time;
+                if (date("Y-m-d H:i") > $dateime) {
+                    $update_app = Appointments::find($appointments->id);
+                    $update_app->appointment_status_id = 6; //expired
+                    $update_app->save();
 
-                    "app_id" =>  $appointments->id ?? "",
-                    "app_created_at" =>  $appointments->created_at ?? "",
-                    "time" =>  date("g:i a", strtotime($appointments->time)) ?? "",
-                    "app_appointed_at" =>  $appointments->appointed_at ?? "",
-                    "app_status" =>  $appointments->appointment_status_id ?? "",
+                    //checking logs limit 5000
+                    if ($logs_count == 5000) {
+                        Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
+                    }
+                    $logs = new Logs();
+                    $logs->message = "An Appointment has been expired with Receipt Order No: " . $appointments->id;
+                    $logs->remark = "danger";
+                    $logs->date =  date("Y/m/d");
+                    $logs->time = date("h:i:sa");
+                    $logs->user_as_clinic_id = $clinic->id;
+                    $logs->save();
+                } else {
+                    $complete_appointment_data[] = (object) array(
+                        "user_email" => $customer_root_data->email ?? "",
+                        "user_avatar" => $customer_root_data->avatar ?? "",
 
-                    "ro_id" =>  $key->id ?? "",
-                    "ro_package_name" =>  $package->name ?? "",
-                    "ro_services_name" => $services_summary ?? "",
-                    "ro_customer_id" =>  $key->user_as_customer_id ?? "",
-                    "ro_patient_details" =>  $key->patient_details ?? "",
-                    "ro_patient_address" =>  $key->patient_address ?? "",
-                );
+                        "app_id" =>  $appointments->id ?? "",
+                        "app_created_at" =>  $appointments->created_at ?? "",
+                        "time" =>  date("g:i a", strtotime($appointments->time)) ?? "",
+                        "app_appointed_at" =>  $appointments->appointed_at ?? "",
+                        "app_status" =>  $appointments->appointment_status_id ?? "",
+
+                        "ro_id" =>  $key->id ?? "",
+                        "ro_package_name" =>  $package->name ?? "",
+                        "ro_services_name" => $services_summary ?? "",
+                        "ro_customer_id" =>  $key->user_as_customer_id ?? "",
+                        "ro_patient_details" =>  $key->patient_details ?? "",
+                        "ro_patient_address" =>  $key->patient_address ?? "",
+                    );
+                }
             }
 
-            if ($appointments->appointment_status_id == 5) { //accepted appointments only
-                $complete_appointment_negotiations[] = (object) array(
-                    "user_email" => $customer_root_data->email ?? "",
-                    "user_avatar" => $customer_root_data->avatar ?? "",
+            if ($appointments->appointment_status_id == 5) { // negotiation
 
-                    "app_id" =>  $appointments->id ?? "",
-                    "app_created_at" =>  $appointments->created_at ?? "",
-                    "time" =>  date("g:i a", strtotime($appointments->time)) ?? "",
-                    "app_appointed_at" =>  $appointments->appointed_at ?? "",
-                    "app_status" =>  $appointments->appointment_status_id ?? "",
+                // echo date("Y-m-d H:i");
+                $dateime = $appointments->appointed_at . " " . $appointments->time;
+                if (date("Y-m-d H:i") > $dateime) {
+                    $update_app = Appointments::find($appointments->id);
+                    $update_app->appointment_status_id = 6; //expired
+                    $update_app->save();
 
-                    "ro_id" =>  $key->id ?? "",
-                    "ro_package_name" =>  $package->name ?? "",
-                    "ro_services_name" => $services_summary ?? "",
-                    "ro_customer_id" =>  $key->user_as_customer_id ?? "",
-                    "ro_patient_details" =>  $key->patient_details ?? "",
-                    "ro_patient_address" =>  $key->patient_address ?? "",
-                );
+                    //checking logs limit 5000
+                    if ($logs_count == 5000) {
+                        Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
+                    }
+                    $logs = new Logs();
+                    $logs->message = "An Appointment has been expired with Receipt Order No: " . $appointments->id;
+                    $logs->remark = "danger";
+                    $logs->date =  date("Y/m/d");
+                    $logs->time = date("h:i:sa");
+                    $logs->user_as_clinic_id = $clinic->id;
+                    $logs->save();
+                } else {
+                    $complete_appointment_negotiations[] = (object) array(
+                        "user_email" => $customer_root_data->email ?? "",
+                        "user_avatar" => $customer_root_data->avatar ?? "",
+
+                        "app_id" =>  $appointments->id ?? "",
+                        "app_created_at" =>  $appointments->created_at ?? "",
+                        "time" =>  date("g:i a", strtotime($appointments->time)) ?? "",
+                        "app_appointed_at" =>  $appointments->appointed_at ?? "",
+                        "app_status" =>  $appointments->appointment_status_id ?? "",
+
+                        "ro_id" =>  $key->id ?? "",
+                        "ro_package_name" =>  $package->name ?? "",
+                        "ro_services_name" => $services_summary ?? "",
+                        "ro_customer_id" =>  $key->user_as_customer_id ?? "",
+                        "ro_patient_details" =>  $key->patient_details ?? "",
+                        "ro_patient_address" =>  $key->patient_address ?? "",
+                    );
+                }
             }
         }
 
-        //echo $complete_appointment_data;
+
+
+        $logs = Logs::where('user_as_clinic_id', '=',  $clinic->id)
+            ->where('remark', '!=',  "notif")
+            ->where('remark', '!=',  "done_notif")
+            ->orderBy('id', 'desc')
+            ->take(10)
+            ->get();
+
+
 
         return view('clinicViews.appointment.accepted_view', [
             "accepted_data" => $complete_appointment_data ?? "",
             "negotiation_data" =>  $complete_appointment_negotiations ?? "",
+            "logs" =>  $logs
         ]);
-
-        // if ($count_app > 0) {
-        //     return view('clinicViews.appointment.accepted_view', ["data" => $complete_appointment_data]);
-        // } else {
-        //     return view('clinicViews.appointment.accepted_view', ["data" => ""]);
-        // }
     }
 
     /**
@@ -125,7 +171,7 @@ class AppointmentController extends Controller
     {
         $user = User::where('email', '=',  Auth::user()->email)->first();
         $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
-        $logs_count = Logs::where('user_as_clinic_id', '=',  $user->id)->count();
+        $logs_count = Logs::where('user_as_clinic_id', '=',  $clinic->id)->count();
 
         $receipts = Receipt_orders::where('user_as_clinic_id', '=',  $clinic->id)->get();
 
@@ -140,7 +186,7 @@ class AppointmentController extends Controller
 
                     //checking logs limit 5000
                     if ($logs_count == 5000) {
-                        Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+                        Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
                     }
                     $logs = new Logs();
                     $logs->message = "An Appointment has been expired with Receipt Order No: " . $appointments->id;
@@ -207,12 +253,17 @@ class AppointmentController extends Controller
             $count++;
         }
 
-        //echo json_encode($complete_appointment_data);
+        $logs = Logs::where('user_as_clinic_id', '=',  $clinic->id)
+            ->where('remark', '!=',  "notif")
+            ->where('remark', '!=',  "done_notif")
+            ->orderBy('id', 'desc')
+            ->take(10)
+            ->get();
 
         if ($count_app > 0) {
-            return view('clinicViews.appointment.index', ["data" => $complete_appointment_data,]);
+            return view('clinicViews.appointment.index', ["data" => $complete_appointment_data, "logs" => $logs]);
         } else {
-            return view('clinicViews.appointment.index', ["data" => ""]);
+            return view('clinicViews.appointment.index', ["data" => "", "logs" => $logs]);
         }
 
 
@@ -346,7 +397,7 @@ class AppointmentController extends Controller
         $user = User::where('email', '=',  Auth::user()->email)->first();
         $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
         $clinic_add = User_address::where('id', '=',  $clinic->user_address_id)->first();
-        $logs_count = Logs::where('user_as_clinic_id', '=',  $user->id)->count();
+        $logs_count = Logs::where('user_as_clinic_id', '=', $clinic->id)->count();
 
         $datetime = explode(' ', $request->datetime);
         $date = $datetime[0];
@@ -365,7 +416,7 @@ class AppointmentController extends Controller
 
             //verify date time if already taken IF NO OTHER DOCTORS (NO SPECIALIST ON SETTINGS)
             $specialists = Clinic_specialists::where('user_as_clinic_id', '=', $clinic->id)->get();
-            if (is_null($specialists)) {
+            if (count($specialists) == 0) {
                 foreach ($receipts as $key) {
                     $this_app = Appointments::where('receipt_orders_id', '=', $key->id)->first();
 
@@ -394,7 +445,7 @@ class AppointmentController extends Controller
 
             //checking logs limit 5000
             if ($logs_count == 5000) {
-                Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+                Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
             }
             $logs = new Logs();
             $logs->message = "Appointmen has been set with Receipt Order No: " . $id;
@@ -428,7 +479,7 @@ class AppointmentController extends Controller
 
             //verify date time if already taken IF NO OTHER DOCTORS (NO SPECIALIST ON SETTINGS)
             $specialists = Clinic_specialists::where('user_as_clinic_id', '=', $clinic->id)->get();
-            if (is_null($specialists)) {
+            if (count($specialists) == 0) {
                 foreach ($receipts as $key) {
                     $this_app = Appointments::where('receipt_orders_id', '=', $key->id)->first();
 
@@ -440,6 +491,20 @@ class AppointmentController extends Controller
                         ]);
                     }
                 }
+            }
+
+            //check existing negotiations
+            $check_nego = Appointments::where('appointed_at', '=', $date)
+                ->where('time', '=', $time)
+                ->where('appointment_status_id', '=', 5)
+                ->first();
+
+            if ($check_nego) {
+                return response()->json([
+                    'status' => 5,
+                    'datetime' => "You have already set a pending negotiation on the selected time and date. Please select again.",
+                    'tester' => "error message"
+                ]);
             }
 
             //IF TIME AND DATE PASSES VERIFICATION
@@ -458,7 +523,7 @@ class AppointmentController extends Controller
 
             //checking logs limit 5000
             if ($logs_count == 5000) {
-                Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+                Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
             }
             $logs = new Logs();
             $logs->message = "Appointment is in a negotiation state with Receipt Order No: " . $id;
@@ -495,7 +560,7 @@ class AppointmentController extends Controller
         $user = User::where('email', '=',  Auth::user()->email)->first();
         $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
         $clinic_add = User_address::where('id', '=',  $clinic->user_address_id)->first();
-        $logs_count = Logs::where('user_as_clinic_id', '=',  $user->id)->count();
+        $logs_count = Logs::where('user_as_clinic_id', '=',  $clinic->id)->count();
 
         $receipt = Receipt_orders::where('id', '=',  $id)->first();
         $customer = User_as_customer::where('id', '=',  $receipt->user_as_clinic_id)->first();
@@ -524,7 +589,7 @@ class AppointmentController extends Controller
 
             //checking logs limit 5000
             if ($logs_count == 5000) {
-                Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+                Logs::where('user_as_clinic_id', '=', $clinic->id)->first()->delete();
             }
             $logs = new Logs();
             $logs->message = "An appointment has been finished with Receipt Order No: " . $getid[0];
@@ -557,7 +622,7 @@ class AppointmentController extends Controller
 
             //checking logs limit 5000
             if ($logs_count == 5000) {
-                Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+                Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
             }
             $logs = new Logs();
             $logs->message = "An appointment has been declined with Receipt Order No: " . $id;

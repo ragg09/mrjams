@@ -3,6 +3,11 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Customer_API\AuthController;
+use App\Http\Controllers\Customer_API\MClinicList;
+use App\Http\Controllers\Customer_API\MCustomerMap;
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +19,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+// Route::resource('mcustomermap', MCustomerMap::class);
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+
+], function ($router) {
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::resource('user', AuthController::class);
+});
+
+Route::group(['prefix' => 'mcustomer', 'middleware' => ['auth:sanctum'], 'as' => 'mcustomer.'], function () {
+    Route::resource('mcliniclist', MClinicList::class);
 });

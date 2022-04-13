@@ -21,7 +21,7 @@
         </a>
         <a href="#"  class="menu_appointment">
             <div id="sidebar-option">
-                <i class="fa fa-calendar" aria-hidden="true" style="margin-right: 20px; margin-left: 10px" title="Appointment"></i>APPOINTMNET<i class="fa fa-caret-down" aria-hidden="true" style="float: right; margin-right: 5px"></i>
+                <i class="fa fa-calendar" aria-hidden="true" style="margin-right: 20px; margin-left: 10px" title="Appointment"></i>APPOINTMENT<i class="fa fa-caret-down" aria-hidden="true" style="float: right; margin-right: 5px"></i>
             </div>
         </a>
         {{-- dropdown menu appointment --}}
@@ -39,15 +39,17 @@
                 </a>
             </div> 
         {{-- dropdown menu appointment end--}}
-        {{-- <a href="{{ route('clinic.patient.index') }}">
-            <div id="sidebar-option">
-                <i class="fa fa-users" aria-hidden="true" style="margin-right: 20px; margin-left: 10px" title="Patient"></i>PATIENT
-            </div>
-        </a> --}}
+        
 
         <a href="{{ route('clinic.billing.index') }}">
             <div id="sidebar-option">
                 <i class="fa fa-money-bill" aria-hidden="true" style="margin-right: 20px; margin-left: 10px" title="Billings"></i>BILLINGS
+            </div>
+        </a>
+
+        <a href="{{ route('clinic.patient.index') }}">
+            <div id="sidebar-option">
+                <i class="fa fa-users" aria-hidden="true" style="margin-right: 20px; margin-left: 10px" title="Patient"></i>PATIENT
             </div>
         </a>
 

@@ -7,6 +7,7 @@ use App\Models\Appointments;
 use App\Models\Clinic_auto_scheduling;
 use App\Models\Clinic_specialists;
 use App\Models\Clinic_time_availability;
+use App\Models\Logs;
 use App\Models\Receipt_orders;
 use App\Models\User_address;
 use Illuminate\Support\Facades\Auth;
@@ -85,6 +86,8 @@ class ClinicSettingsController extends Controller
             $auto_sched_data_all[] =  $auto_sched_data_[$keys];
             $day_count++;
         }
+
+
 
         //echo json_encode($auto_sched_data_all);
 
@@ -174,6 +177,13 @@ class ClinicSettingsController extends Controller
 
         // echo ($summary);
 
+        $logs = Logs::where('user_as_clinic_id', '=',  $clinic->id)
+            ->where('remark', '!=',  "notif")
+            ->where('remark', '!=',  "done_notif")
+            ->orderBy('id', 'desc')
+            ->take(10)
+            ->get();
+
         return view(
             'clinicViews.settings.index',
             compact(
@@ -188,6 +198,7 @@ class ClinicSettingsController extends Controller
                 'auto_accept',
                 'auto_sched_day_status',
                 'auto_sched_data_all',
+                'logs'
             )
         );
     }
@@ -237,10 +248,20 @@ class ClinicSettingsController extends Controller
 
             $user =  User::find($user_table->id);
             $user->role =  request('role');
+            $user->status =  "verifying"; //for verification purposes
             $user->save();
 
+
+            $logs = new Logs();
+            $logs->message = "Welcome to MRJAMS";
+            $logs->remark = "warning";
+            $logs->date =  date("Y/m/d");
+            $logs->time = date("h:i:sa");
+            $logs->user_as_clinic_id = $user->id;
+            $logs->save();
+
             $clinic = new User_as_clinic();
-            $clinic->name = request('name');
+            $clinic->name = strtoupper(request('name'));
             $clinic->phone = request('phone');
             $clinic->telephone = request('telephone');
             $clinic->users_id = $user_table->id;
@@ -253,6 +274,7 @@ class ClinicSettingsController extends Controller
             $availability->summary = "Sunday*08:00*17:00*on&Monday*08:00*17:00*on&Tuesday*08:00*17:00*on&Wednesday*08:00*17:00*on&Thursday*08:00*17:00*on&Friday*08:00*17:00*on&Saturday*08:00*17:00*on";
             $availability->save();
 
+            //AUTO ACCEPT FOR FUTURE CONCEPT
             $auto_sched = new Clinic_auto_scheduling();
             $auto_sched->auto_fill_date = "off";
             $auto_sched->auto_accept = "off";
@@ -275,7 +297,7 @@ class ClinicSettingsController extends Controller
 
             // return response()->json(['message' => request('name').' added successfully', 'keys' => $equipment]);
 
-            return response()->json(['message' => "check mo na db"]);
+            return response()->json(['message' => "Succesful"]);
         }
     }
 
@@ -323,6 +345,19 @@ class ClinicSettingsController extends Controller
 
                         );
                     }
+
+                    $this_nego = Appointments::where('receipt_orders_id', $key->id)
+                        ->where('appointment_status_id', 5)
+                        ->first();
+
+                    if ($this_nego) {
+                        $nego_datetime[] = (object) array(
+                            "datetime" => $this_nego->appointed_at . " " . $this_nego->time,
+                            "date" => $this_nego->appointed_at,
+                            "time" => $this_nego->time,
+
+                        );
+                    }
                 }
             }
 
@@ -336,6 +371,7 @@ class ClinicSettingsController extends Controller
                 'tester' => $id,
                 'specialist' => $specialists,
                 'specialist_appointments' => $app_datetime ?? "",
+                'specialist_nego' => $nego_datetime ?? "",
                 'testet' => $app_datetime ?? "",
             ]);
         }

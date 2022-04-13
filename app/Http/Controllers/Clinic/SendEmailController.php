@@ -46,7 +46,7 @@ class SendEmailController extends Controller
         $user = User::where('email', '=',  Auth::user()->email)->first();
         $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
         $clinic_add = User_address::where('id', '=',  $clinic->user_address_id)->first();
-        $logs_count = Logs::where('user_as_clinic_id', '=',  $user->id)->count();
+        $logs_count = Logs::where('user_as_clinic_id', '=',  $clinic->id)->count();
 
         $validator = Validator::make($request->all(), [
             'title' => 'required',
@@ -58,10 +58,10 @@ class SendEmailController extends Controller
         } else {
 
             //checking logs limit 5000
-            $logs_count = Logs::where('user_as_clinic_id', '=',  $user->id)->count();
+            $logs_count = Logs::where('user_as_clinic_id', '=',  $clinic->id)->count();
 
             if ($logs_count == 5000) {
-                Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+                Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
             }
             //creating logs
             $logs = new Logs();

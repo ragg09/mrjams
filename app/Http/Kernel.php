@@ -58,6 +58,7 @@ class Kernel extends HttpKernel
         'role_guest' => \App\Http\Middleware\Role_guest::class,
         'role_customer' => \App\Http\Middleware\Role_customer::class,
         'role_clinic' => \App\Http\Middleware\Role_clinic::class,
+        'role_public' => \App\Http\Middleware\Role_public::class,
         'check_user' => \App\Http\Middleware\Check_user::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,

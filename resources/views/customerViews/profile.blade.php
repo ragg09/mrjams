@@ -10,7 +10,10 @@
         <div class="container" style="margin-top: 20px; " id="profile">
             <div class="main-body">
                 <div class="row">
+
                     <div class="col-lg-4">
+
+                        {{-- User Avatar --}}
                         <div class="card" style="padding:30px;">
                             <div class="card-body">
                                 <div class="d-flex flex-column align-items-center text-center">
@@ -28,14 +31,15 @@
                               
                             </div>
                         </div>
+
                     </div>
+
                     <div class="col-lg-8">
 
+                        {{-- User Information --}}
                         <form action="/customer/customerinfo/{{Auth::user()->id}}" method="POST" id="main_form">
                             @csrf
                             {{method_field('PUT')}}
-
-                            {{-- san js bka wala namn talga problema lags, try mo mag clear cache route config --}}
 
                             <div class="card" style="padding:30px;">
                                 <div class="card-body" style="width: 100%">
@@ -124,7 +128,5 @@
 @include('customerViews.footer.footer2')
 @endsection
 @section('jsScript')
-
-{{-- san ung controllert --}}
     <script src="{{ URL::asset('js/customer/profile.js') }}"></script>
 @endsection

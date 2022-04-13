@@ -41,6 +41,16 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row mt-2 mb-2" id="min_max_time_error" hidden>
+                        <div class="col-12 w-75 mx-auto rounded" style="background: rgb(207, 0, 0)">
+                            <div class=" mx-auto p-1">
+                                <p class="text-white text-center">
+                                   Max Time Must be Greater Than Min Time.
+                                </p>
+                            </div>
+                        </div>
+                    </div> 
                     
                 </div>
     

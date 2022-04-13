@@ -18,8 +18,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        // $user = User::where('email', '=',  Auth::user()->email)->first();
-        // $customer = User_as_customer::where('users_id', '=', $user->id)->get();
+     
     }
 
     public function about()
@@ -37,10 +36,7 @@ class CustomerController extends Controller
 
     public function profile()
     {
-        // $user = User::where('email', '=',  Auth::user()->email)->first();
-        // $customer = User_as_customer::where('users_id', '=', $user->id)->get();
-
-        // return view('customerViews.profile', ['customer'=>$customer]);
+        
     }
     
 
@@ -80,13 +76,7 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        // $user = User::where('email', '=',  Auth::user()->email)->first();
-        // $customer = User_as_customer::where('users_id', '=', $user->id)->get();
-
-        // $address = User_address::where('id', '=', $customer[0]->user_address_id)->get();
-
-        // return view('customerViews.profile', ['customer'=>$customer, 'address'=>$address]);
-        
+      
     }
 
     /**
@@ -97,10 +87,7 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        // $user = User::where('email', '=',  Auth::user()->email)->first();
-        // $customer = User_as_customer::where('users_id', '=', $user->id)->get();
-
-        // return view('customerViews.mail.mail', ['customer'=>$customer]);
+       
     }
 
     /**

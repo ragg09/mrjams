@@ -31,7 +31,14 @@
 
       @if (Route::has('login'))
         @auth
-            <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
+        {{-- <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a> --}}
+          @if (Auth::user()->role == "clinic")
+            <a href="{{ url('/clinic') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
+          @endif
+          @if (Auth::user()->role == "customer")
+            <a href="{{ url('/customer') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
+          @endif
+            
         @else
             <li><a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline" style="text-decoration: none; color:black;">Login</a></li>
 

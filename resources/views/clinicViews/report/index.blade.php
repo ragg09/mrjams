@@ -20,7 +20,7 @@
     </style>
 @endsection
 @section('content')
-    <div class="row">
+    <div class="row" id="print_summary" hidden>
         <div class="col d-flex justify-content-end">
             <a href="/clinic/print/{{ date("FY") }}_summary" class="btn btn-primary" id="" target="_blank" title="Print Summary">
                 Print Summary <i class="fa fa-print" aria-hidden="true"></i>
@@ -31,6 +31,7 @@
     @include('clinicViews.report.appointment_statistic')
     @include('clinicViews.report.top_services_and_packages')
     @include('clinicViews.report.top_materials')
+    @include('clinicViews.report.material_report_modal')
 @endsection
 
 @section('js_script')

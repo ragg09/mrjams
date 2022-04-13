@@ -16,6 +16,8 @@ use App\Models\Receipt_orders;
 use App\Models\Appointments;
 use App\Models\Clinic_time_availability;
 use App\Models\Logs;
+use App\Models\Customer_logs;
+
 
 
 class RelativeAppointmentController extends Controller
@@ -37,14 +39,7 @@ class RelativeAppointmentController extends Controller
      */
     public function create()
     {
-        // $user = User::where('email', '=',  Auth::user()->email)->first();
-        // $customer = User_as_customer::where('users_id', '=', $user->id)->get();
-       
-        // $customer_add = User_address::where('id', '=', $customer[0]->user_address_id)->get();
-        // $service = Clinic_services::all();
-        // $package = Packages::all();
-       
-        //  return view('customerViews.appointment.relativeAppointment',['customer'=>$customer, 'customer_add'=>$customer_add,'package'=>$package, 'service'=>$service]);
+        
     }
 
     /**
@@ -147,9 +142,27 @@ class RelativeAppointmentController extends Controller
         $logs->message = $customer->fname . ' ' . $customer->lname . " cancelled the appointment day and time.";
         $logs->remark = "notif";
         $logs->date =  date("Y/m/d");
-        $logs->time = date("h:i:sa");
+        $logs->time = date("h:i:s a");
         $logs->user_as_clinic_id =  $receipt->user_as_clinic_id;
         $logs->save();
+
+         // customer logs
+         $customer_logs_count = Customer_logs::where('user_as_customer_id', '=',  $customer->id)->count();
+         if ($customer_logs_count == 5000) {
+             Customer_logs::where('user_as_customer_id', '=',  $customer->id)->first()->delete();
+         }
+ 
+         $clinic_name = User_as_clinic::where('id', '=', $receipt->user_as_clinic_id)->first();
+ 
+          //creating logs
+          $c_log = new Customer_logs();
+          $c_log->message = "You cancelled an appointment from " . $clinic_name->name;
+          $c_log->remark = "notif";
+          $c_log->date =  date("m/d/Y");
+          $c_log->time = date("h:i a");
+          $c_log->user_as_customer_id = $customer->id;
+          $c_log->save();
+ 
 
         return response()->json(['all' => $appointment, 'status' => 'OK']);
     }

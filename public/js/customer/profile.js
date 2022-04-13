@@ -29,15 +29,6 @@ $(function(){
                     function reloader(){
                         location.reload();
                     }
-
-                    // $("#main_form")[0].reset();
-                    // $("#profile").load(window.location + " #profile");
-
-                    //dugain muna kaya natin HAHHAHAHAHHA
-                    //paano?
-                    //ang pinaka habol mo sa gantong approach ung allert message dba?
-                    // oo sige sige pansamantala dudugain muna natin yan
-                    // paano? alin di ako mag palit palit mamaya sa checking?
                     
                 }
             }

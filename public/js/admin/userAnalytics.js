@@ -129,31 +129,57 @@ $(function(){
         url: "/admin/analytics/1",
         success: function (response) {
             // console.log(response.user);
-            // console.log(response);
-            // console.log('shit');
+            console.log(response.appointment.length);
+            console.log('shit');
 
-            var data_users = [
-                ['Month', 'Total'],
+            if(response.appointment.length == 0){
+                var data_users = [
+                    ['Month', 'Total'],
+                    ['N/A', 0],
+    
+                ];
+    
 
-            ];
+    
+                // console.log(data_users);
+    
+                var options = {
+                    title: 'Appointments per Month',
+                    curveType: 'function',
+                    legend: { position: 'bottom' }
+                };
+    
+                var figure = google.visualization.arrayToDataTable(data_users);
+    
+                var chart = new google.visualization.LineChart(document.getElementById('appPerMonth'));
+                chart.draw(figure, options);
+    
+            }else{
+                var data_users = [
+                    ['Month', 'Total'],
+    
+                ];
+    
+                $.each(response.appointment, function (index,value) {
+                    data_users.push([index, parseFloat(value)]);
+                });
+    
+                // console.log(data_users);
+    
+                var options = {
+                    title: 'Appointments per Month',
+                    curveType: 'function',
+                    legend: { position: 'bottom' }
+                };
+    
+                var figure = google.visualization.arrayToDataTable(data_users);
+    
+                var chart = new google.visualization.LineChart(document.getElementById('appPerMonth'));
+                chart.draw(figure, options);
+    
+            }
 
-            $.each(response.appointment, function (index,value) {
-                data_users.push([index, value]);
-            });
-
-            // console.log(data_users);
-
-            var options = {
-                title: 'Appointments per Month',
-                curveType: 'function',
-                legend: { position: 'bottom' }
-            };
-
-            var figure = google.visualization.arrayToDataTable(data_users);
-
-            var chart = new google.visualization.LineChart(document.getElementById('appPerMonth'));
-            chart.draw(figure, options);
-
+            
         },
         error: function(){
             console.log('AJAX load did not work');

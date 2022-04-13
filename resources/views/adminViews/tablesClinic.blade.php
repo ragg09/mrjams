@@ -10,7 +10,7 @@
 
 @section('content')
 
-    {{-- {{$user}} --}}
+    {{-- {{$parasauser}} --}}
 
 <header class="header header-sticky mb-4"> 
   <div class="container-fluid">
@@ -31,6 +31,11 @@
     <div class="container-lg">
         <div class="row">
             <a href="{{ route('admin.clinicTypes.create') }}" id="createClinicType" >Create Clinic Type</a>
+            <a href="{{ route('admin.clinicReg.index') }}">Clinic Registration</a>
+            {{-- <a href="{{ route('admin.reportClinic.index') }}" id="printClinicTable"  >Print Report</a> --}}
+            @if ($clinic == 0 )
+                <h3>NO DATA</h3>
+            @else
             <div class="table-responsive">
                 <table class="table table-hover" id="clinicShow">
                     <thead class="bg-primary">
@@ -39,10 +44,7 @@
                         <th scope="col">Clinic Name</th>
                         <th scope="col">Phone</th>
                         <th scope="col">Telephone</th>
-                        <th scope="col"> </th>
                         <th scope="col">Action</th>
-                        <th scope="col"> </th>
-                        {{-- <th scope="col">   </th> --}}
                       </tr>
                     </thead>
                     <tbody>
@@ -52,15 +54,14 @@
                                 <td>{{$clinics['name']}}</td>
                                 <td>{{$clinics['phone']}}</td>
                                 <td>{{$clinics['telephone']}}</td>
-                                <td><a href="/admin/clinic/{{$clinics['id']}}"><button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a></td>
-                                {{-- <td><button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i> View</button></td> --}}
-                                <td><a href="/admin/clinic/{{$clinics['id']}}/edit" class="btn btn-warning" id="editUser" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a></td>
-                                {{-- <td><a class="btn btn-danger" id="dltbtnClinic" data-id="{{$clinics['id']}}" data-bs-target="#delete_modal_clinic" data-bs-toggle="modal"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a></td> --}}
+                                <td><a href="/admin/clinic/{{$clinics['id']}}"><button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a><a href="/admin/clinic/{{$clinics['id']}}/edit" class="btn btn-warning" id="editUser" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a></td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
+            @endif
+
         </div>
     </div>
 </div>
@@ -70,6 +71,7 @@
 
 @section('extraScript')
 
-<script src="{{ URL::asset('js/admin/patientDetails.js') }}"></script>
+<script src="{{ URL::asset('js/admin/clinicDetails.js') }}"></script>
+{{-- <script src="{{ URL::asset('js/admin/printReport.js') }}"></script> --}}
 
 @endsection

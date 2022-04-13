@@ -32,7 +32,14 @@ class ServicesController extends Controller
         $data = Clinic_services::where('user_as_clinic_id', '=',  $clinic->id)->paginate(10);
         $myequipments = Clinic_equipments::where('user_as_clinic_id', '=',  $clinic->id)->get();
 
-        return view('clinicViews.services.index', ['data' => $data, 'equipments' =>  $myequipments]);
+        $logs = Logs::where('user_as_clinic_id', '=',  $clinic->id)
+            ->where('remark', '!=',  "notif")
+            ->where('remark', '!=',  "done_notif")
+            ->orderBy('id', 'desc')
+            ->take(10)
+            ->get();
+
+        return view('clinicViews.services.index', ['data' => $data, 'logs' => $logs, 'equipments' =>  $myequipments]);
     }
 
     /**
@@ -72,6 +79,7 @@ class ServicesController extends Controller
             'description' => 'required|min:5',
             'min_price' => 'required|numeric|gt:0',
             'max_price' => 'required|numeric|gt:min_price',
+            'equipment_ids' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -103,10 +111,10 @@ class ServicesController extends Controller
                 }
 
                 //checking logs limit 5000
-                $logs_count = Logs::where('user_as_clinic_id', '=',  $user->id)->count();
+                $logs_count = Logs::where('user_as_clinic_id', '=',  $clinic->id)->count();
 
                 if ($logs_count == 5000) {
-                    Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+                    Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
                 }
                 //creating logs
                 $logs = new Logs();
@@ -249,7 +257,7 @@ class ServicesController extends Controller
     {
         $user = User::where('email', '=',  Auth::user()->email)->first();
         $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
-        $logs_count = Logs::where('user_as_clinic_id', '=',  $user->id)->count();
+        $logs_count = Logs::where('user_as_clinic_id', '=',  $clinic->id)->count();
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:2',
@@ -298,7 +306,7 @@ class ServicesController extends Controller
             if (!($service_last_name->name == request('name'))) {
                 //checking logs limit 5000
                 if ($logs_count == 5000) {
-                    Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+                    Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
                 }
                 $logs = new Logs();
                 $logs->message = '"' . $service_last_name->name . '"' . " has changed into " . '"' . request('name') . '".';
@@ -312,7 +320,7 @@ class ServicesController extends Controller
             if (!($service_last_name->min_price == request('min_price')) || !($service_last_name->min_price == request('min_price'))) {
                 //checking logs limit 5000
                 if ($logs_count == 5000) {
-                    Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+                    Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
                 }
                 $logs = new Logs();
                 $logs->message = $service_last_name->name . '\'s price: changed into' . ' "' . request('min_price') . ' - ' . request('max_price') . '"';
@@ -326,7 +334,7 @@ class ServicesController extends Controller
             if (!($service_last_name->description == request('description'))) {
                 //checking logs limit 5000
                 if ($logs_count  == 5000) {
-                    Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+                    Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
                 }
                 $logs = new Logs();
                 $logs->message = '"' . $service_last_name->description . '"' . " has changed into " . '"' . request('description') . '".';
@@ -387,10 +395,10 @@ class ServicesController extends Controller
 
 
         //checking logs limit 5000
-        $logs_count = Logs::where('user_as_clinic_id', '=',  $user->id)->count();
+        $logs_count = Logs::where('user_as_clinic_id', '=',  $clinic->id)->count();
 
         if ($logs_count == 5000) {
-            Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+            Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
         }
         //creating logs
         $logs = new Logs();

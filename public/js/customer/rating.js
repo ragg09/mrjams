@@ -23,9 +23,14 @@ $(function(){
                     // window.location.href = "/customer/announcement"; 
                     $("#rate-modal").modal('toggle');
                     $("#main_form").trigger('reset');
-                    $("#announce").load(window.location + " #announce");
+                    // $("#announce").load(window.location + " #announce");
                      
                     bootstrapAlert("Your Rating to System is Successfully Created!", "warning", 400);
+                    setInterval(reloader, 1500);
+
+                    function reloader(){
+                        location.reload();
+                    }
                 }
             }
         });

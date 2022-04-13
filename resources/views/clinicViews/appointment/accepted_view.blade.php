@@ -16,13 +16,13 @@
         {{ $rows->ro_package_name }}
     @endforeach --}}
 
-    <div class="row mb-2 d-flex justify-content-end">
-        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#accepted_view_calendar_up" id="calendar_btn">
-            <i class="fa fa-calendar mx-2" aria-hidden="true"> View Calendar</i>
-        </button>
-    </div>
-
     @if ($accepted_data != "" || $negotiation_data != "")
+        <div class="row mb-2 d-flex justify-content-end">
+            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#accepted_view_calendar_up" id="calendar_btn">
+                <i class="fa fa-calendar mx-2" aria-hidden="true"> View Calendar</i>
+            </button>
+        </div>  
+
         <div class="col-lg-12 rounded" id="appointment_table_accepted">
             <table class="table">
                 <thead class=" bg-white">
@@ -40,7 +40,7 @@
                         @foreach ($accepted_data as $row)
                             <tr class=" bg-white">
                                 {{-- <td class="align-middle">{{$row->ro_id}}</td> --}}
-                                <td class="align-middle text-center"><img class="rounded-circle" src="{{$row->user_avatar}}" alt="{{$row->user_avatar}}"></td>
+                                <td class="align-middle text-center"><img class="rounded-circle" src="{{$row->user_avatar}}" alt="&#9829;"></td>
                                 <td class="align-middle text-center">{{$row->user_email}}</td>
                                 <td class="align-middle text-center">{{date('M d, Y', strtotime($row->app_appointed_at)) }}</td>
                                 <td class="align-middle text-center">{{$row->time}}</td>

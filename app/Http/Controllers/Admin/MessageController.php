@@ -110,7 +110,7 @@ class MessageController extends Controller
         ];
 
         // Mail::to($request->sender)->send(new AdminMail($details));
-        Mail::to("julszxcmanalo@gmail.com")->send(new AdminMail($details));
+        Mail::to($request->sender)->send(new AdminMail($details));
         return "email sent";
     }
 
