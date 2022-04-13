@@ -277,7 +277,7 @@
 @endsection
 @section('jsScript')
    
-    <script defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places"></script>
     <script src="{{ URL::asset('js/customer/mail_map.js') }}"></script>
 
     <script src="{{ URL::asset('js/customer/clinic_rating.js') }}"></script> 
