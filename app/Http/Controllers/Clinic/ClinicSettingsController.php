@@ -252,13 +252,7 @@ class ClinicSettingsController extends Controller
             $user->save();
 
 
-            // $logs = new Logs();
-            // $logs->message = "Welcome to MRJAMS";
-            // $logs->remark = "warning";
-            // $logs->date =  date("Y/m/d");
-            // $logs->time = date("h:i:sa");
-            // $logs->user_as_clinic_id = $user->id;
-            // $logs->save();
+
 
             $clinic = new User_as_clinic();
             $clinic->name = strtoupper(request('name'));
@@ -268,6 +262,14 @@ class ClinicSettingsController extends Controller
             $clinic->clinic_types_id =  request('clinic_type_id');
             $clinic->user_address_id = $address->id;
             $clinic->save();
+
+            $logs = new Logs();
+            $logs->message = "Welcome to MRJAMS";
+            $logs->remark = "warning";
+            $logs->date =  date("Y/m/d");
+            $logs->time = date("h:i:sa");
+            $logs->user_as_clinic_id = $clinic->id;
+            $logs->save();
 
             $availability = new Clinic_time_availability();
             $availability->user_as_clinic_id = $clinic->id;
