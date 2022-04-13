@@ -252,13 +252,13 @@ class ClinicSettingsController extends Controller
             $user->save();
 
 
-            $logs = new Logs();
-            $logs->message = "Welcome to MRJAMS";
-            $logs->remark = "warning";
-            $logs->date =  date("Y/m/d");
-            $logs->time = date("h:i:sa");
-            $logs->user_as_clinic_id = $user->id;
-            $logs->save();
+            // $logs = new Logs();
+            // $logs->message = "Welcome to MRJAMS";
+            // $logs->remark = "warning";
+            // $logs->date =  date("Y/m/d");
+            // $logs->time = date("h:i:sa");
+            // $logs->user_as_clinic_id = $user->id;
+            // $logs->save();
 
             $clinic = new User_as_clinic();
             $clinic->name = strtoupper(request('name'));
