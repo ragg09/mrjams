@@ -34,6 +34,15 @@ $(function(){
                     $("#info").append('<tr><td class="view-message "></td><td class="inbox-small-cells"><i class="fa fa-star" style="padding-left: 50px; color: #6497B1"></i></td><td class="view-message ">Hi, Welcome to MR. JAMS </td><td class="view-message  inbox-small-cells"><a href="/customer/mail/"></a></td><td class="view-message "></td><td class="view-message "></td><td class="view-message "></td></tr>');
 
                     // });
+                    $("#mailTable").DataTable({
+                        "ordering": true,
+                        
+                        "pageLength": 10,
+                        "pagingType": "simple_numbers",
+                        "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+                        "info": true,
+                        
+                    });
 
 
                 }else{
