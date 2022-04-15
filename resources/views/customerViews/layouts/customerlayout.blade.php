@@ -68,5 +68,6 @@
 
   @yield('jsScript')
   <script src="{{ URL::asset('js/customer/notifications.js') }}"></script>
+  <script src="{{ URL::asset('js/customer/windowSize.js') }}"></script>
 
 </html>

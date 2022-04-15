@@ -261,7 +261,9 @@ class EquipmentsController extends Controller
             $user = User::where('email', '=',  Auth::user()->email)->first();
             $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
 
-            $equipments = Clinic_equipments::where('user_as_clinic_id', '=',  $clinic->id)->get();
+            $equipments = Clinic_equipments::where('user_as_clinic_id', '=',  $clinic->id)
+                ->where('type', '!=',  "equipment")
+                ->get();
 
             $current_ids = $id; //Gettinng string of ids
             $array_ids = explode(',', $current_ids); //splitting string into sepratae string using the comma

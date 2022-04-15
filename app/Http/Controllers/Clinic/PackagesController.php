@@ -30,7 +30,9 @@ class PackagesController extends Controller
         $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
 
         $services = Clinic_services::where('user_as_clinic_id', '=',  $clinic->id)->get();
-        $equipments = Clinic_equipments::where('user_as_clinic_id', '=',  $clinic->id)->get();
+        $equipments = Clinic_equipments::where('user_as_clinic_id', '=',  $clinic->id)
+            ->where('type', '!=',  "equipment")
+            ->get();
         $data = Packages::where('user_as_clinic_id', '=',  $clinic->id)->get();
 
         $logs = Logs::where('user_as_clinic_id', '=',  $clinic->id)
@@ -155,6 +157,7 @@ class PackagesController extends Controller
         foreach ($equipments as $key) {
             $all_equipments[] = Clinic_equipments::where('id', '=',  $key->clinic_equipments_id)
                 ->where('user_as_clinic_id', '=',  $clinic->id)
+
                 ->get();
 
             $all_equipments_ids = $key->clinic_equipments_id . ',' . $all_equipments_ids;

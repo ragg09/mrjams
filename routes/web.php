@@ -207,6 +207,10 @@ Route::group(['prefix' => 'customer', 'middleware' => ['auth', 'check_user', 'ro
         return view('customerViews.contact');
     })->name('contact');
 
+    Route::get('/download/apk', function () {
+        return view('customerViews.windowSize');
+    })->name('windowSize');
+
     // Route::get('/profile', function () {
     //     return view('customerViews.profile');
     // })->name('profile');

@@ -217,7 +217,9 @@ class ServicesController extends Controller
             }
 
 
-            $allequipments = Clinic_equipments::where('user_as_clinic_id', '=',  $clinic->id)->get();;
+            $allequipments = Clinic_equipments::where('user_as_clinic_id', '=',  $clinic->id)
+                ->where('type', '!=',  "equipment")
+                ->get();;
 
             $get_packages_id = Packages_has_services::where('clinic_services_id', '=',  $id)
                 ->where('user_as_clinic_id', '=',  $clinic->id)
