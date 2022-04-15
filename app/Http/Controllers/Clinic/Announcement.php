@@ -25,6 +25,7 @@ class Announcement extends Controller
 
         $announcemnet = Messages::where("receiver", "!=", "customer")
             ->where("receiver", "!=", "admin")
+            ->orderBy('id', 'desc')
             ->get();
 
         // foreach ($announcemnet as $key) {
