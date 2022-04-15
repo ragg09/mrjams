@@ -1,6 +1,6 @@
 @extends('adminViews.layouts.master')
 
-@section('title', 'Clinic')
+@section('title', 'Patient')
 
 
 @section('extraStyle')
