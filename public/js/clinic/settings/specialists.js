@@ -127,7 +127,7 @@ $(function(){
         var id = $("input#todeletespecialist").val();
         $.ajax({
             type: "DELETE",
-            url: "/clinic/settings/"+ id + "DeleteSpecialists",
+            url: "/clinic/settings/"+ id + "_DeleteSpecialists",
             data:{
                 _token: $("input[name=_token]").val()
             },

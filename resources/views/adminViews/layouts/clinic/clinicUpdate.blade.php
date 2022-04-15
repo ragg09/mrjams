@@ -33,10 +33,11 @@
                 <form action="/admin/clinic/{{$clinic->id}}" method="POST">
                     @csrf
                     {{method_field('PUT')}}
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label class="form-label">Clinic Name</label>
                         <input type="text" class="form-control" id="clinicID" name="clinicID"value="{{$clinic->id}}" hidden>
-                      </div>
+                      </div> --}}
+                      <input type="text" class="form-control" id="clinicID" name="clinicID"value="{{$clinic->id}}" hidden>
                     <div class="mb-3">
                       <label class="form-label">Clinic Name</label>
                       <input type="text" class="form-control" id="clinicname" name="clinicname" value="{{$clinic->name}}">
