@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Clinic_types extends Model
 {
     use HasFactory;
+    protected $table = 'clinic_types';
+    protected $fillable = ['type_of_clinic'];
+    public $timestamps = false;
 }
