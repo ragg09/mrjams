@@ -83,7 +83,7 @@
             <div class="row">
                 <div class="col">
                     <button type="submit" id="acceptClinicReg" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i>Accept</button>
-                    <a id="deleteClinicReg" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i>Accept</a>
+                    <a id="deleteClinicReg" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i>Decline</a>
                 </div>
             </div>
         </form>

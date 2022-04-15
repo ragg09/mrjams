@@ -102,7 +102,7 @@ class ClinicRegistrationController extends Controller
         // email
         $details = [
             'title' => 'MR.JAMS',
-            'body' => 'WELCOME! You have been Accepted as a Registered Clinic to MR.JAMS Application.',
+            'body' => 'Your clinic is now verified. Welcome to MrJams.',
         ];
 
         // Mail::to($request->sender)->send(new AdminMail($details));

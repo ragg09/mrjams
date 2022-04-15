@@ -33,9 +33,12 @@
             <a href="{{ route('admin.clinicTypes.create') }}" id="createClinicType" >Create Clinic Type</a>
             <a href="{{ route('admin.clinicReg.index') }}">Clinic Registration</a>
             {{-- <a href="{{ route('admin.reportClinic.index') }}" id="printClinicTable"  >Print Report</a> --}}
-            @if ($clinic == 0 )
+            {{-- @if ($clinic == 0 )
                 <h3>NO DATA</h3>
-            @else
+            @else --}}
+            
+            {{-- @endif --}}
+
             <div class="table-responsive">
                 <table class="table table-hover" id="clinicShow">
                     <thead class="bg-primary">
@@ -60,7 +63,6 @@
                     </tbody>
                 </table>
             </div>
-            @endif
 
         </div>
     </div>
