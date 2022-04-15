@@ -26,7 +26,6 @@ $(function(){
         $.ajax({
             type: $(this).attr('method'),
 	    	url: $(this).attr('action'),
-            headers: {  'Access-Control-Allow-Origin': '*' },
 	    	data: $('#main_form').serialize(),
             beforeSend: function(){
                 $("#create_equipment_add").attr("hidden", true);
@@ -78,7 +77,6 @@ $(function(){
         $.ajax({
             type: "GET",
             url: "/clinic/equipments/" + id + "_inventory",
-            headers: {  'Access-Control-Allow-Origin': '*' },
             beforeSend: function(){
                 $("#equipments_inventory").empty();
                 $("#material_name").text("");
@@ -109,7 +107,6 @@ $(function(){
         $.ajax({
             type: "GET",
             url: "/clinic/equipments/" + id + "/edit",
-            headers: {  'Access-Control-Allow-Origin': '*' },
             beforeSend: function(){
               
                 
@@ -171,7 +168,6 @@ $(function(){
                             $.ajax({
                                 type: "GET",
                                 url: "/clinic/equipments/" + $(this).val() + "_getselecteddate",
-                                headers: {  'Access-Control-Allow-Origin': '*' },
                                 success: function(data){
                                     console.log(data);
                                     $("#edit_inventory").attr("hidden", false);
@@ -214,7 +210,6 @@ $(function(){
         $.ajax({
             type: $(this).attr('method'),
             url: $(this).attr('action'),
-            headers: {  'Access-Control-Allow-Origin': '*' },
             data: $('#edit_main_form').serialize(),
             beforeSend: function(){
                 $("#edit_equipment_add").attr("hidden", true);
@@ -253,7 +248,6 @@ $(function(){
         $.ajax({
             type: $(this).attr('method'),
             url: 'equipments/'+id,
-            headers: {  'Access-Control-Allow-Origin': '*' },
             data: $('#add_quantity_main_form').serialize(),
             beforeSend: function(){
                 $(document).find('span.error-text').text('');
@@ -280,7 +274,6 @@ $(function(){
         var id = $(this).data('id');
         $.ajax({
             type: "GET",
-            headers: {  'Access-Control-Allow-Origin': '*' },
             url: "/clinic/equipments/" + id + "/edit",
             success: function(data){
                 // console.log(data);
@@ -317,7 +310,6 @@ $(function(){
         var id = $("input#todelete").val();
         $.ajax({
             type: "DELETE",
-            headers: {  'Access-Control-Allow-Origin': '*' },
             url: "/clinic/equipments/"+ id,
             data:{
                 _token: $("input[name=_token]").val()
@@ -362,7 +354,6 @@ $(function(){
             $.ajax({
                 type: $('#search_form').attr('method'),
                 url: $('#search_form').attr('action'),
-                headers: {  'Access-Control-Allow-Origin': '*' },
                 data: {query:query},
                 beforeSend: function() {
                     $('#equipment_table_body').empty();
