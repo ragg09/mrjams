@@ -26,8 +26,8 @@
     <nav>
       <li><a href="/" style="text-decoration: none; color:black;">Home</a></li>
        <!-- <li><a href="{{route('customer.customermap.index')}}">Map</a></li> -->
-      <li><a href="{{route('customer.about')}}" style="text-decoration: none; color:black;">About</a></li>
-      <li><a href="{{route('customer.contact')}}" style="text-decoration: none; color:black;">Contact</a></li>
+      <li><a href="/public/about" style="text-decoration: none; color:black;">About</a></li>
+      {{-- <li><a href="{{route('customer.contact')}}" style="text-decoration: none; color:black;">Contact</a></li> --}}
 
       @if (Route::has('login'))
         @auth
@@ -191,8 +191,8 @@
 
   
   <footer>
-    <p>MR. JAMS</p>
-    <p>Created with <i class="fa fa-heart"></i> by TUPT - BSIT 4A | 2018-2022</p>
+    <p><b>Appointment and Management System for Dental and Medical Clinics with Location-Based Mapping </b></p>
+    <p><b>TUPT - BSIT 4A | 2018-2022</b></p>
     <ul>
       <li><a href="https://twitter.com/?lang=en"><i class="fa fa-twitter-square fa-2x text-black"></i></a></li>
       <li><a href="https://www.facebook.com/"><i class="fa fa-facebook-square fa-2x text-black"></i></a></li>

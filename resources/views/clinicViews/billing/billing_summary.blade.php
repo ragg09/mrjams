@@ -112,7 +112,7 @@
                     <h6><i class="fa fa-credit-card-alt" aria-hidden="true"></i> Payment Method</h6>
                     <div class="mx-auto w-75">
                         <div class="form-group">
-                            <p>Step 1: <span class="mx-1" style="font-size: 13px">(can be both)</span></p>
+                            <p><i class="fa fa-circle" aria-hidden="true"></i> <span class="mx-1" style="font-size: 13px">(can be both)</span></p>
                             
                             <div class="form-check form-check-inline">
                                 <input type="checkbox" class="btn-check" id="cash_payment" name="z_cash_payment" autocomplete="off">
@@ -170,7 +170,7 @@
                         </div>
 
                         <div class="form-group mt-3">
-                            <p>Step 2:</p>
+                            <p><i class="fa fa-circle" aria-hidden="true"></i></p>
 
                             <div class="form-check form-check-inline">
                                 <input type="text" class="form-control" id="payment_method" name="payment_method" hidden>

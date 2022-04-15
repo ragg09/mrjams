@@ -178,11 +178,9 @@ $(function(){
                             //console.log(moment($("#accept_modal_flatpicker").val()).format('dddd'));
                             this_day = moment($("#accept_modal_flatpicker").val()).format('dddd');
 
-                            // if($("#CPackage").is(':checked') || ($("#CService").is(':checked') && ($("#service_ids").val() != ""))){
                             
-                            if(($("#CPackage").is(':checked')) || ($("#CService").is(':checked') && ($("#service_ids").val() != ""))){
-                                $("#appointment_b").removeAttr("disabled");
-                            }
+                            $("#appointment_b").removeAttr("disabled");
+                            
     
                             $.each(data.avail, function(index, val){
                                 if(val.day == this_day){ //getting the day name as trapping
@@ -238,10 +236,11 @@ $(function(){
                                             },
                                         ],
                                         onChange: function(selectedDates, dateStr, instance) {
-                                            
+                                            $("#appointment_b").removeAttr("disabled");
                                             //recast self on change if data changes
                                             if(data.avail[day_num.indexOf(this_day)].day != moment($("#accept_modal_flatpicker").val()).format('dddd')){
                                                 this_day = moment($("#accept_modal_flatpicker").val()).format('dddd');
+                                                
                                                 FlatPickrFunction()
                                             }
                                             

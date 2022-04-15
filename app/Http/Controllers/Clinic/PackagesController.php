@@ -172,9 +172,14 @@ class PackagesController extends Controller
 
         //echo ($all_services_ids);
 
+        $logs = Logs::where('user_as_clinic_id', '=',  $clinic->id)
+            ->where('remark', '!=',  "notif")
+            ->where('remark', '!=',  "done_notif")
+            ->orderBy('id', 'desc')
+            ->take(10)
+            ->get();
 
-
-        return view('clinicViews.packages.edit_show', ['package' => $package, 'equipments' => $all_equipments, 'equipment_ids' => $all_equipments_ids, 'services' => $all_services, 'service_ids' => $all_services_ids]);
+        return view('clinicViews.packages.edit_show', ['logs' => $logs, 'package' => $package, 'equipments' => $all_equipments, 'equipment_ids' => $all_equipments_ids, 'services' => $all_services, 'service_ids' => $all_services_ids]);
     }
 
     /**

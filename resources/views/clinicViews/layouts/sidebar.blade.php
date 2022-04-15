@@ -83,11 +83,11 @@
         {{-- nav menus end--}}
 
 
-        <div style="position:absolute; bottom: 0px; left: 10px">
+        {{-- <div style="position:absolute; bottom: 0px; left: 10px">
             <img class="" src="{{ URL::asset('images/mrjams/logowithname.PNG') }}" alt="MrJams" style="width: 100px">
             <p class="text-center fw-bold" style="font-size: 12px">Copyright &copy; MR-JAMS.com</p>
             
-        </div>
+        </div> --}}
         
     </div>
 </div>

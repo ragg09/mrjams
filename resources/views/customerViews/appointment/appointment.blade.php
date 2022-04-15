@@ -343,9 +343,8 @@
 @endsection
 @section('jsScript')
     <script src="{{ URL::asset('js/customer/clinic_rate.js') }}"></script>
-    
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places"></script>
     <script src="{{ URL::asset('js/customer/mail_map.js') }}"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places"></script>
     <script src="{{ URL::asset('js/customer/notifications.js') }}"></script>
 @endsection
 

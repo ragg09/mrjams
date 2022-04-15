@@ -153,6 +153,12 @@
                                 </a>
                             </li>
                             <li>
+                                <a class="dropdown-item" href="{{ route('clinic.announcement.index') }}">
+                                    <i class="fa fa-bullhorn mx-2" aria-hidden="true"></i>
+                                    Announcement
+                                </a>
+                            </li>
+                            <li>
                                 <a class="dropdown-item" href="{{ route('clinic.settings.index') }}">
                                     <i class="fa fa-cog mx-2" aria-hidden="true"></i>
                                     Settings
@@ -197,6 +203,14 @@
     </div>
 
     @include('clinicViews.layouts.feedback_modal')
+
+
+    {{-- footer --}}
+    <div class="" style="position:fixed; bottom: 0px; left: 10px; z-index: 100;">
+        <img class="" src="{{ URL::asset('images/mrjams/logowithname.PNG') }}" alt="MrJams" style="width: 100px">
+        <p class="text-center fw-bold" style="font-size: 12px">Copyright &copy; MR-JAMS.com</p>
+        
+    </div>
     
 </body>
 

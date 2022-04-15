@@ -49,7 +49,8 @@
                                             <h6 class="mb-0">First Name</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input type="text" class="form-control" name="fname" value="{{$customer->fname}}">
+                                            <input type="text" class="form-control" id="fname" name="fname" value="{{$customer->fname}}">
+                                            <span class="text-danger error-text fname_error"></span>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -57,7 +58,8 @@
                                             <h6 class="mb-0">Last Name</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input type="text" class="form-control" name="lname" value="{{$customer->lname}}">
+                                            <input type="text" class="form-control" id="lname" name="lname" value="{{$customer->lname}}">
+                                            <span class="text-danger error-text lname_error"></span>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -65,7 +67,8 @@
                                             <h6 class="mb-0">Age</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input type="text" class="form-control" name="age" value="{{$customer->age}}">
+                                            <input type="text" class="form-control" id="age" name="age" value="{{$customer->age}}">
+                                            <span class="text-danger error-text age_error"></span>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -74,6 +77,7 @@
                                         </div>
                                         <div class="col-sm-9 text-secondary">
                                             <input type="text" class="form-control" id="phone" name="phone" value="{{$customer->phone}}">
+                                            <span class="text-danger error-text phone_error"></span>
                                         </div>
                                     </div>
                                
@@ -82,7 +86,8 @@
                                             <h6 class="mb-0">Address Line 1</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input type="text" class="form-control" name="addline1" value="{{$address->address_line_1}}">
+                                            <input type="text" class="form-control" id="addline1" name="addline1" value="{{$address->address_line_1}}">
+                                            <span class="text-danger error-text addline1_error"></span>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -98,7 +103,8 @@
                                             <h6 class="mb-0">City</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input type="text" class="form-control" name="city" value="{{$address->city}}">
+                                            <input type="text" class="form-control" id="city" name="city" value="{{$address->city}}">
+                                            <span class="text-danger error-text city_error"></span>
                                         </div>
                                     </div>
                                     <div class="row mb-3" style="margin-top: 2%;">
@@ -106,7 +112,8 @@
                                             <h6 class="mb-0">Zip Code</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input type="text" class="form-control" name="zipcode" value="{{$address->zip_code}}">
+                                            <input type="text" class="form-control" id="zipcode" name="zipcode" value="{{$address->zip_code}}">
+                                        
                                         </div>
                                     </div>
                                 

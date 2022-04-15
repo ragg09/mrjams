@@ -43,9 +43,6 @@ class DashbaordController extends Controller
                 ->where('appointment_status_id', '=',  5) //for accecpted appointments
                 ->first();
 
-
-
-
             $package = Packages::where('id', '=',   $key->packages_id)
                 ->where('user_as_clinic_id', '=',  $clinic->id)
                 ->first();

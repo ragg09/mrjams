@@ -2,7 +2,6 @@
 
 
 use App\Http\Controllers\Admin\UserClinicAnalyticsController;
-use App\Http\Controllers\Admin\TablesController;
 use App\Http\Controllers\Admin\ClinicDetailsController;
 use App\Http\Controllers\Admin\PatientDetailsController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -26,6 +25,7 @@ use App\Http\Controllers\Clinic\ReportController;
 use App\Http\Controllers\Clinic\RatingController as ClinicRating;
 use App\Http\Controllers\Clinic\PrintController;
 use App\Http\Controllers\Clinic\SendEmailController;
+use App\Http\Controllers\Clinic\Announcement;
 
 use App\Http\Controllers\Customer\CustomerRegisterController;
 use App\Http\Controllers\Customer\CustomerMap;
@@ -72,19 +72,16 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'public', 'middleware' => ['role_public'], 'as' => 'public.'], function () {
     Route::resource('testing', TestingController::class); //testing purposes
+
+    Route::get('/about', function () {
+        return view('publicViews.about_p');
+    })->name('about');
 });
 
-Route::group(['prefix' => 'clinic_verification', 'middleware' => ['role_public'], 'as' => 'clinic_verification.'], function () {
+Route::group(['prefix' => 'clinic_verification', 'middleware' => ['auth', 'role_public'], 'as' => 'clinic_verification.'], function () {
     Route::get('/verifying', function () {
         $user = User::where('email', '=',  Auth::user()->email)->first();
         $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
-
-        echo $user;
-        echo "<br>";
-        echo "<br>";
-        echo $clinic;
-        echo "<br>";
-        echo "<br>";
         return view(
             'publicViews.verification',
             compact(["user", "clinic"])
@@ -178,6 +175,7 @@ Route::group(['prefix' => 'clinic', 'middleware' => ['auth', 'check_user', 'role
     Route::resource('print', PrintController::class);
     Route::resource('rating', ClinicRating::class);
     Route::resource('email', SendEmailController::class);
+    Route::resource('announcement', Announcement::class);
 });
 //clinic routes with middleware exceptions
 //check_user, role_clinic middlewares are directly included in the contrller

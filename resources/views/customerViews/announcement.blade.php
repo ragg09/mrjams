@@ -22,8 +22,8 @@
                             <div class="mv-lg" style="margin-top: -15px;">
                                 <p>Appointment and Management System for Dental and Medical Clinics with Location-Based Mapping</p>
                                 <p><b>Email: </b> mr.jams1822@gmail.com</p>
-                                <p><b>Phone: </b> +63 1234567890</p>
-                                <p><b>Telephone: </b> +63 1234567890</p>
+                                {{-- <p><b>Phone: </b> +63 1234567890</p>
+                                <p><b>Telephone: </b> +63 1234567890</p> --}}
 
                             </div>
                             

@@ -20,7 +20,7 @@
           </div>
       </section>
       
-      <section class="mapcontain">
+      <section class="mapcontain" style="background-color: #eff3f9">
 
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="mapModal" hidden></button>
 
@@ -160,10 +160,10 @@
   @include('customerViews.footer.footer1')
 @endsection
 @section('jsScript')
-  
-  <script async src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places"></script>
-  {{-- <script defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places"></script> --}}
   <script src="{{ URL::asset('js/customer/map.js') }}"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places"></script>
+  {{-- <script defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places"></script> --}}
+
 @endsection
 
 

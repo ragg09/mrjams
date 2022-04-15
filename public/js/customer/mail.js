@@ -1,4 +1,4 @@
-
+var tableData;
 
 $(function(){
     appointment_data();
@@ -6,7 +6,7 @@ $(function(){
      //calling reusable script
      $.getScript("../../js/customer/reusableFunction.js");
 
-    
+   
 
     // Appointment list
     function appointment_data() {
@@ -34,13 +34,14 @@ $(function(){
                     $("#info").append('<tr><td class="view-message "></td><td class="inbox-small-cells"><i class="fa fa-star" style="padding-left: 50px; color: #6497B1"></i></td><td class="view-message ">Hi, Welcome to MR. JAMS </td><td class="view-message  inbox-small-cells"><a href="/customer/mail/"></a></td><td class="view-message "></td><td class="view-message "></td><td class="view-message "></td></tr>');
 
                     // });
+
                     $("#mailTable").DataTable({
-                        "ordering": true,
+                        "ordering": false,
                         
                         "pageLength": 10,
                         "pagingType": "simple_numbers",
                         "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
-                        "info": true,
+                        "info": false,
                         
                     });
 
@@ -127,15 +128,19 @@ $(function(){
                         
                    });
 
-                   $("#mailTable").DataTable({
-                    "ordering": true,
-                    
-                    "pageLength": 10,
-                    "pagingType": "simple_numbers",
-                    "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
-                    "info": true,
-                    
+                   tableData = $("#mailTable").DataTable({
+                        "ordering": true,
+                        "pageLength": 10,
+                        "pagingType": "simple_numbers",
+                        "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+                        "info": true,
+                        "Destroy": true
+                        
                     });
+
+                    // tableData.ajax.reload();
+
+                   
 
                 }
 
@@ -145,6 +150,7 @@ $(function(){
                 alert("error");
             }
         });
+
     }
 
     // Actions: Appointments
@@ -161,6 +167,8 @@ $(function(){
                 $("#cancel_name").empty();
                 // $("#cancel_packages").empty();
                 $("#cancel_name").append('<input type="text" value="'+id+'" id="cancelStat" data-id="'+id+'" hidden>');
+
+              
                
             },
             error: function(){
@@ -183,9 +191,15 @@ $(function(){
             success: function(e){
                 // console.log(e);
                     $("#cancel_modal_up").modal('toggle');
+
+                    if ($.fn.DataTable.isDataTable('#mailTable')) {
+                        $('#mailTable').DataTable().destroy();
+                    }
+
                     $("#info").empty();
                     appointment_data();
-                    bootstrapAlert("The Appointment is Successfully Cancelled!", "light", 330);
+                
+                    bootstrapAlert("The Appointment is Successfully Cancelled!", "secondary", 380);
                     
             },
             error: function(){
@@ -231,9 +245,14 @@ $(function(){
                 // console.log(e);
                 $("#delete_modal_up").modal('toggle');
                 
+                if ($.fn.DataTable.isDataTable('#mailTable')) {
+                    $('#mailTable').DataTable().destroy();
+                }
+
                 $("#info").empty();
                 appointment_data();
-                bootstrapAlert("The Appointment is Successfully Deleted!", "danger", 330);
+
+                bootstrapAlert("The Appointment is Successfully Deleted!", "danger", 380);
             },
             error: function(){
                 console.log('AJAX load did not work');
@@ -278,10 +297,14 @@ $(function(){
 
                     $("#accept_modal_up").modal('toggle');
 
-                    bootstrapAlert("The Appointment is Successfully Accepted!", "primary", 350);
-             
+                    if ($.fn.DataTable.isDataTable('#mailTable')) {
+                        $('#mailTable').DataTable().destroy();
+                    }
+
                     $("#info").empty();
                     appointment_data();
+
+                    bootstrapAlert("The Appointment is Successfully Accepted!", "primary", 350);
                    
             },
             error: function(){
@@ -327,10 +350,15 @@ $(function(){
                 // console.log(e);
 
                     $("#decline_modal_up").modal('toggle');
-                    bootstrapAlert("The Appointment is Declined!", "danger", 290);
-                
+                 
+                    if ($.fn.DataTable.isDataTable('#mailTable')) {
+                        $('#mailTable').DataTable().destroy();
+                    }
+
                     $("#info").empty();
                     appointment_data();
+
+                    bootstrapAlert("The Appointment is Declined!", "danger", 290);
                    
             },
             error: function(){

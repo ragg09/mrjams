@@ -14,7 +14,7 @@
 
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 
@@ -46,9 +46,9 @@
                   <p>OR</p> --}}
 
                     <img src="{{ URL::asset('images/mrjams/logowithname.PNG') }}" class="center" width="100%" height="20%">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia dignissimos modi nostrum officia ullam eaque commodi. </p><br>
+                    <p>Appointment and Management System for Dental and Medical Clinics with Location-Based Mapping</p><br>
 
-                    <a href="{{ route('login.google') }}" class="btn btn-info" style="display: block; margin-left: auto; margin-right: auto; width: 50%;">Sign In with Google</a>
+                    <a href="{{ route('login.google') }}" class="btn btn-info" style="display: block; margin-left: auto; margin-right: auto; width: 200px;"><i class="fa fa-google" aria-hidden="true" style="color: black; width: 20px; height:15px"></i> Sign In with Google</a>
 
                 </div>
                 
@@ -62,7 +62,7 @@
       
         </div>
 
-        <div style="text-align: center; padding-top:2%;" class="copy-text">Created with <i class="fa fa-heart"></i> by TUPT - BSIT 4A | 2018-2022</div>
+        <div style="text-align: center; padding-top:2%;" class="copy-text">TUPT - BSIT 4A | 2018-2022</div>
 
     </section>
 

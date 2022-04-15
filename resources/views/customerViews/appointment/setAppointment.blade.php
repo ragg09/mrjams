@@ -6,7 +6,7 @@
 @include('customerViews.header.header3')
 
  
-<nav aria-label="breadcrumb" style="background-color: #f2f5f7; padding: 8px 15px 1px 20px; margin: 15px 50px 0px 50px; border-radius: 20px;">
+<nav aria-label="breadcrumb" style="background-color: #f2f5f7; padding: 8px 15px 1px 20px; margin: 15px 50px 0px 50px; border-radius: 8px;">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/customer/appointment/{{$clinic_data->id}}">{{$clinic_data->name}}</a></li>
         <li class="breadcrumb-item active"  style="color: black">Myself</li>

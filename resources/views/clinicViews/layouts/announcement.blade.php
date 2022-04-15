@@ -12,10 +12,17 @@
     {{-- jquery 3.6.0 --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    {{-- datatable --}}
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    
+
+
     {{-- bootstrap 5.1.1 --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
+
     
     {{-- fullcalendar --}}
     <link href='{{ URL::asset('js/clinic/fullcalendar/lib/main.css') }}' rel='stylesheet' />
@@ -43,46 +50,22 @@
  
 
     {{-- font-awesome  --}}
+    {{--  from lags --}}
+    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/fontawesome.min.js" integrity="sha512-5qbIAL4qJ/FSsWfIq5Pd0qbqoZpk5NcUVeAAREV2Li4EKzyJDEGlADHhHOSSCw0tHP7z3Q4hNHJXa81P92borQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    {{-- Google Chart API --}}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
     {{-- star-rating --}}
     <script src="{{ URL::asset('js/clinic/jquery.star-rating-svg.js') }}"></script>
     <link rel="stylesheet" href="{{ URL::asset('css/clinic/star-rating-svg.css') }}">
+    
 
     @yield('extraStyle')
-
-    <style>
-        #loading-screen-bg{
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: black;
-            z-index: 50 !important;
-            opacity: 0.7;
-            visibility: hidden;
-        }
-
-        #loading-screen{
-            padding: 20px;
-            margin: 0px;
-            background: white;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-            border-radius: 20px;
-        }
-    </style>
 </head>
-<body>
-    <div id="loading-screen-bg">
-        <div class="" id="loading-screen">
-            <h4>Your patience is appreciated</h4>
-            <p>aayusin pa </p>
-            <img class="" src="{{ URL::asset('images/mrjams/Spinner-1.6s-204px.gif') }}" alt="">
-        </div>
-    </div>
-    
+<body>    
     <div class="header">
 
         {{-- <a href="" class="btn btn-secondary" id="menu-toggle"><i class="fa fa-bars" aria-hidden="true"></i></a> --}}
@@ -170,6 +153,12 @@
                                 </a>
                             </li>
                             <li>
+                                <a class="dropdown-item" href="{{ route('clinic.announcement.index') }}">
+                                    <i class="fa fa-bullhorn mx-2" aria-hidden="true"></i>
+                                    Announcement
+                                </a>
+                            </li>
+                            <li>
                                 <a class="dropdown-item" href="{{ route('clinic.settings.index') }}">
                                     <i class="fa fa-cog mx-2" aria-hidden="true"></i>
                                     Settings
@@ -194,34 +183,26 @@
         </div>
     </div>
 
-    <div id="wrapper">
-        <div id="wrapper">
-            {{-- sidebar --}}
-            @include('clinicViews.layouts.settings_sidebar')
-            {{-- sidebar end --}}
-    
-            {{-- main content --}}
-            <div id="content-wrapper">
-                <div class="container-fluid">
-                    <div class="row p-2" >
-                        {{-- Use col-lg-# --}}
-                        @yield('content')
-                    </div>
-                </div>
-            </div>
-            {{-- main content end--}}
+    <div class="container-fluid">
+        <div class="row p-2" >
+            {{-- Use col-lg-# --}}
+            @yield('content')
         </div>
     </div>
 
     @include('clinicViews.layouts.feedback_modal')
-    
+
+
     {{-- footer --}}
     <div class="" style="position:fixed; bottom: 0px; left: 10px; z-index: 100;">
         <img class="" src="{{ URL::asset('images/mrjams/logowithname.PNG') }}" alt="MrJams" style="width: 100px">
         <p class="text-center fw-bold" style="font-size: 12px">Copyright &copy; MR-JAMS.com</p>
         
     </div>
+    
 </body>
+
+
 <script src="{{ URL::asset('js/clinic/menu_toggle.js') }}"></script>
 <script src="{{ URL::asset('js/clinic/notifications.js') }}"></script>
 <script src="{{ URL::asset('js/clinic/feedback.js') }}"></script>

@@ -7,6 +7,7 @@ use App\Mail\EmailNotification;
 use App\Models\Appointments;
 use App\Models\Clinic_services;
 use App\Models\Clinic_specialists;
+use App\Models\Customer_logs;
 use App\Models\Logs;
 use App\Models\Packages;
 use App\Models\Receipt_orders;
@@ -39,7 +40,10 @@ class AppointmentController extends Controller
 
         $receipts = Receipt_orders::where('user_as_clinic_id', '=',  $clinic->id)->get();
 
+
+
         foreach ($receipts as $key) {
+            $package_service = [];
 
             $appointments = Appointments::where('receipt_orders_id', '=',  $key->id)
                 ->first();
@@ -47,6 +51,10 @@ class AppointmentController extends Controller
             $package = Packages::where('id', '=',   $key->packages_id)
                 ->where('user_as_clinic_id', '=',  $clinic->id)
                 ->first();
+
+            if (isset($package)) {
+                array_push($package_service, $package->name);
+            }
 
             $ro_services_id = Receipt_orders_has_clinic_services::where('receipt_orders_id', '=', $key->id)->get(['clinic_services_id']);
 
@@ -57,6 +65,8 @@ class AppointmentController extends Controller
             $services_summary = "";
             foreach ($services as $k) {
                 $services_summary = $services_summary . ", " . $k->name;
+
+                array_push($package_service, $k->name);
             }
 
 
@@ -91,7 +101,7 @@ class AppointmentController extends Controller
                         "time" =>  date("g:i a", strtotime($appointments->time)) ?? "",
                         "app_appointed_at" =>  $appointments->appointed_at ?? "",
                         "app_status" =>  $appointments->appointment_status_id ?? "",
-
+                        "package_service" => $package_service,
                         "ro_id" =>  $key->id ?? "",
                         "ro_package_name" =>  $package->name ?? "",
                         "ro_services_name" => $services_summary ?? "",
@@ -132,7 +142,7 @@ class AppointmentController extends Controller
                         "time" =>  date("g:i a", strtotime($appointments->time)) ?? "",
                         "app_appointed_at" =>  $appointments->appointed_at ?? "",
                         "app_status" =>  $appointments->appointment_status_id ?? "",
-
+                        "package_service" => $package_service,
                         "ro_id" =>  $key->id ?? "",
                         "ro_package_name" =>  $package->name ?? "",
                         "ro_services_name" => $services_summary ?? "",
@@ -201,8 +211,9 @@ class AppointmentController extends Controller
 
         $count = 0;
         $count_app = 0;
-        foreach ($receipts as $key) {
 
+        foreach ($receipts as $key) {
+            $package_service = [];
             $appointments = Appointments::where('receipt_orders_id', '=',  $key->id)
                 ->where('appointment_status_id', '=',  2) //for pending appointments
                 ->first();
@@ -210,6 +221,11 @@ class AppointmentController extends Controller
             $package = Packages::where('id', '=',   $key->packages_id)
                 ->where('user_as_clinic_id', '=',  $clinic->id)
                 ->first();
+
+
+            if (isset($package)) {
+                array_push($package_service, $package->name);
+            }
 
             $ro_services_id = Receipt_orders_has_clinic_services::where('receipt_orders_id', '=', $key->id)->get(['clinic_services_id']);
 
@@ -220,13 +236,19 @@ class AppointmentController extends Controller
             $services_summary = "";
             foreach ($services as $k) {
                 $services_summary = $services_summary . ", " . $k->name;
+
+                array_push($package_service, $k->name);
             }
+
+
 
             $customer = User_as_customer::where('id', '=',   $key->user_as_customer_id)->first();
             $customer_root_data = User::where('id', '=',   $customer->users_id)->first();
 
 
             if ($appointments) {
+                // echo json_encode($package_service);
+                // echo "<br";
                 // echo  $customer_root_data;
 
                 $complete_appointment_data[] = (object) array(
@@ -238,7 +260,7 @@ class AppointmentController extends Controller
                     "time" =>  $appointments->time ?? "", //galing sa appointmnent table
                     "app_appointed_at" =>  $appointments->appointed_at ?? "", //galing sa appointmnent table
                     "app_status" =>  $appointments->appointment_status_id ?? "", //galing sa appointmnent table
-
+                    "package_service" => $package_service,
                     "ro_id" =>  $receipts[$count]->id ?? "", //galing sareceipts table
                     "ro_package_name" =>  $package->name ?? "", //galing sareceipts table
                     "ro_services_name" => $services_summary ?? "",
@@ -259,6 +281,8 @@ class AppointmentController extends Controller
             ->orderBy('id', 'desc')
             ->take(10)
             ->get();
+
+
 
         if ($count_app > 0) {
             return view('clinicViews.appointment.index', ["data" => $complete_appointment_data, "logs" => $logs]);
@@ -294,7 +318,7 @@ class AppointmentController extends Controller
             $appointments = Appointments::where('appointment_status_id', '=',  2)->get();
             return response()->json(['data' =>  count($appointments)]);
         } else {
-
+            $package_service = [];
             $user = User::where('email', '=',  Auth::user()->email)->first();
             $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
 
@@ -312,6 +336,10 @@ class AppointmentController extends Controller
                 ->where('user_as_clinic_id', '=',  $clinic->id)
                 ->first();
 
+            if (isset($package)) {
+                array_push($package_service, $package->name);
+            }
+
             $ro_services_id = Receipt_orders_has_clinic_services::where('receipt_orders_id', '=', $id)->get(['clinic_services_id']);
 
             $services = Clinic_services::where('user_as_clinic_id', '=', $clinic->id)
@@ -321,6 +349,8 @@ class AppointmentController extends Controller
             $services_summary = "";
             foreach ($services as $key) {
                 $services_summary = $services_summary . ", " . $key->name;
+
+                array_push($package_service, $key->name);
             }
 
             $customer = User_as_customer::where('id', '=', $receipts->user_as_customer_id)->first();
@@ -349,7 +379,7 @@ class AppointmentController extends Controller
                 "ro_package_name" => $package->name ?? "", //galing sareceipts table
                 "ro_services_name" => $services_summary ?? "", //galing sareceipts table
                 "ro_customer_id" => $receipts->user_as_customer_id ?? "", //galing sareceipts table
-
+                "package_service" => implode(", ", $package_service),
                 "ro_patient_details" => $receipts->patient_details, //galing sareceipts table
                 "ro_patient_address" => $receipts->patient_address, //galing sareceipts table
 
@@ -410,6 +440,7 @@ class AppointmentController extends Controller
         $receipts = Receipt_orders::where('user_as_clinic_id', '=',  $clinic->id)->get();
 
         $appointments = Appointments::where('receipt_orders_id', '=', $id)->first();
+        $this_ro = Receipt_orders::where('id', '=', $id)->first();
 
         if ($appointments->appointed_at == $date && $appointments->time == $time) {
             //ACCEPT PATIENT'S TIME & DATE
@@ -447,6 +478,9 @@ class AppointmentController extends Controller
             if ($logs_count == 5000) {
                 Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
             }
+
+
+
             $logs = new Logs();
             $logs->message = "Appointmen has been set with Receipt Order No: " . $id;
             $logs->remark = "success";
@@ -454,6 +488,14 @@ class AppointmentController extends Controller
             $logs->time = date("h:i:sa");
             $logs->user_as_clinic_id = $clinic->id;
             $logs->save();
+
+            $clogs = new Customer_logs();
+            $clogs->message = "Your appointment has been accepted. See you at " . $clinic->name;
+            $clogs->remark = "notif";
+            $clogs->date =  date("Y/m/d");
+            $clogs->time = date("h:i:sa");
+            $clogs->user_as_customer_id =  $this_ro->user_as_customer_id;
+            $clogs->save();
 
             //sending email notification
             $details = [
@@ -533,6 +575,14 @@ class AppointmentController extends Controller
             $logs->user_as_clinic_id = $clinic->id;
             $logs->save();
 
+            $clogs = new Customer_logs();
+            $clogs->message = $clinic->name . " is negotiating for a new time and date. The clinic is waiting for your response.";
+            $clogs->remark = "notif";
+            $clogs->date =  date("Y/m/d");
+            $clogs->time = date("h:i:sa");
+            $clogs->user_as_customer_id =  $this_ro->user_as_customer_id;
+            $clogs->save();
+
             //sending email notification
             $details = [
                 'clinic' => $clinic->name,
@@ -604,6 +654,8 @@ class AppointmentController extends Controller
             //declined appointment
 
             //sending email notification
+            $this_ro = Receipt_orders::where('id', '=', $id)->first();
+
             $details = [
                 'clinic' => $clinic->name,
                 'address' =>  $clinic_add->address_line_1 . " " . $clinic_add->address_line_2 . " " . $clinic_add->city,
@@ -631,6 +683,15 @@ class AppointmentController extends Controller
             $logs->time = date("h:i:sa");
             $logs->user_as_clinic_id = $clinic->id;
             $logs->save();
+
+            $clogs = new Customer_logs();
+            $clogs->message = "Your appointment at " . $clinic->name . " has been declined.";
+            $clogs->remark = "notif";
+            $clogs->date =  date("Y/m/d");
+            $clogs->time = date("h:i:sa");
+            $clogs->user_as_customer_id =  $this_ro->user_as_customer_id;
+            $clogs->save();
+
 
             return response()->json(['message' => "Appointment Declined"]);
         }

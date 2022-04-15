@@ -265,7 +265,7 @@ class ClinicSettingsController extends Controller
 
             $logs = new Logs();
             $logs->message = "Welcome to MRJAMS";
-            $logs->remark = "warning";
+            $logs->remark = "notif";
             $logs->date =  date("Y/m/d");
             $logs->time = date("h:i:sa");
             $logs->user_as_clinic_id = $clinic->id;

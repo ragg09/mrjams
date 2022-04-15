@@ -49,20 +49,22 @@
                             <div id="appointList">
 
                                     <table class="row-border hover" id="mailTable" style="background-color: #B3CDE0">
-                                        <thead>
-                                          <tr>
-                                            <th scope="col"><i class="fa fa-star" aria-hidden="true"></i></th>
-                                            {{-- <th scope="col">ID</th> --}}
-                                            <th scope="col">Clinic</th>
-                                            <th scope="col">Message</th>
-                                            <th scope="col" class="text-center">Status</th>
-                                            <th scope="col" class="text-center">Date Created</th>
-                                            <th scope="col" class="text-center">Action</th>
-                                            {{-- <th scope="col"></th> --}}
-                                          </tr>
-                                        </thead>
-                                        <tbody id="info">
-                                        </tbody>
+                                      <div id="mailTableReload">
+                                          <thead>
+                                            <tr>
+                                              <th scope="col"><i class="fa fa-star" aria-hidden="true"></i></th>
+                                              {{-- <th scope="col">ID</th> --}}
+                                              <th scope="col">Clinic</th>
+                                              <th scope="col">Message</th>
+                                              <th scope="col" class="text-center">Status</th>
+                                              <th scope="col" class="text-center">Date Created</th>
+                                              <th scope="col" class="text-center">Action</th>
+                                              {{-- <th scope="col"></th> --}}
+                                            </tr>
+                                          </thead>
+                                          <tbody id="info">
+                                          </tbody>
+                                      </div>
                                     </table>
 
                               

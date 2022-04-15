@@ -11,6 +11,7 @@ use App\Models\Billings_history;
 use App\Models\Clinic_equipment_inventory;
 use App\Models\Clinic_equipments;
 use App\Models\Clinic_services;
+use App\Models\Customer_logs;
 use App\Models\Logs;
 use App\Models\Packages;
 use App\Models\Packages_has_equipments;
@@ -344,6 +345,12 @@ class BillingController extends Controller
             //$clinic_packages = Packages::where('user_as_clinic_id', '=',  $clinic->id)->get();
 
             // echo $receipt->packages_id;
+            $logs = Logs::where('user_as_clinic_id', '=',  $clinic->id)
+                ->where('remark', '!=',  "notif")
+                ->where('remark', '!=',  "done_notif")
+                ->orderBy('id', 'desc')
+                ->take(10)
+                ->get();
 
             return view('clinicViews.billing.billing_summary', [
                 'complete_summary' => $complete_summary,
@@ -353,7 +360,8 @@ class BillingController extends Controller
                 'toshow_equip_id' => $toshow_equip_id,
                 'toshow_equip_value' => $toshow_equip_value,
                 'clinic_services' => $clinic_services,
-                'status' => 1
+                'status' => 1,
+                'logs' => $logs
             ]);
         }
     }
@@ -514,6 +522,9 @@ class BillingController extends Controller
             //Finish Appointment
             $customer = User_as_customer::where('id', '=',  $request->customer_id)->first();
             $customer_root = User::where('id', '=',  $customer->users_id)->first();
+
+            $this_ro = Receipt_orders::where('id', '=', $id)->first();
+
             DB::table('appointments')
                 ->where('receipt_orders_id', $id)
                 ->update([
@@ -531,6 +542,15 @@ class BillingController extends Controller
             $logs->time = date("h:i:sa");
             $logs->user_as_clinic_id = $clinic->id;
             $logs->save();
+
+            $clogs = new Customer_logs();
+            $clogs->message = "Your appointment at " . $clinic->name . " is now finished. Thank you!";
+            $clogs->remark = "notif";
+            $clogs->date =  date("Y/m/d");
+            $clogs->time = date("h:i:sa");
+            $clogs->user_as_customer_id =  $this_ro->user_as_customer_id;
+            $clogs->save();
+
             $equipment_ids_array = explode(",", $request->equipment_ids_final);
             $equipment_values_array = explode(",", $request->equipment_values_final);
             $count = 0;
@@ -771,6 +791,17 @@ class BillingController extends Controller
     public function destroy($id)
     {
 
+        // $package_service = [];
+        //     if (isset($package)) {
+        //         array_push($package_service, $package->name);
+        //     }
+        //     array_push($package_service, $k->name);
+        //     "package_service" => $package_service,
+
+
+
+        $package_service = [];
+
         $user = User::where('email', '=',  Auth::user()->email)->first();
         $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
 
@@ -788,6 +819,10 @@ class BillingController extends Controller
             ->where('user_as_clinic_id', '=',  $clinic->id)
             ->first();
 
+        if (isset($package)) {
+            array_push($package_service, $package->name);
+        }
+
         $ro_services_id = Receipt_orders_has_clinic_services::where('receipt_orders_id', '=', $id)->get(['clinic_services_id']);
 
         $services = Clinic_services::where('user_as_clinic_id', '=', $clinic->id)
@@ -797,11 +832,20 @@ class BillingController extends Controller
         $services_summary = "";
         foreach ($services as $key) {
             $services_summary = $services_summary . ", " . $key->name;
+
+            array_push($package_service, $key->name);
         }
 
         $customer = User_as_customer::where('id', '=', $receipts->user_as_customer_id)->first();
         $customer_add = User_address::where('id', '=', $customer->user_address_id)->first();
         $customer_root_data = User::where('id', '=',   $customer->users_id)->first();
+
+        $bill_availed = Billings::where("receipt_orders_id", $id)->first();
+        $biil_price_sum = explode(",",  $bill_availed->price_summary);
+        foreach ($biil_price_sum as $key) {
+            $sec_explode = explode(":",  $key);
+            $package_service_summary[] = $sec_explode[0];
+        }
 
         $complete_appointment_data = (object) array(
             "user_email" => $customer_root_data->email,
@@ -819,11 +863,14 @@ class BillingController extends Controller
             "app_appointed_at" =>  $appointments->appointed_at, //galing sa appointmnent table
             "app_status" =>  $appointments->appointment_status_id, //galing sa appointmnent table
 
+            "package_service_summary" => implode(", ", $package_service_summary),
+
+
             "ro_id" => $receipts->id ?? "", //galing sareceipts table
             "ro_package_name" => $package->name ?? "", //galing sareceipts table
             "ro_services_name" => $services_summary ?? "", //galing sareceipts table
             "ro_customer_id" => $receipts->user_as_customer_id ?? "", //galing sareceipts table
-
+            "package_service" => implode(", ", $package_service),
             "ro_patient_details" => $receipts->patient_details, //galing sareceipts table
             "ro_patient_address" => $receipts->patient_address, //galing sareceipts table
 

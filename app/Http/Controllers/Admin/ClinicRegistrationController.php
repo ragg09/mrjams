@@ -13,6 +13,7 @@ use App\Models\Receipt_orders;
 use App\Models\Appointments;
 use App\Models\Ratings;
 use App\Mail\AcceptRegistrationMail;
+use App\Mail\DeclineRegistrationMail;
 use App\Models\Clinic_time_availability;
 use App\Models\Clinic_auto_scheduling;
 use Illuminate\Support\Facades\DB;
@@ -129,6 +130,16 @@ class ClinicRegistrationController extends Controller
         $clinicAutoSched = Clinic_auto_scheduling::where('user_as_clinic_id', '=', $getClinic->id)->first();
         //clinic user
         $clinicUser = User::where('id', '=', $getClinic->users_id)->first();
+
+        // email
+        $details = [
+            'title' => 'MR.JAMS',
+            'body' => 'Registration declined due to  the possible reasons: Invalid Data, Unreadable Business Permit, No Supporting Permit, etc. If you have a question or any queries, please email us.',
+        ];
+
+        // Mail::to($request->sender)->send(new AdminMail($details));
+        Mail::to($clinicUser->email)->send(new DeclineRegistrationMail($details));
+        // return "email sent";
 
         $clinicTime->delete();
         $clinicAutoSched->delete();

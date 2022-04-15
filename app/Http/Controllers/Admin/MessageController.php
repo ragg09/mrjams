@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Messages;
+use App\Models\User_as_clinic;
 use App\Models\User_as_customer;
 use App\Models\User;
+use App\Models\Logs;
+use App\Models\Customer_logs;
 use App\Models\Appointments;
 use App\Mail\AdminMail;
 
@@ -57,6 +60,55 @@ class MessageController extends Controller
         $messages->users_id = 1;
         $messages->save();
 
+        if(request('messageSelect') == 'clinic') {
+            $getClinic = User_as_clinic::all();
+            
+            foreach ($getClinic as $key) {
+                $notice = new Logs();
+                $notice->message = "Announcement Notice";
+                $notice->remark = "notif";
+                $notice->date = date("Y/m/d");
+                $notice->time = date("h:i:sa");
+                $notice->user_as_clinic_id = $key->id;
+                $notice->save();
+            }
+        } 
+        if(request('messageSelect') == 'patient') {
+            $getPatient = User_as_customer::all();
+            
+            foreach ($getPatient as $key) {
+                $notice = new Customer_logs();
+                $notice->message = "Announcement Notice";
+                $notice->remark = "notif";
+                $notice->date = date("Y/m/d");
+                $notice->time = date("h:i:sa");
+                $notice->user_as_customer_id = $key->id;
+                $notice->save();
+            }
+        }
+        if(request('messageSelect') == 'all') {
+            $getClinic = User_as_clinic::all();
+            foreach ($getClinic as $key) {
+                $notice = new Logs();
+                $notice->message = "Announcement Notice";
+                $notice->remark = "notif";
+                $notice->date = date("Y/m/d");
+                $notice->time = date("h:i:sa");
+                $notice->user_as_clinic_id = $key->id;
+                $notice->save();
+            }
+
+            $getPatient = User_as_customer::all();
+            foreach ($getPatient as $key) {
+                $notice = new Customer_logs();
+                $notice->message = "Announcement Notice";
+                $notice->remark = "notif";
+                $notice->date = date("Y/m/d");
+                $notice->time = date("h:i:sa");
+                $notice->user_as_customer_id = $key->id;
+                $notice->save();
+            }
+        }
         return view('adminViews.message', ['adminMessage' => $adminMessage]);
     }
 
@@ -69,7 +121,7 @@ class MessageController extends Controller
      */
     public function show($id)
     {
-        $adminSent = Messages::where('users_id', '=', 1)->get();
+        $adminSent = Messages::where('users_id', '=', 1)->orderBy('id', 'desc')->get();
         // echo($adminSent);
         return view('adminViews.layouts.message.messageSent', ['adminSent' => $adminSent]);
     }

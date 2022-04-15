@@ -29,10 +29,10 @@
                 <div class="row">
                     <div class="col-sm-6 login-sec">
                      
-                      <h2>Welcome Back!</h2>
+                      <h2>Welcome to MR. JAMS!</h2>
 
                       <img src="{{ URL::asset('images/mrjams/logowithname.PNG') }}" class="center" width="100%" height="20%">
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia dignissimos modi nostrum officia ullam eaque commodi. </p><br>  
+                      <p>Appointment and Management System for Dental and Medical Clinics with Location-Based Mapping</p><br>  
                     
                         <a href="{{ route('role.register_customer') }}" class="btn btn-info" style="display: block; margin-left: auto; margin-right: auto; width: 50%;">Sign Up as a Patient</a>
                         <br>
@@ -52,7 +52,7 @@
       
         </div>
 
-        <div style="text-align: center; padding-top:2%;" class="copy-text">Created with <i class="fa fa-heart"></i> by TUPT - BSIT 4A | 2018-2022</div>
+        <div style="text-align: center; padding-top:2%;" class="copy-text"> TUPT - BSIT 4A | 2018-2022</div>
 
 
     </section>
