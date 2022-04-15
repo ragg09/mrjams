@@ -86,6 +86,8 @@
     </div>
 </div>
 
-<script async src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places">
-</script>
 <script src="{{ URL::asset('js/clinic/settings/details_map.js') }}"></script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places">
+</script>
+

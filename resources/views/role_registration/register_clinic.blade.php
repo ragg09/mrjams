@@ -196,14 +196,16 @@
 </body>
 
 
-{{-- google map API --}}
-<script async src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places">
-</script>
+
 
 <script src="{{ URL::asset('js/registration/mapping.js') }}">  
 </script>
 
 <script src="{{ URL::asset('js/registration/clinic.js') }}">  
+</script>
+
+{{-- google map API --}}
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places">
 </script>
 
 </html>
