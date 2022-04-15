@@ -32,10 +32,11 @@
                 <form action="/admin/patient/{{$patient->id}}" method="POST">
                   @csrf
                   {{method_field('PUT')}}
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label class="form-label">ID</label>
                         <input type="text" class="form-control" id="userID" name="userID" value="{{$patient->id}}" hidden>
-                    </div>
+                    </div> --}}
+                    <input type="text" class="form-control" id="userID" name="userID" value="{{$patient->id}}" hidden>
                     <div class="mb-3">
                       <label class="form-label">First Name</label>
                       <input type="text" class="form-control" id="userName" name="userName" value="{{$patient->fname}}">
