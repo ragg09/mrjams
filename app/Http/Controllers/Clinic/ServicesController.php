@@ -30,7 +30,9 @@ class ServicesController extends Controller
         $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
 
         $data = Clinic_services::where('user_as_clinic_id', '=',  $clinic->id)->paginate(10);
-        $myequipments = Clinic_equipments::where('user_as_clinic_id', '=',  $clinic->id)->get();
+        $myequipments = Clinic_equipments::where('user_as_clinic_id', '=',  $clinic->id)
+            ->where('type', '!=',  "equipment")
+            ->get();
 
         $logs = Logs::where('user_as_clinic_id', '=',  $clinic->id)
             ->where('remark', '!=',  "notif")
