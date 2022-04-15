@@ -91,6 +91,16 @@ class AppointmentController extends Controller
                     $logs->time = date("h:i:sa");
                     $logs->user_as_clinic_id = $clinic->id;
                     $logs->save();
+
+                    $this_ro = Receipt_orders::where("id", $appointments->receipt_orders_id)->first();
+
+                    $clogs = new Customer_logs();
+                    $clogs->message = "Your appointment has expired. Too bad " . $clinic->name . " expected you.";
+                    $clogs->remark = "notif";
+                    $clogs->date =  date("Y/m/d");
+                    $clogs->time = date("h:i:sa");
+                    $clogs->user_as_customer_id =  $this_ro->user_as_customer_id;
+                    $clogs->save();
                 } else {
                     $complete_appointment_data[] = (object) array(
                         "user_email" => $customer_root_data->email ?? "",
@@ -205,6 +215,16 @@ class AppointmentController extends Controller
                     $logs->time = date("h:i:sa");
                     $logs->user_as_clinic_id = $clinic->id;
                     $logs->save();
+
+                    $this_ro = Receipt_orders::where("id", $appointments->receipt_orders_id)->first();
+
+                    $clogs = new Customer_logs();
+                    $clogs->message = "Your appointment has expired. Too bad " . $clinic->name . " expected you.";
+                    $clogs->remark = "notif";
+                    $clogs->date =  date("Y/m/d");
+                    $clogs->time = date("h:i:sa");
+                    $clogs->user_as_customer_id =  $this_ro->user_as_customer_id;
+                    $clogs->save();
                 }
             }
         }

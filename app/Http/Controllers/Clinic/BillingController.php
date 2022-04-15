@@ -465,6 +465,16 @@ class BillingController extends Controller
                     $logs->user_as_clinic_id = $clinic->id;
                     $logs->save();
 
+                    $this_bill = Billings::where("id", $getid[0])->first();
+
+                    $clogs = new Customer_logs();
+                    $clogs->message = "Your bill at " . $clinic->name . " with Receipt order  " . $this_bill->receipt_orders_id . " is complete. Thank you";
+                    $clogs->remark = "notif";
+                    $clogs->date =  date("Y/m/d");
+                    $clogs->time = date("h:i:sa");
+                    $clogs->user_as_customer_id =   $this_bill->user_as_customer_id;
+                    $clogs->save();
+
                     //sending email notification
                     $details = [
                         'clinic' => $clinic->name,
@@ -489,6 +499,17 @@ class BillingController extends Controller
                     $logs->time = date("h:i:sa");
                     $logs->user_as_clinic_id = $clinic->id;
                     $logs->save();
+
+                    $this_bill = Billings::where("id", $getid[0])->first();
+
+                    $clogs = new Customer_logs();
+                    $clogs->message = "Your bill at " . $clinic->name . " with Receipt order  " . $this_bill->receipt_orders_id . " is updated. Please be informed that you still have a ₱" . $new_bal . " balance left.";
+                    $clogs->remark = "notif";
+                    $clogs->date =  date("Y/m/d");
+                    $clogs->time = date("h:i:sa");
+                    $clogs->user_as_customer_id =   $this_bill->user_as_customer_id;
+                    $clogs->save();
+
 
                     //sending email notification
                     $details = [
