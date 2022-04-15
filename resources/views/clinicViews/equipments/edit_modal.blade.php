@@ -99,7 +99,7 @@
                                 </div>
                             </div>
 
-                            <input type="text" id="raw_expiration_date" name="raw_expiration_date">
+                            <input type="text" id="raw_expiration_date" name="raw_expiration_date" hidden>
                         </div>
 
 
