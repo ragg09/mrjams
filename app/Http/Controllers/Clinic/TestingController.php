@@ -38,115 +38,120 @@ class TestingController extends Controller
     public function index()
     {
 
-        //getting all dates in range
-        function getBetweenDates($startDate, $endDate)
-        {
-            $rangArray = [];
+        $todelete = Clinic_types::findOrFail(3);
+        $todelete->delete();
 
-            $startDate = strtotime($startDate);
-            $endDate = strtotime($endDate);
+        echo "deleted na ssob";
 
-            for (
-                $currentDate = $startDate;
-                $currentDate <= $endDate;
-                $currentDate += (86400)
-            ) {
+        // //getting all dates in range
+        // function getBetweenDates($startDate, $endDate)
+        // {
+        //     $rangArray = [];
 
-                $date = date('Y-m-d', $currentDate);
-                $rangArray[] = $date;
-            }
+        //     $startDate = strtotime($startDate);
+        //     $endDate = strtotime($endDate);
 
-            return $rangArray;
-        }
+        //     for (
+        //         $currentDate = $startDate;
+        //         $currentDate <= $endDate;
+        //         $currentDate += (86400)
+        //     ) {
 
-        $dates = getBetweenDates("2022-04-05", "2022-04-12");
+        //         $date = date('Y-m-d', $currentDate);
+        //         $rangArray[] = $date;
+        //     }
 
+        //     return $rangArray;
+        // }
 
-        //getting equipments of this clinic
-        $equipmetns = Clinic_equipments::where('user_as_clinic_id', '=',  1)
-            ->get();
-
-        //setting consumable names in one array
-        foreach ($equipmetns as $key) {
-            $consumables[] = $key->name;
-        }
-
-        foreach ($dates  as $key) {
-            $this_date = $key;
-
-            $this_billing = Billings::where('user_as_clinic_id', '=',  1)
-                ->where('created_at', 'LIKE', '%' . $key . '%')
-                ->get();
-
-            if (count($this_billing) > 0) {
-
-                foreach ($this_billing as $kk) {
-                    if (isset($kk->materials_summary)) {
-                        $exploded_materials = explode(",", $kk->materials_summary);
-                        // echo $kk->created_at;
-                        // echo json_encode($exploded_materials);
-                        // echo "<br><br>";
-                        foreach ($exploded_materials as $kmat) {
-                            $this_material[] =  $kmat;
-                        }
-                    }
-                }
-
-                //cpunt duplicates
-                if (isset($this_material)) {
-                    $all_material = array_filter(array_count_values($this_material), function ($v) {
-                        return $v > 0;
-                    });
-
-                    //array_push($all_material, "date" => $this_date);
-                    // $all_material['date'] = $this_date;
-
-                    // echo json_encode($all_material);
+        // $dates = getBetweenDates("2022-04-05", "2022-04-12");
 
 
-                    // echo "<br><br>";
+        // //getting equipments of this clinic
+        // $equipmetns = Clinic_equipments::where('user_as_clinic_id', '=',  1)
+        //     ->get();
 
-                    // $daily_report[] =  $all_material;
-                }
+        // //setting consumable names in one array
+        // foreach ($equipmetns as $key) {
+        //     $consumables[] = $key->name;
+        // }
+
+        // foreach ($dates  as $key) {
+        //     $this_date = $key;
+
+        //     $this_billing = Billings::where('user_as_clinic_id', '=',  1)
+        //         ->where('created_at', 'LIKE', '%' . $key . '%')
+        //         ->get();
+
+        //     if (count($this_billing) > 0) {
+
+        //         foreach ($this_billing as $kk) {
+        //             if (isset($kk->materials_summary)) {
+        //                 $exploded_materials = explode(",", $kk->materials_summary);
+        //                 // echo $kk->created_at;
+        //                 // echo json_encode($exploded_materials);
+        //                 // echo "<br><br>";
+        //                 foreach ($exploded_materials as $kmat) {
+        //                     $this_material[] =  $kmat;
+        //                 }
+        //             }
+        //         }
+
+        //         //cpunt duplicates
+        //         if (isset($this_material)) {
+        //             $all_material = array_filter(array_count_values($this_material), function ($v) {
+        //                 return $v > 0;
+        //             });
+
+        //             //array_push($all_material, "date" => $this_date);
+        //             // $all_material['date'] = $this_date;
+
+        //             // echo json_encode($all_material);
+
+
+        //             // echo "<br><br>";
+
+        //             // $daily_report[] =  $all_material;
+        //         }
 
 
 
 
 
-                // finalizing data
-                if (isset($all_material)) {
-                    foreach ($all_material as $key => $value) {
-                        $materials_summary[] = (object) array(
-                            'name' => $key,
-                            'count' => $value,
-                        );
-                    }
-                    $daily_report_date[] = $this_date;
-                    $daily_report[] =  $materials_summary;
-                }
-            }
+        //         // finalizing data
+        //         if (isset($all_material)) {
+        //             foreach ($all_material as $key => $value) {
+        //                 $materials_summary[] = (object) array(
+        //                     'name' => $key,
+        //                     'count' => $value,
+        //                 );
+        //             }
+        //             $daily_report_date[] = $this_date;
+        //             $daily_report[] =  $materials_summary;
+        //         }
+        //     }
 
 
-            // echo  $this_billing;
-            // echo "<br>";
-            // echo "<br>";
-        }
+        //     // echo  $this_billing;
+        //     // echo "<br>";
+        //     // echo "<br>";
+        // }
 
 
-        // echo json_encode($daily_report_date);
-        // echo json_encode($daily_report);
+        // // echo json_encode($daily_report_date);
+        // // echo json_encode($daily_report);
 
-        for ($i = 0; $i < count($daily_report_date); $i++) {
-            echo "Date: " . $daily_report_date[$i];
-            echo "<br>";
-            foreach ($daily_report[$i] as $key) {
-                echo "Name: " . $key->name . "| Count: " . $key->count;
-                echo "<br>";
-            }
+        // for ($i = 0; $i < count($daily_report_date); $i++) {
+        //     echo "Date: " . $daily_report_date[$i];
+        //     echo "<br>";
+        //     foreach ($daily_report[$i] as $key) {
+        //         echo "Name: " . $key->name . "| Count: " . $key->count;
+        //         echo "<br>";
+        //     }
 
 
-            echo "<br><br>";
-        }
+        //     echo "<br><br>";
+        // }
 
 
 
