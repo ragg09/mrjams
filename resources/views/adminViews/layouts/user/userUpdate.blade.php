@@ -34,7 +34,7 @@
                   {{method_field('PUT')}}
                     <div class="mb-3">
                         <label class="form-label">ID</label>
-                        <input type="text" class="form-control" id="userID" name="userID" value="{{$patient->id}}">
+                        <input type="text" class="form-control" id="userID" name="userID" value="{{$patient->id}}" hidden>
                     </div>
                     <div class="mb-3">
                       <label class="form-label">First Name</label>

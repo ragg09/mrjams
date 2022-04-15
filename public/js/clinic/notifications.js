@@ -62,6 +62,8 @@ $(function(){
                             $('#notification_list').append('<a href="" onclick="(function(e){e.preventDefault();})(event)" class="text-decoration-none text-dark"><li class="pt-2 pb-2 m-1  rounded"><div style="width: 400px"><div class="row m-1"><div class="col-2 my-auto"><i class="fa fa-map-marker fs-3 text-dark" aria-hidden="true"></i></div><div class="col-10"><p style="font-size: 13px;">'+val.message+'</p><p style="margin-top: -10px; font-size: 12px; color: #6497B1">'+val.date +' '+ val.time+'</p></div></div></div></li></a>');
                         }else if(val.message.includes("Announcement Notice")){
                             $('#notification_list').append('<a href="/clinic/announcement" class="text-decoration-none text-dark"><li class="pt-2 pb-2 m-1  rounded"><div style="width: 400px"><div class="row m-1"><div class="col-2 my-auto"><i class="fa fa-bullhorn fs-3 text-danger" aria-hidden="true"></i></div><div class="col-10"><p>'+val.message.toUpperCase()+'</p><p class="text-muted" style="margin-top: -20px; font-size: 12px;">'+val.date + val.time+'</p></div></div></div></li></a>');
+                        }else if(val.message.includes("cancelled")){
+                            $('#notification_list').append('<a href="" onclick="(function(e){e.preventDefault();})(event)" class="text-decoration-none text-dark"><li class="pt-2 pb-2 m-1  rounded"><div style="width: 400px"><div class="row m-1"><div class="col-2 my-auto"><i class="fa fa-calendar fs-3 text-danger" aria-hidden="true"></i></div><div class="col-10"><p>'+val.message.toUpperCase()+'</p><p class="text-muted" style="margin-top: -20px; font-size: 12px;">'+val.date + val.time+'</p></div></div></div></li></a>');
                         }
 
                     });
