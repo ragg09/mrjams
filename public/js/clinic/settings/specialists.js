@@ -112,6 +112,8 @@ $(function(){
             url: "/clinic/settings/" + id + "_specialist/edit",
             success: function(data){
                 // console.log(data);
+                $("#delete_specialist_name").empty();
+
                 $("#delete_specialist_name").append(data.specialist.fullname.toUpperCase() + '<input type="text" value="'+id+'" id="todeletespecialist" hidden>');
             },
             error: function(){
