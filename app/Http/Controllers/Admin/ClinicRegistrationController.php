@@ -93,6 +93,12 @@ class ClinicRegistrationController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // $getUser = User::where('role', '=', 'clinic')->where('status', '=', 'verified')->get();
+        // foreach ($getUser as $key) {
+        //     $user[] = User_as_clinic::where('users_id', '=', $key->id)->first();
+        // }
+
+
         $clinic = User_as_clinic::find($id);
         $clinicReg = User::where('id', '=', $clinic->users_id)->first();
         $clinicReg->status = 'verified';
@@ -108,7 +114,10 @@ class ClinicRegistrationController extends Controller
         // Mail::to($request->sender)->send(new AdminMail($details));
         Mail::to($clinicReg->email)->send(new AcceptRegistrationMail($details));
         // return "email sent";
-        return response()->json(['clinicReg' => $clinicReg]);
+        // return response()->json(['clinicReg' => $clinicReg]);
+        // return view('adminViews.tablesClinic', ['clinic' => $user]);
+        header("Location: /admin/clinic");
+        exit();
     }
 
     /**

@@ -73,7 +73,7 @@
                     <input class="form-control" id="sender" name="sender" type="text" value="{{ $clinicAdd->city}} , Zipcode: {{ $clinicAdd->zip_code}}" disabled>
                 </div>
             </div>
-            <div class="row">
+            <div class="row mt-3">
                 <div class="col">
                     {{-- <h3>DITO SA BABA YUNG MAP</h3> --}}
                     {{-- {{ $clinicAdd }} --}}
@@ -83,10 +83,11 @@
                     <div id="maps" class="w-100" style="height: 600px;"></div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row mt-3">
                 <div class="col">
                     @if ($clinicReg->permit != null)  
-                        <label for="permit" class="form-label" >Change Business Permit</label>
+                        <label for="permit_id" class="form-label" ><h3>Business Permit</h3></label>
+                        <input class="form-control" id="permit_id" name="permit_id" type="text" value="{{ $clinicReg->permit_id}}" disabled>
                         <img class="w-100" src="{{ $clinicReg->permit }}" alt="permit">
                     @else
                         <label for="permit" class="form-label" >No Business Permit Submitted</label>
