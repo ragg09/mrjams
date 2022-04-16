@@ -31,7 +31,7 @@ $(function(){
                     });
                 }else{
                     // console.log("FINISH NA");
-                    //console.log(data);
+                    // console.log(data);
                     window.location.href = "/clinic"; 
                     
                 }

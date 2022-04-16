@@ -69,6 +69,15 @@
                           <span class="text-danger error-text age_error"></span>
                         </div>
 
+                        <div class="form-floating mb-3">
+                          <div class="form-check">
+                              <input class="form-check-input" type="checkbox" value="" id="terms_conditions">
+                              <label class="form-check-label" for="terms_conditions">
+                                <a href="/public/terms_condition" target="_blank" class="">Terms and Conditions</a>
+                              </label>
+                          </div>
+                      </div>
+
 
                         <input type="hidden" name="role" value="customer"> 
 
@@ -116,8 +125,8 @@
                         </div>
 
               
-
-                          <button type="submit" class="btn btn-login float-right" id="register">Submit</button>
+                        
+                          <button type="submit" class="btn btn-login float-right" id="register" disabled>Submit</button>
                     
                     
                     </div>

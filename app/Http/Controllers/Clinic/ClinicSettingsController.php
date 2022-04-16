@@ -220,6 +220,7 @@ class ClinicSettingsController extends Controller
      */
     public function store(Request $request)
     {
+
         //return response()->json(['message' => $request->all()]);
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:2',

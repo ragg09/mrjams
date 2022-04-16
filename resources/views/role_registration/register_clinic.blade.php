@@ -77,7 +77,7 @@
                 
             </div>
             
-            <form action="{{route('clinic.settings.store')}}" method="POST" id="main_form">
+            <form action="{{route('clinic.settings.store')}}" method="POST" id="main_form" enctype="multipart/form-data">
                 @csrf
                 <input type="text" id="latitude" name="latitude" value="" hidden>
                 <input type="text" id="longitude" name="longitude" value="" hidden>
@@ -123,16 +123,22 @@
                     </div>
 
                     <div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="" placeholder="Address line 1" name="address_line_1">
-                            <label for="floatingInput">Address line 1</label>
-                            <span class="text-warning error-text address_line_1_error"></span>
-                        </div>
 
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="" placeholder="Address line 2" name="address_line_2">
-                            <label for="floatingInput">Address line 2</label>
-                            <span class="text-warning error-text address_line_2_error"></span>
+                        <div class="row">
+                            <div class="col">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="" placeholder="Address line 1" name="address_line_1">
+                                        <label for="floatingInput">Address line 1</label>
+                                        <span class="text-warning error-text address_line_1_error"></span>
+                                    </div>
+                            </div>
+                            <div class="col">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="" placeholder="Address line 2" name="address_line_2">
+                                        <label for="floatingInput">Address line 2</label>
+                                        <span class="text-warning error-text address_line_2_error"></span>
+                                    </div>
+                            </div>
                         </div>
 
                         <div class="row">
@@ -153,6 +159,12 @@
                             </div>
                         </div>
 
+                        {{-- <div class="mb-3">
+                            <label for="permit" class="form-label h5 text-white">Business Permit</label>
+                            <input class="form-control" type="file" id="permit" name="permit">
+                            <span class="text-warning error-text permit_error"></span>
+                        </div> --}}
+
                         <div class="row mt-2 mb-2" hidden id="put_location_first">
                             <div class="col-12 w-75 mx-auto rounded" style="background: rgb(207, 0, 0)">
                                 <div class=" mx-auto p-1">
@@ -169,7 +181,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="" id="terms_conditions">
                                         <label class="form-check-label" for="terms_conditions">
-                                          <a href="" class="text-white">Terms and Conditions</a>
+                                          <a href="/public/terms_condition" target="_blank" class="text-white">Terms and Conditions</a>
                                         </label>
                                     </div>
                                 </div>

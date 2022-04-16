@@ -1,0 +1,1 @@
+list ng terms and conditions

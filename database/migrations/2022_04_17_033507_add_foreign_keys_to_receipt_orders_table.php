@@ -14,9 +14,9 @@ class AddForeignKeysToReceiptOrdersTable extends Migration
     public function up()
     {
         Schema::table('receipt_orders', function (Blueprint $table) {
+            $table->foreign(['user_as_clinic_id'], 'fk_receipt_orders_user_as_clinic1')->references(['id'])->on('user_as_clinic')->onUpdate('NO ACTION')->onDelete('NO ACTION');
             $table->foreign(['packages_id'], 'fk_receipt_orders_packages1')->references(['id'])->on('packages')->onUpdate('NO ACTION')->onDelete('NO ACTION');
             $table->foreign(['user_as_customer_id'], 'fk_receipt_orders_user_as_customer1')->references(['id'])->on('user_as_customer')->onUpdate('NO ACTION')->onDelete('NO ACTION');
-            $table->foreign(['user_as_clinic_id'], 'fk_receipt_orders_user_as_clinic1')->references(['id'])->on('user_as_clinic')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
     }
 
@@ -28,9 +28,9 @@ class AddForeignKeysToReceiptOrdersTable extends Migration
     public function down()
     {
         Schema::table('receipt_orders', function (Blueprint $table) {
+            $table->dropForeign('fk_receipt_orders_user_as_clinic1');
             $table->dropForeign('fk_receipt_orders_packages1');
             $table->dropForeign('fk_receipt_orders_user_as_customer1');
-            $table->dropForeign('fk_receipt_orders_user_as_clinic1');
         });
     }
 }

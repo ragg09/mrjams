@@ -1,4 +1,15 @@
 $(function(){
+
+    $('#terms_conditions').on('click', function(e){
+        if ($(this).is(':checked') && $("#latitude").val() != "") {
+            $("#register").prop("disabled", false);
+         }else{
+            $("#register").prop("disabled", true);
+
+         }
+    });
+
+
     $("#main_form").on('submit', function(e){
         e.preventDefault();
     

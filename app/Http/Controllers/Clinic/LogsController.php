@@ -14,6 +14,8 @@ use App\Models\Ratings;
 
 class LogsController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      *
@@ -51,7 +53,6 @@ class LogsController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**

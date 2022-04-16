@@ -26,7 +26,7 @@ use App\Http\Controllers\Clinic\RatingController as ClinicRating;
 use App\Http\Controllers\Clinic\PrintController;
 use App\Http\Controllers\Clinic\SendEmailController;
 use App\Http\Controllers\Clinic\Announcement;
-
+use App\Http\Controllers\Clinic\CloudinaryController;
 use App\Http\Controllers\Customer\CustomerRegisterController;
 use App\Http\Controllers\Customer\CustomerMap;
 use App\Http\Controllers\Customer\CustomerController;
@@ -72,6 +72,11 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'public', 'middleware' => ['role_public'], 'as' => 'public.'], function () {
     Route::resource('testing', TestingController::class); //testing purposes
+    Route::resource('cloudinary', CloudinaryController::class); //testing purposes
+
+    Route::get('/terms_condition', function () {
+        return view('publicViews.terms_condition');
+    })->name('terms_condition');
 
     Route::get('/about', function () {
         return view('publicViews.about_p');

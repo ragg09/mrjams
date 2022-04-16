@@ -21,6 +21,8 @@ class CreateUserAsClinicTable extends Migration
             $table->integer('users_id')->index('fk_user_as_clinic_details_users1_idx');
             $table->integer('clinic_types_id')->index('fk_user_as_clinic_clinic_types1_idx');
             $table->integer('user_address_id')->index('fk_user_as_clinic_user_adress1_idx');
+            $table->text('permit')->nullable();
+            $table->text('permit_id')->nullable();
         });
     }
 

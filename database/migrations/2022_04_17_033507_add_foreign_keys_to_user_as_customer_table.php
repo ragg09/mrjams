@@ -14,8 +14,8 @@ class AddForeignKeysToUserAsCustomerTable extends Migration
     public function up()
     {
         Schema::table('user_as_customer', function (Blueprint $table) {
-            $table->foreign(['users_id'], 'fk_user_as_customer_details_users1')->references(['id'])->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
             $table->foreign(['user_address_id'], 'fk_user_as_customer_user_adress1')->references(['id'])->on('user_address')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            $table->foreign(['users_id'], 'fk_user_as_customer_details_users1')->references(['id'])->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
     }
 
@@ -27,8 +27,8 @@ class AddForeignKeysToUserAsCustomerTable extends Migration
     public function down()
     {
         Schema::table('user_as_customer', function (Blueprint $table) {
-            $table->dropForeign('fk_user_as_customer_details_users1');
             $table->dropForeign('fk_user_as_customer_user_adress1');
+            $table->dropForeign('fk_user_as_customer_details_users1');
         });
     }
 }
