@@ -59,7 +59,7 @@ class EquipmentsController extends Controller
         if ($request->ajax()) {
             $query = strtolower($request->get('query'));
 
-            $data_name = Clinic_equipments::query()->where('name', 'LIKE', "%" . $query . "%")
+            $data_name = Clinic_equipments::query()->where(DB::raw('LOWER(name)'), 'LIKE', "%" . $query . "%")
                 ->where('user_as_clinic_id', '=', $clinic->id)
                 ->get();
 
