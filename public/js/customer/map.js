@@ -159,7 +159,7 @@ function initMap() {
                     });
         
                     var marker = new google.maps.Marker({
-                        position: { lat: val.latitude, lng: val.longitude },
+                        position: { lat: parseFloat(val.latitude), lng: parseFloat(val.longitude) },
                         map:map,
                         icon: {
                             url: "/images/mrjams/mr-jams-logo.png",

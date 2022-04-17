@@ -35,15 +35,15 @@ $(function(){
 
                     // });
 
-                    $("#mailTable").DataTable({
-                        "ordering": false,
+                    // $("#mailTable").DataTable({
+                    //     "ordering": false,
                         
-                        "pageLength": 10,
-                        "pagingType": "simple_numbers",
-                        "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
-                        "info": false,
+                    //     "pageLength": 10,
+                    //     "pagingType": "simple_numbers",
+                    //     "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+                    //     "info": false,
                         
-                    });
+                    // });
 
 
                 }else{
