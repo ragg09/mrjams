@@ -28,22 +28,10 @@ $(function(){
 
                 if(data.status == 0 ){
 
-                    // $.each(data.customer, function(index, val){
+                    $("#mailTable").DataTable();
 
                     $("#info").empty();
-                    $("#info").append('<tr><td class="view-message "></td><td class="inbox-small-cells"><i class="fa fa-star" style="padding-left: 50px; color: #6497B1"></i></td><td class="view-message ">Hi, Welcome to MR. JAMS </td><td class="view-message  inbox-small-cells"><a href="/customer/mail/"></a></td><td class="view-message "></td><td class="view-message "></td><td class="view-message "></td></tr>');
-
-                    // });
-
-                    // $("#mailTable").DataTable({
-                    //     "ordering": false,
-                        
-                    //     "pageLength": 10,
-                    //     "pagingType": "simple_numbers",
-                    //     "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
-                    //     "info": false,
-                        
-                    // });
+                    $("#info").append('<tr><td><i class="fa fa-star" style="color: #6497B1"></i></td><td></td><td class="view-message ">Hi, Welcome to MR. JAMS </td><td class="view-message  inbox-small-cells"><a href="/customer/mail/"></a></td><td class="view-message "></td><td class="view-message "></td><td class="view-message "></td></tr>');
 
 
                 }else{

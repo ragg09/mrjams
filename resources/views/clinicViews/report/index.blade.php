@@ -8,14 +8,25 @@
             --veryLightGray: hsl(0, 0%, 98%);
         }
 
+        #accounting_box_first {
+            background-color: var(--veryLightGray);
+            box-shadow: 0px 20px 40px -10px var(--grayishBlue);
+            border-top: 2px solid rgb(11, 95, 173);
+            border-radius: 5px;
+            min-height: 15px;
+            overflow: hidden;
+        }
+
         #accounting_box {
             background-color: var(--veryLightGray);
             box-shadow: 0px 20px 40px -10px var(--grayishBlue);
             border-top: 2px solid rgb(11, 95, 173);
             border-radius: 5px;
-            min-height: 150px;
+            min-height: 300px;
             overflow: hidden;
         }
+
+        
         
     </style>
 @endsection
