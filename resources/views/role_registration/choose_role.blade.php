@@ -14,7 +14,8 @@
 
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  {{-- <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> --}}
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 <body>
@@ -34,11 +35,11 @@
                       <img src="{{ URL::asset('images/mrjams/logowithname.PNG') }}" class="center" width="100%" height="20%">
                       <p>Appointment and Management System for Dental and Medical Clinics with Location-Based Mapping</p><br>  
                     
-                        <a href="{{ route('role.register_customer') }}" class="btn btn-info" style="display: block; margin-left: auto; margin-right: auto; width: 50%;">Sign Up as a Patient</a>
+                        <a href="{{ route('role.register_customer') }}" class="btn btn-info" style="display: block; margin-left: auto; margin-right: auto; width: 200px;"><i class="fa fa-user-plus" aria-hidden="true" style="color: black; width: 20px; height:15px; margin-right: 3px;"></i>Sign Up as a Patient</a>
                         <br>
-                        <p>OR</p>
+                        {{-- <p>OR</p> --}}
 
-                        <a href="{{ route('role.register_clinic') }}" class="btn btn-success" style="display: block; margin-left: auto; margin-right: auto; width: 50%;">Sign Up as Clinic</a>
+                        <a href="{{ route('role.register_clinic') }}" class="btn btn-success" style="display: block; margin-left: auto; margin-right: auto; width: 200px;"><i class="fa fa-user-md fa-lg" aria-hidden="true" style="color: black; width: 20px; height:18px; margin-right: 4px;"></i>Sign Up as Clinic</a>
 
                     </div>
                    
