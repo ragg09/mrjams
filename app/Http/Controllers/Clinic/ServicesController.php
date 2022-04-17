@@ -15,7 +15,7 @@ use App\Models\Packages_has_services;
 use App\Models\Services_has_equipments;
 use App\Models\User;
 use App\Models\User_as_clinic;
-
+use Illuminate\Support\Facades\DB;
 
 class ServicesController extends Controller
 {
@@ -55,10 +55,14 @@ class ServicesController extends Controller
         $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
 
         if ($request->ajax()) {
-            $query = $request->get('query');
-            $data = Clinic_services::query()->where('name', 'LIKE', "%{$query}%")
+            $query = strtolower($request->get('query'));
+
+
+            $data = Clinic_services::query()->where(DB::raw('LOWER(name)'), 'LIKE', "%" . $query . "%")
                 ->where('user_as_clinic_id', '=', $clinic->id)
                 ->get();
+
+
             return  response()->json(['data' => $data]);
         }
     }

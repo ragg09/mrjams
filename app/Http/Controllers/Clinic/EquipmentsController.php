@@ -63,11 +63,9 @@ class EquipmentsController extends Controller
                 ->where('user_as_clinic_id', '=', $clinic->id)
                 ->get();
 
-            $data_type = Clinic_equipments::query()->where('type', 'LIKE', "%" . $query . "%")
+            $data_type = Clinic_equipments::query()->where(DB::raw('LOWER(type)'), 'LIKE', "%" . $query . "%")
                 ->where('user_as_clinic_id', '=', $clinic->id)
                 ->get();
-
-
 
             return  response()->json([
                 'data_name' => $data_name,
