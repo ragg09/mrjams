@@ -26,7 +26,7 @@ $(function(){
         $.ajax({
             type: $(this).attr('method'),
 	    	url: $(this).attr('action'),
-            headers: {  'Access-Control-Allow-Origin': '*' },
+            headers: {  'Access-Control-Allow-Origin': 'http://mrjams.herokuapp.com/' },
 	    	data: $('#main_form').serialize(),
             beforeSend: function(){
                 $("#create_equipment_add").attr("hidden", true);
