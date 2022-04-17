@@ -57,13 +57,13 @@ class EquipmentsController extends Controller
         $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
 
         if ($request->ajax()) {
-            $query = $request->get('query');
+            $query = strtolower($request->get('query'));
 
-            $data_name = Clinic_equipments::query()->where('name', 'LIKE', "%{$query}%")
+            $data_name = Clinic_equipments::query()->where('name', 'LIKE', "%" . $query . "%")
                 ->where('user_as_clinic_id', '=', $clinic->id)
                 ->get();
 
-            $data_type = Clinic_equipments::query()->where('type', 'LIKE', "%{$query}%")
+            $data_type = Clinic_equipments::query()->where('type', 'LIKE', "%" . $query . "%")
                 ->where('user_as_clinic_id', '=', $clinic->id)
                 ->get();
 
