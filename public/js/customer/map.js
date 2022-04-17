@@ -146,7 +146,7 @@ function initMap() {
                 $.each(data.data, function(key, val){
                     // console.log(val.latitude);
                     new google.maps.Marker({
-                        position: { lat: parseInt(val.latitude), lng: parseInt(val.longitude) },
+                        position: { lat: parseFloat(val.latitude), lng: parseFloat(val.longitude) },
                         map,
                         icon: {
                             url: "/images/mrjams/mr-jams-logo.png",
