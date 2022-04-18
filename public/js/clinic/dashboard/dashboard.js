@@ -106,7 +106,7 @@ $(function () {
                         headerToolbar: {
                             left: 'prev,next today',
                             center: 'title',
-                            right: 'dayGridMonth,timeGridDay,listWeek'
+                            right: 'dayGridMonth,timeGridDay,listMonth'
                         },
                         //initialView: 'timeGridDay',
                         navLinks: true, // can click day/week names to navigate views

@@ -479,3 +479,20 @@ div.container6 {
         transform: rotate(0);
     }
 }
+
+#footer_clickables{
+    margin-left: -30px;
+    margin-top: -20px;
+}
+
+#footer_clickables li{
+    display:inline;
+    
+}
+
+#footer_clickables li a{
+    font-size: 14px;
+    text-decoration: none;
+    list-style: none;
+    color: black;
+}

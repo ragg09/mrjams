@@ -18,7 +18,7 @@ $(function(){
             type: "GET",
             url: "/clinic/report/create",
             success: function(data){
-                console.log(data);
+                // console.log(data);
 
                 //TOP APPOINTMENTS
                 if(data.appointment_stats && data.appointment_stats.length >= 5){

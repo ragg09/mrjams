@@ -170,6 +170,12 @@
                                 </a>
                             </li>
                             <li>
+                                <a class="dropdown-item" href="{{ route('clinic.announcement.index') }}">
+                                    <i class="fa fa-bullhorn mx-2" aria-hidden="true"></i>
+                                    Announcement
+                                </a>
+                            </li>
+                            <li>
                                 <a class="dropdown-item" href="{{ route('clinic.settings.index') }}">
                                     <i class="fa fa-cog mx-2" aria-hidden="true"></i>
                                     Settings
@@ -218,7 +224,12 @@
     {{-- footer --}}
     <div class="" style="position:fixed; bottom: 0px; left: 10px; z-index: 100;">
         <img class="" src="{{ URL::asset('images/mrjams/logowithname.PNG') }}" alt="MrJams" style="width: 100px">
-        <p class="text-center fw-bold" style="font-size: 12px">Copyright &copy; MR-JAMS.com</p>
+        <p class="text-center fw-bold" style="font-size: 12px; margin-top: -10px;">Copyright &copy; MR-JAMS.com</p>
+        <ul id="footer_clickables">
+            <li><a href="/public/about" target="_blank" class="fw-bold">About</a></li>
+            <li>|</li>
+            <li><a href="/public/terms_condition" target="_blank" class="fw-bold">Terms</a></li>
+        </ul>  
         
     </div>
 </body>
