@@ -30,7 +30,7 @@ class LogsController extends Controller
             ->where('remark', '!=',  "notif")
             ->where('remark', '!=',  "done_notif")
             ->orderBy('id', 'desc')
-            ->take(10)
+            ->limit(10)
             ->get();
         return view('clinicViews.logs.index', ['data' => $data, 'logs' => $logs]);
     }
@@ -111,7 +111,7 @@ class LogsController extends Controller
 
             $notif = Logs::where('user_as_clinic_id', '=',  $clinic->id)
                 ->whereIn('remark', ["notif", "done_notif"])
-                ->limit(15)
+                ->limit(10)
                 ->orderBy('id', 'desc')
                 ->get();
 
