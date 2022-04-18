@@ -106,7 +106,7 @@ class DashbaordController extends Controller
                     "ro_id" =>  $receipts[$count]->id ?? "", //galing sareceipts table
                     "ro_package_name" =>  $package->name ?? "", //galing sareceipts table
                     "ro_services_name" => $services_summary ?? "",
-                    "specialist" => $specialist->fullname,
+                    "specialist" => $specialist->fullname ?? "Not mentioned",
                     "ro_customer_id" =>  $receipts[$count]->user_as_customer_id ?? "", //galing sareceipts table
                     "ro_patient_details" =>  $receipts[$count]->patient_details ?? "", //galing sareceipts table
                     "ro_patient_address" =>  $receipts[$count]->patient_address ?? "", //galing sareceipts table
