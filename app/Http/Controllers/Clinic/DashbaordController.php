@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Clinic;
 
 use App\Http\Controllers\Controller;
 use App\Models\Appointments;
+use App\Models\Clinic_specialists;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -40,7 +41,7 @@ class DashbaordController extends Controller
                 ->first();
 
             $appointments_nego = Appointments::where('receipt_orders_id', '=',  $key->id)
-                ->where('appointment_status_id', '=',  5) //for accecpted appointments
+                ->where('appointment_status_id', '=',  5) //for accecpted but negotin
                 ->first();
 
             $package = Packages::where('id', '=',   $key->packages_id)
@@ -89,24 +90,29 @@ class DashbaordController extends Controller
                 $logs->save();
             }
 
+            if ($appointments) {
+                $specialist = Clinic_specialists::where("id", $receipts[$count]->specialist_id)->first();
 
-            $complete_appointment_data[] = (object) array(
-                "user_email" => $customer_root_data->email,
-                "user_avatar" => $customer_root_data->avatar,
+                $complete_appointment_data[] = (object) array(
+                    "user_email" => $customer_root_data->email,
+                    "user_avatar" => $customer_root_data->avatar,
 
-                "app_id" =>  $appointments->id ?? "", //galing sa appointmnent table
-                "app_created_at" =>  $appointments->created_at ?? "", //galing sa appointmnent table
-                "time" =>  $appointments->time ?? "", //galing sa appointmnent table
-                "app_appointed_at" =>  $appointments->appointed_at ?? "", //galing sa appointmnent table
-                "app_status" =>  $appointments->appointment_status_id ?? "", //galing sa appointmnent tabl
+                    "app_id" =>  $appointments->id ?? "", //galing sa appointmnent table
+                    "app_created_at" =>  $appointments->created_at ?? "", //galing sa appointmnent table
+                    "time" =>  $appointments->time ?? "", //galing sa appointmnent table
+                    "app_appointed_at" =>  $appointments->appointed_at ?? "", //galing sa appointmnent table
+                    "app_status" =>  $appointments->appointment_status_id ?? "", //galing sa appointmnent tabl
 
-                "ro_id" =>  $receipts[$count]->id ?? "", //galing sareceipts table
-                "ro_package_name" =>  $package->name ?? "", //galing sareceipts table
-                "ro_services_name" => $services_summary ?? "",
-                "ro_customer_id" =>  $receipts[$count]->user_as_customer_id ?? "", //galing sareceipts table
-                "ro_patient_details" =>  $receipts[$count]->patient_details ?? "", //galing sareceipts table
-                "ro_patient_address" =>  $receipts[$count]->patient_address ?? "", //galing sareceipts table
-            );
+                    "ro_id" =>  $receipts[$count]->id ?? "", //galing sareceipts table
+                    "ro_package_name" =>  $package->name ?? "", //galing sareceipts table
+                    "ro_services_name" => $services_summary ?? "",
+                    "specialist" => $specialist->fullname,
+                    "ro_customer_id" =>  $receipts[$count]->user_as_customer_id ?? "", //galing sareceipts table
+                    "ro_patient_details" =>  $receipts[$count]->patient_details ?? "", //galing sareceipts table
+                    "ro_patient_address" =>  $receipts[$count]->patient_address ?? "", //galing sareceipts table
+                );
+            }
+
             $count++;
         }
 

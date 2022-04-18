@@ -63,7 +63,7 @@ $(function () {
             headerToolbar: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'dayGridMonth,timeGridDay'
+                right: 'dayGridMonth,timeGridDay,listMonth'
             },
             //initialView: 'timeGridDay',
             navLinks: true, // can click day/week names to navigate views
@@ -93,7 +93,7 @@ $(function () {
                     $.each(data.data, function(index, val){
                         
                         edata.push({
-                            title: "Receipt order: ~" + val.ro_id + "~ " +val.ro_patient_details,
+                            title: "Receipt order: ~" + val.ro_id + "~ | Specialist: " + val.specialist + " | Patient: " +val.ro_patient_details,
                             //start: moment(val.app_created_at).format("YYYY-MM-DD")+"T00:12:00",
                             start: moment(val.app_appointed_at).format("YYYY-MM-DD")+"T"+val.time,
                             //constraint: "businessHours",
