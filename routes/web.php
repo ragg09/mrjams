@@ -163,7 +163,7 @@ Route::group(['prefix' => 'clinic', 'middleware' => ['auth', 'check_user', 'role
             ->where('remark', '!=',  "notif")
             ->where('remark', '!=',  "done_notif")
             ->orderBy('id', 'desc')
-            ->take(5)
+            ->limit(10)
             ->get();
         return view('clinicViews.index', ['logs' => $logs]);
     })->name('dashobard');
