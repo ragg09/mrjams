@@ -38,7 +38,7 @@ class ServicesController extends Controller
             ->where('remark', '!=',  "notif")
             ->where('remark', '!=',  "done_notif")
             ->orderBy('id', 'desc')
-            ->take(10)
+            ->limit(10)
             ->get();
 
         return view('clinicViews.services.index', ['data' => $data, 'logs' => $logs, 'equipments' =>  $myequipments]);
