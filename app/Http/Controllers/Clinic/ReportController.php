@@ -5,17 +5,21 @@ namespace App\Http\Controllers\Clinic;
 use App\Http\Controllers\Controller;
 use App\Models\Appointments;
 use App\Models\Billings;
+use App\Models\Clinic_equipment_inventory;
 use App\Models\Clinic_equipments;
 use App\Models\Clinic_services;
 use App\Models\Logs;
 use App\Models\Packages;
 use App\Models\Receipt_orders;
+use App\Models\Receipt_orders_has_clinic_services;
 use App\Models\User;
 use App\Models\User_address;
 use App\Models\User_as_clinic;
+use App\Models\User_as_customer;
 use COM;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use phpDocumentor\Reflection\Types\Null_;
 
 class ReportController extends Controller
 {
@@ -445,9 +449,870 @@ class ReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        $user = User::where('email', '=',  Auth::user()->email)->first();
+        $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
+        $clinic_address = User_address::where('id', '=',  $clinic->user_address_id)->first();
+
+        $date_range = explode(" to ", $request->datetime_report_generator);
+        //FOR GETTING DATE
+        //getting all dates in range
+        function getBetweenDatesReport($startDate, $endDate)
+        {
+            $rangArray = [];
+
+            $startDate = strtotime($startDate);
+            $endDate = strtotime($endDate);
+
+            for (
+                $currentDate = $startDate;
+                $currentDate <= $endDate;
+                $currentDate += (86400)
+            ) {
+
+                $date = date('Y-m-d', $currentDate);
+                $rangArray[] = $date;
+            }
+
+            return $rangArray;
+        }
+
+
+
+        if (count($date_range) > 1) {
+            $dates = getBetweenDatesReport($date_range[0], $date_range[1]);
+        } else {
+
+            if ($request->datetime_report_generator == "") {
+                $dates[] = date("Y-m-d");
+            } else {
+                $dates[] = $request->datetime_report_generator;
+            }
+        }
+
+
+        // echo json_encode($dates);
+        // dd($dates);
+
+        $this_ro = Receipt_orders::where("user_as_clinic_id", $clinic->id)->get();
+
+        foreach ($this_ro as $ro_key) {
+            $this_clinic_appointments[] = Appointments::where("receipt_orders_id", $ro_key->id)->first();
+        }
+
+        $this_bills = Billings::where("user_as_clinic_id", $clinic->id)->get();
+
+        $daily_report = array();
+
+
+
+        foreach ($dates as $date_key) {
+
+            $this_day_summary = array();
+
+            ############################# FOR APPOINTMENTS  #############################
+            if (isset($request->app_option_selected)) {
+                if ($request->app_option_selected == "detailed") { //FOR DETAILED APPOINTMENT
+
+                    if (isset($request->app_done)) { //DONE ISSET
+                        // echo "done appointments";
+
+                        $all_done = Billings::where("user_as_clinic_id", $clinic->id)
+                            ->where('created_at', 'LIKE', '%' . $date_key . '%')
+                            ->get();
+
+                        if (count($all_done) > 0) {
+                            $complete_done_data = [];
+
+                            foreach ($all_done as $key) {
+                                $this_app = Appointments::where("receipt_orders_id", $key->receipt_orders_id)->first();
+
+
+                                $this_customer = User_as_customer::where("id", $key->user_as_customer_id)->first();
+
+                                $treatment = array();
+                                $first_explode = explode(",", $key->price_summary);
+                                foreach ($first_explode as $k) {
+                                    $sec_explode = explode(":", $k);
+
+                                    array_push($treatment, $sec_explode[0]);
+                                }
+
+
+                                $complete_done_data[] = (object) array(
+                                    "receipt" => $key->receipt_orders_id,
+                                    "customer" => $this_customer->fname . " " . $this_customer->lname,
+                                    "treatment" => implode(", ", $treatment),
+                                    "time" => $this_app->time,
+                                );
+                            }
+
+                            array_push($this_day_summary, $complete_done_data);
+                        } else {
+                            array_push($this_day_summary, array());
+                        }
+                    } else {
+                        array_push($this_day_summary, array());
+                    }
+
+
+                    if (isset($request->app_pending)) { //PENDING ISSET
+                        // echo "pending appointments";
+                        $all_pending = array();
+
+                        foreach ($this_clinic_appointments as $key) {
+
+                            if ($key->appointment_status_id == 2 && $key->appointed_at == $date_key) {
+                                array_push($all_pending, $key);
+                            }
+                        }
+
+                        if (count($all_pending) > 0) {
+                            $complete_pending_data = [];
+
+                            foreach ($all_pending as $al_p) {
+                                $treatment = array();
+
+                                $this_ro = Receipt_orders::where("id", $al_p->receipt_orders_id)->first();
+                                $this_customer = User_as_customer::where("id", $this_ro->user_as_customer_id)->first();
+
+                                $ro_services = Receipt_orders_has_clinic_services::where("receipt_orders_id",  $this_ro->id)->get();
+
+                                if (count($ro_services) > 0) {
+
+                                    foreach ($ro_services as $ro_s) {
+                                        $this_service = Clinic_services::where("id", $ro_s->clinic_services_id)->first();
+
+                                        array_push($treatment,  $this_service->name);
+                                    }
+                                }
+
+                                if ($this_ro->packages_id) {
+                                    $this_package = Packages::where("id", $this_ro->packages_id)->first();
+
+                                    array_push($treatment, $this_package->name);
+                                }
+
+
+
+
+
+                                $complete_pending_data[] = (object) array(
+                                    "receipt" => $this_ro->id,
+                                    "customer" => $this_customer->fname . " " . $this_customer->lname,
+                                    "treatment" => implode(", ", $treatment),
+                                    "time" => $this_ro->time,
+                                );
+                            }
+                            array_push($this_day_summary,  $complete_pending_data);
+                        } else {
+                            array_push($this_day_summary, array());
+                        }
+                    } else {
+                        array_push($this_day_summary, array());
+                    }
+
+                    if (isset($request->app_declined)) { // DECLINED ISSET
+                        // echo "declined appointments";
+                        $all_declined = array();
+
+                        foreach ($this_clinic_appointments as $key) {
+
+                            if ($key->appointment_status_id == 3 && $key->appointed_at == $date_key) {
+                                array_push($all_declined, $key);
+                            }
+                        }
+
+                        if (count($all_declined) > 0) {
+                            $complete_declined_data = [];
+
+                            foreach ($all_declined as $al_d) {
+                                $treatment = array();
+
+                                $this_ro = Receipt_orders::where("id", $al_d->receipt_orders_id)->first();
+                                $this_customer = User_as_customer::where("id", $this_ro->user_as_customer_id)->first();
+
+                                $ro_services = Receipt_orders_has_clinic_services::where("receipt_orders_id",  $this_ro->id)->get();
+
+                                if (count($ro_services) > 0) {
+
+                                    foreach ($ro_services as $ro_s) {
+                                        $this_service = Clinic_services::where("id", $ro_s->clinic_services_id)->first();
+
+                                        array_push($treatment,  $this_service->name);
+                                    }
+                                }
+
+                                if ($this_ro->packages_id) {
+                                    $this_package = Packages::where("id", $this_ro->packages_id)->first();
+
+                                    array_push($treatment, $this_package->name);
+                                }
+
+
+
+
+
+                                $complete_declined_data[] = (object) array(
+                                    "receipt" => $this_ro->id,
+                                    "customer" => $this_customer->fname . " " . $this_customer->lname,
+                                    "treatment" => implode(", ", $treatment),
+                                    "time" => $this_ro->time,
+                                );
+                            }
+                            array_push($this_day_summary,  $complete_declined_data);
+                        } else {
+                            array_push($this_day_summary, array());
+                        }
+                    } else {
+                        array_push($this_day_summary, array());
+                    }
+
+
+                    if (isset($request->app_accepted)) { // ACCEPTED ISSET
+                        // echo "accepted appointments";
+                        $all_accepted = array();
+
+                        foreach ($this_clinic_appointments as $key) {
+
+                            if ($key->appointment_status_id == 4 && $key->appointed_at == $date_key) {
+                                array_push($all_accepted, $key);
+                            }
+                        }
+
+                        if (count($all_accepted) > 0) {
+                            $complete_accepted_data = [];
+
+                            foreach ($all_accepted as $al_d) {
+                                $treatment = array();
+
+                                $this_ro = Receipt_orders::where("id", $al_d->receipt_orders_id)->first();
+                                $this_customer = User_as_customer::where("id", $this_ro->user_as_customer_id)->first();
+
+                                $ro_services = Receipt_orders_has_clinic_services::where("receipt_orders_id",  $this_ro->id)->get();
+
+                                if (count($ro_services) > 0) {
+
+                                    foreach ($ro_services as $ro_s) {
+                                        $this_service = Clinic_services::where("id", $ro_s->clinic_services_id)->first();
+
+                                        array_push($treatment,  $this_service->name);
+                                    }
+                                }
+
+                                if ($this_ro->packages_id) {
+                                    $this_package = Packages::where("id", $this_ro->packages_id)->first();
+
+                                    array_push($treatment, $this_package->name);
+                                }
+
+
+
+
+
+                                $complete_accepted_data[] = (object) array(
+                                    "receipt" => $this_ro->id,
+                                    "customer" => $this_customer->fname . " " . $this_customer->lname,
+                                    "treatment" => implode(", ", $treatment),
+                                    "time" => $this_ro->time,
+                                );
+                            }
+                            array_push($this_day_summary,  $complete_accepted_data);
+                        } else {
+                            array_push($this_day_summary, array());
+                        }
+                    } else {
+                        array_push($this_day_summary, array());
+                    }
+
+
+                    if (isset($request->app_nego)) { // NEGO ISSET
+                        // echo "nego appointments";
+                        $all_nego = array();
+
+                        foreach ($this_clinic_appointments as $key) {
+
+                            if ($key->appointment_status_id == 5 && $key->appointed_at == $date_key) {
+                                array_push($all_nego, $key);
+                            }
+                        }
+
+                        if (count($all_nego) > 0) {
+                            $complete_nego_data = [];
+
+                            foreach ($all_nego as $al_d) {
+                                $treatment = array();
+
+                                $this_ro = Receipt_orders::where("id", $al_d->receipt_orders_id)->first();
+                                $this_customer = User_as_customer::where("id", $this_ro->user_as_customer_id)->first();
+
+                                $ro_services = Receipt_orders_has_clinic_services::where("receipt_orders_id",  $this_ro->id)->get();
+
+                                if (count($ro_services) > 0) {
+
+                                    foreach ($ro_services as $ro_s) {
+                                        $this_service = Clinic_services::where("id", $ro_s->clinic_services_id)->first();
+
+                                        array_push($treatment,  $this_service->name);
+                                    }
+                                }
+
+                                if ($this_ro->packages_id) {
+                                    $this_package = Packages::where("id", $this_ro->packages_id)->first();
+
+                                    array_push($treatment, $this_package->name);
+                                }
+
+
+
+
+
+                                $complete_nego_data[] = (object) array(
+                                    "receipt" => $this_ro->id,
+                                    "customer" => $this_customer->fname . " " . $this_customer->lname,
+                                    "treatment" => implode(", ", $treatment),
+                                    "time" => $this_ro->time,
+                                );
+                            }
+                            array_push($this_day_summary,  $complete_nego_data);
+                        } else {
+                            array_push($this_day_summary, array());
+                        }
+                    } else {
+                        array_push($this_day_summary, array());
+                    }
+
+
+                    if (isset($request->app_expired)) { // EXPIRED ISSET
+                        // echo "expired appointments";
+                        $all_expired = array();
+
+                        foreach ($this_clinic_appointments as $key) {
+
+                            if ($key->appointment_status_id == 6 && $key->appointed_at == $date_key) {
+                                array_push($all_expired, $key);
+                            }
+                        }
+
+                        if (count($all_expired) > 0) {
+                            $complete_expired_data = [];
+
+                            foreach ($all_expired as $al_d) {
+                                $treatment = array();
+
+                                $this_ro = Receipt_orders::where("id", $al_d->receipt_orders_id)->first();
+                                $this_customer = User_as_customer::where("id", $this_ro->user_as_customer_id)->first();
+
+                                $ro_services = Receipt_orders_has_clinic_services::where("receipt_orders_id",  $this_ro->id)->get();
+
+                                if (count($ro_services) > 0) {
+
+                                    foreach ($ro_services as $ro_s) {
+                                        $this_service = Clinic_services::where("id", $ro_s->clinic_services_id)->first();
+
+                                        array_push($treatment,  $this_service->name);
+                                    }
+                                }
+
+                                if ($this_ro->packages_id) {
+                                    $this_package = Packages::where("id", $this_ro->packages_id)->first();
+
+                                    array_push($treatment, $this_package->name);
+                                }
+
+
+
+
+
+                                $complete_expired_data[] = (object) array(
+                                    "receipt" => $this_ro->id,
+                                    "customer" => $this_customer->fname . " " . $this_customer->lname,
+                                    "treatment" => implode(", ", $treatment),
+                                    "time" => $this_ro->time,
+                                );
+                            }
+                            array_push($this_day_summary,  $complete_expired_data);
+                        } else {
+                            array_push($this_day_summary, array());
+                        }
+                    } else {
+                        array_push($this_day_summary, array());
+                    }
+
+                    if (isset($request->app_cancelled)) { // CANCELLED ISSET
+                        // echo "cancelled appointments";
+                        $all_cancelled = array();
+
+                        foreach ($this_clinic_appointments as $key) {
+
+                            if ($key->appointment_status_id == 8 && $key->appointed_at == $date_key) {
+                                array_push($all_cancelled, $key);
+                            }
+                        }
+
+                        if (count($all_cancelled) > 0) {
+                            $complete_cancelled_data = [];
+
+                            foreach ($all_cancelled as $al_d) {
+                                $treatment = array();
+
+                                $this_ro = Receipt_orders::where("id", $al_d->receipt_orders_id)->first();
+                                $this_customer = User_as_customer::where("id", $this_ro->user_as_customer_id)->first();
+
+                                $ro_services = Receipt_orders_has_clinic_services::where("receipt_orders_id",  $this_ro->id)->get();
+
+                                if (count($ro_services) > 0) {
+
+                                    foreach ($ro_services as $ro_s) {
+                                        $this_service = Clinic_services::where("id", $ro_s->clinic_services_id)->first();
+
+                                        array_push($treatment,  $this_service->name);
+                                    }
+                                }
+
+                                if ($this_ro->packages_id) {
+                                    $this_package = Packages::where("id", $this_ro->packages_id)->first();
+
+                                    array_push($treatment, $this_package->name);
+                                }
+
+
+
+
+
+                                $complete_cancelled_data[] = (object) array(
+                                    "receipt" => $this_ro->id,
+                                    "customer" => $this_customer->fname . " " . $this_customer->lname,
+                                    "treatment" => implode(", ", $treatment),
+                                    "time" => $this_ro->time,
+                                );
+                            }
+                            array_push($this_day_summary,  $complete_cancelled_data);
+                        } else {
+                            array_push($this_day_summary, array());
+                        }
+                    } else {
+                        array_push($this_day_summary, array());
+                    }
+
+                    //pushing the summary of the day
+
+                }
+            }
+            ############################# ^^ FOR APPOINTMENTS ^^  #############################
+
+
+            #############################  FOR BILLINGS   #############################
+
+            if (isset($request->billing_fully_paid)) { // BILL FULLY PAID ISSET
+                // echo "fully paid";
+                $all_fully_paid = array();
+
+                foreach ($this_bills as $key) {
+                    if ($key->balance == 0) {
+                        $date_explode = explode(" ", $key->created_at);
+
+                        if ($date_explode[0] == $date_key) {
+                            array_push($all_fully_paid, $key);
+                        }
+                    }
+                }
+
+
+                if (count($all_fully_paid) > 0) {
+                    $complete_fully_paid_data = [];
+
+                    foreach ($all_fully_paid as $al_paid) {
+                        $treatment = array();
+                        $this_customer = User_as_customer::where("id", $al_paid->user_as_customer_id)->first();
+
+                        $first_explode = explode(",", $al_paid->price_summary);
+                        foreach ($first_explode as $k) {
+                            $sec_explode = explode(":", $k);
+
+                            array_push($treatment, $sec_explode[0]);
+                        }
+
+
+                        $complete_fully_paid_data[] = (object) array(
+                            "receipt" => $al_paid->receipt_orders_id,
+                            "customer" => $this_customer->fname . " " . $this_customer->lname,
+                            "treatment" => implode(", ", $treatment),
+                            "time" => $al_paid->time,
+                        );
+                    }
+                    array_push($this_day_summary,  $complete_fully_paid_data);
+                } else {
+                    array_push($this_day_summary, array());
+                }
+            } else {
+                array_push($this_day_summary, array());
+            }
+
+            if (isset($request->billing_with_balance)) { // WITH BALANCE ISSET
+                // echo "WITH BALANCE";
+                $all_with_balance = array();
+
+                foreach ($this_bills as $key) {
+                    if ($key->balance > 1) {
+                        $date_explode = explode(" ", $key->created_at);
+
+                        if ($date_explode[0] == $date_key) {
+                            array_push($all_with_balance, $key);
+                        }
+                    }
+                }
+
+
+                if (count($all_with_balance) > 0) {
+                    $complete_with_balance_data = [];
+
+                    foreach ($all_with_balance as $al_paid) {
+                        $treatment = array();
+                        $this_customer = User_as_customer::where("id", $al_paid->user_as_customer_id)->first();
+
+                        $first_explode = explode(",", $al_paid->price_summary);
+                        foreach ($first_explode as $k) {
+                            $sec_explode = explode(":", $k);
+
+                            array_push($treatment, $sec_explode[0]);
+                        }
+
+
+                        $complete_with_balance_data[] = (object) array(
+                            "receipt" => $al_paid->receipt_orders_id,
+                            "customer" => $this_customer->fname . " " . $this_customer->lname,
+                            "treatment" => implode(", ", $treatment),
+                            "time" => $al_paid->time,
+                        );
+                    }
+                    array_push($this_day_summary,  $complete_with_balance_data);
+                } else {
+                    array_push($this_day_summary, array());
+                }
+            } else {
+                array_push($this_day_summary, array());
+            }
+
+            ############################# ^^ FOR BILLINGS ^^  #############################
+
+
+            #############################  FOR MATERIALS DAILY USAGE   #############################
+
+            if (isset($request->material_used_per_day)) { // MATERIAL USED PER DAY ISSET
+                // echo "USED PER DAY";
+                $material_name = [];
+
+                $this_clinic_materials = Clinic_equipments::where("user_as_clinic_id", $clinic->id)->get();
+
+                foreach ($this_clinic_materials as $key) {
+                    $material_name[] = $key->name;
+                }
+
+                $all_done = Billings::where("user_as_clinic_id", $clinic->id)
+                    ->where('created_at', 'LIKE', '%' . $date_key . '%')
+                    ->get();
+
+                if (count($all_done) > 0) {
+                    $complete_material_data = [];
+
+                    $this_material = [];
+
+                    foreach ($all_done as $kk) {
+                        if (isset($kk->materials_summary)) {
+                            $exploded_materials = explode(",", $kk->materials_summary);
+
+                            foreach ($exploded_materials as $kmat) {
+                                $this_material[] =  $kmat;
+                            }
+                        }
+                    }
+
+                    //cpunt duplicates
+                    $all_material = array_filter(array_count_values($this_material), function ($v) {
+                        return $v > 0;
+                    });
+
+
+
+
+                    // finalizing data
+                    if (isset($materials_summary)) {
+                        $materials_summary = [];
+                    }
+
+                    foreach ($all_material as $key => $value) {
+                        $complete_material_data[] = (object) array(
+                            'name' => $key,
+                            'count' => $value,
+                        );
+                    }
+
+                    array_push($this_day_summary, $complete_material_data);
+                } else {
+                    array_push($this_day_summary, array());
+                }
+            } else {
+                array_push($this_day_summary, array());
+            }
+
+            ############################# ^^ FOR MATERIALS DAILY USAGE ^^  #############################
+
+
+            ############################# ^^ FOR MOST USED MATERIAL^^  #############################
+            if (isset($request->material_top_selected)) { // MATERIAL  TOP SELECTED
+
+                $this_clinic_materials_top = Clinic_equipments::where("user_as_clinic_id", $clinic->id)->get();
+
+                foreach ($this_clinic_materials_top as $key) {
+                    $material_name_top[] = $key->name;
+                }
+
+                $all_done_top = Billings::where("user_as_clinic_id", $clinic->id)
+                    ->where('created_at', 'LIKE', '%' . $date_key . '%')
+                    ->get();
+
+                if (count($all_done_top) > 0) {
+
+                    foreach ($all_done_top as $kk) {
+                        if (isset($kk->materials_summary)) {
+                            $exploded_materials = explode(",", $kk->materials_summary);
+
+                            foreach ($exploded_materials as $kmat) {
+                                $this_material_top[] =  $kmat;
+                            }
+                        }
+                    }
+                }
+            }
+            ############################# ^^ FOR MOST USED MATERIAL^^  #############################
+
+
+            #############################  FOR DAILY AVAILED SERVICES & PACKAGES   #############################
+
+            if (isset($request->ServicePackage_availed_per_day)) { // AVAILED SERVICES & PACCKAGES PER DAY ISSET
+                $availed_name = [];
+
+                // $this_clinic_services = Clinic_services::where("user_as_clinic_id", $clinic->id)->get();
+                // $this_clinic_packages = Packages::where("user_as_clinic_id", $clinic->id)->get();
+
+                // foreach ($this_clinic_services as $key) {
+                //     $availed_name[] = $key->name;
+                // }
+
+                // foreach ($this_clinic_packages as $key) {
+                //     $availed_name[] = $key->name;
+                // }
+
+                $all_done = Billings::where("user_as_clinic_id", $clinic->id)
+                    ->where('created_at', 'LIKE', '%' . $date_key . '%')
+                    ->get();
+
+                if (count($all_done) > 0) {
+                    $complete_availed_data = [];
+
+                    $treatment = [];
+
+                    foreach ($all_done as $key) {
+
+
+                        $first_explode = explode(",", $key->price_summary);
+                        foreach ($first_explode as $k) {
+                            $sec_explode = explode(":", $k);
+
+                            array_push($treatment, $sec_explode[0]);
+                        }
+
+                        //cpunt duplicates
+                        $all_availed = array_filter(array_count_values($treatment), function ($v) {
+                            return $v > 0;
+                        });
+                    }
+
+                    foreach ($all_availed as $key => $value) {
+                        $complete_availed_data[] = (object) array(
+                            'name' => $key,
+                            'count' => $value,
+                        );
+                    }
+
+                    array_push($this_day_summary, $complete_availed_data);
+                } else {
+                    array_push($this_day_summary, array());
+                }
+            } else {
+                array_push($this_day_summary, array());
+            }
+
+            ############################# ^^ FOR DAILY AVAILED SERVICES & PACKAGES ^^  #############################
+
+
+
+            // PUSH EVERY DATA 
+            array_push($daily_report, $this_day_summary);
+        }
+
+
+        if (isset($request->material_top_selected)) { //REFERENCE NG DATA NITO SA TAAS |seratch for| if (isset($request->material_top_selected)) { // MATERIAL  TOP SELECTED
+
+
+            //count duplicates
+            if (isset($this_material_top)) {
+                $all_material_top = array_filter(array_count_values($this_material_top), function ($v) {
+                    return $v > 0;
+                });
+
+                foreach ($all_material_top as $key => $value) {
+                    $complete_material_data_top[] = (object) array(
+                        'name' => $key,
+                        'count' => $value,
+                    );
+                }
+            }
+        }
+
+        // echo json_encode($complete_material_data_top ?? []);
+
+
+        #############################  FOR MATERIALS LIST DO NOT NEED DATE AT ALL   #############################
+        if (isset($request->material_list)) { // MATERIAL LIST ISSET
+            // echo "material list";
+
+            $this_materials = Clinic_equipments::where("user_as_clinic_id", $clinic->id)->get();
+
+            // echo json_encode($this_materials);
+
+            $complete_consumable_data = [];
+            $complete_medicine_data = [];
+            $complete_equipment_data = [];
+
+            foreach ($this_materials as $key) {
+                if ($key->type == "consumable") {
+                    $this_consumable = Clinic_equipment_inventory::where("clinic_equipments_id", $key->id)
+                        ->where("quantity", ">", 0)
+                        ->get();
+
+                    foreach ($this_consumable as $k) {
+                        $complete_consumable_data[] = (object) array(
+                            "name" => $key->name,
+                            "quantity" => $k->quantity . " " . $key->unit,
+                            "supplier" => $k->supplier,
+                            "acquired" => $k->acquired,
+                            "expiration" => $k->expiration,
+
+                        );
+                    }
+                }
+
+                if ($key->type == "medicine") {
+                    $this_medicine = Clinic_equipment_inventory::where("clinic_equipments_id", $key->id)
+                        ->where("quantity", ">", 0)
+                        ->get();
+
+                    foreach ($this_medicine as $k) {
+                        $complete_medicine_data[] = (object) array(
+                            "name" => $key->name,
+                            "quantity" => $k->quantity . " " . $key->unit,
+                            "supplier" => $k->supplier,
+                            "acquired" => $k->acquired,
+                            "expiration" => $k->expiration,
+
+                        );
+                    }
+                }
+
+                if ($key->type == "equipment") {
+                    $this_equipment = Clinic_equipment_inventory::where("clinic_equipments_id", $key->id)
+                        ->where("quantity", ">", 0)
+                        ->get();
+
+                    foreach ($this_equipment as $k) {
+                        $complete_equipment_data[] = (object) array(
+                            "name" => $key->name,
+                            "quantity" => $k->quantity . " " . $key->unit,
+                            "supplier" => $k->supplier,
+                            "acquired" => $k->acquired,
+                            "expiration" => $k->expiration,
+
+                        );
+                    }
+                }
+            }
+        }
+
+        ############################# ^^ FOR MATERIALS LIST DO NOT NEED DATE AT ALL^^  #############################
+
+
+        #############################  FOR SERVICE & PACKAGE LIST DO NOT NEED DATE AT ALL   #############################
+        if (isset($request->ServicePackage_list)) { // SERVICE & PACKAGE LIST ISSET
+            // echo "material list";
+
+            $this_services = Clinic_services::where("user_as_clinic_id", $clinic->id)->get();
+            $this_packages = Packages::where("user_as_clinic_id", $clinic->id)->get();
+
+            $complete_services_data = [];
+            $complete_packages_data = [];
+
+
+            foreach ($this_services as $key) {
+                $complete_services_data[] = (object) array(
+                    "name" => $key->name,
+                    "description" =>  $key->description,
+                    "min" => $key->min_price,
+                    "max" => $key->max_price,
+
+                );
+            }
+
+            foreach ($this_packages as $key) {
+                $complete_packages_data[] = (object) array(
+                    "name" => $key->name,
+                    "description" =>  $key->description,
+                    "min" => $key->min_price,
+                    "max" => $key->max_price,
+
+                );
+            }
+        }
+
+        ############################# ^^ FOR SERVICE & PACKAGE LIST DO NOT NEED DATE AT ALL^^  #############################
+
+
+
+        // dd($daily_report);
+
+        // echo count($daily_report[0][0]);
+
+        // echo json_encode($dates);
+
+
+        return view('clinicViews.print.overall_generated_report', [
+            'clinic' => $clinic,
+            'selected_date' => $dates,
+            'two_dates' => $date_range,
+            'clinic_address' => $clinic_address,
+            'daily_report' => $daily_report,
+
+            'complete_consumable_data' => $complete_consumable_data ?? [],
+            'complete_medicine_data' => $complete_medicine_data ?? [],
+            'complete_equipment_data' => $complete_equipment_data ?? [],
+
+            'material_top_selected' => $complete_material_data_top ?? [],
+
+
+            'complete_services_data' => $complete_services_data ?? [],
+            'complete_packages_data' => $complete_packages_data ?? [],
+        ]);
+
+
+
+
+
+
+        // if (isset($request->app_done)) {
+        //     echo json_encode($request->all());
+        // }
     }
 
     /**

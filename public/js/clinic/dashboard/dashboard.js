@@ -139,9 +139,10 @@ $(function () {
                     
                                     
                                 },
-                                error: function(){
+                                error: function(e){
                                     console.log('AJAX load did not work');
-                                    alert("error");
+                                    console.log(e);
+                                    // alert("error");
                                 }
                             });
 
@@ -181,9 +182,10 @@ $(function () {
 
                 
             },
-            error: function(){
+            error: function(e){
                 console.log('AJAX load did not work');
-                alert("error");
+                console.log(e);
+                // alert("error");
             }
         });
     }

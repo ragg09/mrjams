@@ -69,7 +69,7 @@ ul.timeline > #done:before {
             <div class=" p-2 bg-white rounded overflow-hidden">
                 <div class="row mt-4">
                     <div class="col-12 d-flex justify-content-center">
-                        <img class="rounded-circle" src="https://lh3.googleusercontent.com/a/AATXAJz4KZfgPNyrWa6RNfmKYprDlN3aC_P0S6gRll4s=s96-c" alt="♥" style="width: 100px; ">
+                        <img class="rounded-circle" src="{{ $root_customer->avatar }}" alt="♥" style="width: 100px; ">
                     </div>
                     
                     <div class="col-12 d-flex justify-content-center mt-2">

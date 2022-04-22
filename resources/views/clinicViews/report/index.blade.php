@@ -31,18 +31,29 @@
     </style>
 @endsection
 @section('content')
-    <div class="row" id="print_summary" hidden>
+    <div class="row"  >
         <div class="col d-flex justify-content-end">
-            <a href="/clinic/print/{{ date("FY") }}_summary" class="btn btn-primary" id="" target="_blank" title="Print Summary">
+            <a href="/clinic/print/{{ date("FY") }}_summary" class="btn btn-primary mx-1" id="print_summary" target="_blank" title="Print Summary" hidden>
                 Print Summary <i class="fa fa-print" aria-hidden="true"></i>
+            </a>
+
+            <a data-bs-toggle="modal" data-bs-target="#generate_report_modal" class="btn btn-primary mx-1" title="Print Summary">
+                Generate Report <i class="fa fa-print" aria-hidden="true"></i>
             </a>
         </div>
     </div>
+
+
+    {{-- <a data-bs-toggle="modal" data-bs-target="#material_report" class="btn btn-primary" title="Generate Report">
+        Generate Report <i class="fa fa-print" aria-hidden="true"></i>
+    </a> --}}
+
     @include('clinicViews.report.accounting')
     @include('clinicViews.report.appointment_statistic')
     @include('clinicViews.report.top_services_and_packages')
     @include('clinicViews.report.top_materials')
     @include('clinicViews.report.material_report_modal')
+    @include('clinicViews.report.generate_report')
 @endsection
 
 @section('js_script')

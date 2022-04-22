@@ -83,9 +83,10 @@ $(function(){
                     $("#edit_package_details_form").attr('action', "/clinic/packages/"+id);
                });
             },
-            error: function(){
+            error: function(e){
                 console.log('AJAX load did not work');
-                alert("error");
+                console.log(e);
+                // alert("error");
             }
         });
     });
@@ -181,9 +182,10 @@ $(function(){
                 
                 // console.log(data);
             },
-            error: function(){
+            error: function(e){
                 console.log('AJAX load did not work');
-                alert("error");
+                console.log(e);
+                // alert("error");
             }
         });
     });
@@ -287,9 +289,10 @@ $(function(){
                 
                 // console.log(data);
             },
-            error: function(){
+            error: function(e){
                 console.log('AJAX load did not work');
-                alert("error");
+                console.log(e);
+                // alert("error");
             }
         });
     });
@@ -340,9 +343,10 @@ $(function(){
                 $("#delete_name").empty();
                 $("#delete_name").append(data.package[0].name + '<input type="text" value="'+id+'" id="todelete" hidden>'); 
             },
-            error: function(){
+            error: function(e){
                 console.log('AJAX load did not work');
-                alert("error");
+                console.log(e);
+                // alert("error");
             }
         });
     });

@@ -94,9 +94,10 @@ $(function(){
                     $('#equipments_inventory').append('<p><span class="fw-bold">Stock:</span> '+ val.quantity +' <br> <span class="fw-bold">Supplier:</span> '+ val.supplier +' <br> <span class="fw-bold">Acquired:</span> '+ moment(val.acquired).format('LL') +' <br><span class="fw-bold">Expiration:</span> '+ moment(val.expiration).format('LL') +'</p>');
                 });
             },
-            error: function(){
+            error: function(e){
                 console.log('AJAX load did not work');
-                alert("error");
+                console.log(e);
+                // alert("error");
             }
         });
     });
@@ -180,9 +181,10 @@ $(function(){
                                     $("#raw_expiration_date").val(data.data.expiration);
                                     
                                 },
-                                error: function(){
+                                error: function(e){
                                     console.log('AJAX load did not work');
-                                    alert(error);
+                                    console.log(e);
+                                    // alert(error);
                                 }
                             });
                         }
@@ -198,9 +200,10 @@ $(function(){
                     $("#raw_expiration_date").val(data.inventory[0].expiration);
                 }
             },
-            error: function(){
+            error: function(e){
                 console.log('AJAX load did not work');
-                alert(error);
+                console.log(e);
+                // alert(error);
             }
         });
     });
@@ -298,9 +301,10 @@ $(function(){
 
                 
             },
-            error: function(){
+            error: function(e){
                 console.log('AJAX load did not work');
-                alert("error");
+                console.log(e);
+                // alert("error");
             }
         });
     });
@@ -381,9 +385,10 @@ $(function(){
                         });
                     }  
                 },
-                error: function(){
+                error: function(e){
                     console.log('AJAX load did not work');
-                    alert("error");
+                    console.log(e);
+                    // alert("error");
                 }
             });
             

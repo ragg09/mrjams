@@ -18,7 +18,7 @@ $(function(){
             type: "GET",
             url: "/clinic/report/create",
             success: function(data){
-                // console.log(data);
+                console.log(data);
 
                 //TOP APPOINTMENTS
                 if(data.appointment_stats && data.appointment_stats.length >= 5){
@@ -228,7 +228,7 @@ $(function(){
             },
             error: function(e){
                 console.log(e);
-                alert("error");
+                // alert("error");
             }
         });
     }
@@ -246,6 +246,63 @@ $(function(){
         }
 
     });
+
+     //for generating a report
+     $("#generate_report_modal_flatpicker").flatpickr({
+        dateFormat: "Y-m-d",
+        inline: true,
+        mode: "range",
+        onChange: function(selectedDates, dateStr, instance) {
+            if ($('#inlineCheckbox1, #inlineCheckbox2, #inlineCheckbox3, #inlineCheckbox4, #inlineCheckbox5, #inlineCheckbox6, #inlineCheckbox7, #inlineCheckboxBill1, #inlineCheckboxBill2, #inlineCheckboxMaterial1, #inlineCheckboxMaterial2, #inlineCheckboxMaterial3, #inlineCheckboxServicePackage1, #inlineCheckboxServicePackage2, #inlineCheckboxServicePackage3').is(':checked')) {
+
+                if($('#generate_report_modal_flatpicker').val() != ""){
+                    $("#generate_report_all").attr("disabled", false)
+                }
+    
+            }else{
+                $("#generate_report_all").attr("disabled", true)
+            }
+           
+        }
+
+    });
+
+    $("#app_summary, #app_summary2").on('click', function(e){
+        // console.log("try");
+
+        for (let x = 1; x <= 7; x++) {
+            $("#inlineCheckbox"+x).attr("disabled", false)
+            
+        }
+    });
+
+    $("#inlineCheckbox1, #inlineCheckbox2, #inlineCheckbox3, #inlineCheckbox4, #inlineCheckbox5, #inlineCheckbox6, #inlineCheckbox7, #inlineCheckboxBill1, #inlineCheckboxBill2, #inlineCheckboxMaterial1, #inlineCheckboxMaterial2, #inlineCheckboxMaterial3, #inlineCheckboxServicePackage1, #inlineCheckboxServicePackage2, #inlineCheckboxServicePackage3").on('click', function(e){
+        
+        if ($('#inlineCheckbox1, #inlineCheckbox2, #inlineCheckbox3, #inlineCheckbox4, #inlineCheckbox5, #inlineCheckbox6, #inlineCheckbox7, #inlineCheckboxBill1, #inlineCheckboxBill2, #inlineCheckboxMaterial1, #inlineCheckboxMaterial2, #inlineCheckboxMaterial3, #inlineCheckboxServicePackage1, #inlineCheckboxServicePackage2, #inlineCheckboxServicePackage3').is(':checked')) {
+
+            if($('#generate_report_modal_flatpicker').val() != ""){
+                $("#generate_report_all").attr("disabled", false)
+            }
+
+        }else{
+            $("#generate_report_all").attr("disabled", true)
+        }
+    });
+
+
+    $("#inlineCheckboxMaterial1, #inlineCheckboxServicePackage1, #inlineCheckboxServicePackage3").on('click', function(e){
+        if($("#inlineCheckboxMaterial1, #inlineCheckboxServicePackage1, #inlineCheckboxServicePackage3").is(':checked')) {
+            $("#generate_report_all").attr("disabled", false)
+        }else{
+            $("#generate_report_all").attr("disabled", true)
+        }
+    })
+    
+
+
+    
+
+
 
     // $(document).on('click', '#generate_report', function(e) {
     //     e.preventDefault();

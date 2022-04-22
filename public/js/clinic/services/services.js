@@ -144,7 +144,7 @@ $(function(){
             },
             error: function(e){
                 console.log(e);
-                alert("error");
+                // alert("error");
             }
         });
     });
@@ -218,9 +218,10 @@ $(function(){
                     $("#delete_packages").append("No Package Involvement Yet");
                 }
             },
-            error: function(){
+            error: function(e){
                 console.log('AJAX load did not work');
-                alert("error");
+                console.log(e);
+                // alert("error");
             }
         });
     });
@@ -281,9 +282,10 @@ $(function(){
                     }
                     
                 },
-                error: function(){
+                error: function(e){
                     console.log('AJAX load did not work');
-                    alert("error");
+                    console.log(e);
+                    // alert("error");
                 }
             });
             
