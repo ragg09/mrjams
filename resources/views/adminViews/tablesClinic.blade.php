@@ -1,6 +1,6 @@
 @extends('adminViews.layouts.master')
 
-@section('title', 'Clinic')
+@section('title', 'MR. JAMS - Clinic')
 
 
 @section('extraStyle')
@@ -12,36 +12,37 @@
 
     {{-- {{$parasauser}} --}}
 
-<header class="header header-sticky mb-4"> 
-  <div class="container-fluid">
-      <nav aria-label="breadcrumb">
-          <ol class="breadcrumb my-0 ms-2">
-              <li class="breadcrumb-item">
-                  <span>Home</span>
-              </li>
-              <li class="breadcrumb-item active">
-                  <span>Clinic</span>
-              </li>
-          </ol>
-      </nav>
-  </div>
-  <div class="header-divider"></div>
-</header>
+    <header class="header header-sticky mb-2 mt-5"> 
+        <div class="container-fluid" >
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb my-0 ms-2" style="background-color: #B3CDE0">
+                    <li class="breadcrumb-item" style="margin-left: 20px;">
+                        <span>Home</span>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <span>Clinic</span>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="header-divider"></div>
+    </header>
 <div class="body flex-grow-1 px-3">
     <div class="container-lg">
         <div class="row">
-            <a href="{{ route('admin.clinicTypes.create') }}" id="createClinicType" >Create Clinic Type</a>
-            <a href="{{ route('admin.clinicReg.index') }}">Clinic Registration</a>
+            <button class="btn btn-info" style="width: 200px; margin-right: 5px"><a href="{{ route('admin.clinicTypes.create') }}" id="createClinicType" style="color: black">Create Clinic Type</a></button>
+            <button class="btn btn-warning"  style="width: 200px"><a href="{{ route('admin.clinicReg.index') }}" style="color: black">Clinic Registration</a></button>
             {{-- <a href="{{ route('admin.reportClinic.index') }}" id="printClinicTable"  >Print Report</a> --}}
             {{-- @if ($clinic == 0 )
                 <h3>NO DATA</h3>
             @else --}}
             
             {{-- @endif --}}
+          
 
-            <div class="table-responsive">
+            <div class="table-responsive mt-2">
                 <table class="table table-hover" id="clinicShow">
-                    <thead class="bg-primary">
+                    <thead  style="background-color: #B3CDE0">
                       <tr>
                         <th scope="col">Id</th>
                         <th scope="col">Clinic Name</th>
@@ -57,7 +58,7 @@
                                 <td>{{$clinics['name']}}</td>
                                 <td>{{$clinics['phone']}}</td>
                                 <td>{{$clinics['telephone']}}</td>
-                                <td><a href="/admin/clinic/{{$clinics['id']}}"><button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a><a href="/admin/clinic/{{$clinics['id']}}/edit" class="btn btn-warning" id="editUser" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a></td>
+                                <td><a href="/admin/clinic/{{$clinics['id']}}"><button class="btn btn-primary" style="margin-right: 5px;"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a><a href="/admin/clinic/{{$clinics['id']}}/edit" class="btn btn-warning" id="editUser" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a></td>
                             </tr>
                         @endforeach
                     </tbody>

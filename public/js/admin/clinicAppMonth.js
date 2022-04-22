@@ -25,7 +25,7 @@ $(function(){
             console.log(data);
       
               var options = {
-                title: 'Company Performance',
+                title: 'Appointments per Month',
                 curveType: 'function',
                 legend: { position: 'bottom' }
               };

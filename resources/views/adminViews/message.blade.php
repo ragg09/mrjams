@@ -1,6 +1,6 @@
 @extends('adminViews.layouts.master')
 
-@section('title', 'Message')
+@section('title', 'MR. JAMS - Message')
 
 
 @section('extraStyle')
@@ -11,11 +11,11 @@
 {{-- {{$messageSender}} --}}
 
 @section('content')
-<header class="header header-sticky mb-4"> 
+<header class="header header-sticky mb-2 mt-5"> 
   <div class="container-fluid">
       <nav aria-label="breadcrumb">
-          <ol class="breadcrumb my-0 ms-2">
-              <li class="breadcrumb-item">
+        <ol class="breadcrumb my-0 ms-2" style="background-color: #B3CDE0">
+            <li class="breadcrumb-item" style="margin-left: 20px;">
                   <span>Home</span>
               </li>
               <li class="breadcrumb-item active">
@@ -29,9 +29,9 @@
 <div class="body flex-grow-1 px-3">
     <div class="container-lg">
         <div class="row">
-            <h3>Message</h3>
-            <a href="{{ route('admin.message.create') }}">Create</a>
-            <a href="/admin/message/1">Sent</a>
+            {{-- <h3><b>Message</b></h3> --}}
+            <button class="btn btn-info mb-2" style="width: 200px; margin-right: 5px"><a href="{{ route('admin.message.create') }}" style="color: black">Create</a></button>
+            <button class="btn btn-warning mb-2"  style="width: 200px"><a href="/admin/message/1" style="color: black">Announcement</a></button>
             <div class="table-responsive">
                 <table class="table table-hover" id="messageTable">
                     <thead class="bg-primary">

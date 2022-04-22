@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="{{asset('./images/mrjams/mr-jams-logo.png')}}">
     <title>@yield('title')</title>
 
 
@@ -17,6 +18,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
 
     <link href="{{ asset('css/admin/styles.css') }}" rel="stylesheet">
+
+    
+    {{-- jquery growl plugin --}}
+    <script src="{{ URL::asset('js/customer/growl.js') }}"></script>
 
     {{-- datatable --}}
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
@@ -35,7 +40,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
 
-    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    {{-- <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script> --}}
 
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap-extended.min.css">
@@ -49,7 +54,7 @@
 </head>
 
 <body>
-    <div id="app">
+    <div id="app" >
         {{-- <nav class="navbar navbar-dark bg-dark">
             <div class="container-fluid">
               <a class="navbar-brand" text-dark href="#">
@@ -57,8 +62,10 @@
               </a>
             </div>
         </nav> --}}
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">MR.JAMS</a>
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #6497B1; position:fixed; width: 100%; margin-top:-30px; z-index: 5"  >
+            <a class="navbar-brand" href="/admin">
+              <img src="{{asset('images/mrjams/logowithname-admin.png') }}" class="logotitle">
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -74,26 +81,41 @@
                   <a class="nav-link" href="#"></a>
                 </li>
               </ul>
-              <a class="navbar-brand" onclick="window.print()">
-                <i class="fa fa-print" aria-hidden="true"></i>Print
-              </a>
+
+              
+
+                <a class="navbar-brand" onclick="window.print()">
+                  <i class="fa fa-print fa-lg" aria-hidden="true" style="color: black;"></i>
+                </a>
+
+                <a href="#" >
+                  <img src="{{Auth::user()->avatar}}" alt="admin" class="rounded-circle p-1 " width="65" style="margin-right: 5px;">
+                </a>
+
+                <a class="navbar-brand" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                  <i class="fa fa-sign-out fa-lg" aria-hidden="true" style="margin-right: 3px; color: black"></i>
+                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                                </form>
+
             </div>
           </nav>
         <div class="main-menu">
-            <ul>
-                <section class="home">
-                    <li class="menu-item"><i class="fa fa-home"></i><a href="/admin">Dashboard</a></li>
+            <ul id="main_ul">
+                <section class="home"> 
+                    <li class="menu-item"><i class="fa fa-home" style="margin-right: 5px;"></i><a href="/admin" style="color:white" id="a_tag"><b>Dashboard</b></a></li>
                     {{-- <li class="menu-item"><i class="fa fa-bar-chart" aria-hidden="true"></i><a href="{{ route('admin.analytics.index') }}">Analytics</a></li> --}}
-                    <li class="menu-item"><i class="fa fa-paper-plane"></i><a>Tables</a>
+                    <li class="menu-item"><i class="fa fa-table" aria-hidden="true" style="margin-right: 5px;"></i><a id="a_tag"><b>Tables</b></a>
                         <ul aria-labelledby="navbarDropdown" id="ulol">
-                            <li id="tables_drpdwn"><a href="{{ route('admin.patient.index') }}">Patient</a></li>
-                            <li id="tables_drpdwn"><a href="{{ route('admin.clinic.index') }}">Clinic</a></li>
+                            <li id="tables_drpdwn"> <i class="fa fa-user" aria-hidden="true" id="i_tag"></i><a href="{{ route('admin.patient.index') }}" style="color:white" id="a_tag">Patient</a></li>
+                            <li id="tables_drpdwn"><i class="fa fa-user-md" aria-hidden="true"  id="i_tag"></i><a href="{{ route('admin.clinic.index') }}" style="color:white" id="a_tag">Clinic</a></li>
                             {{-- <hr>
                             <li id="tables_drpdwn"><a href="#">Something else here</a></li> --}}
                         </ul>
                     </li>
-                    <li class="menu-item"><i class="fa fa-bullhorn" aria-hidden="true"></i><a href="{{ route('admin.message.index') }}">Announcements</a></li>
-                    <li class="menu-item"><i class="fa fa-code" aria-hidden="true"></i><a href="{{ route('admin.adminQuery.index') }}">Query</a></li>
+                    <li class="menu-item"><i class="fa fa-bullhorn" aria-hidden="true" style="margin-right: 5px;"></i><a href="{{ route('admin.message.index') }}" style="color:white" id="a_tag"><b>Announcements</b></a></li>
+                    <li class="menu-item"><i class="fa fa-code" aria-hidden="true" style="margin-right: 5px;"></i><a href="{{ route('admin.adminQuery.index') }}" style="color:white" id="a_tag"><b>Query</b></a></li>
                 </section>
             </ul>
         </div>
@@ -101,21 +123,24 @@
     </div>
 
     <div class="container-fluid">
-        <div class="row m-5">
+        <div class="row m-2">
             <div class="col-12">
-              <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+              {{-- <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="fa-solid fa-right-from-bracket mx-2"></i>
                 {{ __('Logout') }}
             </a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
             @csrf
             </form>
-            
+             --}}
                 @yield('content')
             </div>
         </div>
     </div>
     
+    <footer>
+      <p class="text-center" style="margin-top: 20px;">Copyright &copy; MR-JAMS.com</p>
+    </footer>
 
 </body>
 

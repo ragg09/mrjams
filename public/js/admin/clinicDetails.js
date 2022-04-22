@@ -5,7 +5,13 @@
         "info": false,
         dom: 'Bfrtip',
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
+            'copy', 'csv', 'excel', 'print',
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: [ 0, 1, 2, 3 ]
+                }
+            },
         ]
     });
 

@@ -121,7 +121,7 @@ function initMap() {
                      if (status == google.maps.DirectionsStatus.OK) {
                        directionsDisplay.setDirections(response);
                      } else {
-                       window.alert('Directions request failed due to ' + status);
+                      //  window.alert('Directions request failed due to ' + status);
                      }
                    });
               }
@@ -158,7 +158,7 @@ function initMap() {
             },
                 error: function(){
                 console.log('AJAX load did not work');
-                alert("error");
+                // alert("error");
                 }
         });
 

@@ -30,7 +30,7 @@ function initMap() {
                 markerA = new google.maps.Marker({
                     position: {lat: parseFloat(pointAlat), lng: parseFloat(pointAlng)},
                     map: map,
-                    title: "Hello World!",
+                    title: "Your Location",
                 });
                 
 
@@ -97,7 +97,7 @@ function initMap() {
         },
         error: function(){
             console.log('AJAX load did not work');
-            alert("error");
+            // alert("error");
         }
     });
 
@@ -187,7 +187,7 @@ function initMap() {
             },
                 error: function(){
                 console.log('AJAX load did not work');
-                alert("error");
+                // alert("error");
                 }
             });
       

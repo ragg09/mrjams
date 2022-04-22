@@ -169,7 +169,9 @@ class PatientDetailsController extends Controller
         $patient->phone = $request->input('phone');
         $patient->age = $request->input('age');
         $patient->update();
-        return response()->json(['patient' => $patient]);
+        // return response()->json(['patient' => $patient]);
+        header("Location: /admin/patient");
+        exit();
     }
 
     /**

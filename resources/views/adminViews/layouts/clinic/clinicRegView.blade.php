@@ -1,6 +1,6 @@
 @extends('adminViews.layouts.master')
 
-@section('title', 'Title')
+@section('title', 'MR. JAMS - Clinic Registration')
 
 
 @section('extraStyle')
@@ -12,11 +12,11 @@
 {{ $clinicType}} --}}
 
 @section('content')
-<header class="header header-sticky mb-4"> 
+<header class="header header-sticky mb-2 mt-5"> 
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
-            <ol class="breadcrumb my-0 ms-2">
-                <li class="breadcrumb-item">
+            <ol class="breadcrumb my-0 ms-2" style="background-color: #B3CDE0">
+                <li class="breadcrumb-item" style="margin-left: 20px;">
                     <span>Home</span>
                 </li>
                 <li class="breadcrumb-item active">
@@ -40,21 +40,21 @@
                 <div class="col">
                         {{-- <h3>{{ $clinicReg->id}}</h3> <br> --}}
                         <input id="clinicRegID" value="{{ $clinicReg->id}}" hidden>
-                    <label>Clinic Name</label>
+                    <label><b>Clinic Name</b></label>
                     <input class="form-control" id="sender" name="sender" type="text" value="{{ $clinicReg->name}}" disabled><br>
                 </div>
                 <div class="col">
-                    <label>Clinic Type</label>
+                    <label><b>Clinic Type</b></label>
                     <input class="form-control" id="sender" name="sender" type="text" value="{{ $clinicType->type_of_clinic}}" disabled>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <label>Clinic Phone#</label>
+                    <label><b>Clinic Phone#</b></label>
                     <input class="form-control" id="sender" name="sender" type="text" value="{{ $clinicReg->phone}}" disabled> <br>
                 </div>
                 <div class="col">
-                    <label>Clinic Telephone#</label>
+                    <label><b>Clinic Telephone#</b></label>
                     <input class="form-control" id="sender" name="sender" type="text" value="{{ $clinicReg->telephone}}" disabled>
                 </div>
             </div>
@@ -63,13 +63,13 @@
             <br> --}}
             <div class="row">
                 <div class="col">
-                    <label>Clinic Address</label>
+                    <label><b>Clinic Address</b></label>
                     <input class="form-control" id="sender" name="sender" type="text" value="{{ $clinicAdd->address_line_1}} , {{ $clinicAdd->address_line_2}}" disabled> <br> 
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <label>Clinic City & ZipCode</label>
+                    <label><b>Clinic City & ZipCode</b></label>
                     <input class="form-control" id="sender" name="sender" type="text" value="{{ $clinicAdd->city}} , Zipcode: {{ $clinicAdd->zip_code}}" disabled>
                 </div>
             </div>
@@ -90,15 +90,15 @@
                         <input class="form-control" id="permit_id" name="permit_id" type="text" value="{{ $clinicReg->permit_id}}" disabled>
                         <img class="w-100" src="{{ $clinicReg->permit }}" alt="permit">
                     @else
-                        <label for="permit" class="form-label" >No Business Permit Submitted</label>
+                        <label for="permit" class="form-label" style="color: red">No Business Permit Submitted</label>
                     @endif
                 </div>
                 
             </div>
             <div class="row">
                 <div class="col">
-                    <button type="submit" id="acceptClinicReg" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i>Accept</button>
-                    <a id="deleteClinicReg" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i>Decline</a>
+                    <button type="submit" id="acceptClinicReg" class="btn btn-primary" style="font-weight: bold"><i class="fa fa-check" aria-hidden="true" style="margin-right: 5px;"></i>Accept</button>
+                    <a id="deleteClinicReg" class="btn btn-danger" style="font-weight: bold"><i class="fa fa-times" aria-hidden="true" style="margin-right: 5px;"></i>Decline</a>
                 </div>
             </div>
         </form>

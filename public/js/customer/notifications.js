@@ -57,7 +57,7 @@ $(function(){
             },
             error: function(){
                 console.log('AJAX load did not work');
-                alert("error");
+                // alert("error");
             }
         });
 

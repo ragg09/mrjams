@@ -4,7 +4,7 @@
           <div class="container-fluid">
             <a href="/"><img src="{{ asset('images/mrjams/logowithname.PNG') }}" style="margin-left: 5px;" width="160" height="65"></a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" style="float: right">
               <span class="navbar-toggler-icon"></span>
             </button>
 

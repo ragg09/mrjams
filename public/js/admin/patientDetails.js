@@ -6,11 +6,20 @@
         // "responsive": true,
         dom: 'Bfrtip',
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
+            'copy', 'csv', 'excel', 'print',
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: [ 0, 1, 2, 3 ]
+                }
+            },
         ]
     });
 
+     
+
 $(document).on('click', 'button#updatePatient', function(e) {
+    $.getScript("../../js/admin/reusableFunction.js");
     
 
     var id = $('input#userID').val();
@@ -22,10 +31,19 @@ $(document).on('click', 'button#updatePatient', function(e) {
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         dataType: "json",
             success: function(data) {
-                console.log(data);
+                // console.log(data);
                 // $('#editModalgenre').each(function(){
                 //         $(this).modal('hide'); });
                 // location.reload();
+               
+                $("#UpdateUser").load(window.location + " #UpdateUser");
+            
+                bootstrapAlert("Successfully Updated", "success", 250);
+                setInterval( reload_page, 1000);
+
+                function reload_page(){
+                    location.reload()
+                }
             },
             error: function(error) {
                 console.log('error');

@@ -1,6 +1,6 @@
 @extends('adminViews.layouts.master')
 
-@section('title', 'Home')
+@section('title', 'MR. JAMS - Home')
 
 
 @section('extraStyle')
@@ -16,11 +16,11 @@
     
 @else
     
-<header class="header header-sticky mb-4"> 
-    <div class="container-fluid">
+<header class="header header-sticky mb-2 mt-5" id="header_id"> 
+    <div class="container-fluid" >
         <nav aria-label="breadcrumb">
-            <ol class="breadcrumb my-0 ms-2">
-                <li class="breadcrumb-item">
+            <ol class="breadcrumb my-0 ms-2" style="background-color: #B3CDE0">
+                <li class="breadcrumb-item" style="margin-left: 20px;">
                     <span>Home</span>
                 </li>
                 <li class="breadcrumb-item active">
@@ -31,7 +31,7 @@
     </div>
     <div class="header-divider"></div>
 </header>
-<div class="body flex-grow-1 px-3">
+<div class="body flex-grow-1 px-3" id="content_body">
     <div class="container-lg">
         {{-- <a href="{{ route('admin.reportDashboard.index') }}" >Print Report</a>
         <a href="#" onclick="window.print()" >Print </a> --}}
@@ -42,7 +42,8 @@
                     <div class="card-body">
                       <div class="media d-flex">
                         <div class="align-self-center">
-                            <i class="icon-user success font-large-2 float-right"></i>
+                            {{-- <i class="icon-user success font-large-2 float-right"></i> --}}
+                            <i class="fa fa-user fa-4x" aria-hidden="true"></i>
                         </div>
                         <div class="media-body text-right">
                           <h3>{{$regUser}}</h3>
@@ -59,7 +60,8 @@
                     <div class="card-body">
                       <div class="media d-flex">
                         <div class="align-self-center">
-                            <i class="bi bi-hospital success font-large-2 float-left"></i>
+                            {{-- <i class="bi bi-hospital success font-large-2 float-left"></i> --}}
+                            <i class="fa fa-user-md fa-4x" aria-hidden="true"></i>
                         </div><i class=""></i>
                         <div class="media-body text-right">
                           <h3>{{$regClinic}}</h3>
@@ -76,7 +78,8 @@
                     <div class="card-body">
                       <div class="media d-flex">
                         <div class="align-self-center">
-                            <i class="icon-pencil primary font-large-2 mr-2"></i>
+                            {{-- <i class="icon-pencil primary font-large-2 mr-2"></i> --}}
+                            <i class="fa fa-calendar fa-4x" aria-hidden="true"></i>
                         </div><i class=""></i>
                         <div class="media-body text-right">
                           <h3>{{$appointment}}</h3>
@@ -93,7 +96,8 @@
                     <div class="card-body">
                       <div class="media d-flex">
                         <div class="align-self-center">
-                            <i class="icon-pencil primary font-large-2 mr-2"></i>
+                            {{-- <i class="icon-pencil primary font-large-2 mr-2"></i> --}}
+                            <i class="fa fa-star fa-4x" aria-hidden="true"></i>
                         </div><i class=""></i>
                         <div class="media-body text-right">
                           <h3>{{number_format($rating,1)}}</h3>
@@ -117,16 +121,17 @@
                     <div class="widget-49">
                         <div class="widget-49-title-wrapper">
                             <div class="widget-49-date-primary">
-                                <span class="widget-49-date-day">09</span>
-                                <span class="widget-49-date-month">apr</span>
+                                <span class="widget-49-date-day">{{$latestCustomer[0]->id}}</span>
+                                <span class="widget-49-date-month">ID</span>
                             </div>
                             <div class="widget-49-meeting-info">
-                                <span class="widget-60-pro-title">{{$latestCustomer->fname}}</span>
+                                <span class="widget-60-pro-title">{{$latestCustomer[0]->lname}}, {{$latestCustomer[0]->fname}}</span>
                             </div>
                         </div>
                         <ol class="widget-49-meeting-points">
-                            <li class="widget-49-meeting-item"><span>{{$latestCustomer->lname}}</span></li>
-                            <li class="widget-49-meeting-item"><span>{{$latestCustomer->phone}}</span></li>
+                            <li class="widget-49-meeting-item"><span>{{$latestCustomer[1]->lname}}, {{$latestCustomer[1]->fname}}</span></li>
+                            <li class="widget-49-meeting-item"><span>{{$latestCustomer[2]->lname}}, {{$latestCustomer[2]->fname}}</span></li>
+                            <li class="widget-49-meeting-item"><span>{{$latestCustomer[3]->lname}}, {{$latestCustomer[3]->fname}}</span></li>
                             {{-- <li class="widget-49-meeting-item"><span>Session timeout increase to 30 minutes</span></li> --}}
                         </ol>
                         <div class="widget-49-meeting-action">
@@ -145,16 +150,17 @@
                     <div class="widget-49">
                         <div class="widget-49-title-wrapper">
                             <div class="widget-49-date-warning">
-                                <span class="widget-49-date-day">13</span>
-                                <span class="widget-49-date-month">apr</span>
+                                <span class="widget-49-date-day">{{$latestClinic[0]->id}}</span>
+                                <span class="widget-49-date-month">ID</span>
                             </div>
                             <div class="widget-49-meeting-info">
-                                <span class="widget-49-pro-title">{{$latestClinic->name}}</span>
+                                <span class="widget-49-pro-title">{{$latestClinic[0]->name}}</span>
                             </div>
                         </div>
                         <ol class="widget-49-meeting-points">
-                            <li class="widget-49-meeting-item"><span>{{$latestClinic->phone}}</span></li>
-                            <li class="widget-49-meeting-item"><span>{{$latestClinic->telephone}}</span></li>
+                            <li class="widget-49-meeting-item"><span>{{$latestClinic[1]->name}}</span></li>
+                            <li class="widget-49-meeting-item"><span>{{$latestClinic[2]->name}}</span></li>
+                            <li class="widget-49-meeting-item"><span>{{$latestClinic[3]->name}}</span></li>
                             {{-- <li class="widget-49-meeting-item"><span>Client request to send invoice</span></li> --}}
                         </ol>
                         <div class="widget-49-meeting-action">
@@ -249,32 +255,32 @@
 
     {{-- galing analytics page --}}
     <div class="row">
-        <div class="col ">
+        <div class="col " >
         {{-- class="col-sm-6 col-lg-3 --}}
-            <div class="card mb-4 text-white bg-primary pb-3 align-items-center" style="overflow: hidden">
+            <div class="card mb-4 text-black pb-3 align-items-center" style="overflow: hidden;background-color: #B3CDE0">
                 <div class="card-body pb-0 d-flex justify-content-between align-items-start">
                     <div class="fs-4 fw-semibold">
-                        Registered Users
+                        <h5 class="card-title"><b>Registered Customers</b></h5>
                         <div id="linechartCustomer" style="width: 550px; height: 500px;"></div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col">
-            <div class="card mb-4 text-white bg-primary pb-3 align-items-center" style="overflow: hidden">
+            <div class="card mb-4 text-black pb-3 align-items-center" style="overflow: hidden; background-color: #B3CDE0">
                 <div class="card-body pb-0 d-flex justify-content-between align-items-start">
                     <div class="fs-4 fw-semibold">
-                        Registered Clinics
+                        <h5 class="card-title" ><b>Registered Clinics</b></h5>
                         <div id="linechartClinic" style="width: 550px; height: 500px;"></div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col">
-            <div class="card mb-4 text-white bg-primary pb-3 align-items-center" style="overflow: hidden">
+            <div class="card mb-4 text-black pb-3 align-items-center" style="overflow: hidden; background-color: #B3CDE0">
                 <div class="card-body pb-0 d-flex justify-content-between align-items-start">
                     <div class="fs-4 fw-semibold">
-                        Users
+                        <h5 class="card-title" ><b>Over All Registered Users</b></h5>
                         <div id="linechartUsers"  style="width: 550px; height: 500px;"></div>
                     </div>
                 </div>
@@ -291,10 +297,10 @@
             </div>
         </div> --}}
         <div class="col">
-            <div class="card mb-4 text-white bg-primary pb-3 align-items-center" style="overflow: hidden">
+            <div class="card mb-4 text-black pb-3 align-items-center" style="overflow: hidden; background-color: #B3CDE0">
                 <div class="card-body pb-0 d-flex justify-content-between align-items-start">
                     <div class="fs-4 fw-semibold">
-                        Appointments
+                        <h5 class="card-title"><b>Over All Appointments</b></h5>
                         <div id="appPerMonth"  style="width: 550px; height: 500px;"></div>
                     </div>
                 </div>

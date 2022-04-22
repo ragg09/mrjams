@@ -7,31 +7,37 @@
     <link rel="icon" href="{{asset('./images/mrjams/mr-jams-logo.png')}}">
     <title>MR. JAMS</title>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-  <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Raleway" rel="stylesheet">
+  <!-- {{-- bootstrap 5.1.1 --}} -->
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+  {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> --}}
+ 
+
+
   <link rel="stylesheet" href="{{asset('./css/customer/index_one_public.css')}}">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 
 </head>
 <body>
 
-
-
-  <!-- Forked from a template on Tutorialzine: https://tutorialzine.com/2016/06/freebie-landing-page-template-with-flexbox -->
   <header>
     <h2><img src="{{ URL::asset('images/mrjams/logowithname.PNG') }}" class="logotitle"></h2>
 
     <nav>
       <li><a href="/" style="text-decoration: none; color:black;">Home</a></li>
-       <!-- <li><a href="{{route('customer.customermap.index')}}">Map</a></li> -->
+  
       <li><a href="/public/about" style="text-decoration: none; color:black;">About</a></li>
-      {{-- <li><a href="{{route('customer.contact')}}" style="text-decoration: none; color:black;">Contact</a></li> --}}
+      
 
       @if (Route::has('login'))
         @auth
-        {{-- <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a> --}}
+       
           @if (Auth::user()->role == "clinic")
             <a href="{{ url('/clinic') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
           @endif
@@ -41,10 +47,6 @@
             
         @else
             <li><a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline" style="text-decoration: none; color:black;">Login</a></li>
-
-            {{-- @if (Route::has('register'))
-                <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-            @endif --}}
         @endauth
     @endif
 
@@ -69,7 +71,7 @@
       <a href="{{ route('login') }}" class="btn">Get Appointment</a>
     </div>
   </section>
-
+{{-- 
   <section >
 
     <div class="container">
@@ -159,15 +161,47 @@
     </div>
 
 
-</section>
+</section> --}}
 
+<div class="hero-content-area" style="padding:50px; background-color:#f9fcfe">
+
+  <h2>How can I sign up to access this system as a registered user?</h2>
+  <br>
+
+  <div class="card-deck">
+    <div class="card">
+      <img class="card-img-top" src="/images/mrjams/prod1a.png" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title"><i class="fa fa-google" aria-hidden="true" style="margin-right:10px; color: #6497B1"></i>Login with Google</h5>
+        <p class="card-text">To be a registered user of this system, we will use a Google account in this web application.</p>
+        {{-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> --}}
+      </div>
+    </div>
+    <div class="card">
+      <img class="card-img-top" src="/images/mrjams/prod2a.png" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title"><i class="fa fa-user" aria-hidden="true" style="margin-right:10px; color: #6497B1"></i>Choose your Role</h5>
+        <p class="card-text">After you've signed in with Google, the system will ask if you want to register as a customer/patient or as a clinic. This is due to the fact that customer features differ from clinic features.</p>
+        {{-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> --}}
+      </div>
+    </div>
+    <div class="card">
+      <img class="card-img-top" src="/images/mrjams/prod3a.png" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title"><i class="fa fa-user-plus" aria-hidden="true" style="margin-right:10px; color: #6497B1"></i>Register</h5>
+        <p class="card-text">After choosing a role, the user must fill out the required information for that role, such as name, address, phone number, and other details.</p>
+        {{-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> --}}
+      </div>
+    </div>
+  </div>
+</div>
 
   
  
   <section class="packages">
  
     <ul class="grid">
-      <li>
+      <li  class="w3-animate-left">
         <i class="fa fa-map-marker fa-4x"></i>
         <h4>Mapping</h4>
         <p>Mapping for nearby and available clinics.</p>

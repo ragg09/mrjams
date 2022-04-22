@@ -17,7 +17,7 @@ $(function(){
                     
     
                 var dataArray = [["Name", "Rating", { role: "style" }],
-                ["N/A", 0, '#ECECEC']];
+                ["N/A", 0, '#B3CDE0']];
                 // console.log(dataArray);
                 var figure = google.visualization.arrayToDataTable(dataArray)
             
@@ -70,7 +70,7 @@ $(function(){
                 var dataArray = [["Name", "Rating", { role: "style" }],];
                 $.each(response.clinic_complete, function (index,value) {
                         //   console.log(value);
-                        dataArray.push([value.name, parseFloat(value.avg), '#ECECEC']);
+                        dataArray.push([value.name, parseFloat(value.avg), '#B3CDE0']);
                 });
     
                 // console.log(dataArray);
@@ -162,7 +162,7 @@ $(function(){
                 //console.log(top5Clinic_appointments)
 
                 var dataArray = [["Name", "Appointments", { role: "style" }],
-                ["N/A", 0, '#ECECEC']];
+                ["N/A", 0, '#6497B1']];
 
 
                 console.log("==============");
@@ -209,7 +209,7 @@ $(function(){
                 $.each(top5Clinic_appointments, function (index,value) {
                     // console.log("==============");
                     //       console.log(value);
-                        dataArray.push([value.name, parseInt(value.count), '#ECECEC']); // panong pawala? 
+                        dataArray.push([value.name, parseInt(value.count), '#6497B1']); // panong pawala? 
                 });
                 // ayy? pano naging wala meron sya sa response
 
@@ -272,7 +272,7 @@ $(function(){
                 //console.log(top5Clinic_appointments)
 
                 var dataArray = [["Name", "Appointments", { role: "style" }],
-                ["N/A", 0, '#ECECEC']];
+                ["N/A", 0, '#116895']];
 
                 console.log("==============");
                 console.log(dataArray);
@@ -317,7 +317,7 @@ $(function(){
                 var dataArray = [["Name", "Appointments", { role: "style" }],];
                 $.each(top5Customer_appointments, function (index,value) {
                     //       console.log(value);
-                        dataArray.push([value.name, parseInt(value.count), '#ECECEC']);
+                        dataArray.push([value.name, parseInt(value.count), '#116895']);
                 });
 
                 console.log("==============");
