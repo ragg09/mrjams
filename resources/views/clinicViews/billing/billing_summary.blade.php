@@ -17,6 +17,8 @@
 @endsection
 
 @section('content')
+
+
     <form action="/clinic/billing/{{ $complete_summary->ro_id }}" method="POST" id="finish_appointment_form">
         @csrf
         {{method_field('PUT')}}
@@ -223,6 +225,13 @@
                     </div>
 
                     <div class="row w-50 mx-auto mt-4 mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="print_receipt_on_success">
+                            <label class="form-check-label" for="print_receipt_on_success">
+                              Print Receipt <i class="fa fa-print" aria-hidden="true"></i>
+                            </label>
+                        </div>
+
                         <button type="submit"class="btn btn-success float-lg-right" id="finish_appointment" disabled>Finish appointment</button>
                         <p class="" id="input_exceeds" style="font-size: 13px" hidden>The sum of payments can not be more than the total bill.</p>
                     </div>

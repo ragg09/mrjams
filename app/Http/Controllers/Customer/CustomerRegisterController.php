@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Mail\WelcomeMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,7 @@ use App\Models\User_address;
 use App\Models\User_as_customer;
 use App\Models\User;
 use App\Models\Customer_logs;
+use Illuminate\Support\Facades\Mail;
 
 class CustomerRegisterController extends Controller
 {
@@ -46,8 +48,8 @@ class CustomerRegisterController extends Controller
      */
     public function store(Request $request)
     {
-    
-        $validator = Validator::make($request->all(),[
+
+        $validator = Validator::make($request->all(), [
             'fname' => 'required|min:2',
             'lname' => 'required|min:2',
             'gender' => 'required|min:4',
@@ -56,15 +58,16 @@ class CustomerRegisterController extends Controller
             'addline1' => 'required|min:2',
             'city' => 'required|min:2',
             'zip' => 'required|numeric|min:1',
-        
+
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json(['status' => 0, 'error' => $validator->errors()->toArray()]);
-        }else{
+        } else {
 
             $user_table = User::where('email', '=',  Auth::user()->email)->first();
-            
+
+
             $user =  User::find($user_table->id);
             $user->role =  request('role');
             $user->save();
@@ -104,7 +107,14 @@ class CustomerRegisterController extends Controller
             $c_log->user_as_customer_id = $customer->id;
             $c_log->save();
 
-          
+
+
+            //sending email notification
+            Mail::to(Auth::user()->email)->send(new WelcomeMail());
+
+
+
+
             return response()->json(['message' => "check mo na db"]);
         }
     }

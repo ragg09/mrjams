@@ -192,6 +192,11 @@
                                     {{-- <input type="submit" class="form-control btn btn-primary" placeholder="Register" name="Register"> --}}
 
                                     <button type="submit" class="form-control btn btn-primary" disabled id="register_btn">Register</button>
+
+                                    <button type="submit" class="form-control btn btn-primary" disabled id="register_btn_waiting_response" hidden>
+                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                        Waiting for response . . . 
+                                    </button>
                                 </div>
                             </div>
 

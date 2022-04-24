@@ -799,7 +799,7 @@ class BillingController extends Controller
             $logs->save();
 
 
-            return response()->json(['data' => "oks na lods"]);
+            return response()->json(['data' => "oks na lods", 'ro_id' => $id]);
         }
     }
 

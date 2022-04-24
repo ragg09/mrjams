@@ -93,7 +93,7 @@ class LogsController extends Controller
 
                             //checking logs limit 5000
                             if ($logs_count == 5000) {
-                                Logs::where('user_as_clinic_id', '=',  $user->id)->first()->delete();
+                                Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
                             }
                             $logs = new Logs();
                             $logs->message = "Your stock of " . $key->name . " with expiration date of " . date('M d, Y', strtotime($k->expiration)) . " has more or less a month left. Please be informed that after the expiration date, the system will automatically remove it to your inventory.";

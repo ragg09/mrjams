@@ -127,8 +127,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role_admin'], 'as' 
         // $Rating = ModelRating::where('users_id_ratee' , "=" , '1')->get();
         round($Rating, 2);
 
-        $latestClinic = User_as_clinic::orderBy('id', 'desc')->first();
-        $latestCustomer = User_as_customer::orderBy('id', 'desc')->first();
+        $latestClinic = User_as_clinic::orderBy('id', 'desc')->get();
+        $latestCustomer = User_as_customer::orderBy('id', 'desc')->get();
 
         if ($RegUser) {
             return view('adminViews.index', ['regUser' => $RegUser, 'regClinic' => $RegClinic, 'appointment' => $Appointment, 'rating' => $Rating, 'latestClinic' => $latestClinic, 'latestCustomer' => $latestCustomer, 'status' => '1']);

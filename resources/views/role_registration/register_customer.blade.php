@@ -127,7 +127,10 @@
               
                         
                           <button type="submit" class="btn btn-login float-right" id="register" disabled>Submit</button>
-                    
+                          <button type="submit" class="btn btn-login float-right" id="register_response_waiting" disabled hidden>
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Waiting for response . . . 
+                          </button>
                     
                     </div>
                   

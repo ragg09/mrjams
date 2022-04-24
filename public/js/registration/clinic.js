@@ -21,9 +21,14 @@ $(function(){
 	    	data: $('#main_form').serialize(),
             beforeSend: function(){
                 $(document).find('span.error-text').text('');
+
+                $("#register_btn").prop("hidden", true);
+                $("#register_btn_waiting_response").prop("hidden", false);
             },
             success: function(data) {
                 //console.log(data);
+                $("#register_btn").prop("hidden", false);
+                $("#register_btn_waiting_response").prop("hidden", true);
                 if(data.status == 0){
                     console.log(data);
                     $.each(data.error, function(key, val){

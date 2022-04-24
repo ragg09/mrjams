@@ -73,7 +73,12 @@ $(function(){
                 $(document).find('span.error-text').text('');
             },
             success: function(data) {
-                // console.log(data);
+                console.log(data);
+                if($("#print_receipt_on_success").is(':checked')) {
+                    window.open('/clinic/print/'+data.ro_id+'_receipt', '_blank');
+                }
+                
+
                 window.location.href = "/clinic/billing";
 
                 // console.log(data);

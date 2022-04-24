@@ -92,6 +92,18 @@ class AppointmentController extends Controller
                     $logs->user_as_clinic_id = $clinic->id;
                     $logs->save();
 
+                    //checking logs limit 5000
+                    if ($logs_count == 5000) {
+                        Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
+                    }
+                    $logs_notif = new Logs();
+                    $logs_notif->message = "An Appointment has been expired with Receipt Order No: " . $appointments->id;
+                    $logs_notif->remark = "notif";
+                    $logs_notif->date =  date("Y/m/d");
+                    $logs_notif->time = date("h:i:sa");
+                    $logs_notif->user_as_clinic_id = $clinic->id;
+                    $logs_notif->save();
+
                     $this_ro = Receipt_orders::where("id", $appointments->receipt_orders_id)->first();
 
                     $clogs = new Customer_logs();
@@ -142,6 +154,28 @@ class AppointmentController extends Controller
                     $logs->time = date("h:i:sa");
                     $logs->user_as_clinic_id = $clinic->id;
                     $logs->save();
+
+                    //checking logs limit 5000
+                    if ($logs_count == 5000) {
+                        Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
+                    }
+                    $logs_notif = new Logs();
+                    $logs_notif->message = "An Appointment has been expired with Receipt Order No: " . $appointments->id;
+                    $logs_notif->remark = "notif";
+                    $logs_notif->date =  date("Y/m/d");
+                    $logs_notif->time = date("h:i:sa");
+                    $logs_notif->user_as_clinic_id = $clinic->id;
+                    $logs_notif->save();
+
+                    $this_ro = Receipt_orders::where("id", $appointments->receipt_orders_id)->first();
+
+                    $clogs = new Customer_logs();
+                    $clogs->message = "Your appointment has expired. Too bad " . $clinic->name . " expected you.";
+                    $clogs->remark = "notif";
+                    $clogs->date =  date("Y/m/d");
+                    $clogs->time = date("h:i:sa");
+                    $clogs->user_as_customer_id =  $this_ro->user_as_customer_id;
+                    $clogs->save();
                 } else {
                     $complete_appointment_negotiations[] = (object) array(
                         "user_email" => $customer_root_data->email ?? "",

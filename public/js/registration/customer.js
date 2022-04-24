@@ -19,8 +19,13 @@ $(function(){
 	    	data: $('#main_form').serialize(),
             beforeSend: function(){
                 $(document).find('span.error-text').text('');
+
+                $("#register").prop("hidden", true);
+                $("#register_response_waiting").prop("hidden", false);
             },
             success: function(data) {
+                $("#register").prop("hidden", false);
+                $("#register_response_waiting").prop("hidden", true);
                 //console.log(data);
                 if(data.status == 0){
                     // console.log(data);

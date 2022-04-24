@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Clinic;
 
 use App\Http\Controllers\Controller;
+use App\Mail\WelcomeMail;
 use App\Models\Appointments;
 use App\Models\Clinic_auto_scheduling;
 use App\Models\Clinic_specialists;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\User_as_clinic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class ClinicSettingsController extends Controller
@@ -284,6 +286,9 @@ class ClinicSettingsController extends Controller
             $auto_sched->summary = "off*xxxxxxxxxxxxxxxxxxxxxxxx&off*xxxxxxxxxxxxxxxxxxxxxxxx&off*xxxxxxxxxxxxxxxxxxxxxxxx&off*xxxxxxxxxxxxxxxxxxxxxxxx&off*xxxxxxxxxxxxxxxxxxxxxxxx&off*xxxxxxxxxxxxxxxxxxxxxxxx&off*xxxxxxxxxxxxxxxxxxxxxxxx";
             $auto_sched->user_as_clinic_id = $clinic->id;
             $auto_sched->save();
+
+            //sending email notification
+            Mail::to(Auth::user()->email)->send(new WelcomeMail());
 
             // //checking logs limit 5000
             // if(Logs::all()->count() == 5000){
