@@ -29,8 +29,11 @@ class Role_guest
             if ($user->role == "customer") {
                 return redirect('/customer');
             }
-            if (Auth::user()->email == "mrjams.tup@gmail.com") {
+            if (Auth::user()->email == env('GOOGLE_ACCOUNT_EMAIL')) {
                 return redirect('/admin');
+            }
+            if ($user->role == "") {
+                return redirect('/role');
             }
         }
     }
