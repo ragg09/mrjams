@@ -96,13 +96,13 @@
                 
                         <div class="form-group" style="padding-top:101px;">
                           <label for="fname" class="text-uppercase">Address Line 1</label>
-                          <input type="text" class="form-control" placeholder="" id="addline1" name="addline1">
+                          <input type="text" class="form-control" placeholder="House no., Street, . . ." id="addline1" name="addline1">
                           <span class="text-danger error-text addline1_error"></span>
                         </div>
 
                         <div class="form-group">
                           <label for="mname" class="text-uppercase">Address Line 2</label>
-                          <input type="text" class="form-control" placeholder="" id="addline2" name="addline2">
+                          <input type="text" class="form-control" placeholder="Area, Village, . . ." id="addline2" name="addline2">
                           
                         </div>
 
