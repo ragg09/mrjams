@@ -342,6 +342,8 @@ class BillingController extends Controller
                 ->whereNotIn('id', $service_ids)
                 ->get();
 
+            $clinic_materials = Clinic_equipments::where('user_as_clinic_id', '=',  $clinic->id)->get();
+
             //$clinic_packages = Packages::where('user_as_clinic_id', '=',  $clinic->id)->get();
 
             // echo $receipt->packages_id;
@@ -360,6 +362,7 @@ class BillingController extends Controller
                 'toshow_equip_id' => $toshow_equip_id,
                 'toshow_equip_value' => $toshow_equip_value,
                 'clinic_services' => $clinic_services,
+                'clinic_materials' => $clinic_materials,
                 'status' => 1,
                 'logs' => $logs
             ]);

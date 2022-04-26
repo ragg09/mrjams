@@ -67,20 +67,24 @@ class PatientDetailsController extends Controller
 
         $status = 0;
         $months = [];
-        foreach ($appointments as $item) {
-            $date = date('M', strtotime($item->created_at));
-            array_push($months, $date);
+
+        if (isset($appointments)) {
+            foreach ($appointments as $item) {
+                $date = date('M', strtotime($item->created_at));
+                array_push($months, $date);
+            }
+
+            $appMonth = array_filter(array_count_values($months), function ($v) {
+
+                return $v > 0;
+            });
         }
 
-        $appMonth = array_filter(array_count_values($months), function ($v) {
-
-            return $v > 0;
-        });
 
 
         // echo($formatted_data_patient);
         // return response()->json(['formatted_data_patient'=>$formatted_data_patient]);
-        return response()->json(['appointments' => $appointments, 'appMonth' => $appMonth]);
+        return response()->json(['appointments' => $appointments ?? [], 'appMonth' => $appMonth ?? []]);
         // return response()->json(['receipt'=>$receipt]);
     }
 
@@ -116,9 +120,9 @@ class PatientDetailsController extends Controller
             //get data
             $patient = User_as_customer::findOrFail($id);
 
-            $patientAdd = User_address::where('id','=', $patient->user_address_id)->first();
+            $patientAdd = User_address::where('id', '=', $patient->user_address_id)->first();
 
-            return response()->json(['patients' => $patient,'patientAdd' => $patientAdd, 'avgRatingApps' => $avgRatingApp, 'appReceipt' => $appReceipt]);
+            return response()->json(['patients' => $patient, 'patientAdd' => $patientAdd, 'avgRatingApps' => $avgRatingApp, 'appReceipt' => $appReceipt]);
         } else {
             //get all appointments
             $getUserCustomer = User_as_customer::where('id', '=', $id)->first();
@@ -132,9 +136,9 @@ class PatientDetailsController extends Controller
             //get data
             $patient = User_as_customer::findOrFail($id);
 
-            $patientAdd = User_address::where('id','=', $patient->user_address_id)->first();
+            $patientAdd = User_address::where('id', '=', $patient->user_address_id)->first();
 
-            return view('adminViews.layouts.user.userView', ['patient' => $patient,'patientAdd' => $patientAdd, 'avgRatingApps' => $avgRatingApp, 'appReceipt' => $appReceipt]);
+            return view('adminViews.layouts.user.userView', ['patient' => $patient, 'patientAdd' => $patientAdd, 'avgRatingApps' => $avgRatingApp, 'appReceipt' => $appReceipt]);
         }
     }
 

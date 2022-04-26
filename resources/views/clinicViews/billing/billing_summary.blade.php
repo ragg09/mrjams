@@ -52,8 +52,13 @@
                                 </div>
                             </div>
                         @endif
+
+                        {{-- <div class="pt-2" id="addtional_material">
+                        </div>
                         
-                        
+                        <button type="button" class="btn btn-outline-success mx-auto d-block" data-bs-toggle="modal" data-bs-target="#additionals_material_modal" id="open_additionals_material_modal">
+                            <i class="fas fa-plus"></i>
+                        </button> --}}
                     </div>
                 </div>
             </div>
@@ -246,7 +251,7 @@
         <input type="text"  value="0" id="balance" name="balance" hidden>
 
         @include('clinicViews.billing.additionals_modal')
-        
+        @include('clinicViews.billing.additional_material_modal')
 
     </form>
     @include('clinicViews.billing.loading_modal')

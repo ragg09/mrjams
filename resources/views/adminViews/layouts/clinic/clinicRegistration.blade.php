@@ -68,6 +68,6 @@
 
 @section('extraScript')
 
-<script src="{{ URL::asset('js/admin/clinigRegistration.js') }}"></script>
+{{-- <script src="{{ URL::asset('js/admin/clinigRegistration.js') }}"></script> --}}
 
 @endsection

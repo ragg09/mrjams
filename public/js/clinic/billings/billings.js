@@ -115,5 +115,22 @@ $(function(){
         $("#service_ids").val(ids);
     });
 
+    //additional service modal
+    $("#material_multiple").select2({ 
+        dropdownParent: $('#additionals_material_modal'),
+        placeholder: "Select Materials",
+        allowClear: true,
+        minimumResultsForSearch: -1,
+        tags: true,
+    });
+
+    $("#material_multiple").change(function() {
+        var ids = [];
+        $('#material_multiple :selected').each(function(i, sel){ 
+            ids.push($(sel).val());
+        });
+        $("#material_ids").val(ids);
+    });
+
 
 });
