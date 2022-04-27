@@ -197,9 +197,9 @@ class ClinicListController extends Controller
                                 "package" => $packname ?? "no data",
                                 "service" => $sername ?? "no data"
                             );
-
-                            $count++;
                         }
+
+                        $count++;
                     }
 
                     // echo($package);
