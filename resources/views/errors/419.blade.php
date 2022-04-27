@@ -64,13 +64,19 @@
 </head>
 <body>
     <div id="pagenotfound">
-        <img src="{{ URL::asset('images/mrjams/page_not_found_1.png') }}" id="pagenotfound1"/>
-        <button onclick="history.back()" type="button" class="btn btn-primary mx-auto d-block" id="back_btn"> <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back</button>
+        <img src="{{ URL::asset('images/mrjams/419.png') }}" id="pagenotfound1"/>
+        {{-- <button onclick="history.back()" type="button" class="btn btn-primary mx-auto d-block" id="back_btn"> <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back</button> --}}
+
+        <a href="/"  class="btn btn-primary mx-auto d-block w-25 mb-3"> <i class="fa fa-home" aria-hidden="true"></i> Home </a>
+        <a href="/login"  class="btn btn-primary mx-auto d-block w-25 mb-5"> <i class="fa fa-google" aria-hidden="true"></i> Sign In </a>
     </div>
 
     <div id="pagenotfound2">
-        <img src="{{ URL::asset('images/mrjams/page_not_found_2.png') }}" id="pagenotfound1"/>
-        <button onclick="history.back()" type="button" class="btn btn-primary mx-auto d-block" id="back_btn"> <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back</button>
+        <img src="{{ URL::asset('images/mrjams/419.png') }}" id="pagenotfound1"/>
+        {{-- <button onclick="history.back()" type="button" class="btn btn-primary mx-auto d-block" id="back_btn"> <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back</button> --}}
+
+        <a href="/"  class="btn btn-primary mx-auto d-block w-25 mb-3"> <i class="fa fa-home" aria-hidden="true"></i> Home </a>
+        <a href="/login"  class="btn btn-primary mx-auto d-block w-25 mb-5"> <i class="fa fa-google" aria-hidden="true"></i> Sign In </a>
     </div>
 </body>
 
