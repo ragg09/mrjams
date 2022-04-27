@@ -206,7 +206,7 @@ class ClinicListController extends Controller
 
 
                     if ($count > 0) {
-                        return  response()->json(['ClinicAdd' => $ClinicAdd, 'status' => 1, 'query' => $query]);
+                        return  response()->json(['ClinicAdd' => $ClinicAdd, 'status' => 1, 'query' => $query, 'raw_data' => $data]);
                     } else {
                         return response()->json(['status' => 0]);
                     }
