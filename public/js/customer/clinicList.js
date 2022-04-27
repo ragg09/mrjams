@@ -94,7 +94,7 @@ $(function(){
     $('#ClinicType').click(function(){
         // e.preventDefault();
         var query = $(this).val();
-        console.log(query);
+        // console.log(query);
         if(query == "ClinicTypes"){
             $("#info").empty();
             clinic_data();
@@ -106,7 +106,7 @@ $(function(){
                  url: "/customer/clinicList/"+id,
                  data: {query:query},
                  success: function(data){
-                     console.log(data);
+                    //  console.log(data);
 
                         if(data.status == 1){
 
