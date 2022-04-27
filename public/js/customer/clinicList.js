@@ -106,7 +106,7 @@ $(function(){
                  url: "/customer/clinicList/"+id,
                  data: {query:query},
                  success: function(data){
-                    //  console.log(data);
+                     console.log(data);
 
                         if(data.status == 1){
 

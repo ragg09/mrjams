@@ -165,7 +165,7 @@ class ClinicListController extends Controller
             $user = User::where('email', '=',  Auth::user()->email)->first();
 
             if ($request->ajax()) {
-                $query = $request->get('query');
+                $query = $request->query;
                 $data = User_as_clinic::where('clinic_types_id', $query)->get();
 
                 $count = 0;
@@ -177,7 +177,7 @@ class ClinicListController extends Controller
                         $service = Clinic_services::where('user_as_clinic_id', '=', $key->id)->first();
 
 
-                        if (isset($package) || isset($service)) {
+                        if (isset($service)) {
 
                             if (isset($package)) {
                                 $packname =  $package->name;
