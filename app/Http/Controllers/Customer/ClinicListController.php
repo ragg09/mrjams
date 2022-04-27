@@ -166,7 +166,7 @@ class ClinicListController extends Controller
 
             if ($request->ajax()) {
                 $query = $request->get('query');
-                $data = User_as_clinic::query()->where('clinic_types_id', $query)->get();
+                $data = User_as_clinic::where('clinic_types_id', $query)->get();
 
                 $count = 0;
                 if (count($data) > 0) {
