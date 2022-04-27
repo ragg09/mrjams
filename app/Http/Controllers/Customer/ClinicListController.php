@@ -165,7 +165,7 @@ class ClinicListController extends Controller
             $user = User::where('email', '=',  Auth::user()->email)->first();
 
             if ($request->ajax()) {
-                $query = $request->query;
+                $query = $request->get('query');
                 $data = User_as_clinic::where('clinic_types_id', $query)->get();
 
                 $count = 0;
@@ -206,7 +206,7 @@ class ClinicListController extends Controller
 
 
                     if ($count > 0) {
-                        return  response()->json(['ClinicAdd' => $ClinicAdd, 'status' => 1]);
+                        return  response()->json(['ClinicAdd' => $ClinicAdd, 'status' => 1, 'query' => $query]);
                     } else {
                         return response()->json(['status' => 0]);
                     }
