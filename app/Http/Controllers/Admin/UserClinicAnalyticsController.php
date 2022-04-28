@@ -67,12 +67,12 @@ class UserClinicAnalyticsController extends Controller
 
         // // $data = User::all();
 
-        // foreach ($data as $item) {
-        //     $formatted_data[] = array(
-        //         'total' => $item->total,
-        //         'month' => date("F", mktime(0, 0, 0, $item->month, 10)),
-        //     );
-        // }
+        foreach ($data as $item) {
+            $formatted_data[] = array(
+                'total' => $item->total,
+                'month' => date("F", mktime(0, 0, 0, $item->month, 10)),
+            );
+        }
 
         // $dataClinic = User::where('role', '=', 'clinic')
         //     ->select(FacadesDB::raw('count(id) as total'), FacadesDB::raw('MONTH(created_at) month'))
