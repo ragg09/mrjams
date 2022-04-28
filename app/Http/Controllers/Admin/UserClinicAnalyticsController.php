@@ -60,10 +60,11 @@ class UserClinicAnalyticsController extends Controller
         //     ->orderBy('created_at', 'asc')
         //     ->get();
 
-        // $data = User::select(FacadesDB::raw('count(id) as total'), FacadesDB::raw('MONTH(created_at) month'))
-        //     ->groupby('month')
-        //     ->orderBy('created_at', 'asc')
-        //     ->get();
+        $data = User::select(FacadesDB::raw('count(id) as total'), FacadesDB::raw('MONTH(created_at) as month'))
+            ->groupby('month')
+            ->orderBy('created_at', 'asc')
+            ->get();
+
         // // $data = User::all();
 
         // foreach ($data as $item) {
