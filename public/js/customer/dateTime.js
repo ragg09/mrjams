@@ -7,8 +7,13 @@ $(function(){
         dropdownParent: $('#services_multi'),
         placeholder: "Select Services",
         allowClear: true,
-        tags: true,
-        formatNoMatches: "Nothing found",
+        // tags: true,
+        noResults: function() {
+            return '<button id="no-results-btn" onclick="noResultsButtonClicked()">No Result Found</a>';
+          },
+        // escapeMarkup: function(markup) {
+        //     return markup;
+        //   },
     });
 
 
