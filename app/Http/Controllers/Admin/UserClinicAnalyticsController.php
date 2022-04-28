@@ -60,44 +60,137 @@ class UserClinicAnalyticsController extends Controller
         //     ->orderBy('created_at', 'asc')
         //     ->get();
 
-        $data = User::select(FacadesDB::raw('count(id) as `total`'), FacadesDB::raw('MONTH(created_at) month'))
-            ->groupby('month')
-            ->orderBy('created_at', 'asc')
-            ->get();
-        // $data = User::all();
 
-        foreach ($data as $item) {
+
+        // $data = User::select(FacadesDB::raw('count(id) as `total`'), FacadesDB::raw('MONTH(created_at) month'))
+        //     ->groupby('month')
+        //     ->orderBy('created_at', 'asc')
+        //     ->get();
+
+
+        $data = User::all();
+
+        foreach ($data as $key) {
+            // $dates[] = date("F", mktime(0, 0, 0, $key->created_at, 10));
+
+            $dates[] = date("F", strtotime($key->created_at));
+        }
+
+
+
+        //cpunt duplicates
+        if (isset($dates)) {
+            $counted_month = array_filter(array_count_values($dates), function ($v) {
+                return $v > 0;
+            });
+        }
+
+
+
+        foreach ($counted_month as $k => $v) {
             $formatted_data[] = array(
-                'total' => $item->total,
-                'month' => date("F", mktime(0, 0, 0, $item->month, 10)),
+                'total' => $v,
+                'month' => $k,
             );
         }
 
-        $dataClinic = User::where('role', '=', 'clinic')
-            ->select(FacadesDB::raw('count(id) as `total`'), FacadesDB::raw('MONTH(created_at) month'))
-            ->groupby('month')
-            ->orderBy('created_at', 'asc')
-            ->get();
 
-        foreach ($dataClinic as $item) {
+
+
+
+
+
+
+        // $dataClinic = User::where('role', '=', 'clinic')
+        //     ->select(FacadesDB::raw('count(id) as `total`'), FacadesDB::raw('MONTH(created_at) month'))
+        //     ->groupby('month')
+        //     ->orderBy('created_at', 'asc')
+        //     ->get();
+
+        // foreach ($dataClinic as $item) {
+        //     $formatted_data_clinic[] = array(
+        //         'total' => $item->total,
+        //         'month' => date("F", mktime(0, 0, 0, $item->month, 10)),
+        //     );
+        // }
+
+        $dataClinic = User::where('role', '=', 'clinic')->where('status', '=', 'verified')->get();
+
+        foreach ($dataClinic as $key) {
+            // $dates[] = date("F", mktime(0, 0, 0, $key->created_at, 10));
+
+            $dates_clinics[] = date("F", strtotime($key->created_at));
+        }
+
+
+
+        //cpunt duplicates
+        if (isset($dates_clinics)) {
+            $counted_month_clinic = array_filter(array_count_values($dates_clinics), function ($v) {
+                return $v > 0;
+            });
+        }
+
+
+
+        foreach ($counted_month_clinic as $k => $v) {
             $formatted_data_clinic[] = array(
-                'total' => $item->total,
-                'month' => date("F", mktime(0, 0, 0, $item->month, 10)),
+                'total' => $v,
+                'month' => $k,
             );
         }
 
-        $dataCustomer = User::where('role', '=', 'customer')
-            ->select(FacadesDB::raw('count(id) as `total`'), FacadesDB::raw('MONTH(created_at) month'))
-            ->groupby('month')
-            ->orderBy('created_at', 'asc')
-            ->get();
 
-        foreach ($dataCustomer as $item) {
+
+
+
+
+        // $dataCustomer = User::where('role', '=', 'customer')
+        //     ->select(FacadesDB::raw('count(id) as `total`'), FacadesDB::raw('MONTH(created_at) month'))
+        //     ->groupby('month')
+        //     ->orderBy('created_at', 'asc')
+        //     ->get();
+
+        // foreach ($dataCustomer as $item) {
+        //     $formatted_data_customer[] = array(
+        //         'total' => $item->total,
+        //         'month' => date("F", mktime(0, 0, 0, $item->month, 10)),
+        //     );
+        // }
+
+        $dataCustomer = User::where('role', '=', 'customer')->get();
+
+        foreach ($dataCustomer as $key) {
+            // $dates[] = date("F", mktime(0, 0, 0, $key->created_at, 10));
+
+            $dates_customer[] = date("F", strtotime($key->created_at));
+        }
+
+
+
+        //cpunt duplicates
+        if (isset($dates_customer)) {
+            $counted_month_customer = array_filter(array_count_values($dates_customer), function ($v) {
+                return $v > 0;
+            });
+        }
+
+
+
+        foreach ($counted_month_customer as $k => $v) {
             $formatted_data_customer[] = array(
-                'total' => $item->total,
-                'month' => date("F", mktime(0, 0, 0, $item->month, 10)),
+                'total' => $v,
+                'month' => $k,
             );
         }
+
+
+
+
+
+
+
+
 
         $appPerMonth = Appointments::where('appointment_status_id', '=', 1)->get();
         $months = [];
@@ -112,6 +205,12 @@ class UserClinicAnalyticsController extends Controller
             return $v > 0;
         });
 
+
+
+
+
+
+
         if (!isset($formatted_data)) {
             $formatted_data = [];
         }
@@ -125,7 +224,14 @@ class UserClinicAnalyticsController extends Controller
             $appMonth = [];
         }
 
-        return response()->json(['data' => $formatted_data, 'clinic' => $formatted_data_clinic, 'customer' => $formatted_data_customer, 'appointment' => $appMonth]);
+        return response()->json([
+            'data' => $formatted_data,
+            'clinic' => $formatted_data_clinic,
+            'customer' => $formatted_data_customer,
+            'appointment' => $appMonth,
+
+            'tester2' => $formatted_data_customer,
+        ]);
         // return response()->json(['data' => $formatted_data, 'clinic' => $formatted_data_clinic, 'customer' => $formatted_data_customer]);
     }
 
