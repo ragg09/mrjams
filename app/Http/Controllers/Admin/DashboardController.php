@@ -104,8 +104,10 @@ class DashboardController extends Controller
                 $this_app = Appointments::where('receipt_orders_id', '=', $kk->id)->first();
 
                 //checking if current appoint of every receipt is ACCEPTED
-                if ($this_app->appointment_status_id == 4 || $this_app->appointment_status_id == 1) {
-                    $count++; //plus 1 kung mag true
+                if (isset($this_app)) {
+                    if ($this_app->appointment_status_id == 4 || $this_app->appointment_status_id == 1) {
+                        $count++; //plus 1 kung mag true
+                    }
                 }
             }
 
