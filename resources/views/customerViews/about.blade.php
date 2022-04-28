@@ -1,4 +1,5 @@
 @extends('customerViews.layouts.customerlayout')
+@section('title', 'MR. JAMS - About')
 @section('specificStyle')
 
     <link rel="stylesheet" href="{{asset('./css/customer/about-mr.css')}}">
@@ -19,27 +20,27 @@
 </section>
 
  
-<section class="about">
+<section class="about" style="font-family: 'Roboto', sans-serif;">
     <br>
-    <h3 class="title" style="color: #116895">About MR. JAMS</h3>
+    <h3 style="color: #116895; font-size: 30px;"><b>About MR. JAMS</b></h3>
     <br>
     {{-- <p class="subtitle">MISSION</p> --}}
-    <p style="font-family: 'Roboto', sans-serif; font-size:18px;"> <b>MR. JAMS</b> is a web and mobile application that allows users to schedule appointments with clinics that have registered for the system. You may also find out which clinic is nearest to your present location by using this website. You will also get the information a user requires at that clinic, such as the clinic's address, phone number, services, packages, clinic schedules, doctors, clinic rate, and the clinic's distance from your current location. Clinics who registered in this web application will gain access to a management system that will allow them to keep track of their supplies, equipment, services, packages, reports, incoming appointments, doctor availability, patient records, and much more. To assist them in their regular tasks.</p>
+    <p style="font-size: 15px;"> <b>MR. JAMS</b> is a web and mobile application that allows users to schedule appointments with clinics that have registered for the system. You may also find out which clinic is nearest to your present location by using this website. You will also get the information a user requires at that clinic, such as the clinic's address, phone number, services, packages, clinic schedules, doctors, clinic rate, and the clinic's distance from your current location. Clinics who registered in this web application will gain access to a management system that will allow them to keep track of their supplies, equipment, services, packages, reports, incoming appointments, doctor availability, patient records, and much more. To assist them in their regular tasks.</p>
     
     <br><br><br><br>
 </section>
   
 
-<div class="container">
+<div class="container" style="font-family: 'Roboto', sans-serif;">
         <div class="row justify-content-center">
           <div class="col-12 col-sm-8 col-lg-6">
             <!-- Section Heading-->
             <div class="section_heading text-center wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
-              <h3 style="color: #116895;"><b>Our Creative <span> Team</span></b></h3><br>
-              <h5><b>Technological University of the Philippines - Taguig</b></h5>
+              <h3 style="color: #116895; font-size: 30px;"><b>Our Creative Team</b></h3><br>
+              <p style="font-size: 16px;"><b>Technological University of the Philippines - Taguig</b></p>
               {{-- <p>Km. 14 East Service Road Western Bicutan, Taguig City 1630</p> --}}
-              <h6><b>Bachelor of Science in Information Technology - 4A</b></h6>
-              <h6>Appointment and Management System for Dental and Medical Clinics with Location-Based Mapping </h6>
+              <p style="font-size: 15px;"><b>Bachelor of Science in Information Technology - 4A</b></p>
+              <p style="font-size: 15px;">Appointment and Management System for Dental and Medical Clinics with Location-Based Mapping </p>
               <br>
               <div class="line"></div>
             </div>

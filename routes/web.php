@@ -37,6 +37,7 @@ use App\Http\Controllers\Customer\MailController;
 use App\Http\Controllers\Customer\RatingController;
 use App\Http\Controllers\Customer\AnnouncementController;
 use App\Http\Controllers\Customer\CustomerLogsController;
+use App\Http\Controllers\Customer\CPrintController;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -229,6 +230,7 @@ Route::group(['prefix' => 'customer', 'middleware' => ['auth', 'check_user', 'ro
     Route::resource('announcement', AnnouncementController::class);
     Route::resource('customerLogs', CustomerLogsController::class);
     Route::resource('customermap', CustomerMap::class);
+    Route::resource('print', CPrintController::class);
 });
 //customer routes with middleware exceptions
 //check_user, role_customer middlewares are directly included in the controller

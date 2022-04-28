@@ -36,6 +36,7 @@ function initMap() {
         
                       var marker = new google.maps.Marker({
                           position: { lat: parseFloat(val.latitude), lng: parseFloat(val.longitude) },
+                          title: "Clinic Location",
                           map:map,
                           icon: {
                               url: "/images/mrjams/mr-jams-logo.png",
@@ -129,7 +130,7 @@ function initMap() {
               // Calculating Distance from current location to clinic:
               
                     // Draw a line showing the straight distance between the markers
-                    var line = new google.maps.Polyline({path: [pointAa, pointBb], map: map});
+                    // var line = new google.maps.Polyline({path: [pointAa, pointBb], map: map});
                     
                     function haversine_distance() {
                       var R = 3958.8; // Radius of the Earth in miles
@@ -144,8 +145,9 @@ function initMap() {
 
                     // Calculate and display the distance between markers
                     var distance = haversine_distance(pointAa, pointBb);
+                    document.getElementById('msg1').innerHTML = "Point A: <b>Your Current Location</b><br>Point B: <b>Clinic Location</b>";
+              
                     document.getElementById('msg').innerHTML = "<i>Distance between your Location and the Clinic: </i><b>" + distance.toFixed(2) + " mi. </b>";
-              // 
                       
                     },
                     () => {

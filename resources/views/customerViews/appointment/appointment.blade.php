@@ -1,4 +1,5 @@
 @extends('customerViews.layouts.customerlayout')
+@section('title', 'MR. JAMS - Clinic')
 @section('specificStyle')
     <link rel="stylesheet" href="{{asset('./css/customer/appoint-modal.css')}}">
     <link rel="stylesheet" href="{{asset('./css/customer/rating-clinic-show.css')}}">
@@ -66,12 +67,29 @@
                     <div class="panel panel-default hidden-xs hidden-sm" style="padding: 10px;">
                         <div class="panel-heading">
                             <div class="panel-title text-center">
-                            
+                              
+                                <div id="msg1"></div>
+                               
+
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                           
+                        </div>
+                    </div>
+
+
+                    <div class="panel panel-default hidden-xs hidden-sm" style="padding: 10px;">
+                        <div class="panel-heading">
+                            <div class="panel-title text-center">
+                              
+                             
                                 <div id="msg"></div>
 
                             </div>
                         </div>
                         <div class="panel-body">
+                           
                         </div>
                     </div>
                 

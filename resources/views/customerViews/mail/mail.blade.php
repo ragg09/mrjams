@@ -1,4 +1,5 @@
 @extends('customerViews.layouts.customerlayout')
+@section('title', 'MR. JAMS - Appointments ')
 @section('specificStyle')
     {{-- <link rel="stylesheet" href="{{asset('./css/customer/mail.css')}}"> --}}
     {{-- <link rel="stylesheet" href="{{asset('./css/customer/mail-content.css')}}"> --}}

@@ -8,7 +8,7 @@
               <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarNavDropdown"  style="font-weight:bold; margin-left: 550px">
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown"  style="font-weight:bold;">
               <ul class="navbar-nav" >
 
                 <li class="nav-item">

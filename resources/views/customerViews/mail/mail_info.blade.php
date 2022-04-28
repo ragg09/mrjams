@@ -1,4 +1,5 @@
 @extends('customerViews.layouts.customerlayout')
+@section('title', 'MR. JAMS - Appointment Info')
 @section('specificStyle')
     <link rel="stylesheet" href="{{asset('./css/customer/mail-info-content.css')}}">
     <link rel="stylesheet" href="{{asset('./css/customer/rating.css')}}">
@@ -59,7 +60,22 @@
                         <div class="panel-heading">
                             <div class="panel-title text-center">
                               
+                                <div id="msg1"></div>
+                               
+
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                           
+                        </div>
+                    </div>
+
+
+                    <div class="panel panel-default hidden-xs hidden-sm" style="padding: 10px;">
+                        <div class="panel-heading">
+                            <div class="panel-title text-center">
                               
+                             
                                 <div id="msg"></div>
 
                             </div>
@@ -94,7 +110,8 @@
                                         </div>
                                             
                                         <div class="col d-flex justify-content-end">
-                                            <button class="btn btn-light" ><i class="fa fa-download fa-lg" aria-hidden="true" onclick="printPage()"></i></button>
+                                            {{-- <button class="btn btn-light" ><i class="fa fa-download fa-lg" aria-hidden="true" onclick="printPage()"></i></button> --}}
+                                            <a href="/customer/print/{{$appointment_data->id}}" class="btn btn-light" id="view_bill_details_print" target="_blank"><i class="fa fa-download fa-lg" aria-hidden="true"></i></a>
                                         </div>
                                     </div>
                                    
@@ -281,10 +298,10 @@
     <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places"></script>
     <script src="{{ URL::asset('js/customer/clinic_rating.js') }}"></script> 
     {{-- <script src="{{ URL::asset('js/customer/print.js') }}"></script> --}}
-    <script>
+    {{-- <script>
         function printPage(){
             window.print();
         }
-    </script>
+    </script> --}}
 
 @endsection

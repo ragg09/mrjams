@@ -198,30 +198,30 @@
 
   
  
-  <section class="packages">
- 
-    <ul class="grid">
-      <li  class="w3-animate-left">
-        <i class="fa fa-map-marker fa-4x"></i>
-        <h4>Mapping</h4>
-        <p>Mapping for nearby and available clinics.</p>
-      <li>
-        <i class="fa fa-medkit fa-4x"></i>
-        <h4>Medical Services</h4>
-        <p>list of services offered by a clinic.</p>
-      </li>
-      <li>
-        <i class="fa fa-user-md fa-4x"></i>
-        <h4>Find A Doctor</h4>
-        <p>A doctor who specializes in the service you need.</p>
-      </li>
-      <li>
-        <i class="fa fa-calendar fa-4x"></i>
-        <h4>Request an Appoinment</h4>
-        <p>You can schedule an appointment at any time and from any location.</p>
-      </li>
-    </ul>
-  </section>
+<section class="packages">
+  <ul class="grid">
+    <li>
+      <i class="fa fa-map-marker fa-4x"></i>
+      <h4><b>Mapping</b></h4>
+      <p style="font-size: 15px;">Mapping for nearby and available clinics.</p>
+    <li>
+      <i class="fa fa-medkit fa-4x"></i>
+      <h4><b>Medical Services</b></h4>
+      <p style="font-size: 15px;">list of services offered by a clinic.</p>
+    </li>
+    <li>
+      <i class="fa fa-user-md fa-4x"></i>
+      <h4><b>Find A Doctor</b></h4>
+      <p style="font-size: 15px;">A doctor who specializes in the service you need.</p>
+    </li>
+    <li>
+      <i class="fa fa-calendar fa-4x"></i>
+      <h4><b>Request an Appoinment</b></h4>
+      <p style="font-size: 15px;">You can schedule an appointment at any time and from any location.</p>
+    </li>
+  </ul>
+  <br><br>
+</section>
 
   
   <footer>

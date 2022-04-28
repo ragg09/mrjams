@@ -1,4 +1,5 @@
 @extends('customerViews.layouts.customerlayout')
+@section('title', 'MR. JAMS - Announcement')
 @section('specificStyle')
     <link rel="stylesheet" href="{{asset('./css/customer/announcement.css')}}">
     <link rel="stylesheet" href="{{asset('./css/customer/announce.css')}}">

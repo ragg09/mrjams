@@ -1,4 +1,5 @@
 @extends('customerViews.layouts.customerlayout')
+@section('title', 'MR. JAMS - Get Appointment - Myself')
 @section('specificStyle')
     <link rel="stylesheet" href="{{asset('./css/customer/setAppoint-form.css')}}">
 @endsection 

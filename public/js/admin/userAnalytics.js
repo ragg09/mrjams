@@ -11,7 +11,7 @@ $(function(){
         url: "/admin/analytics/1",
         success: function (response) {
             // console.log(response.user);
-            console.log(response);
+            // console.log(response);
             // console.log('shit');
 
             var data_users = [
@@ -40,7 +40,7 @@ $(function(){
         },
         error: function(){
             console.log('AJAX load did not work');
-            alert("error");
+            // alert("error");
         }
         
 
@@ -79,7 +79,7 @@ $(function(){
         },
         error: function(){
             console.log('AJAX load did not work');
-            alert("error");
+            // alert("error");
         }
         
 
@@ -118,7 +118,7 @@ $(function(){
         },
         error: function(){
             console.log('AJAX load did not work');
-            alert("error");
+            // alert("error");
         }
         
 
@@ -129,8 +129,8 @@ $(function(){
         url: "/admin/analytics/1",
         success: function (response) {
             // console.log(response.user);
-            console.log(response.appointment.length);
-            console.log('shit');
+            // console.log(response.appointment.length);
+            // console.log('shit');
 
             if(response.appointment.length == 0){
                 var data_users = [
@@ -183,7 +183,7 @@ $(function(){
         },
         error: function(){
             console.log('AJAX load did not work');
-            alert("error");
+            // alert("error");
         }
         
 

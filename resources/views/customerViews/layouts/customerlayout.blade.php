@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{asset('./images/mrjams/mr-jams-logo.png')}}">
-    <title>MR. JAMS</title>
+    <title>@yield('title')</title>
 
     <link rel="stylesheet" href="{{asset('./css/customer/notif.css')}}">
 

@@ -1,4 +1,5 @@
 @extends('customerViews.layouts.customerlayout')
+@section('title', 'MR. JAMS - Download')
 @section('specificStyle')
     <link rel="stylesheet" href="{{asset('./css/customer/windowSize.css')}}">
 @endsection

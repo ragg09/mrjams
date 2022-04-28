@@ -1,4 +1,5 @@
 @extends('customerViews.layouts.customerlayout')
+@section('title', 'MR. JAMS - Clinics')
 @section('content')
 @include('customerViews.header.header2')
 
