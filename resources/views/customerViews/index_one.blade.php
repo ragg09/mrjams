@@ -187,10 +187,10 @@
   <script src="{{ URL::asset('js/customer/map.js') }}"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places"></script>
   {{-- <script defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places"></script> --}}
-    <script>
+    {{-- <script>
       // $('.alert').alert()
       $(".alert").alert('close')
-    </script>
+    </script> --}}
 @endsection
 
 
