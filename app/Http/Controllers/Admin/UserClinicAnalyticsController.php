@@ -60,57 +60,57 @@ class UserClinicAnalyticsController extends Controller
         //     ->orderBy('created_at', 'asc')
         //     ->get();
 
-        $data = User::select(FacadesDB::raw('count(id) as total'), FacadesDB::raw('MONTH(created_at) month'))
-            ->groupby('month')
-            ->orderBy('created_at', 'asc')
-            ->get();
-        // $data = User::all();
+        // $data = User::select(FacadesDB::raw('count(id) as total'), FacadesDB::raw('MONTH(created_at) month'))
+        //     ->groupby('month')
+        //     ->orderBy('created_at', 'asc')
+        //     ->get();
+        // // $data = User::all();
 
-        foreach ($data as $item) {
-            $formatted_data[] = array(
-                'total' => $item->total,
-                'month' => date("F", mktime(0, 0, 0, $item->month, 10)),
-            );
-        }
+        // foreach ($data as $item) {
+        //     $formatted_data[] = array(
+        //         'total' => $item->total,
+        //         'month' => date("F", mktime(0, 0, 0, $item->month, 10)),
+        //     );
+        // }
 
-        $dataClinic = User::where('role', '=', 'clinic')
-            ->select(FacadesDB::raw('count(id) as total'), FacadesDB::raw('MONTH(created_at) month'))
-            ->groupby('month')
-            ->orderBy('created_at', 'asc')
-            ->get();
+        // $dataClinic = User::where('role', '=', 'clinic')
+        //     ->select(FacadesDB::raw('count(id) as total'), FacadesDB::raw('MONTH(created_at) month'))
+        //     ->groupby('month')
+        //     ->orderBy('created_at', 'asc')
+        //     ->get();
 
-        foreach ($dataClinic as $item) {
-            $formatted_data_clinic[] = array(
-                'total' => $item->total,
-                'month' => date("F", mktime(0, 0, 0, $item->month, 10)),
-            );
-        }
+        // foreach ($dataClinic as $item) {
+        //     $formatted_data_clinic[] = array(
+        //         'total' => $item->total,
+        //         'month' => date("F", mktime(0, 0, 0, $item->month, 10)),
+        //     );
+        // }
 
-        $dataCustomer = User::where('role', '=', 'customer')
-            ->select(FacadesDB::raw('count(id) as `total`'), FacadesDB::raw('MONTH(created_at) month'))
-            ->groupby('month')
-            ->orderBy('created_at', 'asc')
-            ->get();
+        // $dataCustomer = User::where('role', '=', 'customer')
+        //     ->select(FacadesDB::raw('count(id) as `total`'), FacadesDB::raw('MONTH(created_at) month'))
+        //     ->groupby('month')
+        //     ->orderBy('created_at', 'asc')
+        //     ->get();
 
-        foreach ($dataCustomer as $item) {
-            $formatted_data_customer[] = array(
-                'total' => $item->total,
-                'month' => date("F", mktime(0, 0, 0, $item->month, 10)),
-            );
-        }
+        // foreach ($dataCustomer as $item) {
+        //     $formatted_data_customer[] = array(
+        //         'total' => $item->total,
+        //         'month' => date("F", mktime(0, 0, 0, $item->month, 10)),
+        //     );
+        // }
 
-        $appPerMonth = Appointments::where('appointment_status_id', '=', 1)->get();
-        $months = [];
-        $months_filtered = "";
-        foreach ($appPerMonth as $item) {
-            $date = date('M', strtotime($item->created_at));
-            array_push($months, $date);
-        }
+        // $appPerMonth = Appointments::where('appointment_status_id', '=', 1)->get();
+        // $months = [];
+        // $months_filtered = "";
+        // foreach ($appPerMonth as $item) {
+        //     $date = date('M', strtotime($item->created_at));
+        //     array_push($months, $date);
+        // }
 
-        $appMonth = array_filter(array_count_values($months), function ($v) {
+        // $appMonth = array_filter(array_count_values($months), function ($v) {
 
-            return $v > 0;
-        });
+        //     return $v > 0;
+        // });
 
         if (!isset($formatted_data)) {
             $formatted_data = [];
