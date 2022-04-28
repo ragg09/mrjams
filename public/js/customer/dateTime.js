@@ -8,7 +8,14 @@ $(function(){
         placeholder: "Select Services",
         allowClear: true,
         tags: true,
+        language: {
+            noResults: function(){
+                return "No Results Found";
+            }
+        },
     });
+
+
 
     $("#service_multiple").change(function() {
         var ids = [];
