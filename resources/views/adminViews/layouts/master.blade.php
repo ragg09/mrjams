@@ -83,10 +83,10 @@
               </ul>
 
               
-
+{{-- 
                 <a class="navbar-brand" onclick="window.print()">
                   <i class="fa fa-print fa-lg" aria-hidden="true" style="color: black;"></i>
-                </a>
+                </a> --}}
 
                 <a href="#" >
                   <img src="{{Auth::user()->avatar}}" alt="admin" class="rounded-circle p-1 " width="65" style="margin-right: 5px;">
