@@ -7,8 +7,8 @@ $(function(){
         url: "/admin/dashboard/create", //san to?
         success: function (response) {
             // console.log(response.user);
-            console.log(response.clinic_complete.length);
-            console.log('shit');
+            // console.log(response.clinic_complete.length);
+            // console.log('shit');
 
             if(response.clinic_complete.length == 0){
                 google.charts.load("current", {packages:['corechart']});
@@ -165,9 +165,9 @@ $(function(){
                 ["N/A", 0, '#6497B1']];
 
 
-                console.log("==============");
-                console.log(dataArray);
-                console.log("==============");
+                // console.log("==============");
+                // console.log(dataArray);
+                // console.log("==============");
 
                 var figure = google.visualization.arrayToDataTable(dataArray)
             
@@ -213,9 +213,9 @@ $(function(){
                 });
                 // ayy? pano naging wala meron sya sa response
 
-                console.log("==============");
-                console.log(dataArray);
-                console.log("==============");
+                // console.log("==============");
+                // console.log(dataArray);
+                // console.log("==============");
 
                 var figure = google.visualization.arrayToDataTable(dataArray)
             
@@ -252,9 +252,9 @@ $(function(){
         type: "GET",
         url: "/admin/dashboard/create",
         success: function (response) {
-            console.log(response.top5Customer_App.length);
-            // console.log(response);
-            console.log('tangina');
+            // console.log(response.top5Customer_App.length);
+            // // console.log(response);
+            // console.log('tangina');
 
             if(response.top5Customer_App.length == 0){
                 google.charts.load("current", {packages:['corechart']});
@@ -274,9 +274,9 @@ $(function(){
                 var dataArray = [["Name", "Appointments", { role: "style" }],
                 ["N/A", 0, '#116895']];
 
-                console.log("==============");
-                console.log(dataArray);
-                console.log("==============");
+                // console.log("==============");
+                // console.log(dataArray);
+                // console.log("==============");
 
                 var figure = google.visualization.arrayToDataTable(dataArray)
             
@@ -320,9 +320,9 @@ $(function(){
                         dataArray.push([value.name, parseInt(value.count), '#116895']);
                 });
 
-                console.log("==============");
-                console.log(dataArray);
-                console.log("==============");
+                // console.log("==============");
+                // console.log(dataArray);
+                // console.log("==============");
 
                 var figure = google.visualization.arrayToDataTable(dataArray)
             
