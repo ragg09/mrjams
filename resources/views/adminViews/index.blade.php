@@ -117,7 +117,7 @@
                 <div class="card-header no-border">
                     <h5 class="card-title">Last Registered Users</h5>
                 </div>
-                <div class="card-body pt-0">
+                {{-- <div class="card-body pt-0">
                     <div class="widget-49">
                         <div class="widget-49-title-wrapper">
                             <div class="widget-49-date-primary">
@@ -132,13 +132,12 @@
                             <li class="widget-49-meeting-item"><span>{{$latestCustomer[1]->lname}}, {{$latestCustomer[1]->fname}}</span></li>
                             <li class="widget-49-meeting-item"><span>{{$latestCustomer[2]->lname}}, {{$latestCustomer[2]->fname}}</span></li>
                             <li class="widget-49-meeting-item"><span>{{$latestCustomer[3]->lname}}, {{$latestCustomer[3]->fname}}</span></li>
-                            {{-- <li class="widget-49-meeting-item"><span>Session timeout increase to 30 minutes</span></li> --}}
                         </ol>
                         <div class="widget-49-meeting-action">
                             <a href="{{ route('admin.patient.index') }}" class="btn btn-sm btn-flash-border-primary">View All</a>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
         <div class="col-lg-6">
@@ -146,7 +145,7 @@
                 <div class="card-header no-border">
                     <h5 class="card-title">Last Registered Clinics</h5>
                 </div>
-                <div class="card-body pt-0">
+                {{-- <div class="card-body pt-0">
                     <div class="widget-49">
                         <div class="widget-49-title-wrapper">
                             <div class="widget-49-date-warning">
@@ -161,13 +160,12 @@
                             <li class="widget-49-meeting-item"><span>{{$latestClinic[1]->name}}</span></li>
                             <li class="widget-49-meeting-item"><span>{{$latestClinic[2]->name}}</span></li>
                             <li class="widget-49-meeting-item"><span>{{$latestClinic[3]->name}}</span></li>
-                            {{-- <li class="widget-49-meeting-item"><span>Client request to send invoice</span></li> --}}
                         </ol>
                         <div class="widget-49-meeting-action">
                             <a href="{{ route('admin.clinic.index') }}" class="btn btn-sm btn-flash-border-warning">View All</a>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
 
