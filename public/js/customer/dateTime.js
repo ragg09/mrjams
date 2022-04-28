@@ -8,11 +8,7 @@ $(function(){
         placeholder: "Select Services",
         allowClear: true,
         tags: true,
-        language: {
-            noResults: function(){
-                return "No Results Found";
-            }
-        },
+        formatNoMatches: "Nothing found",
     });
 
 
