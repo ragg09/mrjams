@@ -500,20 +500,20 @@ class AppointmentController extends Controller
             //ACCEPT PATIENT'S TIME & DATE
 
             //verify date time if already taken IF NO OTHER DOCTORS (NO SPECIALIST ON SETTINGS)
-            $specialists = Clinic_specialists::where('user_as_clinic_id', '=', $clinic->id)->get();
-            if (count($specialists) == 0) {
-                foreach ($receipts as $key) {
-                    $this_app = Appointments::where('receipt_orders_id', '=', $key->id)->first();
+            // $specialists = Clinic_specialists::where('user_as_clinic_id', '=', $clinic->id)->get();
+            // if (count($specialists) == 0) {
+            //     foreach ($receipts as $key) {
+            //         $this_app = Appointments::where('receipt_orders_id', '=', $key->id)->first();
 
-                    if ($this_app->appointed_at == $date && $this_app->time == $time && $this_app->appointment_status_id == 4) {
-                        return response()->json([
-                            'status' => 0,
-                            'datetime' => "You have already set an appointment on this given time and date, please check your calendar for reference.",
-                            'tester' => "error message"
-                        ]);
-                    }
-                }
-            }
+            //         if ($this_app->appointed_at == $date && $this_app->time == $time && $this_app->appointment_status_id == 4) {
+            //             return response()->json([
+            //                 'status' => 0,
+            //                 'datetime' => "You have already set an appointment on this given time and date, please check your calendar for reference.",
+            //                 'tester' => "error message"
+            //             ]);
+            //         }
+            //     }
+            // }
 
 
             //IF TIME AND DATE PASSES VERIFICATION
