@@ -3,9 +3,9 @@ $(document).on('submit', '#formQuery', function(e) {
     $.ajax({
         type: "POST",
         // url: "https://mrjams.herokuapp.com/admin/adminQuery/",
-        url: "/admin/adminQuery/",
+        url: "/admin/adminQuery",
         data: $('#formQuery').serialize(),
-        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        // headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         // headers: {  'Access-Control-Allow-Origin': 'https://mrjams.herokuapp.com/' },
             success: function(data) {
 
