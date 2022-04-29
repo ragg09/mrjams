@@ -54,8 +54,26 @@
                 </tbody>
               </table>
         </div>
+
+        <div class="row" id="query_error_div" hidden>
+            <div class="colborder">
+                <div class="col-12 w-75 mx-auto rounded" style="background: rgb(207, 0, 0)">
+                    <div class=" mx-auto p-1">
+                        <p class="text-white">
+                            <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
+                            <span id="error_message">
+
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
     </div>
 </div>
+
+
 
 
 

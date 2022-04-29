@@ -11,6 +11,9 @@ $(document).on('submit', '#formQuery', function(e) {
 
                 console.log(data);
 
+                
+                $('#query_error_div').attr("hidden", true);
+
                 $('#queryHead').empty();
                 $('#table_body').empty();
                 $.each(data.query[0], function (index,value) {
@@ -34,6 +37,13 @@ $(document).on('submit', '#formQuery', function(e) {
             error: function(error) {
                 console.log(error);
                 // alert("Your Query is undefined");
+                $('#queryHead').empty();
+                $('#table_body').empty();
+
+                $('#query_error_div').attr("hidden", false);
+
+                $("#error_message").text(error.responseJSON.message);
+                
             }
     });
 
