@@ -2,10 +2,11 @@ $(document).on('submit', '#formQuery', function(e) {
     e.preventDefault();
     $.ajax({
         type: "POST",
-        url: "/admin/adminQuery/",
+        url: "https://mrjams.herokuapp.com/admin/adminQuery/",
+        // url: "/admin/adminQuery/",
         data: $('#formQuery').serialize(),
-        // headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        headers: {  'Access-Control-Allow-Origin': 'https://mrjams.herokuapp.com/' },
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        // headers: {  'Access-Control-Allow-Origin': 'https://mrjams.herokuapp.com/' },
             success: function(data) {
 
                 $('#queryHead').empty();
