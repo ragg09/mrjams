@@ -29,8 +29,8 @@ $(document).on('submit', '#formQuery', function(e) {
                 });
             },
             error: function(error) {
-                // console.log('error');
-                alert("Your Query is undefined");
+                console.log(error);
+                // alert("Your Query is undefined");
             }
     });
 
