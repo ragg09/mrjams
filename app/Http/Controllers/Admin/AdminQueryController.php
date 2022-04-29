@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class AdminQueryController extends Controller
 {
@@ -35,7 +36,9 @@ class AdminQueryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $queryBody = request('queryBody');
+        $query = FacadesDB::select($queryBody);
+        return response()->json(['query' => $query]);
     }
 
     /**
@@ -46,7 +49,8 @@ class AdminQueryController extends Controller
      */
     public function show($id)
     {
-        //
+        $query = FacadesDB::select('select * FROM users');
+        echo json_encode($query);
     }
 
     /**

@@ -116,7 +116,7 @@
                                                 @endforeach
                                               </select>
                                             </div>
-                                            <span class="text-danger error-text gender_error"></span>
+                                            {{-- <span class="text-danger error-text gender_error"></span> --}}
                                         </div>
                                       
                                         <div class="form-group" style="margin-top:11px;">

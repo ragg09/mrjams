@@ -44,14 +44,14 @@
 
     
       
-      <section class="mapcontain" style="background-color: #eff3f9">
+      <section class="mapcontain" style="background-color: #eff3f9; ">
 
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="mapModal" hidden></button>
 
             <div class="container" id="map_locate">
 
               {{-- search landmark --}}
-              <div class="form-floating mb-3" >
+              <div class="form-floating mb-3" style="border-style: solid; border-color: #6497B1">
                 <input class="form-control" type="text" id="searchInput" placeholder="" >
                 <label for="floatingInput">Search landmark near to your location</label>
               </div>
@@ -187,10 +187,7 @@
   <script src="{{ URL::asset('js/customer/map.js') }}"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places"></script>
   {{-- <script defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places"></script> --}}
-    {{-- <script>
-      // $('.alert').alert()
-      $(".alert").alert('close')
-    </script> --}}
+   
 @endsection
 
 

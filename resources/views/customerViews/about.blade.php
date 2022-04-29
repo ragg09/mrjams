@@ -37,10 +37,10 @@
             <!-- Section Heading-->
             <div class="section_heading text-center wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
               <h3 style="color: #116895; font-size: 30px;"><b>Our Creative Team</b></h3><br>
-              <p style="font-size: 16px;"><b>Technological University of the Philippines - Taguig</b></p>
-              {{-- <p>Km. 14 East Service Road Western Bicutan, Taguig City 1630</p> --}}
+              {{-- <p style="font-size: 16px;"><b>Technological University of the Philippines - Taguig</b></p>
+             
               <p style="font-size: 15px;"><b>Bachelor of Science in Information Technology - 4A</b></p>
-              <p style="font-size: 15px;">Appointment and Management System for Dental and Medical Clinics with Location-Based Mapping </p>
+              <p style="font-size: 15px;">Appointment and Management System for Dental and Medical Clinics with Location-Based Mapping </p> --}}
               <br>
               <div class="line"></div>
             </div>

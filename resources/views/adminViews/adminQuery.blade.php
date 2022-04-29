@@ -28,34 +28,31 @@
     <div class="container-lg">
         <div class="row">
             <h3><b>Create a Query</b></h3>
-            <form action="{{ route('admin.message.store') }}" method="POST">
+            <form action="{{ route('admin.adminQuery.store') }}" method="POST" id="formQuery">
               @csrf
                 <div class="mb-2">
-                  {{-- <select class="form-select" aria-label="Default select example" id="messageSelect" name="messageSelect">
-                    <option selected></option>
-                    <option value="User">User</option>
-                    <option value="User_as_Clinic">Clinic</option>
-                    <option value="User_as_customer">Patient</option>
-                  </select> --}}
                   <label class="form-label"><i class="fa fa-code" aria-hidden="true" style="margin-right:5px;"></i>Insert Query:</label>
-                  <textarea class="form-control" id="queryBody" name="queryBody" rows="3" value="{{ csrf_token() }}"></textarea>
-                  {{-- <input type="text" class="form-control" id="messageBody" aria-describedby="emailHelp"> --}}
+                  <textarea class="form-control" id="queryBody" name="queryBody" rows="3"></textarea>
                 </div>
-                
-                {{-- <div class="mb-3">
-                  <label for="exampleInputPassword1" class="form-label">Password</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1">
-                </div>
-                <div class="mb-3 form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                  <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                </div> --}}
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <br>
-                <label class="form-label mt-2"><i class="fa fa-code" aria-hidden="true" style="margin-right:5px;"></i>Result:</label>
-                <textarea class="form-control" id="queryBody" name="queryBody" rows="3" value="{{ csrf_token() }}"></textarea>
-
+                {{-- <label class="form-label mt-2"><i class="fa fa-code" aria-hidden="true" style="margin-right:5px;"></i>select * from users</label> --}}
+                {{-- <textarea class="form-control" id="queryBody" name="queryBody" rows="3" value="{{ csrf_token() }}"></textarea> --}}
               </form>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                  <tr id="queryHead">
+                    {{-- <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Handle</th> --}}
+                  </tr>
+                </thead>
+                <tbody id="table_body">
+                </tbody>
+              </table>
         </div>
     </div>
 </div>
@@ -66,6 +63,6 @@
 
 @section('extraScript')
 
-{{-- <script src="{{ URL::asset('js/admin/userAnalytics.js') }}"></script> --}}
+<script src="{{ URL::asset('js/admin/adminQuery.js') }}"></script>
 
 @endsection

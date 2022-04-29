@@ -123,7 +123,7 @@
                               @endforeach
                               </select>
                             </div>
-                          <span class="text-danger error-text gender_error"></span>
+                          {{-- <span class="text-danger error-text gender_error"></span> --}}
                       </div>
                   
                 

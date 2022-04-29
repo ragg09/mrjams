@@ -152,7 +152,7 @@
                                 </li>
                                 <li>
                                     <div class="icon">
-                                        <i class="fa fa-user-md fa-lg" aria-hidden="true"></i>
+                                        <i class="fa fa-user-md fa-2x" aria-hidden="true"></i>
                                     </div>
                                     <h5 style="color: #6497B1; font-size:18px;"><b>Clinic Information:</b></h5>
                                     <table class="table">
