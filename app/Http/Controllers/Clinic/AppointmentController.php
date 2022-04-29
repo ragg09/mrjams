@@ -518,11 +518,15 @@ class AppointmentController extends Controller
 
             //IF TIME AND DATE PASSES VERIFICATION
             //accepted || accept customer's time request
-            DB::table('appointments')
-                ->where('receipt_orders_id', $id)
-                ->update([
-                    'appointment_status_id' =>  4, //4 is the id for accepted
-                ]);
+            // DB::table('appointments')
+            //     ->where('receipt_orders_id', $id)
+            //     ->update([
+            //         'appointment_status_id' =>  4, //4 is the id for accepted
+            //     ]);
+            $app_update = Appointments::find($id);
+            $app_update->appointment_status_id = 4; //4 is the id for accepted;
+            $app_update->save();
+
 
             $ro_update = Receipt_orders::find($id);
             $ro_update->specialist_id = $request->specialist ?? NULL;
