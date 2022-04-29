@@ -117,7 +117,7 @@
                 <div class="card-header no-border">
                     <h5 class="card-title">Last Registered Users</h5>
                 </div>
-                {{-- <div class="card-body pt-0">
+                <div class="card-body pt-0">
                     <div class="widget-49">
                         <div class="widget-49-title-wrapper">
                             <div class="widget-49-date-primary">
@@ -137,7 +137,7 @@
                             <a href="{{ route('admin.patient.index') }}" class="btn btn-sm btn-flash-border-primary">View All</a>
                         </div>
                     </div>
-                </div> --}}
+                </div>
             </div>
         </div>
         <div class="col-lg-6">
@@ -169,7 +169,7 @@
             </div>
         </div>
 
-        <div class="col-lg-4">
+        {{-- <div class="col-lg-4">
             <div class="card card-margin">
                 <div class="card-header no-border">
                     <h5 class="card-title">MOM</h5>
@@ -197,7 +197,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
     <div class="row">
         <div class="col-lg-12">
