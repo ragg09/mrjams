@@ -493,7 +493,7 @@ class AppointmentController extends Controller
         //SUGGESTION: put timestamp on this table for trapping purposes
         $receipts = Receipt_orders::where('user_as_clinic_id', '=',  $clinic->id)->get();
 
-        $appointments = Appointments::where('receipt_orders_id', '=', $id)->first();
+        $appointments = Appointments::where('receipt_orders_id', $id)->first();
         $this_ro = Receipt_orders::where('id', '=', $id)->first();
 
         if ($appointments->appointed_at == $date && $appointments->time == $time) {
