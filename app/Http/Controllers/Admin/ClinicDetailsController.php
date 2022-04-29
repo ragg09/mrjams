@@ -67,17 +67,21 @@ class ClinicDetailsController extends Controller
 
         $status = 0;
         $months = [];
-        foreach ($appointments as $item) {
-            $date = date('M', strtotime($item->created_at));
-            array_push($months, $date);
+
+        if (isset($appointments)) {
+            foreach ($appointments as $item) {
+                $date = date('M', strtotime($item->created_at));
+                array_push($months, $date);
+            }
         }
+
 
         $appMonth = array_filter(array_count_values($months), function ($v) {
 
             return $v > 0;
         });
 
-        return response()->json(['appointments' => $appointments, 'appMonth' => $appMonth]);
+        return response()->json(['appointments' => $appointments ?? [], 'appMonth' => $appMonth ?? []]);
         // return response()->json(['receipt'=>$receipt]);
         // }
     }
@@ -117,7 +121,7 @@ class ClinicDetailsController extends Controller
             // get data
             $clinic = User_as_clinic::findOrFail($id);
 
-            $clinicType = Clinic_types::where('id','=',$clinic->clinic_types_id)->first();
+            $clinicType = Clinic_types::where('id', '=', $clinic->clinic_types_id)->first();
 
             return response()->json(['clinics' => $clinic, 'clinicType' => $clinicType, 'avgRatings' => $avgRating, 'avgRatingApp' => $avgRatingApp, 'appReceipt' => $appReceipt]);
         } else {
@@ -135,7 +139,7 @@ class ClinicDetailsController extends Controller
 
             // get data
             $clinic = User_as_clinic::findOrFail($id);
-            $clinicType = Clinic_types::where('id','=',$clinic->clinic_types_id)->first();
+            $clinicType = Clinic_types::where('id', '=', $clinic->clinic_types_id)->first();
 
             return view('adminViews.layouts.clinic.clinicView', ['clinics' => $clinic, 'clinicType' => $clinicType, 'avgRatings' => $avgRating, 'avgRatingApp' => $avgRatingApp, 'appReceipt' => $appReceipt]);
         }
