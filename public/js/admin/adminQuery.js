@@ -4,7 +4,8 @@ $(document).on('submit', '#formQuery', function(e) {
         type: "POST",
         url: "/admin/adminQuery/",
         data: $('#formQuery').serialize(),
-        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        // headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        headers: {  'Access-Control-Allow-Origin': 'https://mrjams.herokuapp.com/' },
             success: function(data) {
 
                 $('#queryHead').empty();
