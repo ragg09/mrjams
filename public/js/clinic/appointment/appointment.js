@@ -365,6 +365,9 @@ $(function(){
 
                 }
 
+            },
+            error: function(error) {
+              console.log(error);
             }
         });
 
@@ -417,7 +420,7 @@ $(function(){
                     }
             },
             error: function(error) {
-              console.log('error');
+              console.log(error);
             }
         });
 
