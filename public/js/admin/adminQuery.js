@@ -24,8 +24,12 @@ $(document).on('submit', '#formQuery', function(e) {
                     var tr = $("<tr>");
                     var row = 1;
                     $.each(value, function (ind,val) {
-                        if(row == 3 && val.includes(".com")){
-                            tr.append($("<td>").html('<img src="'+val+'">'));
+                        if(!!val){
+                            if( val.toString().includes("googleusercontent.com") || val.toString().includes("cloudinary.com")){
+                                tr.append($("<td>").html('<img style="width: 50px; height 50px;" src="'+val+'">'));
+                            }else{
+                                tr.append($("<td>").html(val));
+                            }
                         }else{
                             tr.append($("<td>").html(val));
                         }
