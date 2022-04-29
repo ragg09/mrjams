@@ -525,9 +525,7 @@ class AppointmentController extends Controller
                 ->update([
                     'appointment_status_id' =>  4, //4 is the id for accepted
                 ]);
-            // $app_update = Appointments::find($id);
-            // $app_update->appointment_status_id = 4; //4 is the id for accepted;
-            // $app_update->save();
+
 
 
             $ro_update = Receipt_orders::find($id);
