@@ -617,7 +617,7 @@ class ReportController extends Controller
                         // echo "declined appointments";
                         $all_declined = array();
 
-                        if (isset($this_clinic_appointments)) {
+                        if (isset($key->appointment_status_id)) {
                             foreach ($this_clinic_appointments as $key) {
 
                                 if ($key->appointment_status_id == 3 && $key->appointed_at == $date_key) {
