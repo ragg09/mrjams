@@ -112,17 +112,20 @@ class DashbaordController extends Controller
                 $logs->user_as_clinic_id = $clinic->id;
                 $logs->save();
 
-                //checking logs limit 5000
-                if ($logs_count == 5000) {
-                    Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
+                if (isset($appointments->id)) {
+                    //checking logs limit 5000
+                    if ($logs_count == 5000) {
+                        Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
+                    }
+                    $logs_notif = new Logs();
+                    $logs_notif->message = "An Appointment has been expired with Receipt Order No: " . $appointments->id;
+                    $logs_notif->remark = "notif";
+                    $logs_notif->date =  date("Y/m/d");
+                    $logs_notif->time = date("h:i:sa");
+                    $logs_notif->user_as_clinic_id = $clinic->id;
+                    $logs_notif->save();
                 }
-                $logs_notif = new Logs();
-                $logs_notif->message = "An Appointment has been expired with Receipt Order No: " . $appointments->id;
-                $logs_notif->remark = "notif";
-                $logs_notif->date =  date("Y/m/d");
-                $logs_notif->time = date("h:i:sa");
-                $logs_notif->user_as_clinic_id = $clinic->id;
-                $logs_notif->save();
+
 
                 $this_ro = Receipt_orders::where("id", $appointments->receipt_orders_id)->first();
 
