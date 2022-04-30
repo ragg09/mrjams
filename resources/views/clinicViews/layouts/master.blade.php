@@ -215,7 +215,7 @@
             <li>|</li>
             <li><a href="/public/terms_condition" target="_blank" class="fw-bold">Terms</a></li>
             <li>|</li>
-            <li><a href="https://www.youtube.com/watch?v=E2x3CLpcTrY&ab_channel=MRJAMS" target="_blank" class="fw-bold">How to?</a></li>
+            <li><a href="https://www.youtube.com/watch?v=E2x3CLpcTrY&ab_channel=MRJAMS" target="_blank" class="fw-bold">Getting Started</a></li>
         </ul>  
         
     </div>
