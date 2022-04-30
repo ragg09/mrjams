@@ -63,6 +63,15 @@ class MessageController extends Controller
     public function store(Request $request)
     {
         $adminMessage = Messages::where('receiver', '=', 'admin')->orderBy('id', 'desc')->get();
+        foreach ($adminMessage as $key) {
+            $sender = User::where('id', '=', $key->users_id)->first();
+
+            $formatted_data_message[] = array(
+                'id' => $key->id,
+                'message' => $key->message,
+                'sender' => $sender->email,
+            );
+        }
 
         $messages = new Messages();
         $messages->message = request('messageBody');
@@ -119,7 +128,7 @@ class MessageController extends Controller
                 $notice->save();
             }
         }
-        return view('adminViews.message', ['adminMessage' => $adminMessage]);
+        return view('adminViews.message', ['formatted_data_message' => $formatted_data_message ?? []]);
     }
 
 
