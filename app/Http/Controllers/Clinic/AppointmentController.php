@@ -583,12 +583,14 @@ class AppointmentController extends Controller
                 foreach ($receipts as $key) {
                     $this_app = Appointments::where('receipt_orders_id', '=', $key->id)->first();
 
-                    if ($this_app->appointed_at == $date && $this_app->time == $time && $this_app->appointment_status_id == 4) {
-                        return response()->json([
-                            'status' => 0,
-                            'datetime' => "You have already set an appointment on this given time and date, please check your calendar for reference.",
-                            'tester' => "error message"
-                        ]);
+                    if (isset($this_app)) {
+                        if ($this_app->appointed_at == $date && $this_app->time == $time && $this_app->appointment_status_id == 4) {
+                            return response()->json([
+                                'status' => 0,
+                                'datetime' => "You have already set an appointment on this given time and date, please check your calendar for reference.",
+                                'tester' => "error message"
+                            ]);
+                        }
                     }
                 }
             }
