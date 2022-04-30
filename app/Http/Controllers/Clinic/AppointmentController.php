@@ -73,127 +73,129 @@ class AppointmentController extends Controller
             $customer = User_as_customer::where('id', '=',   $key->user_as_customer_id)->first();
             $customer_root_data = User::where('id', '=',   $customer->users_id)->first();
 
-            if ($appointments->appointment_status_id == 4) { //accepted appointments only
-                $dateime = $appointments->appointed_at . " " . $appointments->time;
-                if (date("Y-m-d H:i") > $dateime) {
-                    $update_app = Appointments::find($appointments->id);
-                    $update_app->appointment_status_id = 6; //expired
-                    $update_app->save();
+            if (isset($appointments)) {
+                if ($appointments->appointment_status_id == 4) { //accepted appointments only
+                    $dateime = $appointments->appointed_at . " " . $appointments->time;
+                    if (date("Y-m-d H:i") > $dateime) {
+                        $update_app = Appointments::find($appointments->id);
+                        $update_app->appointment_status_id = 6; //expired
+                        $update_app->save();
 
-                    //checking logs limit 5000
-                    if ($logs_count == 5000) {
-                        Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
+                        //checking logs limit 5000
+                        if ($logs_count == 5000) {
+                            Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
+                        }
+                        $logs = new Logs();
+                        $logs->message = "An Appointment has been expired with Receipt Order No: " . $appointments->id;
+                        $logs->remark = "danger";
+                        $logs->date =  date("Y/m/d");
+                        $logs->time = date("h:i:sa");
+                        $logs->user_as_clinic_id = $clinic->id;
+                        $logs->save();
+
+                        //checking logs limit 5000
+                        if ($logs_count == 5000) {
+                            Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
+                        }
+                        $logs_notif = new Logs();
+                        $logs_notif->message = "An Appointment has been expired with Receipt Order No: " . $appointments->id;
+                        $logs_notif->remark = "notif";
+                        $logs_notif->date =  date("Y/m/d");
+                        $logs_notif->time = date("h:i:sa");
+                        $logs_notif->user_as_clinic_id = $clinic->id;
+                        $logs_notif->save();
+
+                        $this_ro = Receipt_orders::where("id", $appointments->receipt_orders_id)->first();
+
+                        $clogs = new Customer_logs();
+                        $clogs->message = "Your appointment has expired. Too bad " . $clinic->name . " expected you.";
+                        $clogs->remark = "notif";
+                        $clogs->date =  date("Y/m/d");
+                        $clogs->time = date("h:i:sa");
+                        $clogs->user_as_customer_id =  $this_ro->user_as_customer_id;
+                        $clogs->save();
+                    } else {
+                        $complete_appointment_data[] = (object) array(
+                            "user_email" => $customer_root_data->email ?? "",
+                            "user_avatar" => $customer_root_data->avatar ?? "",
+
+                            "app_id" =>  $appointments->id ?? "",
+                            "app_created_at" =>  $appointments->created_at ?? "",
+                            "time" =>  date("g:i a", strtotime($appointments->time)) ?? "",
+                            "app_appointed_at" =>  $appointments->appointed_at ?? "",
+                            "app_status" =>  $appointments->appointment_status_id ?? "",
+                            "package_service" => $package_service,
+                            "ro_id" =>  $key->id ?? "",
+                            "ro_package_name" =>  $package->name ?? "",
+                            "ro_services_name" => $services_summary ?? "",
+                            "ro_customer_id" =>  $key->user_as_customer_id ?? "",
+                            "ro_patient_details" =>  $key->patient_details ?? "",
+                            "ro_patient_address" =>  $key->patient_address ?? "",
+                        );
                     }
-                    $logs = new Logs();
-                    $logs->message = "An Appointment has been expired with Receipt Order No: " . $appointments->id;
-                    $logs->remark = "danger";
-                    $logs->date =  date("Y/m/d");
-                    $logs->time = date("h:i:sa");
-                    $logs->user_as_clinic_id = $clinic->id;
-                    $logs->save();
-
-                    //checking logs limit 5000
-                    if ($logs_count == 5000) {
-                        Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
-                    }
-                    $logs_notif = new Logs();
-                    $logs_notif->message = "An Appointment has been expired with Receipt Order No: " . $appointments->id;
-                    $logs_notif->remark = "notif";
-                    $logs_notif->date =  date("Y/m/d");
-                    $logs_notif->time = date("h:i:sa");
-                    $logs_notif->user_as_clinic_id = $clinic->id;
-                    $logs_notif->save();
-
-                    $this_ro = Receipt_orders::where("id", $appointments->receipt_orders_id)->first();
-
-                    $clogs = new Customer_logs();
-                    $clogs->message = "Your appointment has expired. Too bad " . $clinic->name . " expected you.";
-                    $clogs->remark = "notif";
-                    $clogs->date =  date("Y/m/d");
-                    $clogs->time = date("h:i:sa");
-                    $clogs->user_as_customer_id =  $this_ro->user_as_customer_id;
-                    $clogs->save();
-                } else {
-                    $complete_appointment_data[] = (object) array(
-                        "user_email" => $customer_root_data->email ?? "",
-                        "user_avatar" => $customer_root_data->avatar ?? "",
-
-                        "app_id" =>  $appointments->id ?? "",
-                        "app_created_at" =>  $appointments->created_at ?? "",
-                        "time" =>  date("g:i a", strtotime($appointments->time)) ?? "",
-                        "app_appointed_at" =>  $appointments->appointed_at ?? "",
-                        "app_status" =>  $appointments->appointment_status_id ?? "",
-                        "package_service" => $package_service,
-                        "ro_id" =>  $key->id ?? "",
-                        "ro_package_name" =>  $package->name ?? "",
-                        "ro_services_name" => $services_summary ?? "",
-                        "ro_customer_id" =>  $key->user_as_customer_id ?? "",
-                        "ro_patient_details" =>  $key->patient_details ?? "",
-                        "ro_patient_address" =>  $key->patient_address ?? "",
-                    );
                 }
-            }
 
-            if ($appointments->appointment_status_id == 5) { // negotiation
+                if ($appointments->appointment_status_id == 5) { // negotiation
 
-                // echo date("Y-m-d H:i");
-                $dateime = $appointments->appointed_at . " " . $appointments->time;
-                if (date("Y-m-d H:i") > $dateime) {
-                    $update_app = Appointments::find($appointments->id);
-                    $update_app->appointment_status_id = 6; //expired
-                    $update_app->save();
+                    // echo date("Y-m-d H:i");
+                    $dateime = $appointments->appointed_at . " " . $appointments->time;
+                    if (date("Y-m-d H:i") > $dateime) {
+                        $update_app = Appointments::find($appointments->id);
+                        $update_app->appointment_status_id = 6; //expired
+                        $update_app->save();
 
-                    //checking logs limit 5000
-                    if ($logs_count == 5000) {
-                        Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
+                        //checking logs limit 5000
+                        if ($logs_count == 5000) {
+                            Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
+                        }
+                        $logs = new Logs();
+                        $logs->message = "An Appointment has been expired with Receipt Order No: " . $appointments->id;
+                        $logs->remark = "danger";
+                        $logs->date =  date("Y/m/d");
+                        $logs->time = date("h:i:sa");
+                        $logs->user_as_clinic_id = $clinic->id;
+                        $logs->save();
+
+                        //checking logs limit 5000
+                        if ($logs_count == 5000) {
+                            Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
+                        }
+                        $logs_notif = new Logs();
+                        $logs_notif->message = "An Appointment has been expired with Receipt Order No: " . $appointments->id;
+                        $logs_notif->remark = "notif";
+                        $logs_notif->date =  date("Y/m/d");
+                        $logs_notif->time = date("h:i:sa");
+                        $logs_notif->user_as_clinic_id = $clinic->id;
+                        $logs_notif->save();
+
+                        $this_ro = Receipt_orders::where("id", $appointments->receipt_orders_id)->first();
+
+                        $clogs = new Customer_logs();
+                        $clogs->message = "Your appointment has expired. Too bad " . $clinic->name . " expected you.";
+                        $clogs->remark = "notif";
+                        $clogs->date =  date("Y/m/d");
+                        $clogs->time = date("h:i:sa");
+                        $clogs->user_as_customer_id =  $this_ro->user_as_customer_id;
+                        $clogs->save();
+                    } else {
+                        $complete_appointment_negotiations[] = (object) array(
+                            "user_email" => $customer_root_data->email ?? "",
+                            "user_avatar" => $customer_root_data->avatar ?? "",
+
+                            "app_id" =>  $appointments->id ?? "",
+                            "app_created_at" =>  $appointments->created_at ?? "",
+                            "time" =>  date("g:i a", strtotime($appointments->time)) ?? "",
+                            "app_appointed_at" =>  $appointments->appointed_at ?? "",
+                            "app_status" =>  $appointments->appointment_status_id ?? "",
+                            "package_service" => $package_service,
+                            "ro_id" =>  $key->id ?? "",
+                            "ro_package_name" =>  $package->name ?? "",
+                            "ro_services_name" => $services_summary ?? "",
+                            "ro_customer_id" =>  $key->user_as_customer_id ?? "",
+                            "ro_patient_details" =>  $key->patient_details ?? "",
+                            "ro_patient_address" =>  $key->patient_address ?? "",
+                        );
                     }
-                    $logs = new Logs();
-                    $logs->message = "An Appointment has been expired with Receipt Order No: " . $appointments->id;
-                    $logs->remark = "danger";
-                    $logs->date =  date("Y/m/d");
-                    $logs->time = date("h:i:sa");
-                    $logs->user_as_clinic_id = $clinic->id;
-                    $logs->save();
-
-                    //checking logs limit 5000
-                    if ($logs_count == 5000) {
-                        Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
-                    }
-                    $logs_notif = new Logs();
-                    $logs_notif->message = "An Appointment has been expired with Receipt Order No: " . $appointments->id;
-                    $logs_notif->remark = "notif";
-                    $logs_notif->date =  date("Y/m/d");
-                    $logs_notif->time = date("h:i:sa");
-                    $logs_notif->user_as_clinic_id = $clinic->id;
-                    $logs_notif->save();
-
-                    $this_ro = Receipt_orders::where("id", $appointments->receipt_orders_id)->first();
-
-                    $clogs = new Customer_logs();
-                    $clogs->message = "Your appointment has expired. Too bad " . $clinic->name . " expected you.";
-                    $clogs->remark = "notif";
-                    $clogs->date =  date("Y/m/d");
-                    $clogs->time = date("h:i:sa");
-                    $clogs->user_as_customer_id =  $this_ro->user_as_customer_id;
-                    $clogs->save();
-                } else {
-                    $complete_appointment_negotiations[] = (object) array(
-                        "user_email" => $customer_root_data->email ?? "",
-                        "user_avatar" => $customer_root_data->avatar ?? "",
-
-                        "app_id" =>  $appointments->id ?? "",
-                        "app_created_at" =>  $appointments->created_at ?? "",
-                        "time" =>  date("g:i a", strtotime($appointments->time)) ?? "",
-                        "app_appointed_at" =>  $appointments->appointed_at ?? "",
-                        "app_status" =>  $appointments->appointment_status_id ?? "",
-                        "package_service" => $package_service,
-                        "ro_id" =>  $key->id ?? "",
-                        "ro_package_name" =>  $package->name ?? "",
-                        "ro_services_name" => $services_summary ?? "",
-                        "ro_customer_id" =>  $key->user_as_customer_id ?? "",
-                        "ro_patient_details" =>  $key->patient_details ?? "",
-                        "ro_patient_address" =>  $key->patient_address ?? "",
-                    );
                 }
             }
         }
