@@ -69,7 +69,7 @@
                                 {{-- <td class="align-middle">{{$row->ro_id}}</td> --}}
                                 <td class="align-middle text-center"><img class="rounded-circle" src="{{$row->user_avatar}}" alt="{{$row->user_avatar}}"></td>
                                 <td class="align-middle text-center">{{$row->user_email}}</td>
-                                <td class="align-middle text-center">{{$row->app_appointed_at}}</td>
+                                <td class="align-middle text-center">{{date('M d, Y', strtotime($row->app_appointed_at)) }}</td>
                                 <td class="align-middle text-center">{{$row->time}}</td>
                                 <td class="align-middle text-center">
                                     <a href="" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#accepted_view_detail_modal_up" id="accepted_view_detail_modal" data-id="{{ $row->ro_id }}" title="View Details">
