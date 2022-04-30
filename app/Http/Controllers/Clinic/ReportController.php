@@ -560,11 +560,13 @@ class ReportController extends Controller
                     if (isset($request->app_pending)) { //PENDING ISSET
                         // echo "pending appointments";
                         $all_pending = array();
+                        if (isset($key->appointment_status_id)) {
 
-                        foreach ($this_clinic_appointments as $key) {
+                            foreach ($this_clinic_appointments as $key) {
 
-                            if ($key->appointment_status_id == 2 && $key->appointed_at == $date_key) {
-                                array_push($all_pending, $key);
+                                if ($key->appointment_status_id == 2 && $key->appointed_at == $date_key) {
+                                    array_push($all_pending, $key);
+                                }
                             }
                         }
 
@@ -675,11 +677,12 @@ class ReportController extends Controller
                     if (isset($request->app_accepted)) { // ACCEPTED ISSET
                         // echo "accepted appointments";
                         $all_accepted = array();
+                        if (isset($key->appointment_status_id)) {
+                            foreach ($this_clinic_appointments as $key) {
 
-                        foreach ($this_clinic_appointments as $key) {
-
-                            if ($key->appointment_status_id == 4 && $key->appointed_at == $date_key) {
-                                array_push($all_accepted, $key);
+                                if ($key->appointment_status_id == 4 && $key->appointed_at == $date_key) {
+                                    array_push($all_accepted, $key);
+                                }
                             }
                         }
 
@@ -732,11 +735,12 @@ class ReportController extends Controller
                     if (isset($request->app_nego)) { // NEGO ISSET
                         // echo "nego appointments";
                         $all_nego = array();
+                        if (isset($key->appointment_status_id)) {
+                            foreach ($this_clinic_appointments as $key) {
 
-                        foreach ($this_clinic_appointments as $key) {
-
-                            if ($key->appointment_status_id == 5 && $key->appointed_at == $date_key) {
-                                array_push($all_nego, $key);
+                                if ($key->appointment_status_id == 5 && $key->appointed_at == $date_key) {
+                                    array_push($all_nego, $key);
+                                }
                             }
                         }
 
@@ -789,11 +793,12 @@ class ReportController extends Controller
                     if (isset($request->app_expired)) { // EXPIRED ISSET
                         // echo "expired appointments";
                         $all_expired = array();
+                        if (isset($key->appointment_status_id)) {
+                            foreach ($this_clinic_appointments as $key) {
 
-                        foreach ($this_clinic_appointments as $key) {
-
-                            if ($key->appointment_status_id == 6 && $key->appointed_at == $date_key) {
-                                array_push($all_expired, $key);
+                                if ($key->appointment_status_id == 6 && $key->appointed_at == $date_key) {
+                                    array_push($all_expired, $key);
+                                }
                             }
                         }
 
@@ -845,11 +850,12 @@ class ReportController extends Controller
                     if (isset($request->app_cancelled)) { // CANCELLED ISSET
                         // echo "cancelled appointments";
                         $all_cancelled = array();
+                        if (isset($key->appointment_status_id)) {
+                            foreach ($this_clinic_appointments as $key) {
 
-                        foreach ($this_clinic_appointments as $key) {
-
-                            if ($key->appointment_status_id == 8 && $key->appointed_at == $date_key) {
-                                array_push($all_cancelled, $key);
+                                if ($key->appointment_status_id == 8 && $key->appointed_at == $date_key) {
+                                    array_push($all_cancelled, $key);
+                                }
                             }
                         }
 
