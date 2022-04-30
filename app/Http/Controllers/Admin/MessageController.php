@@ -25,10 +25,20 @@ class MessageController extends Controller
     public function index()
     {
         $adminMessage = Messages::where('receiver', '=', 'admin')->orderBy('id', 'desc')->get();
+        foreach ($adminMessage as $key) {
+            $sender = User::where('id', '=', $key->users_id)->first();
+
+            $formatted_data_message[] = array(
+                'id' => $key->id,
+                'message' => $key->message,
+                'sender' => $sender->email,
+            );
+        }
+
         // $messageSender = User::where('id' , '=', $adminMessage->users_id)->get();
         // echo($adminMessage);
         // return view('adminViews.message', ['adminMessage'=>$adminMessage,'messageSender'=>$messageSender ]);
-        return view('adminViews.message', ['adminMessage' => $adminMessage]);
+        return view('adminViews.message', ['adminMessage' => $adminMessage, 'formatted_data_message' => $formatted_data_message ?? []]);
 
 
         //sang function 
@@ -60,9 +70,9 @@ class MessageController extends Controller
         $messages->users_id = 1;
         $messages->save();
 
-        if(request('messageSelect') == 'clinic') {
+        if (request('messageSelect') == 'clinic') {
             $getClinic = User_as_clinic::all();
-            
+
             foreach ($getClinic as $key) {
                 $notice = new Logs();
                 $notice->message = "Announcement Notice";
@@ -72,10 +82,10 @@ class MessageController extends Controller
                 $notice->user_as_clinic_id = $key->id;
                 $notice->save();
             }
-        } 
-        if(request('messageSelect') == 'patient') {
+        }
+        if (request('messageSelect') == 'patient') {
             $getPatient = User_as_customer::all();
-            
+
             foreach ($getPatient as $key) {
                 $notice = new Customer_logs();
                 $notice->message = "Announcement Notice";
@@ -86,7 +96,7 @@ class MessageController extends Controller
                 $notice->save();
             }
         }
-        if(request('messageSelect') == 'all') {
+        if (request('messageSelect') == 'all') {
             $getClinic = User_as_clinic::all();
             foreach ($getClinic as $key) {
                 $notice = new Logs();

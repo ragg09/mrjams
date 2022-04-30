@@ -8,7 +8,7 @@
 @endsection
 
 
-{{-- {{$messageSender}} --}}
+{{-- {{$sender}} --}}
 
 @section('content')
 <header class="header header-sticky mb-2 mt-5"> 
@@ -44,11 +44,11 @@
                       </tr>
                     </thead>
                     <tbody>
-                        @foreach($adminMessage as $adminMessages)
+                        @foreach($formatted_data_message as $adminMessages)
                             <tr>
                                 <td>{{$adminMessages['id']}}</td>
                                 <td>{{$adminMessages['message']}}</td>
-                                <td>{{$adminMessages['users_id']}}</td>
+                                <td>{{$adminMessages['sender']}}</td>
                                 {{-- <td>{{$clinics['phone']}}</td>
                                 <td>{{$clinics['telephone']}}</td> --}}
                                 {{-- <td><a href="/admin/message/{{$adminMessages['id']}}"><button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i> Reply</button></a></td> --}}
