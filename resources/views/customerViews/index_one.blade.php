@@ -18,7 +18,7 @@
         </button>
       </div> --}}
 
-      <div class="alert alert-danger alert-dismissible fade show" role="alert" style="position: fixed; margin-left:20px; margin-top:500px; z-index: 5;">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert" style="position: fixed;   bottom: 0;margin-left:20px; z-index: 5;">
         <i class="fa fa-map-marker" aria-hidden="true" style="margin-right:5px;"></i><strong>Please allow the browser's location</strong> to utilize Google Maps more effectively.
         <button type="button" class="btn btn-transparent close" data-bs-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
