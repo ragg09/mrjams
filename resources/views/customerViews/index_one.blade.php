@@ -18,11 +18,11 @@
         </button>
       </div> --}}
 
-      <div class="alert alert-danger alert-dismissible fade show" role="alert" style="position: fixed;   bottom: 0;margin-left:20px; z-index: 5;">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert" style="position: fixed;   bottom: 0;margin-left:20px; z-index: 5;" id="location_alert">
         <i class="fa fa-map-marker" aria-hidden="true" style="margin-right:5px;"></i><strong>Please allow the browser's location</strong> to utilize Google Maps more effectively.
-        <button type="button" class="btn btn-transparent close" data-bs-dismiss="alert" aria-label="Close">
+        {{-- <button type="button" class="btn btn-transparent close" data-bs-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
-        </button>
+        </button> --}}
       </div>
 
 
@@ -184,6 +184,19 @@
   @include('customerViews.footer.footer1')
 @endsection
 @section('jsScript')
+    <script>
+      navigator.geolocation.watchPosition(function(position) {
+        //console.log("enabled location");
+
+        $("#location_alert").attr("hidden", true);
+      },
+      function(error) {
+        if (error.code == error.PERMISSION_DENIED)
+          //console.log("disabled location");
+          $("#location_alert").attr("hidden", false);
+      });
+    </script>
+
   <script src="{{ URL::asset('js/customer/map.js') }}"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places"></script>
   {{-- <script defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPPING_API_KEY') }}&callback=initMap&libraries=places"></script> --}}
