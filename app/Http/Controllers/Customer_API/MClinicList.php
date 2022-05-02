@@ -48,8 +48,8 @@ class MClinicList extends Controller
                     "type_of_clinic" => $clinic_types->type_of_clinic,
                     "address_line_1" => $clinic_address->address_line_1,
                     "address_line_2" => $clinic_address->address_line_2,
-                    "packages" => $package->name,
-                    "services" => $service->name
+                    "packages" => $package,
+                    "services" => $service
                 );
 
                 $count++;
@@ -62,8 +62,8 @@ class MClinicList extends Controller
                     "type_of_clinic" => $clinic_types->type_of_clinic,
                     "address_line_1" => $clinic_address->address_line_1,
                     "address_line_2" => $clinic_address->address_line_2,
-                    "packages" => "no packages",
-                    "services" => $service->name
+                    "packages" => null,
+                    "services" => $service
                 );
 
                 $count++;
@@ -76,9 +76,8 @@ class MClinicList extends Controller
                     "type_of_clinic" => $clinic_types->type_of_clinic,
                     "address_line_1" => $clinic_address->address_line_1,
                     "address_line_2" => $clinic_address->address_line_2,
-                    "packages" => $package->name,
-                    "services" => "no services",
-
+                    "packages" => $package,
+                    "services" => null,
                 );
                 $count++;
             }
@@ -87,11 +86,15 @@ class MClinicList extends Controller
         if ($count > 0) {
             return response()->json([
                 'all' => $all,
+                'packages' => $package,
                 'services' => $service
             ]);
             // return response()->json(['customer'=>$customer]);
         } else {
-            return response()->json(['status' => 0, 'customer' => $customer, 'clinics' => $clinics]);
+            return response()->json([
+                'status' => 0, 
+                'customer' => $customer, 
+                'clinics' => $clinics]);
         }
     }
 
@@ -124,7 +127,69 @@ class MClinicList extends Controller
      */
     public function show($id)
     {
-        //
+        // Search Clinic 
+
+        $user = User::where('email', '=',  Auth::user()->email)->first();
+        // $clinic = User_as_clinic::where('users_id', '=', $user->id)->first();
+
+            // $info = "hello";
+            $query = $request->get('query');
+            $data = User_as_clinic::query()->where('name', 'LIKE', "%{$query}%")->get();
+
+            $count = 0;
+            if (count($data) > 0) {
+                foreach ($data as $key) {
+                    $address = User_address::where('id', '=', $key->user_address_id)->first();
+                    $type = Clinic_types::where('id', '=', $key->clinic_types_id)->first();
+                    $package = Packages::where('user_as_clinic_id', '=', $key->id)->first();
+                    $service = Clinic_services::where('user_as_clinic_id', '=', $key->id)->first();
+
+                    if ($data &&  isset($package) && isset($service)) {
+                        $ClinicAdd[] = (object) array(
+                            "id" => $key->id,
+                            "name" => $data[$count]->name,
+                            "addLine1" => $address->address_line_1,
+                            "addLine2" => $address->address_line_2,
+                            "type" => $type->type_of_clinic,
+                            "package" => $package->name,
+                            "service" => $service->name
+                        );
+                        $count++;
+                    }elseif($data &&  isset($package)){
+                        $ClinicAdd[] = (object) array(
+                            "id" => $key->id,
+                            "name" => $data[$count]->name,
+                            "addLine1" => $address->address_line_1,
+                            "addLine2" => $address->address_line_2,
+                            "type" => $type->type_of_clinic,
+                            "package" => $package->name
+                           
+                        );
+                        $count++;
+                    }elseif($data && isset($service)){
+                        $ClinicAdd[] = (object) array(
+                            "id" => $key->id,
+                            "name" => $data[$count]->name,
+                            "addLine1" => $address->address_line_1,
+                            "addLine2" => $address->address_line_2,
+                            "type" => $type->type_of_clinic,
+                            "service" => $service->name
+                        );
+                        $count++;
+                    }
+                    
+
+
+
+                }
+
+
+                if ($count > 0) {
+                    return  response()->json(['ClinicAdd' => $ClinicAdd, 'status' => 1]);
+                } else {
+                    return response()->json(['status' => 0]);
+                }
+            }
     }
 
     /**

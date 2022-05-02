@@ -6,6 +6,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer_API\AuthController;
 use App\Http\Controllers\Customer_API\MClinicList;
 use App\Http\Controllers\Customer_API\MCustomerMap;
+use App\Http\Controllers\Customer_API\MMailController;
+use App\Http\Controllers\Customer_API\MAppointmentController;
+use App\Http\Controllers\Customer_API\MCustomerLogsController;
+
 
 
 /*
@@ -33,4 +37,9 @@ Route::group([
 
 Route::group(['prefix' => 'mcustomer', 'middleware' => ['auth:sanctum'], 'as' => 'mcustomer.'], function () {
     Route::resource('mcliniclist', MClinicList::class);
+    Route::resource('mmailappointment', MMailController::class);
+    Route::resource('mappointment', MAppointmentController::class);
+    Route::resource('mcustomerLogs', MCustomerLogsController::class);
+    Route::resource('mcustomermap', MCustomerMap::class);
+
 });
