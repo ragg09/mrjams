@@ -9,7 +9,7 @@ $(function () {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(function() {
 
-            console.log("DONE!");
+            // console.log("DONE!");
             dashboard();
                     
         }, 250);

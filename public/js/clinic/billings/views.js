@@ -52,7 +52,7 @@ $(function(){
                 $("#response_waiting_billing_update").removeAttr("hidden");
             },
             success: function(data) {
-                console.log(data);
+                // console.log(data);
                 $("#response_waiting_billing_update").attr("hidden", true);
                 $("#update_bill_body").removeAttr("hidden");
 
@@ -94,7 +94,7 @@ $(function(){
                 $('#update_billing_update_btn').removeAttr("hidden");
                 $('#response_waiting_update_billing_update_btn').attr("hidden", true)
 
-                console.log(data);
+                // console.log(data);
 
                 if(data.status == 0){
                     $.each(data.error, function(key, val){
@@ -193,7 +193,7 @@ $(function(){
                 $('#response_waiting_billing_history').attr("hidden", false);
             },
             success: function(data) {
-                console.log(data);
+                // console.log(data);
 
                 $('#response_waiting_billing_history').attr("hidden", true);
 

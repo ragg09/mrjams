@@ -420,7 +420,7 @@ $(function(){
 
            
             if(parseInt($("#total_paid").val()) == 0){
-                console.log("wala pang input");
+                // console.log("wala pang input");
                 $('#success-outlined').prop("checked",false);
                 $('#danger-outlined').prop("checked",false);
                 $("#payment_method").val("");
@@ -436,7 +436,7 @@ $(function(){
 
                     //console.log(balance);
                     if(balance == 0){
-                        console.log("Wala na balance check mo ung fully paid button");
+                        // console.log("Wala na balance check mo ung fully paid button");
                         $('#success-outlined').prop("checked", true );
                         $("#for_installment").hide();
                         $("#payment_paid").text(parseInt(paid_in_card));
@@ -449,7 +449,7 @@ $(function(){
                         $('#success-outlined').prop("checked",false);
                         $('#danger-outlined').prop("checked",false);
                     }else{
-                        console.log("may balance dapat mag kalaman ung balance input ");
+                        // console.log("may balance dapat mag kalaman ung balance input ");
                         $('#danger-outlined').prop("checked", true );
                         $("#for_installment").show();
                         $("#payment_paid").text(parseInt(paid_in_card));

@@ -133,11 +133,11 @@ $(function(){
 
                 var count_data = 0;
 
-                console.log(data);
+                // console.log(data);
                 // console.log(moment(timedate[0]+"," +timedate[1]).add(5, 'hours').format('h:mm a'));
 
                 if(timedate[1] >= data.specialist.min_time && timedate[1] <= data.specialist.max_time){
-                    console.log("SAKOP NG ORAS NI DR! PROCEED SA TRAPPING LOGIC");
+                    // console.log("SAKOP NG ORAS NI DR! PROCEED SA TRAPPING LOGIC");
                     $("#confirm_accept_btn_confirm").prop("disabled", false);
                     //Within Specialist Time Range
 
@@ -153,16 +153,16 @@ $(function(){
                                 //disable button ng submit
                                 //console.log($("#accept_modal_flatpicker").val() + " | " + val.datetime);
     
-                                console.log("ito ung nakuha na ung exact date at time|| RED ERROR MESSAGE");
+                                // console.log("ito ung nakuha na ung exact date at time|| RED ERROR MESSAGE");
                                 
                                 $("#calendar_btn").attr("hidden", false);
                                 $("#accept_specialist_with_error").attr("hidden", false);
                                 $("#confirm_accept_btn_confirm").prop("disabled", true);
                             }else {
                                 if(selected_datetime >= minus_one_hour && selected_datetime <= plus_one_hour){
-                                    console.log("warning na ipapakita ung date na may appointment si dr pero pwede padin iaccept");
-                                    console.log(val.datetime);
-                                    console.log(selected_datetime);
+                                    // console.log("warning na ipapakita ung date na may appointment si dr pero pwede padin iaccept");
+                                    // console.log(val.datetime);
+                                    // console.log(selected_datetime);
                                     $("#accept_specialist_with_warning").attr("hidden", false);
     
                                     $("#reminder_time").text(moment(val.datetime).format('LL HH:mmA'));
@@ -175,7 +175,7 @@ $(function(){
                                         
                                         if(timedate[0] != moment().format('YYYY-MM-DD')){
                                             // if no issue at all after looping through all of data in array
-                                            console.log("All goods || no issue at all");
+                                            // console.log("All goods || no issue at all");
                                             $("#accept_specialist_with_warning").attr("hidden", true);
                                             $("#accept_specialist_with_error").attr("hidden", true);
                                             $("#calendar_btn").attr("hidden", true);
@@ -205,14 +205,14 @@ $(function(){
                         });
                     }else{
                         //console.log("ITO NGA PUTANG INA!");
-                        console.log("NO APPOINTMENT AT ALL");
+                        // console.log("NO APPOINTMENT AT ALL");
                         //No appointment at all
                         $("#confirm_accept_btn_confirm").prop("disabled", false);
                     }
                     
 
                 }else{
-                    console.log("HINDI NA SAKOP NG ORAS NI SPECIALIST");
+                    // console.log("HINDI NA SAKOP NG ORAS NI SPECIALIST");
 
                     $("#confirm_accept_btn_confirm").prop("disabled", true);
                 }
@@ -230,7 +230,7 @@ $(function(){
     $("#accept_app_btn").on('click', function(e){
         e.preventDefault();
         var id =  document.getElementById("for_ro_id").value;
-        console.log(id);
+        // console.log(id);
         var today = new Date();
         $.ajax({
             type: "GET",
@@ -249,13 +249,13 @@ $(function(){
             success: function(data) {
                 $("#response_waiting_accept").attr("hidden", true);
                 // $("#detail_modal_body").empty();
-                console.log(data);
+                // console.log(data);
                 $("#flatpicker").removeAttr("hidden");
                 $("#specialist_div").empty();
                 $("#accept_modal_flatpicker").empty();
 
                 if(data.specialists.length > 0){
-                    console.log(("nagana"));
+                    // console.log(("nagana"));
                     $("#confirm_accept_btn_confirm").prop("disabled", true);
 
                     $("#specialist_div").append('<select class="form-control" id="specialist" name="specialist" style="width: 100%;">');

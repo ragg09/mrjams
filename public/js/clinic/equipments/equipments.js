@@ -85,7 +85,7 @@ $(function(){
                 
             },
             success: function(data){
-                console.log(data);
+                // console.log(data);
                 $("#response_waiting_equipment_view").attr("hidden", true);
 
                 $("#material_name").text(data.material.name.toUpperCase());
@@ -126,7 +126,7 @@ $(function(){
 
             },
             success: function(data){
-                console.log(data.inventory.length);
+                // console.log(data.inventory.length);
 
                 $("#response_waiting_equipment_edit").attr("hidden", true);
 
@@ -139,7 +139,7 @@ $(function(){
                 $("#edit_main_form").attr('action', "/clinic/equipments/"+id); 
 
                 if(data.inventory.length > 1){
-                    console.log(data.inventory);
+                    // console.log(data.inventory);
 
                     $("#select_inventory_date").attr("hidden", false);
                     // $("#selected_date").append('<option value=""></option>');
@@ -171,7 +171,7 @@ $(function(){
                                 type: "GET",
                                 url: "/clinic/equipments/" + $(this).val() + "_getselecteddate",
                                 success: function(data){
-                                    console.log(data);
+                                    // console.log(data);
                                     $("#edit_inventory").attr("hidden", false);
                                     
                                     $("#edit_quantity").val(data.data.quantity);
@@ -233,7 +233,7 @@ $(function(){
                         $('span.'+key+'_error').text(val[0]);
                     });
                 }else{
-                    console.log(data);
+                    // console.log(data);
                     $("#equipment_table").load(window.location + " #equipment_table");
                     $("#edit_modal_up").modal('toggle');
                     bootstrapAlert(data.message, "info", 200);
