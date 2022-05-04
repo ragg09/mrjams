@@ -47,13 +47,13 @@ class MailController extends Controller
 
 
         if ($request->ajax()) {
-           
+
             $user_id = $customer->id;
             $query = strtoupper($request->get('query'));
             $data = User_as_clinic::query()->where('name', 'LIKE', "%{$query}%")->first();
 
             // $clinic_id = $data;
-            if($data){
+            if ($data) {
 
                 $receipt_data = Receipt_orders::where('user_as_clinic_id', '=', $data->id)
                     ->where('user_as_customer_id', '=',  $user_id)
@@ -70,7 +70,7 @@ class MailController extends Controller
                             $all_clinics = User_as_clinic::where('id', '=',  $key->user_as_clinic_id)->first();
                             $stat_id =  $all_appointments->appointment_status_id;
                             $stat = Appointment_status::where('id', '=', $stat_id)->first();
-        
+
                             // if($all_appointments){
                             $all[] = [
                                 "created_at" =>  $all_appointments->created_at, //galing sa appointment table
@@ -83,7 +83,7 @@ class MailController extends Controller
                             ];
                             $count++;
                             // }
-        
+
                         }
                     }
 
@@ -92,17 +92,16 @@ class MailController extends Controller
                         return response()->json(['all' => $all, 'status' => 1]);
                     } else {
                         return response()->json(['status' => 0]);
-                    } 
+                    }
                 }
             }
 
-               
+
 
             // }
 
-            
-        }
 
+        }
     }
 
     /**
@@ -113,7 +112,6 @@ class MailController extends Controller
      */
     public function store(Request $request)
     {
-       
     }
 
     /**
@@ -142,25 +140,26 @@ class MailController extends Controller
             $count = 0;
             foreach ($all_receipts as $key) {
                 $all_appointments = Appointments::where('receipt_orders_id', '=',  $key->id)->first();
+                if (isset($all_appointments->appointment_status_id)) {
+                    if ($all_appointments->appointment_status_id != 7) {
+                        $all_clinics = User_as_clinic::where('id', '=',  $key->user_as_clinic_id)->first();
+                        $stat_id =  $all_appointments->appointment_status_id;
+                        $stat = Appointment_status::where('id', '=', $stat_id)->first();
 
-                if ($all_appointments->appointment_status_id != 7) {
-                    $all_clinics = User_as_clinic::where('id', '=',  $key->user_as_clinic_id)->first();
-                    $stat_id =  $all_appointments->appointment_status_id;
-                    $stat = Appointment_status::where('id', '=', $stat_id)->first();
+                        // if($all_appointments){
+                        $all[] = [
+                            "created_at" =>  $all_appointments->created_at, //galing sa appointment table
+                            "appointed_at" => $all_appointments->appointed_at,
+                            "time" =>  $all_appointments->time,
+                            "status" =>  $all_appointments->appointment_status_id,
+                            "remark" => $stat->status,
+                            "name" => $all_clinics->name, //galing sa clinic table
+                            "id" =>  $all_appointments->id
+                        ];
+                        $count++;
+                        // }
 
-                    // if($all_appointments){
-                    $all[] = [
-                        "created_at" =>  $all_appointments->created_at, //galing sa appointment table
-                        "appointed_at" => $all_appointments->appointed_at,
-                        "time" =>  $all_appointments->time,
-                        "status" =>  $all_appointments->appointment_status_id,
-                        "remark" => $stat->status,
-                        "name" => $all_clinics->name, //galing sa clinic table
-                        "id" =>  $all_appointments->id
-                    ];
-                    $count++;
-                    // }
-
+                    }
                 }
             }
 
@@ -217,12 +216,12 @@ class MailController extends Controller
             } else {
                 return response()->json(['status' => 0, 'customer' => $customer]);
             }
-        } else if (strpos($id, "clinic")){
+        } else if (strpos($id, "clinic")) {
             // echo("hello");
 
-            
 
-        }else {
+
+        } else {
 
             // Details of Appointment
 
@@ -271,11 +270,6 @@ class MailController extends Controller
      */
     public function edit($id)
     {
-
-        
-         
- 
-
     }
 
     /**
@@ -287,7 +281,6 @@ class MailController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
     }
 
     /**
@@ -317,14 +310,14 @@ class MailController extends Controller
 
         $clinic_name = User_as_clinic::where('id', '=', $receipt->user_as_clinic_id)->first();
 
-         //creating logs
-         $c_log = new Customer_logs();
-         $c_log->message = "You deleted an appointment from " . $clinic_name->name;
-         $c_log->remark = "notif";
-         $c_log->date =  date("m/d/Y");
-         $c_log->time = date("h:i a");
-         $c_log->user_as_customer_id = $customer->id;
-         $c_log->save();
+        //creating logs
+        $c_log = new Customer_logs();
+        $c_log->message = "You deleted an appointment from " . $clinic_name->name;
+        $c_log->remark = "notif";
+        $c_log->date =  date("m/d/Y");
+        $c_log->time = date("h:i a");
+        $c_log->user_as_customer_id = $customer->id;
+        $c_log->save();
 
         return response()->json(['all' => $appointment, 'status' => 'OK']);
     }
