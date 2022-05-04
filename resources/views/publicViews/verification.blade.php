@@ -79,7 +79,7 @@
     <div class="col-12 p-3">
         <div class="rounded">
             <h4 class="text-center" >Want to know more?</h4>
-            <h5 class="text-center" ><a href="https://youtu.be/Y2zPYCNREBE" target="_blank">Click here.</a></h5>
+            <h5 class="text-center" ><a href="https://www.youtube.com/watch?v=rDk5ee6qYV0&ab_channel=MRJAMS" target="_blank">Click here.</a></h5>
         </div>
     </div>
 

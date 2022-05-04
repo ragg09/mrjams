@@ -28,21 +28,20 @@ class AuthController extends Controller
         //
     }
 
-    public function register (Request $request)
+    public function register(Request $request)
     {
+
         $user = User::where('email', '=', $request->email)->first();
-        if($user){
+        if ($user) {
             //LOGIN ======================================================================================
             // $this_user = User::where('id', '=', 
             $token = $user->createToken("token")->plainTextToken;
             return response()->json([
-                'message'=>"Login Successfully", 
-                'user'=>$user,
-                'token'=>$token
+                'message' => "Login Successfully",
+                'user' => $user,
+                'token' => $token
             ]);
-        }
-        
-        else{
+        } else {
             //REGISTRATION =============================================================================
             $newuser = new User();
             $newuser->email = $request->email;
@@ -51,25 +50,24 @@ class AuthController extends Controller
             $newuser->save();
             $this_user = User::where('id', '=', $newuser->id)->first();
             $token = $this_user->createToken("token")->plainTextToken;
-            return response()->json(['message'=>"Registration Successfully", 'user'=>$newuser, 'token'=>$token]);
+            return response()->json(['message' => "Registration Successfully", 'user' => $newuser, 'token' => $token]);
         }
     }
 
     public function login(Request $request)
     {
-        
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         $request->user()->currentAccessToken()->delete();
-
     }
 
     public function getUserID($email)
     {
         $user = User::orderBy('id')
-        ->where('email', '=', $email)
-        ->get();
+            ->where('email', '=', $email)
+            ->get();
         return response()->json($user);
     }
 
@@ -91,7 +89,7 @@ class AuthController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'fname' => 'required|min:2',
             'mname' => 'nullable',
             'lname' => 'required|min:2',
@@ -104,11 +102,11 @@ class AuthController extends Controller
             'zip_code' => 'required|numeric',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json(['status' => 0, 'error' => $validator->errors()->toArray()]);
-        }else{
+        } else {
             $user_table = User::where('email', '=',  $request->email)->first();
-            
+
             $user =  User::find($user_table->id);
             $user->role = "customer";
             $user->save();
@@ -216,7 +214,7 @@ class AuthController extends Controller
             $customer_add->zip_code = $zipcode;
             $customer_add->save();
 
-            return response()->json(['all'=>$user_customer, 'add'=>$customer_add]);
+            return response()->json(['all' => $user_customer, 'add' => $customer_add]);
         }
     }
 
