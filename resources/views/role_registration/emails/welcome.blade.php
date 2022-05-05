@@ -7,18 +7,26 @@
     <title>MRJAMS NOTIFICATIONS</title>
 </head>
 <body>
-    
-    
-    <img src="https://res.cloudinary.com/mrjams/image/upload/v1650790344/MRJAMS/logowithname_hek7qj.png" id="logo"/>
-    {{-- <img src="{{ URL::asset('images/mrjams/logowithname.PNG') }}" id="logo"/> --}}
-    
-    <h1>WELCOME TO MRJAMS!</h1>
+   
+    <div class="row">
+        <div class="col">
+            <div  style="padding: 20px; border: 2px solid #6497B1; width: 800px;">
+                
+                <div style="width: 100%;">
+                    <img src="https://res.cloudinary.com/mrjams/image/upload/v1651734738/MRJAMS/email-mrjams_wcpjef.png" id="email_sent" style="width: 60%; display: block;margin-left: auto; margin-right: auto;"/>
+                </div>
 
-    <p>Great! You are now registered.</p>
-    <p>We will keep you posted on the latest events, updates, and announcements.</p>
+                <div style=" text-align: center;">
+                    <h1></i><span>WELCOME TO MRJAMS!</span></h1>
+                    <p>Great! You are now registered.</p>
+                    <p>We will keep you posted on the latest events, updates, and announcements.</p>
+                    <a  href="https://mrjams.herokuapp.com/" style="color: white; text-decoration: none; border-radius: 5px; background-color: #6497B1;">&nbsp; Home &nbsp;</a>
+                </div>
 
-    <a href="https://mrjams.herokuapp.com/" target="_blank">https://mrjams.herokuapp.com/</a>
-
+            </div>
+        </div>
+    </div>
+    {{-- #6497B1 --}}
 
 </body>
 </html>

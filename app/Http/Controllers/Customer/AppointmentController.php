@@ -151,15 +151,14 @@ class AppointmentController extends Controller
 
             $clinic_name = User_as_clinic::where('id', '=', $request->clinic_id)->first();
 
-             //creating logs
-             $c_log = new Customer_logs();
-             $c_log->message = "You requested an appointment to " . $clinic_name->name;
-             $c_log->remark = "notif";
-             $c_log->date =  date("m/d/Y");
-             $c_log->time = date("h:i a");
-             $c_log->user_as_customer_id = $customer->id;
-             $c_log->save();
-
+            //creating logs
+            $c_log = new Customer_logs();
+            $c_log->message = "You requested an appointment to " . $clinic_name->name;
+            $c_log->remark = "notif";
+            $c_log->date =  date("m/d/Y");
+            $c_log->time = date("h:i a");
+            $c_log->user_as_customer_id = $customer->id;
+            $c_log->save();
         } else {
 
 
@@ -261,7 +260,7 @@ class AppointmentController extends Controller
                 $c_log->time = date("h:i a");
                 $c_log->user_as_customer_id = $customer->id;
                 $c_log->save();
-                }
+            }
         }
     }
 
@@ -281,7 +280,7 @@ class AppointmentController extends Controller
 
         $clinic_data = User_as_clinic::where('id', '=', $id)->first();
         $clinic_type = Clinic_types::where('id', '=', $clinic_data->clinic_types_id)->first();
-        $clinic_address = User_address::where('id', '=', $id)->first();
+        $clinic_address = User_address::where('id', '=', $clinic_data->user_address_id)->first();
         $services = Clinic_services::where('user_as_clinic_id', '=', $id)->get();
         $packages = Packages::where('user_as_clinic_id', '=', $id)->get();
 
@@ -309,7 +308,7 @@ class AppointmentController extends Controller
 
         //  echo json_encode($doctor);
         // echo($doctor);
-        return view('customerViews.appointment.appointment', ['doctor'=> $doctor, 'avail' => $availability, 'customer' => $customer, 'rate' => $rate, 'clinic_data' => $clinic_data, 'clinic_type' => $clinic_type, 'clinic_address' => $clinic_address, 'services' => $services, 'packages' => $packages]);
+        return view('customerViews.appointment.appointment', ['doctor' => $doctor, 'avail' => $availability, 'customer' => $customer, 'rate' => $rate, 'clinic_data' => $clinic_data, 'clinic_type' => $clinic_type, 'clinic_address' => $clinic_address, 'services' => $services, 'packages' => $packages]);
     }
 
     /**
@@ -349,7 +348,7 @@ class AppointmentController extends Controller
         }
 
         // echo json_encode($availability);
-        return view('customerViews.appointment.setAppointment', ['clinic_data' => $clinic_data,'avail' => $availability, 'customer' => $customer, 'customer_add' => $customer_add, 'package' => $package, 'service' => $service, 'clinic_id' => $clinic_id]);
+        return view('customerViews.appointment.setAppointment', ['clinic_data' => $clinic_data, 'avail' => $availability, 'customer' => $customer, 'customer_add' => $customer_add, 'package' => $package, 'service' => $service, 'clinic_id' => $clinic_id]);
     }
 
     /**
@@ -361,8 +360,6 @@ class AppointmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-
     }
 
     /**
@@ -406,14 +403,14 @@ class AppointmentController extends Controller
 
         $clinic_name = User_as_clinic::where('id', '=', $receipt->user_as_clinic_id)->first();
 
-         //creating logs
-         $c_log = new Customer_logs();
-         $c_log->message = "You accepted the scheduled appointment from " . $clinic_name->name;
-         $c_log->remark = "notif";
-         $c_log->date =  date("m/d/Y");
-         $c_log->time = date("h:i a");
-         $c_log->user_as_customer_id = $customer->id;
-         $c_log->save();
+        //creating logs
+        $c_log = new Customer_logs();
+        $c_log->message = "You accepted the scheduled appointment from " . $clinic_name->name;
+        $c_log->remark = "notif";
+        $c_log->date =  date("m/d/Y");
+        $c_log->time = date("h:i a");
+        $c_log->user_as_customer_id = $customer->id;
+        $c_log->save();
 
 
         return response()->json(['all' => $appointment, 'status' => 'OK']);

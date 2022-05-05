@@ -1,13 +1,32 @@
-<img src="https://res.cloudinary.com/mrjams/image/upload/v1650790344/MRJAMS/logowithname_hek7qj.png" id="logo"/>
-    {{-- <img src="{{ URL::asset('images/mrjams/logowithname.PNG') }}" id="logo"/> --}}
-<h1>{{$details['title']}}</h1>
-<h1>{{$details['body']}}</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MRJAMS NOTIFICATIONS</title>
+</head>
+<body>
+   
+    <div class="row">
+        <div class="col">
+            <div  style="padding: 20px; border: 2px solid #6497B1; width: 800px;">
+                
+                <div style="width: 100%;">
+                    <img src="https://res.cloudinary.com/mrjams/image/upload/v1651734738/MRJAMS/email-mrjams_wcpjef.png" id="email_sent" style="width: 60%; display: block;margin-left: auto; margin-right: auto;"/>
+                </div>
 
-{{-- <div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="..." alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
+                <div style=" text-align: center;">
+                    <h1></i><span>WELCOME TO MRJAMS!</span></h1>
+                    <p>Great! You are now registered.</p>
+                    <p>We will keep you posted on the latest events, updates, and announcements.</p>
+                    <a  href="https://mrjams.herokuapp.com/" style="color: white; text-decoration: none; border-radius: 5px; background-color: #6497B1;">&nbsp; Home &nbsp;</a>
+                </div>
+
+            </div>
+        </div>
     </div>
-  </div> --}}
+    {{-- #6497B1 --}}
+
+</body>
+</html>

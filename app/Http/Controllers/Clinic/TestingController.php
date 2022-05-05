@@ -38,10 +38,12 @@ class TestingController extends Controller
     public function index()
     {
 
-        $todelete = Clinic_types::findOrFail(3);
-        $todelete->delete();
+        return view('role_registration.emails.welcome',);
 
-        echo "deleted na ssob";
+        // $todelete = Clinic_types::findOrFail(3);
+        // $todelete->delete();
+
+        // echo "deleted na ssob";
 
         // //getting all dates in range
         // function getBetweenDates($startDate, $endDate)

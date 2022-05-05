@@ -74,7 +74,7 @@
         </div>
     </div>
     
-    <div class="row justify-content-center" id="col_box">
+    <div class="row justify-content-center" id="col_box" hidden>
         <div class="col-lg-8 col-md-12 col-sm-12 p-4 mt-md-5 mt-sm-5">
             <div class="" id="bot_box">
                 GRPAH
