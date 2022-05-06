@@ -15,7 +15,7 @@
     <div class="hero-content-area1">
       <h1>Your Health is our Priority!</h1>
       <h3>Just a Reminder, It's Time For Your Appointment</h3>
-      <a href="#" class="btn">Download Now</a>
+      <a href="/public/download" class="btn">Download Now</a>
     </div>
 </section>
 

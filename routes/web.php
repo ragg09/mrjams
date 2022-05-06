@@ -82,6 +82,10 @@ Route::group(['prefix' => 'public', 'middleware' => ['role_public'], 'as' => 'pu
     Route::get('/about', function () {
         return view('publicViews.about_p');
     })->name('about');
+
+    Route::get('/download', function () {
+        return view('publicViews.downloadApp');
+    })->name('download');
 });
 
 Route::group(['prefix' => 'clinic_verification', 'middleware' => ['auth', 'role_public'], 'as' => 'clinic_verification.'], function () {
