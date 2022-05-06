@@ -53,7 +53,17 @@ class MAnnouncementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = User::where('email', '=',  Auth::user()->email)->first();
+
+        $message = new Messages();
+        $message->message = $request->message;
+        $message->receiver = "admin";
+        $message->users_id = $user->id;
+        $message->save();
+        
+        // echo($request->message);            
+        // return view('customerViews.announcement');
+         return response()->json(['data'=> $request->message]);
     }
 
     /**

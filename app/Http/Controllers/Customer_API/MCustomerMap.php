@@ -88,7 +88,21 @@ class MCustomerMap extends Controller
      */
     public function show($id)
     {
-        //
+        $clinic = User_As_clinic::where('id', '=', $id)->first();
+        $clinic_type = Clinic_types::where('id', '=', $clinic->clinic_types_id)->first();
+        $clinic_add = User_address::where('id', '=', $clinic->user_address_id)->first();
+   
+        $clinic_data[] = (object) array(  
+                    "id" => $clinic->id, 
+                    "name" => $clinic->name,
+                    "type" => $clinic_type->type_of_clinic,
+                    "longitude" => $clinic_add->longitude,
+                    "latitude"=> $clinic_add->latitude,
+                    "city" => $clinic_add->city,
+                    "zip_code" => $clinic_add->zip_code
+        );
+
+        return response()->json(['clinic_data'=>$clinic_data]);
     }
 
     /**
