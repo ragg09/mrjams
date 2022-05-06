@@ -9,9 +9,9 @@ use App\Http\Controllers\Customer_API\MCustomerMap;
 use App\Http\Controllers\Customer_API\MMailController;
 use App\Http\Controllers\Customer_API\MAppointmentController;
 use App\Http\Controllers\Customer_API\MCustomerLogsController;
-
-
-
+use App\Http\Controllers\Customer_API\MCustomerController;
+use App\Http\Controllers\Customer_API\MAnnouncementController;
+use App\Http\Controllers\Customer_API\MRatingController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,7 +23,6 @@ use App\Http\Controllers\Customer_API\MCustomerLogsController;
 |
 */
 
-
 // Route::resource('mcustomermap', MCustomerMap::class);
 
 Route::group([
@@ -31,7 +30,7 @@ Route::group([
     'prefix' => 'auth'
 
 ], function ($router) {
-    Route::post('/register', [AuthController::class, 'register']);
+    Route::POST('/register', [AuthController::class, 'register']);
     Route::resource('user', AuthController::class);
 });
 
@@ -41,5 +40,7 @@ Route::group(['prefix' => 'mcustomer', 'middleware' => ['auth:sanctum'], 'as' =>
     Route::resource('mappointment', MAppointmentController::class);
     Route::resource('mcustomerLogs', MCustomerLogsController::class);
     Route::resource('mcustomermap', MCustomerMap::class);
-
+    Route::resource('mprofile', MCustomerController::class);
+    Route::resource('mannouncement', MAnnouncementController::class);
+    Route::resource('mrating', MRatingController::class);
 });

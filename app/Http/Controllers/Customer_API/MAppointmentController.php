@@ -160,6 +160,8 @@ class MAppointmentController extends Controller
             $c_log->time = date("h:i a");
             $c_log->user_as_customer_id = $customer->id;
             $c_log->save();
+
+            return response()->json(['message'=>"Registration Successfully", 'request' => $request]);
         }
     }
 

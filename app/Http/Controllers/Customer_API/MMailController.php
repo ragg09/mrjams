@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\User_as_clinic;
 use App\Models\User_address;
 use App\Models\Clinic_services;
+use App\Models\Clinic_types;
 use App\Models\Packages;
 use App\Models\Appointment_status;
 use App\Models\Receipt_orders_has_clinic_services;
@@ -167,6 +168,7 @@ class MMailController extends Controller
             $splitName = explode(",",  $receipt_info->patient_details);
 
             $clinic_info = User_as_clinic::where('id', '=', $receipt_info->user_as_clinic_id)->first();
+            $clinic_type = Clinic_types::where('id', '=', $clinic_info->clinic_types_id)->first();
             $clinic_address = User_address::where('id', '=', $clinic_info->user_address_id)->first();
 
             $receiptService = Receipt_orders_has_clinic_services::where('receipt_orders_id', '=', $receipt_info->id)->get();
@@ -189,6 +191,7 @@ class MMailController extends Controller
                         'name' => $splitName, 
                         'appointment_data' => $appointment_data, 
                         'clinic_info' => $clinic_info, 
+                        'clinic_type' =>  $clinic_type,
                         'clinic_address' => $clinic_address, 
                         'service' => $service, 
                         'package' => $package, 
@@ -201,7 +204,9 @@ class MMailController extends Controller
                             'name' => $splitName, 
                             'appointment_data' => $appointment_data, 
                             'clinic_info' => $clinic_info, 
+                            'clinic_type' =>  $clinic_type,
                             'clinic_address' => $clinic_address, 
+                            'package' => [],
                             'service' => $service, 
                             'status' => $status]);
                     } else {
@@ -210,8 +215,10 @@ class MMailController extends Controller
                             'name' => $splitName, 
                             'appointment_data' => $appointment_data, 
                             'clinic_info' => $clinic_info, 
+                            'clinic_type' =>  $clinic_type,
                             'clinic_address' => $clinic_address, 
                             'package' => $package, 
+                            'services_all' => [],
                             'status' => $status]);
                     }
                 }
