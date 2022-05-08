@@ -38,7 +38,7 @@ class TestingController extends Controller
     public function index()
     {
 
-        return view('role_registration.emails.welcome',);
+        return view('adminViews.layouts.clinic.clinicAcceptMessage',);
 
         // $todelete = Clinic_types::findOrFail(3);
         // $todelete->delete();

@@ -17,8 +17,8 @@
                 </div>
 
                 <div style=" text-align: center;">
-                    <h1></i><span>{{$details['title']}}</span></h1>
-                    <h3>{{$details['body']}}</h3>
+                    <h1></i><span>{{$details['title'] ?? "MR.JAMS"}}</span></h1>
+                    <h3>{{$details['body'] ?? "Your clinic is now verified. Welcome to MrJams."}}</h3>
                     <p>We will keep you posted on the latest events, updates, and announcements.</p>
                     <a  href="https://mrjams.herokuapp.com/" style="color: white; text-decoration: none; border-radius: 5px; background-color: #6497B1;">&nbsp; Home &nbsp;</a>
                 </div>
