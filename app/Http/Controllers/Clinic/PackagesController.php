@@ -182,7 +182,7 @@ class PackagesController extends Controller
             ->take(10)
             ->get();
 
-        return view('clinicViews.packages.edit_show', ['logs' => $logs, 'package' => $package, 'equipments' => $all_equipments ?? [], 'equipment_ids' => $all_equipments_ids ?? [], 'services' => $all_services, 'service_ids' => $all_services_ids]);
+        return view('clinicViews.packages.edit_show', ['logs' => $logs, 'package' => $package, 'equipments' => $all_equipments ?? [], 'equipment_ids' => $all_equipments_ids ?? [], 'services' => $all_services ?? [], 'service_ids' => $all_services_ids ?? []]);
     }
 
     /**
