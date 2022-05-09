@@ -1,6 +1,6 @@
 $(document).on('click', 'button#acceptClinicReg', function(e) {
     var id = $('input#clinicRegID').val();
-    console.log(data);
+    // console.log(data);
     $.ajax({
         type: "PUT",
         url: "/admin/clinicReg/" + id ,
@@ -8,11 +8,11 @@ $(document).on('click', 'button#acceptClinicReg', function(e) {
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         dataType: "json",
             success: function(data) {
-                console.log(data);
+                // console.log(data);
                 window.location.href = "/admin/clinic";
             },
             error: function(error) {
-                console.log('error');
+                console.log(error);
             }
     });
 
@@ -26,7 +26,7 @@ $(document).on('click', 'a#deleteClinicReg', function(e) {
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         dataType: "json",
             success: function(data) {
-                console.log(data);
+                // console.log(data);
                 window.location.href = "/admin/clinic";
             },
             error: function(error) {

@@ -7,7 +7,7 @@ $(function(){
         url: "/admin/clinic/create?id="+ var_id,
         success: function (response) {
             // console.log(response.user);
-            console.log(response);
+            // console.log(response);
 
             // google.charts.load('current', {'packages':['corechart']});
             // google.charts.setOnLoadCallback(drawChart);
@@ -22,7 +22,7 @@ $(function(){
                   data.push([index, value]);
               });
 
-              console.log(data);
+              // console.log(data);
         
                 var options = {
                   title: 'Appointments per Month',
@@ -37,9 +37,10 @@ $(function(){
             }
               
         },
-        error: function(){
-            console.log('AJAX load did not work');
-            alert("error");
+        error: function(e){
+            // console.log('AJAX load did not work');
+            // alert("error");
+            console.log(e);
         }
         
 

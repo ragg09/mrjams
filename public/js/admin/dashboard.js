@@ -350,9 +350,10 @@ $(function(){
         
 
         },
-        error: function(){
-            console.log('AJAX load did not work');
-            alert("error");
+        error: function(e){
+            // console.log('AJAX load did not work');
+            // alert("error");
+            console.log(e);
         }
         
 

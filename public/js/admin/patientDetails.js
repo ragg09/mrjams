@@ -19,11 +19,11 @@
      
 
 $(document).on('click', 'button#updatePatient', function(e) {
-    $.getScript("../../js/admin/reusableFunction.js");
+    // $.getScript("../../js/admin/reusableFunction.js");
     
 
     var id = $('input#userID').val();
-    console.log(data);
+    // console.log(data);
     $.ajax({
         type: "PUT",
         url: "/admin/patient/" + id ,
@@ -38,7 +38,7 @@ $(document).on('click', 'button#updatePatient', function(e) {
                
                 $("#UpdateUser").load(window.location + " #UpdateUser");
             
-                bootstrapAlert("Successfully Updated", "success", 250);
+                // bootstrapAlert("Successfully Updated", "success", 250);
                 setInterval( reload_page, 1000);
 
                 function reload_page(){
@@ -46,7 +46,7 @@ $(document).on('click', 'button#updatePatient', function(e) {
                 }
             },
             error: function(error) {
-                console.log('error');
+                console.log(error);
             }
     });
 
@@ -59,12 +59,13 @@ $(document).on('click', 'a#dltbtnPatient', function(e) {
         type: "GET",
         url: "/admin/patient/" + id + "@" ,
         success: function(data){
-            console.log(data);
+            // console.log(data);
             $('#userIDDeletePatient').val(data.patients.id);
         },
-        error: function(){
-            console.log('AJAX load did not work');
-            alert("error");
+        error: function(e){
+            // console.log('AJAX load did not work');
+            // alert("error");
+            console.log(e);
         }
     });
 });
@@ -73,7 +74,7 @@ $(document).on('click', 'button#confirm_delete', function(e) {
     e.preventDefault();
     var id = $("input#userIDDeletePatient").val();
 
-    console.log(id);
+    // console.log(id);
  //hmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm asan master mo?
     $.ajax({
         type: "DELETE",
@@ -83,7 +84,7 @@ $(document).on('click', 'button#confirm_delete', function(e) {
         },
         success: function(data) {
 
-            console.log(data);
+            // console.log(data);
             $("#patientShow").load(window.location + " #patientShow");
             $("#delete_modal_patient").modal('toggle');
         },

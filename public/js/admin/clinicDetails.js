@@ -25,13 +25,13 @@ $(document).on('click', 'button#clinicTypeSubmit', function(e) {
         // headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         dataType: "json",
             success: function(data) {
-                console.log(data);
+                // console.log(data);
                 // $('#editModalgenre').each(function(){
                 //         $(this).modal('hide'); });
                 // location.reload();
             },
             error: function(error) {
-                console.log('error');
+                console.log(error);
             }
     });
 

@@ -7,7 +7,7 @@ $(function(){
         url: "/admin/patient/create?id="+ var_id,
         success: function (response) {
             // console.log(response.user);
-            console.log(response.appointments.length);
+            // console.log(response.appointments.length);
       
             if(response.appointments.length > 0){
                 var data = [
@@ -32,9 +32,10 @@ $(function(){
                 chart.draw(figure, options);
             }
         },
-        error: function(){
-            console.log('AJAX load did not work');
-            alert("error");
+        error: function(e){
+            // console.log('AJAX load did not work');
+            // alert("error");
+            console.log(e);
         }
         
 

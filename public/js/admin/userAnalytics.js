@@ -38,8 +38,8 @@ $(function(){
             
 
         },
-        error: function(){
-            console.log('AJAX load did not work');
+        error: function(e){
+            console.log(e);
             // alert("error");
         }
         
@@ -77,9 +77,10 @@ $(function(){
             chart.draw(figure, options);
 
         },
-        error: function(){
-            console.log('AJAX load did not work');
+        error: function(e){
+            // console.log('AJAX load did not work');
             // alert("error");
+            console.log(e);
         }
         
 
@@ -116,9 +117,10 @@ $(function(){
             chart.draw(figure, options);
 
         },
-        error: function(){
-            console.log('AJAX load did not work');
+        error: function(e){
+            // console.log('AJAX load did not work');
             // alert("error");
+            console.log(e);
         }
         
 
@@ -181,9 +183,10 @@ $(function(){
 
             
         },
-        error: function(){
-            console.log('AJAX load did not work');
+        error: function(e){
+            // console.log('AJAX load did not work');
             // alert("error");
+            console.log(e);
         }
         
 

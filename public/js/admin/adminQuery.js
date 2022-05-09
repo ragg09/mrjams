@@ -9,7 +9,7 @@ $(document).on('submit', '#formQuery', function(e) {
         // headers: {  'Access-Control-Allow-Origin': 'https://mrjams.herokuapp.com/' },
             success: function(data) {
 
-                console.log(data);
+                // console.log(data);
 
                 
                 $('#query_error_div').attr("hidden", true);

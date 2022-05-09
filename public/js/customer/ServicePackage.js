@@ -46,10 +46,10 @@ $(function(){
           $("#accept_modal_flatpicker").removeAttr("disabled");
       }else{
           if($("#CService").is(':checked') && $("#service_multiple").val().length > 0){
-              console.log("enable buttons padin");
+            //   console.log("enable buttons padin");
               $("#accept_modal_flatpicker").removeAttr("disabled");
           }else{
-              console.log("disbale buttons");
+            //   console.log("disbale buttons");
               $("#accept_modal_flatpicker").attr("disabled", true);
               $("#accept_modal_flatpicker").val("");
               $("#appointment_b").attr("disabled", true);
