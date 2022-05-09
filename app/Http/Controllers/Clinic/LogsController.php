@@ -114,11 +114,9 @@ class LogsController extends Controller
                     //Deleting || Removing Logic
                     if ($curdate == $expiration_month_exact) {
                         //expiration notif logic
-                        if ($k->notify == "done") {
-                            $up_inventory = Clinic_equipment_inventory::find($k->id);
-                            $up_inventory->quantity =  0;
-                            $up_inventory->save();
-                        }
+                        $up_inventory = Clinic_equipment_inventory::find($k->id);
+                        $up_inventory->quantity =  0;
+                        $up_inventory->save();
 
                         $recount = Clinic_equipment_inventory::where("clinic_equipments_id",  $k->clinic_equipments_id)->get();
                         $quant_count = 0;
