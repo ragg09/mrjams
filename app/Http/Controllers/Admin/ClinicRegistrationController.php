@@ -146,7 +146,7 @@ class ClinicRegistrationController extends Controller
         // email
         $details = [
             'title' => 'MR.JAMS',
-            'body' => 'Registration declined due to  the possible reasons: Invalid Data, Unreadable Business Permit, No Supporting Permit, etc. If you have a question or any queries, please email us.',
+            'body' => 'Registration declined due to  the possible reasons: Invalid Data, Unreadable Business Permit, No Supporting Permit, etc. If you have a question or any inquiries, please email us.',
         ];
 
         // Mail::to($request->sender)->send(new AdminMail($details));
