@@ -81,12 +81,14 @@ class LogsController extends Controller
                 foreach ($get_inventory as $k) {
 
                     //TAKE NOT comparing YEAR & MONTH only
-                    // $expiration_day = date("Y-m", strtotime("-1 day", strtotime($k->expiration)));
-                    // $expiration_month = date("Y-m", strtotime("-1 month", strtotime($k->expiration)));
+                    $expiration_day = date("Y-m", strtotime("-1 day", strtotime($k->expiration)));
+                    $expiration_month = date("Y-m", strtotime("-1 month", strtotime($k->expiration)));
 
-                    $expiration_day = date("Y-m");
-                    $expiration_month = date("Y-m");
+                    $expiration_day_exact = date("Y-m");
+                    $expiration_month_exact = date("Y-m");
+
                     $curdate = date('Y-m');
+
                     if ($curdate >= $expiration_month) {
                         //expiration notif logic
                         if ($k->notify != "done") {
@@ -105,6 +107,15 @@ class LogsController extends Controller
                             $logs->time = date("h:i:sa");
                             $logs->user_as_clinic_id = $clinic->id;
                             $logs->save();
+                        }
+                    }
+
+                    if ($curdate == $expiration_month_exact) {
+                        //expiration notif logic
+                        if ($k->notify == "done") {
+                            $up_inventory = Clinic_equipment_inventory::find($k->id);
+                            $up_inventory->quantity =  0;
+                            $up_inventory->save();
                         }
                     }
                 }
