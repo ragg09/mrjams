@@ -129,14 +129,14 @@ class LogsController extends Controller
                             }
                         }
 
-                        if ($quant_count == 0) {
-                            $equipment = Clinic_equipments::where("id", $k->clinic_equipments_id);
-                            $equipment->delete();
-                        } else {
-                            $equipment = Clinic_equipments::find($k->clinic_equipments_id);
-                            $equipment->quantity = $quant_count;
-                            $equipment->save();
-                        }
+                        // if ($quant_count == 0) {
+                        //     $equipment = Clinic_equipments::where("id", $k->clinic_equipments_id);
+                        //     $equipment->delete();
+                        // } else {
+                        //     $equipment = Clinic_equipments::find($k->clinic_equipments_id);
+                        //     $equipment->quantity = $quant_count;
+                        //     $equipment->save();
+                        // }
                     }
                 }
             }
