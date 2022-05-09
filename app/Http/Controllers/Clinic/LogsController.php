@@ -110,12 +110,31 @@ class LogsController extends Controller
                         }
                     }
 
+                    //Deleting || Removing Logic
                     if ($curdate == $expiration_month_exact) {
                         //expiration notif logic
                         if ($k->notify == "done") {
                             $up_inventory = Clinic_equipment_inventory::find($k->id);
                             $up_inventory->quantity =  0;
                             $up_inventory->save();
+                        }
+
+                        $recount = Clinic_equipment_inventory::where("clinic_equipments_id",  $k->clinic_equipments_id)->get();
+                        $quant_count = 0;
+
+                        foreach ($recount as $sana_all) {
+                            if ($sana_all->quantity) {
+                                $quant_count += $sana_all->quantity;
+                            }
+                        }
+
+                        if ($quant_count == 0) {
+                            $equipment = Clinic_equipments::findOrFail($id);
+                            $equipment->delete();
+                        } else {
+                            $equipment = Clinic_equipments::findOrFail($k->id);
+                            $equipment->quantity = $quant_count;
+                            $equipment->save();
                         }
                     }
                 }
