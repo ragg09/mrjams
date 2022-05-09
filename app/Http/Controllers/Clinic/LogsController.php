@@ -114,29 +114,39 @@ class LogsController extends Controller
                     }
 
                     //Deleting || Removing Logic
-                    // if ($curdate == $expiration_month_exact) {
-                    //     //expiration notif logic
-                    //     if ($k->notify == "done") {
-                    //         $up_inventory = Clinic_equipment_inventory::find($k->id);
-                    //         $up_inventory->quantity =  0;
-                    //         $up_inventory->save();
-                    //     }
+                    if ($curdate == $expiration_month_exact) {
+                        //expiration notif logic
+                        if ($k->notify == "done") {
+                            $up_inventory = Clinic_equipment_inventory::find($k->id);
+                            $up_inventory->quantity =  0;
+                            $up_inventory->save();
+                        }
 
-                    //     $recount = Clinic_equipment_inventory::where("clinic_equipments_id",  $key->id)->get();
-                    //     $quant_count = 0;
+                        $recount = Clinic_equipment_inventory::where("clinic_equipments_id",  $key->id)->get();
+                        $quant_count = 0;
 
-                    //     foreach ($recount as $sana_all) {
-                    //         if ($sana_all->quantity) {
-                    //             $quant_count = $sana_all->quantity +  $quant_count;
-                    //         }
-                    //     }
+                        foreach ($recount as $sana_all) {
+                            if ($sana_all->quantity) {
+                                $quant_count = $sana_all->quantity +  $quant_count;
+                            }
+                        }
 
-                    //     if ($quant_count > 0) {
-                    //         $equipment = Clinic_equipments::find($k->clinic_equipments_id);
-                    //         $equipment->quantity = $quant_count;
-                    //         $equipment->save();
-                    //     }
-                    // }
+                        $equipment = Clinic_equipments::find($k->clinic_equipments_id);
+                        $equipment->quantity = $quant_count;
+                        $equipment->save();
+
+                        // //checking logs limit 5000
+                        // if ($logs_count == 5000) {
+                        //     Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
+                        // }
+                        // $logs = new Logs();
+                        // $logs->message = "Your stock of " . $key->name . " with expiration date of " . date('M d, Y', strtotime($k->expiration)) . " has expired.";
+                        // $logs->remark = "danger";
+                        // $logs->date =  date("Y/m/d");
+                        // $logs->time = date("h:i:sa");
+                        // $logs->user_as_clinic_id = $clinic->id;
+                        // $logs->save();
+                    }
                 }
             }
 

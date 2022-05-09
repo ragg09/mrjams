@@ -32,7 +32,7 @@ $(function(){
                 $(document).find('span.error-text').text('');
             },
             success: function(data) {
-                console.log(data);
+                // console.log(data);
                 if(data.status == 0){
                     $.each(data.error, function(key, val){
                          $('span.'+key+'_error').text(val[0]);
@@ -123,7 +123,7 @@ $(function(){
             type: "GET",
             url: "/clinic/services/" + id + "/edit",
             success: function(data){
-                console.log(data);
+                // console.log(data);
                 $("#edit_name").val(data.services.name);
                 $("#edit_min_price").val(data.services.min_price);
                 $("#edit_max_price").val(data.services.max_price);

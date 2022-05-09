@@ -33,8 +33,8 @@ class EquipmentsController extends Controller
         $user = User::where('email', '=',  Auth::user()->email)->first();
         $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
 
-        $data = Clinic_equipments::where('user_as_clinic_id', '=',  $clinic->id)->orderBy('name', 'ASC')->paginate(10);
-        $data_all = Clinic_equipments::where('user_as_clinic_id', '=',  $clinic->id)->orderBy('name', 'ASC')->get();
+        $data = Clinic_equipments::where('user_as_clinic_id', '=',  $clinic->id)->where("quantity", ">", 0)->orderBy('name', 'ASC')->paginate(10);
+        $data_all = Clinic_equipments::where('user_as_clinic_id', '=',  $clinic->id)->where("quantity", ">", 0)->orderBy('name', 'ASC')->get();
 
         $logs = Logs::where('user_as_clinic_id', '=',  $clinic->id)
             ->where('remark', '!=',  "notif")
