@@ -359,11 +359,14 @@ class PackagesController extends Controller
             ->where('packages_id', '=',  $id)
             ->get();
 
-        foreach ($services as $service) {
-            Packages_has_services::where('packages_id', '=',  $id)
-                ->where('user_as_clinic_id', '=',  $clinic->id)
-                ->delete();
+        if (count($services) > 0) {
+            foreach ($services as $service) {
+                Packages_has_services::where('packages_id', '=',  $id)
+                    ->where('user_as_clinic_id', '=',  $clinic->id)
+                    ->delete();
+            }
         }
+
 
         if (count($equipments) > 0) {
             foreach ($equipments as $equipment) {
