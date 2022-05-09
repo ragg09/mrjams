@@ -37,9 +37,9 @@ class TestingController extends Controller
      */
     public function index()
     {
-        $get_inventory = Clinic_equipment_inventory::where("clinic_equipments_id",  3)->get();
+        $get_inventory = Clinic_equipment_inventory::where("clinic_equipments_id",  4)->get();
 
-        $expiration_month = date("Y-m", strtotime("-1 month", strtotime($get_inventory[0]->expiration)));
+        $expiration_month = date("Y-m", strtotime($get_inventory[0]->expiration));
 
         echo $expiration_month;
         // return view('adminViews.layouts.clinic.clinicAcceptMessage',);
