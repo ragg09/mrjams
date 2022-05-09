@@ -365,11 +365,14 @@ class PackagesController extends Controller
                 ->delete();
         }
 
-        foreach ($equipments as $equipment) {
-            Packages_has_equipments::where('packages_id', '=',  $id)
-                ->where('user_as_clinic_id', '=',  $clinic->id)
-                ->delete();
+        if (count($equipments) > 0) {
+            foreach ($equipments as $equipment) {
+                Packages_has_equipments::where('packages_id', '=',  $id)
+                    ->where('user_as_clinic_id', '=',  $clinic->id)
+                    ->delete();
+            }
         }
+
 
         $package = Packages::findOrFail($id);
         $package->delete();
