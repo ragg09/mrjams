@@ -187,6 +187,11 @@ $(function(){
                     bootstrapAlert(data.message, "info", 200);
                     $('#equipment_ids_edit').val(null).trigger('change');
                 }
+            },
+            error: function(e){
+                console.log('AJAX load did not work');
+                console.log(e);
+                // alert("error");
             }
         });
     });
