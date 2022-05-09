@@ -122,51 +122,20 @@ class LogsController extends Controller
                             $up_inventory->save();
                         }
 
-                        $recount = Clinic_equipment_inventory::where("clinic_equipments_id",  $k->clinic_equipments_id)->get();
+                        $recount = Clinic_equipment_inventory::where("clinic_equipments_id",  $key->id)->get();
                         $quant_count = 0;
 
                         foreach ($recount as $sana_all) {
                             if ($sana_all->quantity) {
-                                $quant_count += $sana_all->quantity;
+                                $quant_count = $sana_all->quantity +  $quant_count;
                             }
                         }
 
-                        if ($quant_count == 0) {
-                            $user = User::where('email', '=',  Auth::user()->email)->first();
-                            $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
-
-                            //removing service from every packages
-                            $get_packages_id = Packages_has_equipments::where('clinic_equipments_id', '=',  $key->id)
-                                ->where('user_as_clinic_id', '=',  $clinic->id)
-                                ->get();
-
-
-                            foreach ($get_packages_id as $key_pack) {
-                                Packages_has_equipments::where('packages_id', '=',  $key_pack->packages_id)
-                                    ->where('clinic_equipments_id', '=',  $key_pack->id)
-                                    ->where('user_as_clinic_id', '=',  $clinic->id)
-                                    ->delete();
-                            }
-
-                            $services = Services_has_equipments::where('clinic_equipments_id', '=',  $key->id)
-                                ->where('user_as_clinic_id', '=',  $clinic->id)
-                                ->get();
-
-                            foreach ($services as $key_ser) {
-                                Services_has_equipments::where('clinic_services_id', '=',  $key_ser->clinic_services_id)
-                                    ->where('clinic_equipments_id', '=',  $key_ser->id)
-                                    ->where('user_as_clinic_id', '=',  $clinic->id)
-                                    ->delete();
-                            }
-
-
-                            $equipment = Clinic_equipments::findOrFail($key->id);
-                            $equipment->delete();
-                        } //else {
-                        //     $equipment = Clinic_equipments::find($k->clinic_equipments_id);
-                        //     $equipment->quantity = $quant_count;
-                        //     $equipment->save();
-                        // }
+                        if ($quant_count > 0) {
+                            $equipment = Clinic_equipments::find($k->clinic_equipments_id);
+                            $equipment->quantity = $quant_count;
+                            $equipment->save();
+                        }
                     }
                 }
             }
