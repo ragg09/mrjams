@@ -84,8 +84,8 @@ class LogsController extends Controller
                     $expiration_day = date("Y-m", strtotime("-1 day", strtotime($k->expiration)));
                     $expiration_month = date("Y-m", strtotime("-1 month", strtotime($k->expiration)));
 
-                    $expiration_day_exact = date("Y-m");
-                    $expiration_month_exact = date("Y-m");
+                    $expiration_day_exact = date("Y-m", strtotime(strtotime($k->expiration)));
+                    $expiration_month_exact = date("Y-m", strtotime(strtotime($k->expiration)));
 
                     $curdate = date('Y-m');
 
