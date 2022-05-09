@@ -239,15 +239,15 @@ class ServicesController extends Controller
                     'tester' => 'if package exists',
                     'services' => $services,
                     'packages' => $packages,
-                    'myequipments' => $myequipments,
-                    'myequipments_orig_ids' =>  $myequipments_orig_ids,
+                    'myequipments' => $myequipments ?? [],
+                    'myequipments_orig_ids' =>  $myequipments_orig_ids ?? [],
                     'allequipments' => $allequipments
                 ]);
             } else {
                 return response()->json([
                     'services' => $services,
-                    'myequipments' => $myequipments,
-                    'myequipments_orig_ids' =>  $myequipments_orig_ids,
+                    'myequipments' => $myequipments ?? [],
+                    'myequipments_orig_ids' =>  $myequipments_orig_ids ?? [],
                     'allequipments' => $allequipments
                 ]);
             }
