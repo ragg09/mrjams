@@ -16,6 +16,7 @@ use App\Mail\AcceptRegistrationMail;
 use App\Mail\DeclineRegistrationMail;
 use App\Models\Clinic_time_availability;
 use App\Models\Clinic_auto_scheduling;
+use App\Models\Logs;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -140,6 +141,8 @@ class ClinicRegistrationController extends Controller
         //clinic user
         $clinicUser = User::where('id', '=', $getClinic->users_id)->first();
 
+        $clinicLogs = Logs::where('user_as_clinic_id', '=', $id)->first();
+
         // email
         $details = [
             'title' => 'MR.JAMS',
@@ -150,6 +153,7 @@ class ClinicRegistrationController extends Controller
         Mail::to($clinicUser->email)->send(new DeclineRegistrationMail($details));
         // return "email sent";
 
+        $clinicLogs->delete();
         $clinicTime->delete();
         $clinicAutoSched->delete();
         $getClinic->delete();
