@@ -89,6 +89,7 @@ class LogsController extends Controller
 
                     $curdate = date('Y-m');
 
+                    //Checking Expiration || Notif
                     if ($curdate >= $expiration_month) {
                         //expiration notif logic
                         if ($k->notify != "done") {
@@ -129,7 +130,7 @@ class LogsController extends Controller
                         }
 
                         if ($quant_count == 0) {
-                            $equipment = Clinic_equipments::findOrFail($id);
+                            $equipment = Clinic_equipments::findOrFail($k->id);
                             $equipment->delete();
                         } else {
                             $equipment = Clinic_equipments::findOrFail($k->id);
