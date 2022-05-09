@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\User_as_clinic;
 use App\Models\Logs;
+use App\Models\Packages_has_equipments;
 use App\Models\Ratings;
+use App\Models\Services_has_equipments;
 
 class LogsController extends Controller
 {
@@ -130,7 +132,35 @@ class LogsController extends Controller
                         }
 
                         if ($quant_count == 0) {
-                            $equipment = Clinic_equipments::where("id", $key->id);
+                            $user = User::where('email', '=',  Auth::user()->email)->first();
+                            $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
+
+                            //removing service from every packages
+                            $get_packages_id = Packages_has_equipments::where('clinic_equipments_id', '=',  $key->id)
+                                ->where('user_as_clinic_id', '=',  $clinic->id)
+                                ->get();
+
+
+                            foreach ($get_packages_id as $key_pack) {
+                                Packages_has_equipments::where('packages_id', '=',  $key_pack->packages_id)
+                                    ->where('clinic_equipments_id', '=',  $key_pack->id)
+                                    ->where('user_as_clinic_id', '=',  $clinic->id)
+                                    ->delete();
+                            }
+
+                            $services = Services_has_equipments::where('clinic_equipments_id', '=',  $key->id)
+                                ->where('user_as_clinic_id', '=',  $clinic->id)
+                                ->get();
+
+                            foreach ($services as $key_ser) {
+                                Services_has_equipments::where('clinic_services_id', '=',  $key_ser->clinic_services_id)
+                                    ->where('clinic_equipments_id', '=',  $key_ser->id)
+                                    ->where('user_as_clinic_id', '=',  $clinic->id)
+                                    ->delete();
+                            }
+
+
+                            $equipment = Clinic_equipments::findOrFail($key->id);
                             $equipment->delete();
                         } //else {
                         //     $equipment = Clinic_equipments::find($k->clinic_equipments_id);
