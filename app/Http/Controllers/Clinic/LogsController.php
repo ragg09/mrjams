@@ -133,7 +133,7 @@ class LogsController extends Controller
                             $equipment = Clinic_equipments::findOrFail($k->id);
                             $equipment->delete();
                         } else {
-                            $equipment = Clinic_equipments::findOrFail($k->id);
+                            $equipment = Clinic_equipments::find($k->id);
                             $equipment->quantity = $quant_count;
                             $equipment->save();
                         }
