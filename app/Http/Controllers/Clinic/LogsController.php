@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\User_as_clinic;
 use App\Models\Logs;
+use App\Models\Packages_has_equipments;
 use App\Models\Ratings;
+use App\Models\Services_has_equipments;
 
 class LogsController extends Controller
 {
@@ -130,13 +132,55 @@ class LogsController extends Controller
                         }
 
                         if ($quant_count == 0) {
-                            $equipment = Clinic_equipments::where("id", $key->id);
-                            $equipment->delete();
-                        } //else {
-                        //     $equipment = Clinic_equipments::find($k->clinic_equipments_id);
-                        //     $equipment->quantity = $quant_count;
-                        //     $equipment->save();
-                        // }
+
+                            $user = User::where('email', '=',  Auth::user()->email)->first();
+                            $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
+
+                            //removing service from every packages
+                            $get_packages_id = Packages_has_equipments::where('clinic_equipments_id', '=',  $key->id)
+                                ->where('user_as_clinic_id', '=',  $clinic->id)
+                                ->get();
+
+                            $get_inventory_id = Clinic_equipment_inventory::where('clinic_equipments_id', '=',  $key->id)
+                                ->get();
+
+                            foreach ($get_inventory_id as $key) {
+                                Clinic_equipment_inventory::where('id', '=',  $key->id)
+                                    ->where('clinic_equipments_id', '=',  $key->id)
+                                    ->delete();
+                            }
+
+                            foreach ($get_packages_id as $key) {
+                                Packages_has_equipments::where('packages_id', '=',  $key->packages_id)
+                                    ->where('clinic_equipments_id', '=',  $key->id)
+                                    ->where('user_as_clinic_id', '=',  $clinic->id)
+                                    ->delete();
+                            }
+
+
+
+                            $services = Services_has_equipments::where('clinic_equipments_id', '=',  $key->id)
+                                ->where('user_as_clinic_id', '=',  $clinic->id)
+                                ->get();
+
+                            foreach ($services as $key) {
+                                Services_has_equipments::where('clinic_services_id', '=',  $key->clinic_services_id)
+                                    ->where('clinic_equipments_id', '=',  $key->id)
+                                    ->where('user_as_clinic_id', '=',  $clinic->id)
+                                    ->delete();
+                            }
+
+
+                            $equipment = Clinic_equipments::findOrFail($key->id);
+
+                            if ($equipment->user_as_clinic_id == $clinic->id) {
+                                $equipment->delete();
+                            }
+                        } else {
+                            $equipment = Clinic_equipments::find($k->clinic_equipments_id);
+                            $equipment->quantity = $quant_count;
+                            $equipment->save();
+                        }
                     }
                 }
             }
