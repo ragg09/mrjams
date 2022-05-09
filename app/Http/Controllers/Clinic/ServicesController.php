@@ -290,7 +290,7 @@ class ServicesController extends Controller
                 //deleting old equipments first
                 $orig = request('equipments_original_ids'); //Gettinng string of ids
                 $orig_array = explode(',', $orig); //splitting string into sepratae string using the comma
-                if (count($orig_array) > 0) {
+                if (isset($orig) || $orig != "" || count($orig_array) > 0) {
                     foreach ($orig_array as $key) {
                         Services_has_equipments::where('clinic_services_id', '=',  $id)
                             ->where('clinic_equipments_id', '=', $key)
