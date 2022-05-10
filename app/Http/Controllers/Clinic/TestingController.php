@@ -41,10 +41,13 @@ class TestingController extends Controller
         $getUserClinic = User_as_clinic::where('id', 4)->first();
 
 
-        // $getUser = User::where('id', '=', $getUserClinic->users_id)->first();
-        // $avgRatingApp = Ratings::where('users_id_ratee', '=', 1)->where('users_id_rater', '=', $getUser->id)->avg('rating');
+        $getUser = User::where('id', '=', $getUserClinic->users_id)->first();
 
-        echo $getUserClinic;
+        $avgRatingApp = Ratings::where('users_id_ratee', '=', 1)->where('users_id_rater', '=', $getUser->id)->avg('rating');
+
+        echo $getUserClinic . " ~ ~<br> ";
+        echo $getUser . " ~ ~<br> ";
+        echo $avgRatingApp . " ~ ~<br> ";
 
         // $get_inventory = Clinic_equipment_inventory::where("clinic_equipments_id",  4)->get();
 
