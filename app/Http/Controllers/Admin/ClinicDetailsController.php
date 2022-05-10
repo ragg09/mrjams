@@ -67,21 +67,17 @@ class ClinicDetailsController extends Controller
 
         $status = 0;
         $months = [];
-
-        if (isset($appointments)) {
-            foreach ($appointments as $item) {
-                $date = date('M', strtotime($item->created_at));
-                array_push($months, $date);
-            }
+        foreach ($appointments as $item) {
+            $date = date('M', strtotime($item->created_at));
+            array_push($months, $date);
         }
-
 
         $appMonth = array_filter(array_count_values($months), function ($v) {
 
             return $v > 0;
         });
 
-        return response()->json(['appointments' => $appointments ?? [], 'appMonth' => $appMonth ?? []]);
+        return response()->json(['appointments' => $appointments, 'appMonth' => $appMonth]);
         // return response()->json(['receipt'=>$receipt]);
         // }
     }
@@ -111,7 +107,9 @@ class ClinicDetailsController extends Controller
             $appReceipt = Receipt_orders::where('user_as_clinic_id', '=', $getUserClinic->id)->count();
 
             //rating for the clinic
-            $avgRating = Ratings::where('users_id_ratee', '=', $id)->avg('rating');
+            $getUserClinic = User_as_clinic::where('id', '=', $id)->first(); // kinukuha yung id sa table na user_as_clinic
+            $getUser = User::where('id', '=', $getUserClinic->users_id)->first(); // kinukuha yung id na may match sa users'id
+            $avgRating = Ratings::where('users_id_ratee', '=', $getUser->id)->avg('rating');
 
             //rating for the system
             $getUserClinic = User_as_clinic::where('id', '=', $id)->first();
@@ -130,7 +128,9 @@ class ClinicDetailsController extends Controller
             $appReceipt = Receipt_orders::where('user_as_clinic_id', '=', $getUserClinic->id)->count();
 
             //rating for the clinic
-            $avgRating = Ratings::where('users_id_ratee', '=', $id)->avg('rating');
+            $getUserClinic = User_as_clinic::where('id', '=', $id)->first(); // kinukuha yung id sa table na user_as_clinic
+            $getUser = User::where('id', '=', $getUserClinic->users_id)->first(); // kinukuha yung id na may match sa users'id
+            $avgRating = Ratings::where('users_id_ratee', '=', $getUser->id)->avg('rating');
 
             //rating for the system
             $getUserClinic = User_as_clinic::where('id', '=', $id)->first();
