@@ -113,8 +113,7 @@ class ClinicDetailsController extends Controller
 
             //rating for the system
             $getUserClinic = User_as_clinic::where('id', '=', $id)->first();
-            $getUser = User::where('id', '=', $getUserClinic->users_id)->first();
-            $avgRatingApp = Ratings::where('users_id_ratee', '=', 1)->where('users_id_rater', '=', $getUser->id)->avg('rating');
+            $avgRatingApp = Ratings::where('users_id_ratee', '=', 1)->where('users_id_rater', '=', $getUserClinic->users_id)->avg('rating');
 
             // get data
             $clinic = User_as_clinic::findOrFail($id);

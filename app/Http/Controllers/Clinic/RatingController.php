@@ -57,7 +57,7 @@ class RatingController extends Controller
             $rating->rating = $request->rating;
             $rating->comment = "FEEDBACK ~~ " . $request->area . ' ~@~' . $request->message;
             $rating->users_id_ratee = 1;
-            $rating->users_id_rater = $clinic->id;
+            $rating->users_id_rater = $user->id;
             $rating->save();
 
             return response()->json(['message' => "Thank you for you feedback, it will help us to improve MrJams."]);
