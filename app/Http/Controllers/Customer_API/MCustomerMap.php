@@ -49,7 +49,6 @@ class MCustomerMap extends Controller
                 }
                 $count++;
             }
-
         }
 
         if ($count > 0) {
@@ -91,18 +90,24 @@ class MCustomerMap extends Controller
         $clinic = User_As_clinic::where('id', '=', $id)->first();
         $clinic_type = Clinic_types::where('id', '=', $clinic->clinic_types_id)->first();
         $clinic_add = User_address::where('id', '=', $clinic->user_address_id)->first();
-   
-        $clinic_data[] = (object) array(  
-                    "id" => $clinic->id, 
-                    "name" => $clinic->name,
-                    "type" => $clinic_type->type_of_clinic,
-                    "longitude" => $clinic_add->longitude,
-                    "latitude"=> $clinic_add->latitude,
-                    "city" => $clinic_add->city,
-                    "zip_code" => $clinic_add->zip_code
+
+        $clinic_data[] = (object) array(
+            "id" => $clinic->id,
+            "name" => $clinic->name,
+            "phone" => $clinic->phone,
+            "telephone" => $clinic->telephone,
+            "type" => $clinic_type->type_of_clinic,
+            "address_line_1" => $clinic_add->address_line_1,
+            "address_line_2" => $clinic_add->address_line_2,
+            "longitude" => $clinic_add->longitude,
+            "latitude" => $clinic_add->latitude,
+            "city" => $clinic_add->city,
+            "zip_code" => $clinic_add->zip_code
         );
 
-        return response()->json(['clinic_data'=>$clinic_data]);
+        return response()->json([
+            "clinic_data" => $clinic_data
+        ]);
     }
 
     /**
