@@ -10,7 +10,10 @@ $(function(){
         dropdownParent: $('#create_modal'),
         placeholder: "Select equipments",
         allowClear: true,
-        tags: true,
+        // tags: true,
+        noResults: function() {
+            return '<button id="no-results-btn" onclick="noResultsButtonClicked()">No Result Found</a>';
+          },
     });
 
     $("#equipment_multiple").on('change', function() {
@@ -153,7 +156,10 @@ $(function(){
         dropdownParent: $('#select_equipments_multiple'),
         placeholder: "Select equipments",
         allowClear: true,
-        tags: true,
+        // tags: true,
+        noResults: function() {
+            return '<button id="no-results-btn" onclick="noResultsButtonClicked()">No Result Found</a>';
+          },
     });
 
     $("#select_equipments").on('change', function() {

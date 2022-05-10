@@ -122,7 +122,10 @@ $(function(){
         dropdownParent: $('#edit_package_equipment_up'),
         placeholder: "Select Equipments",
         allowClear: true,
-        tags: true,
+        // tags: true,
+        noResults: function() {
+            return '<button id="no-results-btn" onclick="noResultsButtonClicked()">No Result Found</a>';
+          },
     });
 
     $("#select_equipments").change(function() {
@@ -230,7 +233,10 @@ $(function(){
         dropdownParent: $('#edit_package_service_up'),
         placeholder: "Select services",
         allowClear: true,
-        tags: true,
+        // tags: true,
+        noResults: function() {
+            return '<button id="no-results-btn" onclick="noResultsButtonClicked()">No Result Found</a>';
+          },
     });
 
     $("#select_services").change(function() {
