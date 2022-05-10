@@ -104,7 +104,10 @@ $(function(){
         placeholder: "Select Services",
         allowClear: true,
         minimumResultsForSearch: -1,
-        tags: true,
+        // tags: true,
+        noResults: function() {
+            return '<button id="no-results-btn" onclick="noResultsButtonClicked()">No Result Found</a>';
+          },
     });
 
     $("#service_multiple").change(function() {
@@ -121,7 +124,10 @@ $(function(){
         placeholder: "Select Materials",
         allowClear: true,
         minimumResultsForSearch: -1,
-        tags: true,
+        // tags: true,
+        noResults: function() {
+            return '<button id="no-results-btn" onclick="noResultsButtonClicked()">No Result Found</a>';
+          },
     });
 
     $("#material_multiple").change(function() {
