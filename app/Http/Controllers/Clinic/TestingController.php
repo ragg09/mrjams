@@ -37,11 +37,20 @@ class TestingController extends Controller
      */
     public function index()
     {
-        $get_inventory = Clinic_equipment_inventory::where("clinic_equipments_id",  4)->get();
 
-        $expiration_month = date("Y-m", strtotime($get_inventory[0]->expiration));
+        $getUserClinic = User_as_clinic::where('id', 4)->first();
 
-        echo $expiration_month;
+
+        // $getUser = User::where('id', '=', $getUserClinic->users_id)->first();
+        // $avgRatingApp = Ratings::where('users_id_ratee', '=', 1)->where('users_id_rater', '=', $getUser->id)->avg('rating');
+
+        echo $getUserClinic;
+
+        // $get_inventory = Clinic_equipment_inventory::where("clinic_equipments_id",  4)->get();
+
+        // $expiration_month = date("Y-m", strtotime($get_inventory[0]->expiration));
+
+        // echo $expiration_month;
         // return view('adminViews.layouts.clinic.clinicAcceptMessage',);
 
         // $todelete = Clinic_types::findOrFail(3);

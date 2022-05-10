@@ -34,6 +34,9 @@ $(function(){
 
                 var chart = new google.visualization.LineChart(document.getElementById('appMonthClinic'));
                 chart.draw(figure, options);
+            }else{
+              
+              $('#cappMonthPatient_nodata').attr("hidden", false);
             }
               
         },

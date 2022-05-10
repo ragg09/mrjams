@@ -30,6 +30,9 @@ $(function(){
   
                 var chart = new google.visualization.LineChart(document.getElementById('appMonthPatient'));
                 chart.draw(figure, options);
+            }else{
+              
+              $('#cappMonthPatient_nodata').attr("hidden", false);
             }
         },
         error: function(e){
