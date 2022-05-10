@@ -98,7 +98,10 @@
             dropdownParent: $('#create_modal'),
             placeholder: "Select Services",
             allowClear: true,
-            tags: true,
+            // tags: true,
+            noResults: function() {
+                return '<button id="no-results-btn" onclick="noResultsButtonClicked()">No Result Found</a>';
+            },
         });
 
         $("#service_multiple").change(function() {
@@ -113,7 +116,10 @@
             dropdownParent: $('#create_modal'),
             placeholder: "Select Tools and Equipments",
             allowClear: true,
-            tags: true,
+            // tags: true,
+            noResults: function() {
+                return '<button id="no-results-btn" onclick="noResultsButtonClicked()">No Result Found</a>';
+            },
         });
 
         $("#equipment_multiple").change(function() {
