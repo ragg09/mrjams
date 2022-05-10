@@ -782,7 +782,7 @@ class BillingController extends Controller
                     'address' =>  $clinic_add->address_line_1 . " " . $clinic_add->address_line_2 . " " . $clinic_add->city,
                     'contact' => $clinic->phone,
                     'title' => 'Your appointment is done',
-                    'body' => 'Please be noted that you have a balance in '  . $clinic->name . '. Expect that the clinic will contanct you.',
+                    'body' => 'Please be noted that you have a balance in '  . $clinic->name . '. Expect that the clinic will contact you. Balance: ' . $request->balance,
                 ];
             }
 
