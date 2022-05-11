@@ -92,7 +92,9 @@
                     <div class="card-content">
                       <div class="card-body text-center">
                         <div class="media d-flex">
-                         
+                          {{-- <div class="align-self-center">
+                            <i class="fa fa-phone fa-2x" aria-hidden="true"></i>
+                          </div> --}}
                           <div class="media-body text-right">
                             <div id="appMonthPatient" style="width: 100%; height: 500px">
                               <h1 class="text-center" id="appMonthPatient_nodata">NO AVAILABLE DATA</h1>
