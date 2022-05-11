@@ -41,6 +41,14 @@
 
                         <a href="{{ route('role.register_clinic') }}" class="btn btn-success" style="display: block; margin-left: auto; margin-right: auto; width: 200px;"><i class="fa fa-user-md fa-lg" aria-hidden="true" style="color: black; width: 20px; height:18px; margin-right: 4px;"></i>Sign Up as Clinic</a>
 
+
+                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                          <i class="fa-solid fa-right-from-bracket mx-2"></i>
+                          {{ __('Logout') }}
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                        </form>
                     </div>
                    
                     <div class="col-sm-6">
