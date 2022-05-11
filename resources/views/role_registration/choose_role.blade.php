@@ -40,7 +40,9 @@
                         {{-- <p>OR</p> --}}
 
                         <a href="{{ route('role.register_clinic') }}" class="btn btn-success" style="display: block; margin-left: auto; margin-right: auto; width: 200px;"><i class="fa fa-user-md fa-lg" aria-hidden="true" style="color: black; width: 20px; height:18px; margin-right: 4px;"></i>Sign Up as Clinic</a>
+                      
 
+                        
                     </div>
                    
                     <div class="col-sm-6">

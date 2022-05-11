@@ -289,6 +289,49 @@ class MAppointmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Negotiating Appointment (Mail: Appointment Status Accepted)  
+        $appointment = Appointments::find($id);
+        $appointment->appointment_status_id = 4;
+        $appointment->save();
+
+        $user = User::where('email', '=',  Auth::user()->email)->first();
+        $customer = User_as_customer::where('users_id', '=', $user->id)->first();
+
+        $receipt = Receipt_orders::where('id', '=', $appointment->receipt_orders_id)->first();
+
+
+        //checking logs limit 5000
+        $logs_count = Logs::where('user_as_clinic_id', '=', $receipt->user_as_clinic_id)->count();
+        if ($logs_count == 5000) {
+            Logs::where('user_as_clinic_id', '=', $receipt->user_as_clinic_id)->first()->delete();
+        }
+        //creating logs
+        $logs = new Logs();
+        $logs->message = $customer->fname . ' ' . $customer->lname . " agreed to the suggested appointment day and time.";
+        $logs->remark = "notif";
+        $logs->date =  date("Y/m/d");
+        $logs->time = date("h:i:s a");
+        $logs->user_as_clinic_id =  $receipt->user_as_clinic_id;
+        $logs->save();
+
+        // customer logs
+        $customer_logs_count = Customer_logs::where('user_as_customer_id', '=',  $customer->id)->count();
+        if ($customer_logs_count == 5000) {
+            Customer_logs::where('user_as_customer_id', '=',  $customer->id)->first()->delete();
+        }
+
+        $clinic_name = User_as_clinic::where('id', '=', $receipt->user_as_clinic_id)->first();
+
+         //creating logs
+         $c_log = new Customer_logs();
+         $c_log->message = "You accepted the scheduled appointment from " . $clinic_name->name;
+         $c_log->remark = "notif";
+         $c_log->date =  date("m/d/Y");
+         $c_log->time = date("h:i a");
+         $c_log->user_as_customer_id = $customer->id;
+         $c_log->save();
+
+
+        return response()->json(['all' => $appointment, 'status' => 'OK']);
     }
 }
