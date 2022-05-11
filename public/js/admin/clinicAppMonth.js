@@ -36,7 +36,7 @@ $(function(){
                 chart.draw(figure, options);
             }else{
               
-              $('#cappMonthPatient_nodata').attr("hidden", false);
+              $('#appMonthPatient_nodata').attr("hidden", false);
             }
               
         },

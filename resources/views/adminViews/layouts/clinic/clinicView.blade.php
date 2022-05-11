@@ -115,7 +115,7 @@
                        </div> --}}
                        <div class="media-body text-right">
                         <div id="appMonthClinic" style="width: 100%; height: 565px"></div>
-                          <h1 class="text-center" id="appMonthPatient_nodata">NO AVAILABLE DATA</h1>
+                          <h1 class="text-center" id="appMonthPatient_nodata" hidden>NO AVAILABLE DATA</h1>
                        </div>
                      </div>
 
