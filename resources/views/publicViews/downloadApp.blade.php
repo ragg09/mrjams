@@ -22,7 +22,7 @@
 
     <div>
         <img src="{{asset('images/mrjams/downloadSize.jpg') }}" alt="" class="center">
-        <a href="https://drive.google.com/file/d/1wH-ExyaFfXhed966KYrua1HKQPsSb-Pw/view?usp=drivesdk" class="btn btn-secondary mx-auto d-block mb-2 w-25" > <i class="fa fa-arrow-circle-left" aria-hidden="true" ></i> Download</a>
+        <a href="https://qr.page/g/4ZteeTgUVTP" class="btn btn-secondary mx-auto d-block mb-2 w-25" > <i class="fa fa-arrow-circle-left" aria-hidden="true" ></i> Download</a>
         <a onclick="history.back()" class="btn btn-primary mx-auto d-block w-25" id="back_btn"> <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back</a>
     </div>
     
