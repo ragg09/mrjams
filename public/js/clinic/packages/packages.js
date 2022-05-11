@@ -223,6 +223,11 @@ $(function(){
                     // console.log(data.message);
                     $('#select_equipments').val(null).trigger('change');
                 }
+            },
+            error: function(e){
+                console.log('AJAX load did not work');
+                console.log(e);
+                // alert("error");
             }
         });
     });

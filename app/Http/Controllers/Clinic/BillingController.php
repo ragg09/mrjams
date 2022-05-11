@@ -358,11 +358,11 @@ class BillingController extends Controller
                 'complete_summary' => $complete_summary,
                 'services' => $services ?? "",
                 'package' => $package ?? "",
-                'complete_equipments' => $complete_equipments,
-                'toshow_equip_id' => $toshow_equip_id,
-                'toshow_equip_value' => $toshow_equip_value,
-                'clinic_services' => $clinic_services,
-                'clinic_materials' => $clinic_materials,
+                'complete_equipments' => $complete_equipments ?? [],
+                'toshow_equip_id' => $toshow_equip_id ?? [],
+                'toshow_equip_value' => $toshow_equip_value ?? [],
+                'clinic_services' => $clinic_services ?? [],
+                'clinic_materials' => $clinic_materials ?? [],
                 'status' => 1,
                 'logs' => $logs
             ]);
