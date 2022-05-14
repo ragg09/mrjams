@@ -65,9 +65,13 @@ $(function(){
         enableTime: true,
         dateFormat: "Y-m-d H:i",
         // inline: true,
-        minDate: today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(),
+        minDate: today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()+1),
         // defaultDate: data.data.app_appointed_at + " " + data.data.time ,
+
+  
       })
+
+    //   console.log( today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()+1));
 
 
     function clinic_availability(){
@@ -136,7 +140,7 @@ $(function(){
                         minTime: "08:00",
                         maxTime: "22:00",
                         dateFormat: "Y-m-d H:i",
-                        minDate: today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(),
+                        minDate: today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()+1),
                         disable: [
                             function(date) {
                                 // disable sunday
@@ -197,8 +201,12 @@ $(function(){
                                         minTime: today.getHours() + ": 00",
                                         maxTime: val.max,
                                         dateFormat: "Y-m-d H:i",
-                                        minDate: today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate() + " " + today.getHours() + ": 00",
+                                        minDate: today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()+1) + " " + today.getHours() + ": 00",
                                         disable: [
+                                            // function(date) {
+                                            //     // disable today
+                                            //     return (date);
+                                            // },
                                             function(date) {
                                                 // disable sunday
                                                 if(data.avail[0].status == "off"){

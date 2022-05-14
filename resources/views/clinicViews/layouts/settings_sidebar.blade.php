@@ -20,11 +20,11 @@
 
         <a href="" id="TimeDateSettings">
             <div id="sidebar-option">
-                <i class="fa fa-calendar" aria-hidden="true" style="margin-right: 20px; margin-left: 10px" title="Time & Date"></i>Manual Shedule
+                <i class="fa fa-calendar" aria-hidden="true" style="margin-right: 20px; margin-left: 10px" title="Time & Date"></i>Manual Schedule
             </div>
         </a>
 
-        <a href="" id="PreferencesSettings">
+        <a href="" id="PreferencesSettings" hidden>
             <div id="sidebar-option">
                 <i class="fa fa-calendar" aria-hidden="true" style="margin-right: 20px; margin-left: 10px" title="Preferences"></i>Auto Schedule
             </div>

@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="equipments">Consumable or Equipments</label>
+                        <label for="equipments">Consumable / Medicine</label>
                             <select class="form-control" id="equipment_multiple" multiple name="equipment_multiple" style="width: 100%;">
                                 @foreach ($equipments as $row)
                                     <option value="{{$row->id}}">{{$row->name}}</option>     

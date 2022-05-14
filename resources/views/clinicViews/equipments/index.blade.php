@@ -50,18 +50,40 @@
                     @foreach ($data as $row)
                         <tr>
                             <td>{{$row->name}}</td>
-                            <td>{{$row->quantity}} {{$row->unit}}</td>
+                            
+                            @if ($row->quantity > 0)
+                                <td>{{$row->quantity}} {{$row->unit}}</td>
+                            @else
+                                
+                                <td><p>Out of Stock</p></td>
+                            @endif
+                            
                             <td>{{$row->type}}</td>
-                            <td>
-                                <a href="" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#view_modal_up" id="view_modal" data-id="{{$row->id}}" title="View {{$row->name}}">
-                                    <i class="fa fa-list" aria-hidden="true"></i>
-                                </a>    
-                                <a href="" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#edit_modal_up" id="edit_modal" data-id="{{$row->id}}" title="Edit {{$row->name}}">
-                                    <i class="fa fa-pencil" aria-hidden="true" ></i>
-                                </a>
+
+                            <td class="justify-content-center">
+                               
+                                @if ($row->quantity > 0)
+                                    <a href="" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#view_modal_up" id="view_modal" data-id="{{$row->id}}" title="View {{$row->name}}">
+                                        <i class="fa fa-list" aria-hidden="true"></i>
+                                    </a>    
+
+                                    <a href="" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#edit_modal_up" id="edit_modal" data-id="{{$row->id}}" title="Edit {{$row->name}}">
+                                        <i class="fa fa-pencil" aria-hidden="true" ></i>
+                                    </a>
+
+                                    
+                                @else
+                                    <a href="" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#add_stock_material" id="add_stock" data-id="{{$row->id}}" title="Edit {{$row->name}}">
+                                        <i class="fa fa-plus" aria-hidden="true"></i> 
+                                    </a>
+                                    
+                                @endif
+
                                 <a href="" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete_modal_up" id="delete_modal" data-id="{{$row->id}}" title="Delete {{$row->name}}">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </a>
+                                
+                                
                             </td>
                         </tr>
                     @endforeach
@@ -85,6 +107,7 @@
     
     @include('clinicViews.equipments.view_modal')
     @include('clinicViews.equipments.create_modal')
+    @include('clinicViews.equipments.add_stock_modal')
     @include('clinicViews.equipments.edit_modal')
     @include('clinicViews.equipments.delete_modal')
     @include('clinicViews.equipments.add_quantity_modal')

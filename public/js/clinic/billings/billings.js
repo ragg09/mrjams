@@ -94,6 +94,9 @@ $(function(){
                 //     console.log(data.message);
                 //     $('#select_services').val(null).trigger('change');
                 // }
+            },
+            error: function(error) {
+              console.log(error);
             }
         });
     });

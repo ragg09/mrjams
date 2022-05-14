@@ -69,8 +69,8 @@ class PackagesController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:2',
             'description' => 'required|min:5|max:45',
-            'min_price' => 'required|numeric|gt:0',
-            // 'max_price' => 'required|numeric|gt:min_price',
+            'min_price' => 'required|integer|gt:0',
+            // 'max_price' => 'required|integer|gt:min_price',
         ]);
 
         if ($validator->fails()) {
@@ -216,8 +216,8 @@ class PackagesController extends Controller
             $validator = Validator::make($request->all(), [
                 'name' => 'required|min:2',
                 'description' => 'required|min:5|max:45',
-                'min_price' => 'required|numeric|gt:0',
-                // 'max_price' => 'required|numeric|gt:min_price',
+                'min_price' => 'required|integer|gt:0',
+                // 'max_price' => 'required|integer|gt:min_price',
             ]);
 
             if ($validator->fails()) {

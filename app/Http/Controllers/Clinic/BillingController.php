@@ -273,6 +273,7 @@ class BillingController extends Controller
                     $this_equipmnts = Services_has_equipments::where('clinic_services_id', '=',  $this_service->id)->get();
                     //getting equipments from these services
                     foreach ($this_equipmnts as $k) {
+
                         $get_equipmnts[] = (object) array(
                             'user_as_clinic_id' => $k->user_as_clinic_id,
                             'clinic_equipments_id' => $k->clinic_equipments_id,
@@ -289,7 +290,11 @@ class BillingController extends Controller
             if (isset($get_equipmnts)) {
                 foreach ($get_equipmnts as $keys) {
                     //echo $keys->clinic_equipments_id;
-                    array_push($equipmnts_ids, $keys->clinic_equipments_id);
+                    $check_quantity = Clinic_equipments::where("id", $keys->clinic_equipments_id)->first();
+
+                    if ($check_quantity->quantity > 0) {
+                        array_push($equipmnts_ids, $keys->clinic_equipments_id);
+                    }
                 }
             }
 
@@ -607,6 +612,8 @@ class BillingController extends Controller
                         $up_inventory->quantity =  $total;
                         $up_inventory->save();
                     } else {
+
+
 
                         $to_deduct = (int)$equipment_values_array[$count]; //used in this transaction 
 

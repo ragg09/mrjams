@@ -33,8 +33,15 @@ class EquipmentsController extends Controller
         $user = User::where('email', '=',  Auth::user()->email)->first();
         $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
 
-        $data = Clinic_equipments::where('user_as_clinic_id', '=',  $clinic->id)->where("quantity", ">", 0)->orderBy('name', 'ASC')->paginate(10);
-        $data_all = Clinic_equipments::where('user_as_clinic_id', '=',  $clinic->id)->where("quantity", ">", 0)->orderBy('name', 'ASC')->get();
+        $data = Clinic_equipments::where('user_as_clinic_id', '=',  $clinic->id)
+            // ->where("quantity", ">", 0)
+            ->orderBy('name', 'ASC')
+            ->paginate(10);
+
+        $data_all = Clinic_equipments::where('user_as_clinic_id', '=',  $clinic->id)
+            // ->where("quantity", ">", 0)
+            ->orderBy('name', 'ASC')
+            ->get();
 
         $logs = Logs::where('user_as_clinic_id', '=',  $clinic->id)
             ->where('remark', '!=',  "notif")
@@ -100,6 +107,8 @@ class EquipmentsController extends Controller
         } else {
             $myequiipments = Clinic_equipments::where('user_as_clinic_id', '=',  $clinic->id)
                 ->where('name', '=',  $request->name)
+                ->where('unit', '=',  $request->unit)
+                ->where('type', '=',  $request->type)
                 ->first();
 
             if ($myequiipments) {
@@ -255,6 +264,12 @@ class EquipmentsController extends Controller
                 ->where('expiration', $getid[1])
                 ->first();
             return response()->json(['data' => $selected_material, 'tester' => "get selected date"]);
+        } else if (strpos($id, "addStock")) {
+            //get material details
+            $getid = explode("_", $id);
+            $selected_material = Clinic_equipments::where('id', $getid[0])
+                ->first();
+            return response()->json(['data' => $selected_material, 'tester' => "materail detail"]);
         } else {
             $user = User::where('email', '=',  Auth::user()->email)->first();
             $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();

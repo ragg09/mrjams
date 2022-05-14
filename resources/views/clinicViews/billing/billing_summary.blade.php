@@ -42,10 +42,13 @@
                         @if ($complete_equipments)
                             <div class="overall_equipments">
                                 @foreach ($complete_equipments as $row)
+                                    @if ($row->max_quantity > 0)
                                     <div class="row">
                                         <div class="col"><p>{{ $row->name }} ({{ $row->unit }})</p></div>
                                         <div class="col"><input type="number" class=" positive-numeric-only" min="0" max="{{ $row->max_quantity }}" value="{{ $row->min_quantity }}" id="equipment_values" name="equipment_values" ></div>
                                     </div>
+                                    @endif
+                                    
                                 @endforeach
 
                                 <div id="addtional_equipment">
@@ -245,8 +248,8 @@
             </div>
         </div>
         <input type="text"  id="customer_id" name="customer_id" value="{{ $complete_summary->customer_id }}" hidden>
-        <input type="text"  value="{{ $toshow_equip_id }}" id="equipment_ids_final" name="equipment_ids_final" hidden>
-        <input type="text"  value="{{ $toshow_equip_value }}" id="equipment_values_final" name="equipment_values_final" hidden>
+        <input type="text"  value="{{ $toshow_equip_id }}" id="equipment_ids_final" name="equipment_ids_final" >
+        <input type="text"  value="{{ $toshow_equip_value }}" id="equipment_values_final" name="equipment_values_final" >
         <input type="text"  id="pricing_summary" name="pricing_summary" hidden>
         <input type="text"  value="0" id="balance" name="balance" hidden>
 

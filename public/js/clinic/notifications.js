@@ -13,6 +13,7 @@ $(function(){
                 // console.log(data.rate);
 
                 $('#rating_in_drodwn').text(data.clinic.name);
+                $('#clinic_name').text(data.clinic.name);
 
                 if(data.rate){
                     $('#numerical_rating').text(data.rate.toFixed(2));

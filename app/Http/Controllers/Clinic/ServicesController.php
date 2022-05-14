@@ -83,8 +83,8 @@ class ServicesController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:2',
             'description' => 'required|min:5',
-            'min_price' => 'required|numeric|gt:0',
-            'max_price' => 'required|numeric|gt:min_price',
+            'min_price' => 'required|integer|gt:0',
+            'max_price' => 'required|integer|gt:min_price',
             'equipment_ids' => 'required',
         ]);
 
@@ -168,12 +168,15 @@ class ServicesController extends Controller
 
 
             foreach ($getEqupId as $key) {
-                $equipments[] = Clinic_equipments::where('user_as_clinic_id', '=',  $clinic->id)
-                    ->where('id', '=',  $key->clinic_equipments_id)
-                    ->first();
+                $check_quantiy =  Clinic_equipments::where('id', '=',  $key->clinic_equipments_id)->first();
+                if ($check_quantiy->quantity > 0) {
+                    $equipments[] = Clinic_equipments::where('user_as_clinic_id', '=',  $clinic->id)
+                        ->where('id', '=',  $key->clinic_equipments_id)
+                        ->first();
+                }
             }
 
-            return response()->json(['services' => $getservices, 'equipments' => $equipments]);
+            return response()->json(['services' => $getservices, 'equipments' => $equipments ?? []]);
         } else {
             $services = Clinic_services::where('user_as_clinic_id', '=',  $clinic->id)->get();
 
@@ -270,8 +273,8 @@ class ServicesController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:2',
             'description' => 'required|min:5',
-            'min_price' => 'required|numeric|gt:0',
-            'max_price' => 'required|numeric|gt:min_price',
+            'min_price' => 'required|integer|gt:0',
+            'max_price' => 'required|integer|gt:min_price',
         ]);
 
         if ($validator->fails()) {

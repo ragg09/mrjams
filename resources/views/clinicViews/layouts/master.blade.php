@@ -78,7 +78,11 @@
 
 
         <div class="header_menu">
-            <ul class="nav justify-content-end">
+
+            <ul class="nav justify-content-end border">
+                <li class="nav-item " id="">
+                    <h5 class="mt-2 mx-2" id="clinic_name"></h5>
+                </li>
 
                 <li class="nav-item" id="">
                     <div class="dropdown">

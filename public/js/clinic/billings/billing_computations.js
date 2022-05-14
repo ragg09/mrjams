@@ -348,6 +348,9 @@ $(function(){
     
                 $("#additionals_modal").modal('toggle');
                 
+            },
+            error: function(error) {
+              console.log(error);
             }
         });
         

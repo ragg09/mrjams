@@ -86,17 +86,12 @@
                  <div class="card-content">
                    <div class="card-body">
                      <div class="media d-flex">
-                      
                        <div class="media-body text-center">
                          <i class="fa fa-user fa-6x mb-2" aria-hidden="true"></i> 
                          <h3 style="font-weight: bold">{{ $patient->fname}} {{ $patient->lname}}</h3>
                         <h5>Role: Customer</h5>
                          {{-- <h5>{{ $patientAdd->address_line_1}} {{ $patientAdd->address_line_2}}, {{ $patientAdd->city}}</h5> --}}
-
                        </div>
-
-                     
-
                      </div>
                    </div>
                  </div>
@@ -117,8 +112,6 @@
                         <form action="/admin/patient/{{$patient->id}}" method="POST">
                           @csrf
                           {{method_field('PUT')}}
-
-
                           <input type="text" class="form-control" id="userID" name="userID" value="{{$patient->id}}" hidden>
                           <div class="mb-2">
                             <label class="form-label" style="float: left; font-weight: bold">First Name</label>
@@ -134,7 +127,7 @@
                           </div>
                           <div class="mb-2">
                             <label class="form-label"  style="float: left; font-weight: bold">Age</label>
-                            <input type="text" class="form-control" id="userTelephone" name="age" value="{{$patient->age}}">
+                            <input type="text" class="form-control" id="userTelephone" name="age" value="{{$patient->age}}" pattern="[0-9]+">
                           </div>
                           <div class="mb-2">
                             <label class="form-label"  style="float: left; font-weight: bold">Gender</label>
@@ -145,10 +138,9 @@
                               <option value="Other">Other</option>
                             </select>
                           </div>
-                        
                           <div class="mb-2">
                               <label class="form-label"  style="float: left; font-weight: bold">Cellphone Number</label>
-                              <input type="text" class="form-control" id="userTelephone" name="phone" value="{{$patient->phone}}">
+                              <input type="text" class="form-control" id="userTelephone" name="phone" value="{{$patient->phone}}" pattern="[0-9]+">
                           </div>
                           <button type="submit" id="updatePatient" class="btn btn-primary">Submit</button>
 

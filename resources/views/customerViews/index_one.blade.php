@@ -165,12 +165,12 @@
         <li>
           <i class="fa fa-medkit fa-4x"></i>
           <h4><b>Medical Services</b></h4>
-          <p style="font-size: 15px;">list of services offered by a clinic.</p>
+          <p style="font-size: 15px;">List of services offered by a clinic.</p>
         </li>
         <li>
-          <i class="fa fa-user-md fa-4x"></i>
-          <h4><b>Find A Doctor</b></h4>
-          <p style="font-size: 15px;">A doctor who specializes in the service you need.</p>
+          <i class="fa fa-compass fa-4x"></i>
+          <h4><b>Direction</b></h4>
+          <p style="font-size: 15px;">Directions to your preferred clinic.</p>
         </li>
         <li>
           <i class="fa fa-calendar fa-4x"></i>

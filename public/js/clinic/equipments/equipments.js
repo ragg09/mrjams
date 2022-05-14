@@ -19,6 +19,24 @@ $(function(){
     //calling reusable script
     $.getScript("../js/clinic/reusableFunction.js");
 
+    //to prevent date that is less than its expiration
+    $("#acquired").on('change', function(e){
+        // console.log( $("#acquired").val());
+        $("#expiration").attr("min", $("#acquired").val());
+        $("#expiration").attr("disabled", false);
+        
+    })
+
+    $("#add_stock_acquired").on('change', function(e){
+        // console.log( $("#add_stock_acquired").val());
+        $("#add_stock_expiration").attr("min", $("#add_stock_acquired").val());
+        $("#add_stock_expiration").attr("disabled", false);
+        
+    })
+
+
+    
+
     //CREATE , create_modal
     $("#main_form").on('submit', function(e){
         e.preventDefault();
@@ -63,13 +81,120 @@ $(function(){
                         
                         $("#create_modal").modal('toggle');
                         bootstrapAlert(data.message, "success", 250);
+                        
+                        $("#name").val("");
+                        $("#quantity").val("");
+                        $("#supplier").val("");
+                        $("#acquired").val("");
+                        $("#expiration").val("");
+                        $("#expiration").attr("disabled", true);
                     }
+
+                   
 
                     
                 }
             }
         });
     });
+
+
+
+    
+
+
+    //add stock view
+    $(document).on('click', 'a#add_stock', function(e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+
+        console.log(id);
+        $.ajax({
+            type: "GET",
+            url: "/clinic/equipments/" + id + "_addStock",
+            success: function(data){
+                console.log(data);
+
+
+                $("#add_stock_name").val(data.data.name);
+                $("#add_stock_unit").val(data.data.unit);
+                $("#add_stock_type").val(data.data.type);
+                
+                
+                
+                
+            },
+            error: function(e){
+                console.log('AJAX load did not work');
+                console.log(e);
+                // alert("error");
+            }
+        });
+    });
+
+    //ADD STOCK MODAL SUBMIT
+    $("#add_stock_main_form").on('submit', function(e){
+        e.preventDefault();
+    
+        $.ajax({
+            type: $(this).attr('method'),
+	    	url: $(this).attr('action'),
+            headers: {  'Access-Control-Allow-Origin': 'https://mrjams.herokuapp.com/' },
+	    	data: $('#add_stock_main_form').serialize(),
+            beforeSend: function(){
+                $("#stock_create_equipment_add").attr("hidden", true);
+                $("#stock_create_equipment_close").attr("hidden", true);
+                $("#stock_response_waiting_equipment_create").removeAttr("hidden");
+                $(document).find('span.error-text').text('');
+            },
+            success: function(data) {
+                $("#create_equipment_add").removeAttr("hidden");
+                $("#create_equipment_close").removeAttr("hidden");
+                $("#stock_response_waiting_equipment_create").attr("hidden", true);
+                $("#stock_create_equipment_add").attr("hidden", false);
+                $("#stock_create_equipment_close").attr("hidden", false);
+
+
+                if(data.status == 0){
+                    // console.log(data);
+                    $.each(data.error, function(key, val){
+                         $('span.'+key+'_error').text(val[0]);
+                    });
+                }else{
+                    if(data.dataCount == 1){
+                        $("#equipment_table").load(window.location + " #equipment_table");
+                        $('#add_stock_material').modal('toggle');
+                        bootstrapAlert(data.message, "success", 250);
+                        setInterval( reload_page, 2000);
+
+                        function reload_page(){
+                            location.reload()
+                        }
+                    }else{
+                        $.each(data.keys, function(key, val){
+                            $('input#'+key).val('');
+                        });
+                        $("#equipment_table").load(window.location + " #equipment_table");
+                        
+                        $('#add_stock_material').modal('toggle');
+                        bootstrapAlert(data.message, "success", 250);
+                        
+                        $("#add_stock_name").val("");
+                        $("#add_stock_quantity").val("");
+                        $("#add_stock_supplier").val("");
+                        $("#add_stock_acquired").val("");
+                        $("#add_stock_expiration").val("");
+                        $("#add_stock_expiration").attr("disabled", true);
+                    }
+
+                   
+
+                    
+                }
+            }
+        });
+    });
+
 
     // display of data in view modal, view_modal || equipment show function
     $(document).on('click', 'a#view_modal', function(e) {
