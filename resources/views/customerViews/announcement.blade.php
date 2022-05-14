@@ -77,6 +77,7 @@
                                 <div class="form-group" style="margin: 8px 0px 8px 0px;">
                                     <div class="col-sm-12" id="admin-message">
                                         <textarea class="form-control" id="inputContact1" type="text" name="message"  id="message" placeholder="Message" ></textarea>
+                                        <span class="text-danger error-text message_error"></span>
                                     </div>
                                 </div>
     

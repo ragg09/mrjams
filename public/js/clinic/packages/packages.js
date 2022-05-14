@@ -42,6 +42,11 @@ $(function(){
                         $('#equipment_multiple').val(null).trigger('change');
                     }
                 }
+            },
+            error: function(e){
+                console.log('AJAX load did not work');
+                console.log(e);
+                // alert("error");
             }
         });
     });
@@ -111,6 +116,11 @@ $(function(){
                     $("#edit_package_up").modal('toggle');
                     bootstrapAlert(data.message, "info", 200);
                 }
+            },
+            error: function(e){
+                console.log('AJAX load did not work');
+                console.log(e);
+                // alert("error");
             }
         });
     });
@@ -337,6 +347,11 @@ $(function(){
                     // console.log(data.message);
                     $('#select_services').val(null).trigger('change');
                 }
+            },
+            error: function(e){
+                console.log('AJAX load did not work');
+                console.log(e);
+                // alert("error");
             }
         });
     });

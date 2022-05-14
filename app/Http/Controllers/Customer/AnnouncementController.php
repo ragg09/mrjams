@@ -11,6 +11,7 @@ use App\Models\User_as_customer;
 use App\Models\User_as_clinic;
 use App\Models\User;
 use App\Models\Clinic_types;
+use Illuminate\Support\Facades\Validator;
 
 use DateTime;
 
@@ -31,7 +32,7 @@ class AnnouncementController extends Controller
         $customer = User_as_customer::where('users_id', '=', $user->id)->first();
 
         // echo (Messages::whereIn('receiver', ['all', 'patient'])->get());    
-        return view('customerViews.announcement', ['announceP'=>$announcePatient, 'customer'=>$customer]);
+        return view('customerViews.announcement', ['announceP' => $announcePatient, 'customer' => $customer]);
     }
 
     /**
@@ -53,6 +54,14 @@ class AnnouncementController extends Controller
     public function store(Request $request)
     {
         // Message (Customer to Admin)
+        $validator = Validator::make($request->all(), [
+            'message' => 'required|min:2'
+
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['status' => 0, 'error' => $validator->errors()->toArray()]);
+        } else {
 
             $user = User::where('email', '=',  Auth::user()->email)->first();
 
@@ -61,11 +70,11 @@ class AnnouncementController extends Controller
             $message->receiver = "admin";
             $message->users_id = $user->id;
             $message->save();
-            
+
             // echo($request->message);            
             // return view('customerViews.announcement');
-             return response()->json(['data'=> $request->message]);
-    
+            return response()->json(['data' => $request->message]);
+        }
     }
 
     /**
@@ -92,20 +101,20 @@ class AnnouncementController extends Controller
         $clinic = User_As_clinic::where('id', '=', $id)->first();
         $clinic_type = Clinic_types::where('id', '=', $clinic->clinic_types_id)->first();
         $clinic_add = User_address::where('id', '=', $clinic->user_address_id)->first();
-   
-        $clinic_data[] = (object) array(  
-                    "id" => $clinic->id, 
-                    "name" => $clinic->name,
-                    "type" => $clinic_type->type_of_clinic,
-                    "longitude" => $clinic_add->longitude,
-                    "latitude"=> $clinic_add->latitude,
-                    "city" => $clinic_add->city,
-                    "zip_code" => $clinic_add->zip_code
+
+        $clinic_data[] = (object) array(
+            "id" => $clinic->id,
+            "name" => $clinic->name,
+            "type" => $clinic_type->type_of_clinic,
+            "longitude" => $clinic_add->longitude,
+            "latitude" => $clinic_add->latitude,
+            "city" => $clinic_add->city,
+            "zip_code" => $clinic_add->zip_code
         );
 
         // echo json_encode($data);
 
-        return response()->json(['clinic_data'=>$clinic_data]);
+        return response()->json(['clinic_data' => $clinic_data]);
     }
 
     /**
