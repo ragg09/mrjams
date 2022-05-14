@@ -180,16 +180,6 @@ $(function(){
                 console.log(data.ids );
                 console.log(data.equipments);
 
-               
-                // const arrOfStr_ids_equip = [];
-
-                // $.each(data.ids, function(key, val){
-                //     console.log(key);
-                //     // if(val !== ""){
-                //     //     arrOfStr_ids_equip.push(String(val));
-                //     // }
-                    
-                // });
 
 
                 $("#selected_equipments").removeAttr("hidden")
