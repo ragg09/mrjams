@@ -177,8 +177,8 @@ $(function(){
                 $("#selected_equipments").attr("hidden",true)
             },
             success: function(data){
-                console.log(data.ids );
-                console.log(data.equipments);
+                // console.log(data.ids );
+                // console.log(data.equipments);
 
                
                 const arrOfStr_ids_equip = [];
@@ -313,8 +313,16 @@ $(function(){
                 $("#edit_package_services_form").attr('action', "/clinic/packages/"+package_id);
                 $("#services_original_ids").attr('value', services_ids_array); 
 
+
+                const arrOfStr_ids_ser = [];
+
+                $.each(services_ids_array, function(key, val){
+                    arrOfStr_ids_ser.push(String(val));
+                });
+
+
                 $.each(data.services, function(key, val){
-                    if(data.ids.includes(val.id)){
+                    if(arrOfStr_ids_ser.includes(String(val.id))){
                         $("#select_services").append('<option selected value="'+val.id+'">'+val.name+'</option> '); 
                     }else{
                         $("#select_services").append('<option value="'+val.id+'">'+val.name+'</option> '); 
