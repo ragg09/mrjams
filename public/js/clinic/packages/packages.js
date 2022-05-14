@@ -183,9 +183,10 @@ $(function(){
                
                 const arrOfStr_ids_equip = [];
 
-                data.ids.forEach(ids => {
-                    arrOfStr_ids_equip.push(String(ids));
+                $.each(data.ids, function(key, val){
+                    arrOfStr_ids_equip.push(String(val));
                 });
+
 
                 $("#selected_equipments").removeAttr("hidden")
                 $("#response_waiting_equipments").attr("hidden",true)
