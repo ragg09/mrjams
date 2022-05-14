@@ -177,6 +177,7 @@ $(function(){
                 $("#selected_equipments").attr("hidden",true)
             },
             success: function(data){
+                console.log(data.ids);
                 $("#selected_equipments").removeAttr("hidden")
                 $("#response_waiting_equipments").attr("hidden",true)
 
