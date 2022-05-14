@@ -79,7 +79,7 @@
 
         <div class="header_menu">
 
-            <ul class="nav justify-content-end border">
+            <ul class="nav justify-content-end">
                 <li class="nav-item " id="">
                     <h5 class="mt-2 mx-2" id="clinic_name"></h5>
                 </li>
