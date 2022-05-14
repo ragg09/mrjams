@@ -29,7 +29,7 @@
 
                     <input type="text" class="form-control" name="package_update_filter" value="package_services" hidden>
 
-                    <input type="text" class="form-control" id="services_original_ids" name="services_original_ids" value="orig: " hidden>
+                    <input type="text" class="form-control" id="services_original_ids" name="services_original_ids" value="orig: " >
 
                 </div>
     
