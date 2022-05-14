@@ -293,10 +293,12 @@ class PackagesController extends Controller
 
             $equipments = explode(',', request("equipments_original_ids")); //splitting string into sepratae string using the comma
             foreach ($equipments as $key) {
-                Packages_has_equipments::where('packages_id', '=',  $id)
-                    ->where('clinic_equipments_id', '=',  $key)
-                    ->where('user_as_clinic_id', '=',  $clinic->id)
-                    ->delete();
+                if ($key != "") {
+                    Packages_has_equipments::where('packages_id', '=',  $id)
+                        ->where('clinic_equipments_id', '=',  $key)
+                        ->where('user_as_clinic_id', '=',  $clinic->id)
+                        ->delete();
+                }
             }
 
             $equipment_ids = request('equipment_ids'); //Gettinng string of ids
@@ -320,11 +322,15 @@ class PackagesController extends Controller
             $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
 
             $services = explode(',', request("services_original_ids")); //splitting string into sepratae string using the comma
+
             foreach ($services as $key) {
-                Packages_has_services::where('packages_id', '=',  $id)
-                    ->where('clinic_services_id', '=',  $key)
-                    ->where('user_as_clinic_id', '=',  $clinic->id)
-                    ->delete();
+                if ($key != "") {
+
+                    Packages_has_services::where('packages_id', '=',  $id)
+                        ->where('clinic_services_id', '=',  $key)
+                        ->where('user_as_clinic_id', '=',  $clinic->id)
+                        ->delete();
+                }
             }
 
             $service_ids = request('service_ids'); //Gettinng string of ids
