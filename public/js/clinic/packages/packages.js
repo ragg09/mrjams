@@ -180,10 +180,12 @@ $(function(){
                 console.log(data.ids );
                 console.log(data.equipments);
 
-                const arrOfStr_ids = data.ids.map(num => {
-                    return String(num);
-                  });
-                
+               
+                const arrOfStr_ids_equip = [];
+
+                data.ids.forEach(ids => {
+                    arrOfStr_ids_equip.push(String(ids));
+                });
 
                 $("#selected_equipments").removeAttr("hidden")
                 $("#response_waiting_equipments").attr("hidden",true)
@@ -194,7 +196,7 @@ $(function(){
                 $("#equipments_original_ids").attr('value', equipments_ids_array); 
 
                 $.each(data.equipments, function(key, val){
-                    if(arrOfStr_ids.includes(String(val.id))){
+                    if(arrOfStr_ids_equip.includes(String(val.id))){
                         $("#select_equipments").append('<option selected value="'+val.id+'">'+val.name+'</option> '); 
                     }else{
                         $("#select_equipments").append('<option value="'+val.id+'">'+val.name+'</option> '); 
