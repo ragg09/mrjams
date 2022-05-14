@@ -23,7 +23,7 @@
                         <p>Price: &#8369;{{$row->min_price}}</p>
                 @endforeach
                 
-                <img src="https://assets.codepen.io/2301174/icon-karma.svg" alt="" id="box_img">
+                <img src="{{ URL::asset('images/mrjams/package.png') }}" alt="" id="box_img">
             </div>
             
         </div>
@@ -31,7 +31,7 @@
     
     <div class="row justify-content-between mt-lg-0 mt-md-5 mt-sm-5" >
         <div class="col-lg-4 col-md-12 col-sm-12 p-4" id="col_box">
-            <div class="" id="mid_box">
+            <div class="" id="mid_box" >
                 <h3>Equipments 
                     <span id="edit_package_equipments">
                         <a href="" class="btn" data-bs-toggle="modal" data-bs-target="#edit_package_equipment_up" id="edit_package_get_equipments" data-id="{{ $equipment_ids }},{{ $package[0]->id }}">
@@ -47,7 +47,7 @@
     
                     {{-- {{ $equipment_ids }}  for edit purposes --}}
                     
-                <img src="https://assets.codepen.io/2301174/icon-supervisor.svg" alt="" id="box_img">
+                <img src="{{ URL::asset('images/mrjams/equipments.png') }}" alt="" id="box_img" >
             </div>
         </div>
     
@@ -69,7 +69,7 @@
                     {{-- {{ $service_ids }}  for edit purposes --}}
 
                     
-                <img src="https://assets.codepen.io/2301174/icon-supervisor.svg" alt="" id="box_img">
+                <img src="{{ URL::asset('images/mrjams/services.png') }}" alt="" id="box_img">
             </div>
         </div>
     </div>
