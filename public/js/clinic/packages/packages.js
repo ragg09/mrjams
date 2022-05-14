@@ -179,6 +179,10 @@ $(function(){
             success: function(data){
                 console.log(data.ids );
                 console.log(data.equipments);
+
+                const arrOfStr_ids = data.ids.map(num => {
+                    return String(num);
+                  });
                 
 
                 $("#selected_equipments").removeAttr("hidden")
@@ -190,11 +194,13 @@ $(function(){
                 $("#equipments_original_ids").attr('value', equipments_ids_array); 
 
                 $.each(data.equipments, function(key, val){
-                    if(data.ids.includes(val.id)){
+                    if(arrOfStr_ids.includes(String(val.id))){
                         $("#select_equipments").append('<option selected value="'+val.id+'">'+val.name+'</option> '); 
                     }else{
                         $("#select_equipments").append('<option value="'+val.id+'">'+val.name+'</option> '); 
                     }
+
+                    
                });
                 
                 // console.log(data);
