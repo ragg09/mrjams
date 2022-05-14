@@ -184,9 +184,10 @@ $(function(){
                 const arrOfStr_ids_equip = [];
 
                 $.each(data.ids, function(key, val){
-                    if(val !== ""){
-                        arrOfStr_ids_equip.push(String(val));
-                    }
+                    console.log(val);
+                    // if(val !== ""){
+                    //     arrOfStr_ids_equip.push(String(val));
+                    // }
                     
                 });
 
