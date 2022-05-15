@@ -94,7 +94,7 @@ class EquipmentsController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'quantity' => 'required|numeric',
+            'quantity' => 'required|integer',
             'unit' => 'required',
             'type' => 'required',
             'supplier' => 'required',
@@ -364,7 +364,7 @@ class EquipmentsController extends Controller
             'name' => 'required|min:2',
             'unit' => 'required',
             'type' => 'required',
-            'quantity' => 'required',
+            'quantity' => 'required|integer',
             'supplier' => 'required',
             'acquired' => 'required',
             'expiration' => 'required',
