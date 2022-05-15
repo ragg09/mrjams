@@ -210,7 +210,7 @@
       <p style="font-size: 15px;">list of services offered by a clinic.</p>
     </li>
     <li>
-      <i class="fa fa-user-md fa-4x"></i>
+      <i class="fa fa-compass fa-4x"></i>
       <h4><b>Direction</b></h4>
           <p style="font-size: 15px;">Directions to your preferred clinic.</p>
     </li>
