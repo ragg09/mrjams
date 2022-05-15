@@ -288,7 +288,7 @@ $(function(){
                         $('#service_table_body').empty();
                         $('#pagination_div').css('height', '0px');
                         $.each(data.data, function(key, val){
-                            $("#service_table_body").append('<tr><th scope="row">'+val.id+'</th><td>'+val.name+'</td><td>'+val.description+'</td><td><a href="" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#edit_modal_up" id="edit_modal" data-id="'+val.id+'" title="Edit '+val.name+'"><i class="fa fa-pencil" aria-hidden="true" ></i></a><a href="" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete_modal_up" id="delete_modal" data-id="'+val.id+'" title="Delete '+val.name+'"><i class="fa fa-trash" aria-hidden="true"></i></a></td></tr>');
+                            $("#service_table_body").append('<tr><td>'+val.name+'</td><td>'+val.description+'</td><td><a href="" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#edit_modal_up" id="edit_modal" data-id="'+val.id+'" title="Edit '+val.name+'"><i class="fa fa-pencil" aria-hidden="true" ></i></a><a href="" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete_modal_up" id="delete_modal" data-id="'+val.id+'" title="Delete '+val.name+'"><i class="fa fa-trash" aria-hidden="true"></i></a></td></tr>');
                         });
                     }
                     
