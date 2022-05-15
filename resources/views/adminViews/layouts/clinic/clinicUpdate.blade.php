@@ -79,15 +79,15 @@
                             <input type="text" class="form-control" id="clinicID" name="clinicID"value="{{$clinic->id}}" hidden>
                             <div class="mb-2">
                             <label class="form-label"><b>Clinic Name</b></label>
-                            <input type="text" class="form-control" id="clinicname" name="clinicname" value="{{$clinic->name}}">
+                            <input type="text" class="form-control" id="clinicname" name="clinicname" value="{{$clinic->name}}" required>
                             </div>
                             <div class="mb-2">
                                 <label class="form-label"><b>Cellphone Number</b></label>
-                                <input type="text" class="form-control" id="clinicphone" name="clinicphone" value="{{$clinic->phone}}" pattern="[0-9]+">
+                                <input type="text" class="form-control" id="clinicphone" name="clinicphone" value="{{$clinic->phone}}" pattern="[0-9]+" required>
                             </div>
                             <div class="mb-2">
                                 <label class="form-label"><b>Telephone Number</b></label>
-                                <input type="text" class="form-control" id="clinictelephone" name="clinictelephone" value="{{$clinic->telephone}}" pattern="[0-9]+">
+                                <input type="text" class="form-control" id="clinictelephone" name="clinictelephone" value="{{$clinic->telephone}}" pattern="[0-9]+" required>
                             </div>
                             <button type="submit" id="updateClinic" class="btn btn-primary">Submit</button>
                         </form>

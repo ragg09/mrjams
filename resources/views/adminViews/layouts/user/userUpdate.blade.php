@@ -115,19 +115,19 @@
                           <input type="text" class="form-control" id="userID" name="userID" value="{{$patient->id}}" hidden>
                           <div class="mb-2">
                             <label class="form-label" style="float: left; font-weight: bold">First Name</label>
-                            <input type="text" class="form-control" id="userName" name="userName" value="{{$patient->fname}}">
+                            <input type="text" class="form-control" id="userName" name="userName" value="{{$patient->fname}}" required>
                           </div>
                           <div class="mb-2">
                             <label class="form-label"  style="float: left; font-weight: bold">Middle Name</label>
-                            <input type="text" class="form-control" id="mname" name="mname" value="{{$patient->mname}}">
+                            <input type="text" class="form-control" id="mname" name="mname" value="{{$patient->mname}}" required>
                           </div>
                           <div class="mb-2">
                             <label class="form-label"  style="float: left; font-weight: bold">Last Name</label>
-                            <input type="text" class="form-control" id="lname" name="lname" value="{{$patient->lname}}">
+                            <input type="text" class="form-control" id="lname" name="lname" value="{{$patient->lname}}" required>
                           </div>
                           <div class="mb-2">
                             <label class="form-label"  style="float: left; font-weight: bold">Age</label>
-                            <input type="text" class="form-control" id="userTelephone" name="age" value="{{$patient->age}}" pattern="[0-9]+">
+                            <input type="text" class="form-control" id="userTelephone" name="age" value="{{$patient->age}}" pattern="[0-9]+" required>
                           </div>
                           <div class="mb-2">
                             <label class="form-label"  style="float: left; font-weight: bold">Gender</label>
@@ -140,7 +140,7 @@
                           </div>
                           <div class="mb-2">
                               <label class="form-label"  style="float: left; font-weight: bold">Cellphone Number</label>
-                              <input type="text" class="form-control" id="userTelephone" name="phone" value="{{$patient->phone}}" pattern="[0-9]+">
+                              <input type="text" class="form-control" id="userTelephone" name="phone" value="{{$patient->phone}}" pattern="[0-9]+" required>
                           </div>
                           <button type="submit" id="updatePatient" class="btn btn-primary">Submit</button>
 
