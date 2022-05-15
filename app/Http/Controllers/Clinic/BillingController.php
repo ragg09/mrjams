@@ -427,7 +427,7 @@ class BillingController extends Controller
             $getid = explode("_", $id);
 
             $validator = Validator::make($request->all(), [
-                'payment_update' => 'required|numeric|lt:' . $request->edit_balance + 1,
+                'payment_update' => 'required|integer|lt:' . $request->edit_balance + 1,
             ]);
 
             if ($validator->fails()) {
