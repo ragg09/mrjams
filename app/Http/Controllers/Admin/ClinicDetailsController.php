@@ -67,17 +67,21 @@ class ClinicDetailsController extends Controller
 
         $status = 0;
         $months = [];
-        foreach ($appointments as $item) {
-            $date = date('M', strtotime($item->created_at));
-            array_push($months, $date);
+
+        if (count($appointments) > 0) {
+            foreach ($appointments as $item) {
+                $date = date('M', strtotime($item->created_at));
+                array_push($months, $date);
+            }
         }
+
 
         $appMonth = array_filter(array_count_values($months), function ($v) {
 
             return $v > 0;
         });
 
-        return response()->json(['appointments' => $appointments, 'appMonth' => $appMonth]);
+        return response()->json(['appointments' => $appointments ?? [], 'appMonth' => $appMonth]);
         // return response()->json(['receipt'=>$receipt]);
         // }
     }
