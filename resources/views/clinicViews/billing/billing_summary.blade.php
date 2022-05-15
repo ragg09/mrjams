@@ -248,8 +248,8 @@
             </div>
         </div>
         <input type="text"  id="customer_id" name="customer_id" value="{{ $complete_summary->customer_id }}" hidden>
-        <input type="text"  value="{{ $toshow_equip_id }}" id="equipment_ids_final" name="equipment_ids_final" >
-        <input type="text"  value="{{ $toshow_equip_value }}" id="equipment_values_final" name="equipment_values_final" >
+        <input type="text"  value="{{ $toshow_equip_id }}" id="equipment_ids_final" name="equipment_ids_final" hidden>
+        <input type="text"  value="{{ $toshow_equip_value }}" id="equipment_values_final" name="equipment_values_final" hidden>
         <input type="text"  id="pricing_summary" name="pricing_summary" hidden>
         <input type="text"  value="0" id="balance" name="balance" hidden>
 

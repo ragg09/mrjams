@@ -18,6 +18,30 @@ $(".menu_appointment").click(function (e){
     }
 });
 
+
+$(".menu_utilities").click(function (e){
+    e.preventDefault();
+    $(".menu_utilities_dropdown").toggle(200);
+
+    // to open sidebar while in spacesaver mode
+    if($("#sidebar-wrapper").width() == 45){
+        $("#wrapper").toggleClass("menuDisplayed");
+    }
+});
+
+
+$(".menu_accounting").click(function (e){
+    e.preventDefault();
+    $(".menu_accounting_dropdown").toggle(200);
+
+    // to open sidebar while in spacesaver mode
+    if($("#sidebar-wrapper").width() == 45){
+        $("#wrapper").toggleClass("menuDisplayed");
+    }
+});
+
+
+
 // $(".menu_services").click(function (e){
 //     e.preventDefault();
 //     $(".menu_services_dropdown").toggle(200);

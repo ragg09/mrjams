@@ -39,9 +39,35 @@
                 </a>
             </div> 
         {{-- dropdown menu appointment end--}}
-        
 
-        <a href="{{ route('clinic.billing.index') }}">
+
+
+
+
+        <a href="#"  class="menu_accounting">
+            <div id="sidebar-option">
+                <i class="fa fa-address-book" aria-hidden="true" style="margin-right: 20px; margin-left: 10px" title="Appointment"></i>Accounting<i class="fa fa-caret-down" aria-hidden="true" style="float: right; margin-right: 5px"></i>
+            </div>
+        </a>
+        {{-- dropdown menu accounting --}}
+            <div id="sidebar-option-dropdown" class="menu_accounting_dropdown">
+                <a href="{{ route('clinic.billing.index') }}">
+                    <div id="sidebar-option">
+                        <i class="fa fa-money-bill" aria-hidden="true" style="margin-right: 20px; margin-left: 30px" title="Billings"></i>BILLINGS
+                    </div>
+                </a>
+        
+                <a href="{{ route('clinic.patient.index') }}">
+                    <div id="sidebar-option">
+                        <i class="fa fa-users" aria-hidden="true" style="margin-right: 20px; margin-left: 30px" title="Patient"></i>PATIENT
+                    </div>
+                </a>
+            </div> 
+        {{-- dropdown menu accounting end--}}
+
+
+
+        {{-- <a href="{{ route('clinic.billing.index') }}">
             <div id="sidebar-option">
                 <i class="fa fa-money-bill" aria-hidden="true" style="margin-right: 20px; margin-left: 10px" title="Billings"></i>BILLINGS
             </div>
@@ -51,11 +77,45 @@
             <div id="sidebar-option">
                 <i class="fa fa-users" aria-hidden="true" style="margin-right: 20px; margin-left: 10px" title="Patient"></i>PATIENT
             </div>
-        </a>
+        </a> --}}
 
-         <a href="{{ route('clinic.equipments.index') }}" class="menu_equipments">
+        
+
+
+
+        <a href="#"  class="menu_utilities">
             <div id="sidebar-option">
-                <i class="fa fa-stethoscope" aria-hidden="true" style="margin-right: 20px; margin-left: 10px" title="Equipments"></i>{{--EQUIPMENTS--}}MATERIALS
+                <i class="fa fa-archive" aria-hidden="true" style="margin-right: 20px; margin-left: 10px" title="Appointment"></i>Utilities<i class="fa fa-caret-down" aria-hidden="true" style="float: right; margin-right: 5px"></i>
+            </div>
+        </a>
+        {{-- dropdown menu utilities --}}
+            <div id="sidebar-option-dropdown" class="menu_utilities_dropdown">
+                <a href="{{ route('clinic.equipments.index') }}" class="menu_equipments">
+                    <div id="sidebar-option">
+                        <i class="fa fa-stethoscope" aria-hidden="true"  style="margin-right: 20px; margin-left: 30px" title="Equipments"></i>{{--EQUIPMENTS--}}MATERIALS
+                    </div>
+                </a>
+        
+                <a href="{{ route('clinic.services.index') }}" class="menu_services">
+                    <div id="sidebar-option">
+                        <i class="fa fa-user-md" aria-hidden="true"  style="margin-right: 20px; margin-left: 30px" title="Service"></i>SERVICES
+                    </div>
+                </a>
+        
+                <a href="{{ route('clinic.packages.index') }}">
+                    <div id="sidebar-option">
+                        <i class="fa fa-medkit" aria-hidden="true"  style="margin-right: 20px; margin-left: 30px" title="Packages"></i>PACKAGES
+                    </div>
+                </a>
+            </div> 
+        {{-- dropdown menu utilities end--}}
+
+
+
+
+        {{-- <a href="{{ route('clinic.equipments.index') }}" class="menu_equipments">
+            <div id="sidebar-option">
+                <i class="fa fa-stethoscope" aria-hidden="true" style="margin-right: 20px; margin-left: 10px" title="Equipments"></i>MATERIALS
             </div>
         </a>
 
@@ -69,7 +129,11 @@
             <div id="sidebar-option">
                 <i class="fa fa-medkit" aria-hidden="true" style="margin-right: 20px; margin-left: 10px" title="Packages"></i>PACKAGES
             </div>
-        </a>
+        </a> --}}
+
+
+
+        
         <a href="{{ route('clinic.report.index') }}">
             <div id="sidebar-option">
                 <i class="fa fa-bar-chart"  aria-hidden="true" style="margin-right: 20px; margin-left: 10px" title="Report"></i>REPORT
