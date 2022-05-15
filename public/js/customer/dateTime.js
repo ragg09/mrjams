@@ -198,7 +198,8 @@ $(function(){
                                 if(val.day == this_day){ //getting the day name as trapping
                                     $("#accept_modal_flatpicker").flatpickr({
                                         enableTime: true,
-                                        minTime: today.getHours() + ": 00",
+                                        // minTime: today.getHours() + ": 00",
+                                        minTime: val.min,
                                         maxTime: val.max,
                                         dateFormat: "Y-m-d H:i",
                                         minDate: today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()+1) + " " + today.getHours() + ": 00",
