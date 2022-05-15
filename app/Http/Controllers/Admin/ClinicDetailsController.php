@@ -68,7 +68,7 @@ class ClinicDetailsController extends Controller
         $status = 0;
         $months = [];
 
-        if (count($appointments) > 0) {
+        if (isset($appointments)) {
             foreach ($appointments as $item) {
                 $date = date('M', strtotime($item->created_at));
                 array_push($months, $date);
