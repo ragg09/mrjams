@@ -86,10 +86,12 @@ class LogsController extends Controller
                     $expiration_day = date("Y-m", strtotime("-1 day", strtotime($k->expiration)));
                     $expiration_month = date("Y-m", strtotime("-1 month", strtotime($k->expiration)));
 
-                    $expiration_day_exact = date("Y-m", strtotime($k->expiration));
+                    $expiration_day_exact = date("Y-m-d", strtotime($k->expiration));
                     $expiration_month_exact = date("Y-m", strtotime($k->expiration));
 
                     $curdate = date('Y-m');
+
+                    $curdate_exact = date('Y-m-d');
 
                     //Checking Expiration || Notif
                     if ($curdate >= $expiration_month) {
@@ -113,8 +115,8 @@ class LogsController extends Controller
                         }
                     }
 
-                    //Deleting || Removing Logic
-                    if ($curdate == $expiration_month_exact) {
+                    //Deleting || Removing Logic EXACT DATE
+                    if ($curdate_exact == $expiration_day_exact) {
                         //expiration notif logic
                         if ($k->notify == "done") {
                             $up_inventory = Clinic_equipment_inventory::find($k->id);

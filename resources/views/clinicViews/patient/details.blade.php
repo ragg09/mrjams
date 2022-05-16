@@ -144,7 +144,7 @@ ul.timeline > #done:before {
     <div class="row mx-auto" style="">
         <div class="col p-3">
             <div class=" p-2 bg-white rounded overflow-hidden">
-                <h4 class="mx-5 text-muted">Patient Record</h4>
+                <h4 class="mx-5 text-muted">Patient Appointment Record</h4>
                 <ul class="timeline mx-auto">
                     
 
