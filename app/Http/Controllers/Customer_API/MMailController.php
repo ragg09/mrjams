@@ -145,11 +145,12 @@ class MMailController extends Controller
                         'clinic_info' => $clinic_info, 
                         'clinic_type' =>  $clinic_type,
                         'clinic_address' => $clinic_address, 
-                        'package' => [],
                         'service' => $service, 
+                        'package' => $package, 
                         'status' => $status]);
                 } else {
                     return response()->json([
+                        'services_all' => $servies_all, 
                         'customer' => $customer, 
                         'name' => $splitName, 
                         'appointment_data' => $appointment_data, 
@@ -157,7 +158,6 @@ class MMailController extends Controller
                         'clinic_type' =>  $clinic_type,
                         'clinic_address' => $clinic_address, 
                         'package' => $package, 
-                        'services_all' => [],
                         'status' => $status]);
                 }
             }
