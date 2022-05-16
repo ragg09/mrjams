@@ -13,6 +13,7 @@ use App\Models\Appointments;
 use App\Models\Receipt_orders;
 use App\Models\Appointment_status;
 use App\Models\Customer_logs;
+use App\Models\Logs;
 
 
 class MRatingController extends Controller
@@ -55,8 +56,8 @@ class MRatingController extends Controller
         $rating->users_id_ratee = $adminID;
         $rating->users_id_rater = $user->id;
         $rating->save();
-        
-        return response()->json(['data'=> $request->rating]);
+
+        return response()->json(['data' => $request->rating]);
     }
 
     /**
@@ -126,23 +127,23 @@ class MRatingController extends Controller
         $logs->user_as_clinic_id =  $receipt->user_as_clinic_id;
         $logs->save();
 
-         // customer logs
-         $customer_logs_count = Customer_logs::where('user_as_customer_id', '=',  $customer->id)->count();
-         if ($customer_logs_count == 5000) {
-             Customer_logs::where('user_as_customer_id', '=',  $customer->id)->first()->delete();
-         }
- 
-         $clinic_name = User_as_clinic::where('id', '=', $receipt->user_as_clinic_id)->first();
- 
-          //creating logs
-          $c_log = new Customer_logs();
-          $c_log->message = "You cancelled an appointment from " . $clinic_name->name;
-          $c_log->remark = "notif";
-          $c_log->date =  date("m/d/Y");
-          $c_log->time = date("h:i a");
-          $c_log->user_as_customer_id = $customer->id;
-          $c_log->save();
- 
+        // customer logs
+        $customer_logs_count = Customer_logs::where('user_as_customer_id', '=',  $customer->id)->count();
+        if ($customer_logs_count == 5000) {
+            Customer_logs::where('user_as_customer_id', '=',  $customer->id)->first()->delete();
+        }
+
+        $clinic_name = User_as_clinic::where('id', '=', $receipt->user_as_clinic_id)->first();
+
+        //creating logs
+        $c_log = new Customer_logs();
+        $c_log->message = "You cancelled an appointment from " . $clinic_name->name;
+        $c_log->remark = "notif";
+        $c_log->date =  date("m/d/Y");
+        $c_log->time = date("h:i a");
+        $c_log->user_as_customer_id = $customer->id;
+        $c_log->save();
+
 
         return response()->json(['all' => $appointment, 'status' => 'OK']);
     }
