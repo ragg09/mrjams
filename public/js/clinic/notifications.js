@@ -67,6 +67,8 @@ $(function(){
                             $('#notification_list').append('<a href="" onclick="(function(e){e.preventDefault();})(event)" class="text-decoration-none text-dark"><li class="pt-2 pb-2 m-1  rounded"><div style="width: 400px"><div class="row m-1"><div class="col-2 my-auto"><i class="fa fa-calendar fs-3 text-danger" aria-hidden="true"></i></div><div class="col-10"><p>'+val.message.toLowerCase()+'</p><p class="text-muted" style="margin-top: -20px; font-size: 12px;">'+val.date + val.time+'</p></div></div></div></li></a>');
                         }else if(val.message.includes("expired")){
                             $('#notification_list').append('<a href="" onclick="(function(e){e.preventDefault();})(event)" class="text-decoration-none text-dark"><li class="pt-2 pb-2 m-1  rounded"><div style="width: 400px"><div class="row m-1"><div class="col-2 my-auto"><i class="fa fa-calendar fs-3 text-danger" aria-hidden="true"></i></div><div class="col-10"><p>'+val.message.toLowerCase()+'</p><p class="text-muted" style="margin-top: -20px; font-size: 12px;">'+val.date + val.time+'</p></div></div></div></li></a>');
+                        }else if(val.message.includes("has expired")){
+                            $('#notification_list').append('<a href="" onclick="(function(e){e.preventDefault();})(event)" class="text-decoration-none text-dark"><li class="pt-2 pb-2 m-1  rounded"><div style="width: 400px"><div class="row m-1"><div class="col-2 my-auto"><i class="fa fa-calendar fs-3 text-danger" aria-hidden="true"></i></div><div class="col-10"><p>'+val.message.toLowerCase()+'</p><p class="text-muted" style="margin-top: -20px; font-size: 12px;">'+val.date + val.time+'</p></div></div></div></li></a>');
                         }
 
                     });
