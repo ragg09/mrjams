@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="form-group" id="select_equipments_multiple">
-                        <label for="equipments">Consumbale or Equipments</label>
+                        <label for="equipments">Consumbale / Medicine</label>
                             <select class="form-control" id="select_equipments" multiple name="select_equipments" style="width: 100%;">
                                 {{-- options came appended from js --}}
                            </select>
