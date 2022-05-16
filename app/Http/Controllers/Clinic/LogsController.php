@@ -120,10 +120,11 @@ class LogsController extends Controller
                     }
 
                     //Deleting || Removing Logic EXACT DATE
-                    if ($curdate_exact == $expiration_day_exact) {
+                    if ($curdate_exact == $expiration_day_exact && $k->quantity > 0) {
                         //expiration notif logic
                         if ($k->notify == "done") {
                             $up_inventory = Clinic_equipment_inventory::find($k->id);
+                            $up_inventory->notify =  NULL;
                             $up_inventory->quantity =  0;
                             $up_inventory->save();
                         }
@@ -141,15 +142,10 @@ class LogsController extends Controller
                         $equipment->quantity = $quant_count;
                         $equipment->save();
 
-                        $message_checker1 = "Your stock of " . $key->name . " with expiration date of " . date('M d, Y', strtotime($k->expiration)) . " has more or less a month left. Please be informed that after the expiration date, the system will automatically remove it to your inventory.";
 
-                        $message_checker2 = "Your stock of " . $key->name . " with expiration date of " . date('M d, Y', strtotime($k->expiration)) . " has expired.";
+                        $recheck_notify = Clinic_equipment_inventory::where("id", $k->id)->first();
 
-                        $check_logs_exist1 = Logs::where('message', '=', $message_checker1)->get();
-                        $check_logs_exist2 = Logs::where('message', '=', $message_checker2)->get();
-
-
-                        if (count($check_logs_exist1) == 1 && count($check_logs_exist2) < 1) {
+                        if ($recheck_notify->notify != "done") {
                             //checking logs limit 5000
                             if ($logs_count == 5000) {
                                 Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();

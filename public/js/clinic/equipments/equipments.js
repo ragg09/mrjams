@@ -108,12 +108,12 @@ $(function(){
         e.preventDefault();
         var id = $(this).data('id');
 
-        console.log(id);
+        // console.log(id);
         $.ajax({
             type: "GET",
             url: "/clinic/equipments/" + id + "_addStock",
             success: function(data){
-                console.log(data);
+                // console.log(data);
 
 
                 $("#add_stock_name").val(data.data.name);
