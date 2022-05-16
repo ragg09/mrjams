@@ -141,11 +141,15 @@ class LogsController extends Controller
                         $equipment->quantity = $quant_count;
                         $equipment->save();
 
-                        $message = "Your stock of " . $key->name . " with expiration date of " . date('M d, Y', strtotime($k->expiration)) . " has expired.";
+                        $message_checker1 = "Your stock of " . $key->name . " with expiration date of " . date('M d, Y', strtotime($k->expiration)) . " has more or less a month left. Please be informed that after the expiration date, the system will automatically remove it to your inventory.";
 
-                        $check_logs_exist = Logs::where('message', '=', $message)->get();
+                        $message_checker2 = "Your stock of " . $key->name . " with expiration date of " . date('M d, Y', strtotime($k->expiration)) . " has expired.";
 
-                        if (!isset($check_logs_exist) || !count($check_logs_exist) > 0) {
+                        $check_logs_exist1 = Logs::where('message', '=', $message_checker1)->get();
+                        $check_logs_exist2 = Logs::where('message', '=', $message_checker2)->get();
+
+
+                        if (count($check_logs_exist1) == 1 && count($check_logs_exist2) < 1) {
                             //checking logs limit 5000
                             if ($logs_count == 5000) {
                                 Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
