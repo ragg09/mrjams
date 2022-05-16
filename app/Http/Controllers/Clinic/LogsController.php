@@ -141,39 +141,41 @@ class LogsController extends Controller
                         $equipment->quantity = $quant_count;
                         $equipment->save();
 
-                        //checking logs limit 5000
-                        if ($logs_count == 5000) {
-                            Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
-                        }
-                        $logs = new Logs();
-                        $logs->message = "Your stock of " . $key->name . " with expiration date of " . date('M d, Y', strtotime($k->expiration)) . " has expired.";
-                        $logs->remark = "danger";
-                        $logs->date =  date("Y/m/d");
-                        $logs->time = date("h:i:sa");
-                        $logs->user_as_clinic_id = $clinic->id;
-                        $logs->save();
+                        if ($k->notify == "done") {
+                            //checking logs limit 5000
+                            if ($logs_count == 5000) {
+                                Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
+                            }
+                            $logs = new Logs();
+                            $logs->message = "Your stock of " . $key->name . " with expiration date of " . date('M d, Y', strtotime($k->expiration)) . " has expired.";
+                            $logs->remark = "danger";
+                            $logs->date =  date("Y/m/d");
+                            $logs->time = date("h:i:sa");
+                            $logs->user_as_clinic_id = $clinic->id;
+                            $logs->save();
 
-                        //checking logs limit 5000
-                        if ($logs_count == 5000) {
-                            Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
-                        }
-                        $logs = new Logs();
-                        $logs->message = "Your stock of " . $key->name . " with expiration date of " . date('M d, Y', strtotime($k->expiration)) . " has expired.";
-                        $logs->remark = "notif";
-                        $logs->date =  date("Y/m/d");
-                        $logs->time = date("h:i:sa");
-                        $logs->user_as_clinic_id = $clinic->id;
-                        $logs->save();
+                            //checking logs limit 5000
+                            if ($logs_count == 5000) {
+                                Logs::where('user_as_clinic_id', '=',  $clinic->id)->first()->delete();
+                            }
+                            $logs = new Logs();
+                            $logs->message = "Your stock of " . $key->name . " with expiration date of " . date('M d, Y', strtotime($k->expiration)) . " has expired.";
+                            $logs->remark = "notif";
+                            $logs->date =  date("Y/m/d");
+                            $logs->time = date("h:i:sa");
+                            $logs->user_as_clinic_id = $clinic->id;
+                            $logs->save();
 
-                        //sending email notification
-                        $details = [
-                            'clinic' => $clinic->name,
-                            'address' =>  $clinic_add->address_line_1 . " " . $clinic_add->address_line_2 . " " . $clinic_add->city,
-                            'contact' => $clinic->phone,
-                            'title' => 'Expired Stock',
-                            'body' => "Your stock of " . $key->name . " with expiration date of " . date('M d, Y', strtotime($k->expiration)) . " has expired.",
-                        ];
-                        Mail::to(Auth::user()->email)->send(new EmailNotification($details));
+                            //sending email notification
+                            $details = [
+                                'clinic' => $clinic->name,
+                                'address' =>  $clinic_add->address_line_1 . " " . $clinic_add->address_line_2 . " " . $clinic_add->city,
+                                'contact' => $clinic->phone,
+                                'title' => 'Expired Stock',
+                                'body' => "Your stock of " . $key->name . " with expiration date of " . date('M d, Y', strtotime($k->expiration)) . " has expired.",
+                            ];
+                            Mail::to(Auth::user()->email)->send(new EmailNotification($details));
+                        }
                     }
                 }
             }
