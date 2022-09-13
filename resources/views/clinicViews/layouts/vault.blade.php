@@ -101,59 +101,6 @@
                     <h5 class="mt-2 mx-2" id="clinic_name"></h5>
                 </li>
 
-                <li class="nav-item" id="">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary" type="button" id="" data-bs-toggle="dropdown"
-                            aria-expanded="false" style="border-radius: 100%">
-                            <i class="fa fa-file-text" aria-hidden="true"></i>
-                        </button>
-
-                        <div class="dropdown-menu" aria-labelledby="" id="dashboard_table_div" style="width: 500px;">
-                            <a href="{{ route('clinic.logs.index') }}" title="Click to see Logs History"><i
-                                    class="fa fa-book mx-2 mb-2" aria-hidden="true"></i> Clinic Logs History</a>
-
-                            @if (count($logs) > 0)
-                                <table class="table table-dark" id="dashboard_table">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Time</th>
-                                            <th scope="colspan">Message</th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($logs as $row)
-                                            <tr class="table-{{ $row->remark }}">
-                                                <th scope="row">{{ date('Md,Y', strtotime($row->date)) }}</th>
-                                                <td>{{ date('h:ia', strtotime($row->time)) }}</td>
-                                                <td class="">{{ $row->message }}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            @else
-                                <img src="{{ URL::asset('images/mrjams/noData.jpg') }}" alt="no data available"
-                                    style="width: 100%" id="nodata_img">
-                            @endif
-                        </div>
-                    </div>
-                </li>
-
-                <li class="nav-item mx-3" id="ForNotifications">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary" type="button" id="notifIcon_btn" data-bs-toggle="dropdown"
-                            aria-expanded="false" style="border-radius: 100%">
-                            <i class="fa fa-bell" aria-hidden="true"></i>
-                            <span id="notif_count" hidden></span>
-                        </button>
-
-                        <ul class="dropdown-menu" aria-labelledby="notifIcon_btn" id="notification_list">
-                            {{-- data came from js --}}
-                        </ul>
-                    </div>
-                </li>
-
                 <li class="nav-item">
                     <div class="dropdown">
 
@@ -162,41 +109,11 @@
                             <i class="fa fa-caret-down" aria-hidden="true"></i>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="DropdownSettings" style="min-width: 280px">
-                            <li>
-                                <div class="text-center mb-3">
-                                    <div class="pv-lg"><i class="fa fa-user-md fa-5x" aria-hidden="true"
-                                            style="color: #6497B1; margin-bottom: 20px;"></i></div>
-                                    <p class="fw-bold" id="rating_in_drodwn" style="margin-top: -10px;"></p>
-                                    <div class="my-rating" style="margin-top: -20px;"></div>
-                                    <div class="text-muted">Rating: <span id="numerical_rating"></span></div>
-                                </div>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{{ route('clinic.access-vault') }}">
-                                    <i class="fa-solid fa-vault mx-2" aria-hidden="true"></i>
-                                    Owner's Vault
-                                </a>
-                            </li>
 
                             <li>
-
-                                <a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                    data-bs-target="#give_feedback" id="detail_modal">
-                                    <i class="fa fa-commenting mx-2" aria-hidden="true"></i>
-                                    Give Feedback <br>
-                                    <span style="font-size: 12px">Help us improve MrJams</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{{ route('clinic.announcement.index') }}">
+                                <a class="dropdown-item" href="/">
                                     <i class="fa fa-bullhorn mx-2" aria-hidden="true"></i>
-                                    Announcement
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{{ route('clinic.settings.index') }}">
-                                    <i class="fa fa-cog mx-2" aria-hidden="true"></i>
-                                    Settings
+                                    Clinic Dashboard
                                 </a>
                             </li>
                             <li>
@@ -205,8 +122,7 @@
                                     <i class="fa-solid fa-right-from-bracket mx-2"></i>
                                     {{ __('Logout') }}
                                 </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                    class="d-none">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
                             </li>
@@ -220,26 +136,12 @@
         </div>
     </div>
 
-    <div id="wrapper">
-        <div id="wrapper">
-            {{-- sidebar --}}
-            @include('clinicViews.layouts.sidebar')
-            {{-- sidebar end --}}
-
-            {{-- main content --}}
-            <div id="content-wrapper">
-                <div class="container-fluid">
-                    <div class="row p-2">
-                        {{-- Use col-lg-# --}}
-                        @yield('content')
-                    </div>
-                </div>
-            </div>
-            {{-- main content end --}}
+    <div class="w-75 m-auto" style="padding-top: 80px;">
+        <div class="border">
+            @yield('content')
         </div>
     </div>
 
-    @include('clinicViews.layouts.feedback_modal')
 
 
     {{-- footer --}}
@@ -262,8 +164,7 @@
 
 
 <script src="{{ URL::asset('js/clinic/menu_toggle.js') }}"></script>
-<script src="{{ URL::asset('js/clinic/notifications.js') }}"></script>
-<script src="{{ URL::asset('js/clinic/feedback.js') }}"></script>
+
 <script>
     $(function() {
         $("[data-bs-toggle=tooltip").tooltip();

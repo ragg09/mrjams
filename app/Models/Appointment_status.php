@@ -11,4 +11,10 @@ class Appointment_status extends Model
     protected $table = 'appointment_status';
     protected $fillable = ['status', 'remark'];
     public $timestamps = false;
+
+
+    public function appointment()
+    {
+        return $this->belongsTo(Receipt_orders::class);
+    }
 }

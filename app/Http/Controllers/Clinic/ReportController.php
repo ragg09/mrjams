@@ -8,6 +8,8 @@ use App\Models\Billings;
 use App\Models\Clinic_equipment_inventory;
 use App\Models\Clinic_equipments;
 use App\Models\Clinic_services;
+use App\Models\Clinic_specialists;
+use App\Models\Clinic_specialists_compensation;
 use App\Models\Logs;
 use App\Models\Packages;
 use App\Models\Receipt_orders;
@@ -19,6 +21,7 @@ use App\Models\User_as_customer;
 use COM;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use phpDocumentor\Reflection\Types\Null_;
 
 class ReportController extends Controller
@@ -34,7 +37,40 @@ class ReportController extends Controller
         $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
 
 
-        //for accounting 
+
+
+        $top_specialist =  DB::table('receipt_orders')
+            ->where('user_as_clinic_id', $clinic->id)
+            ->select('specialist_id', DB::raw('count(*) as total'))
+            ->groupBy('specialist_id')
+            ->orderBy('total', 'desc')
+            ->get();
+
+        foreach ($top_specialist as $key) {
+
+            if ($key->specialist_id > 0) {
+                $this_specialist = Clinic_specialists::find($key->specialist_id);
+
+                $complete_specialists_data[] = (object) array(
+                    "id" => $key->specialist_id,
+                    "name" => $this_specialist->fullname,
+                    "specialization" => $this_specialist->specialization,
+                    "served" => $key->total,
+                );
+            }
+        }
+
+        // return $complete_specialists_data;
+
+
+
+        // $revenue_today = Billings::where(date('Y-m-d', strtotime('created_at')),  date('Y-m-d'))->get();
+
+        // return  $revenue_today;
+
+
+
+        //for accounting
         $total_paid = Billings::where('user_as_clinic_id', $clinic->id)->sum('total_paid');
         $total_balance = Billings::where('user_as_clinic_id', $clinic->id)->sum('balance');
 
@@ -45,10 +81,14 @@ class ReportController extends Controller
             ->take(10)
             ->get();
 
+
+
+
         return view('clinicViews.report.index', [
             'total_paid' => $total_paid,
             'total_balance' => $total_balance,
             'clinic' => $clinic,
+            'complete_specialists_data' => $complete_specialists_data,
             'logs' => $logs,
         ]);
     }
@@ -1157,7 +1197,7 @@ class ReportController extends Controller
 
 
 
-            // PUSH EVERY DATA 
+            // PUSH EVERY DATA
             array_push($daily_report, $this_day_summary);
         }
 

@@ -27,6 +27,7 @@ use App\Http\Controllers\Clinic\PrintController;
 use App\Http\Controllers\Clinic\SendEmailController;
 use App\Http\Controllers\Clinic\Announcement;
 use App\Http\Controllers\Clinic\CloudinaryController;
+use App\Http\Controllers\Clinic\OwnerController;
 use App\Http\Controllers\Customer\CustomerRegisterController;
 use App\Http\Controllers\Customer\CustomerMap;
 use App\Http\Controllers\Customer\CustomerController;
@@ -48,6 +49,7 @@ use App\Models\User;
 use App\Models\Logs;
 use App\Models\User_as_customer;
 use App\Models\Appointments;
+use App\Models\Clinic_vaults;
 use App\Models\Ratings as ModelRating;
 /*
 |--------------------------------------------------------------------------
@@ -120,8 +122,8 @@ Route::group(['prefix' => 'role', 'middleware' => ['auth'], 'as' => 'role.'], fu
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role_admin'], 'as' => 'admin.'], function () {
 
     //Route::resource('analytics', UserClinicAnalyticsController::class);
-    // 
-    // return view('adminViews.index'); 
+    //
+    // return view('adminViews.index');
 
     Route::get('/', function () {
         $RegUser = User_as_customer::count();
@@ -186,7 +188,23 @@ Route::group(['prefix' => 'clinic', 'middleware' => ['auth', 'check_user', 'role
     Route::resource('rating', ClinicRating::class);
     Route::resource('email', SendEmailController::class);
     Route::resource('announcement', Announcement::class);
+    Route::resource('owners-vault', OwnerController::class);
+
+    Route::get('/access-vault', function () {
+        $user = User::where('email', '=',  Auth::user()->email)->first();
+        $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
+        $vault = Clinic_vaults::where('user_as_clinic_id', $clinic->id)->first();
+
+        if ($vault) {
+            return redirect(route('clinic.owners-vault.index'));
+        } else {
+            return view('clinicViews.vault.create_vault');
+        }
+    })->name('access-vault');
 });
+
+Route::resource('testing', TestingController::class);
+
 //clinic routes with middleware exceptions
 //check_user, role_clinic middlewares are directly included in the contrller
 //add these lines in controller
@@ -247,4 +265,4 @@ Route::group(['prefix' => 'customer', 'middleware' => ['auth'], 'as' => 'custome
     //
     Route::resource('customerregister', CustomerRegisterController::class);
 });
-//================================================================================================================       
+//================================================================================================================

@@ -11,4 +11,9 @@ class Appointments extends Model
     protected $table = 'appointments';
     protected $fillable = ['created_at', 'appointed_at', 'time', 'receipt_orders_id', 'appointment_status_id'];
     public $timestamps = false;
+
+    public function ReceiptOrders()
+    {
+        return $this->belongsTo(Receipt_orders::class);
+    }
 }

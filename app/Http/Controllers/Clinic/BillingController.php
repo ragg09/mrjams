@@ -11,6 +11,8 @@ use App\Models\Billings_history;
 use App\Models\Clinic_equipment_inventory;
 use App\Models\Clinic_equipments;
 use App\Models\Clinic_services;
+use App\Models\Clinic_specialists;
+use App\Models\Clinic_specialists_compensation;
 use App\Models\Customer_logs;
 use App\Models\Logs;
 use App\Models\Packages;
@@ -554,6 +556,8 @@ class BillingController extends Controller
 
             $this_ro = Receipt_orders::where('id', '=', $id)->first();
 
+
+
             DB::table('appointments')
                 ->where('receipt_orders_id', $id)
                 ->update([
@@ -615,7 +619,7 @@ class BillingController extends Controller
 
 
 
-                        $to_deduct = (int)$equipment_values_array[$count]; //used in this transaction 
+                        $to_deduct = (int)$equipment_values_array[$count]; //used in this transaction
 
                         foreach ($this_inventory as $key) {
                             if ($to_deduct != 0) {
@@ -792,6 +796,21 @@ class BillingController extends Controller
                     'body' => 'Please be noted that you have a balance in '  . $clinic->name . '. Expect that the clinic will contact you. Balance: ' . $request->balance,
                 ];
             }
+
+            if ($this_ro->specialist_id > 0) {
+                $spe_rate = Clinic_specialists::find($this_ro->specialist_id)->first();
+
+                $total = $request->total_paid + $request->balance;
+                $compensation = $total * ("0." . $spe_rate->compensation_rate);
+
+                Clinic_specialists_compensation::Create([
+                    'clinic_specialists_id' => $this_ro->specialist_id,
+                    'receipt_order_id' => $this_ro->id,
+                    'compensation' => $compensation,
+                    'claim' => 0,
+                ]);
+            }
+
 
             //Mail::to('ragunayon@gmail.com')->send(new EmailNotification($details)); //testing purposes email
             Mail::to($customer_root->email)->send(new EmailNotification($details));

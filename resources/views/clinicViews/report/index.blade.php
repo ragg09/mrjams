@@ -1,5 +1,5 @@
 @extends('clinicViews.layouts.master')
-@section('title', 'Appointment')
+@section('title', 'Report')
 @section('extraStyle')
     <style>
         :root {
@@ -25,19 +25,18 @@
             min-height: 300px;
             overflow: hidden;
         }
-
-        
-        
     </style>
 @endsection
 @section('content')
-    <div class="row"  >
+    <div class="row">
         <div class="col d-flex justify-content-end">
-            <a href="/clinic/print/{{ date("FY") }}_summary" class="btn btn-primary mx-1" id="print_summary" target="_blank" title="Print Summary" hidden>
+            <a href="/clinic/print/{{ date('FY') }}_summary" class="btn btn-primary mx-1" id="print_summary" target="_blank"
+                title="Print Summary" hidden>
                 Print Summary <i class="fa fa-print" aria-hidden="true"></i>
             </a>
 
-            <a data-bs-toggle="modal" data-bs-target="#generate_report_modal" class="btn btn-primary mx-1" title="Print Summary">
+            <a data-bs-toggle="modal" data-bs-target="#generate_report_modal" class="btn btn-primary mx-1"
+                title="Print Summary">
                 Generate Report <i class="fa fa-print" aria-hidden="true"></i>
             </a>
         </div>
@@ -49,6 +48,7 @@
     </a> --}}
 
     @include('clinicViews.report.accounting')
+    @include('clinicViews.report.added_report')
     @include('clinicViews.report.appointment_statistic')
     @include('clinicViews.report.top_services_and_packages')
     @include('clinicViews.report.top_materials')
@@ -60,6 +60,3 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="{{ URL::asset('js/clinic/reports/reports.js') }}"></script>
 @endsection
-
-
-   

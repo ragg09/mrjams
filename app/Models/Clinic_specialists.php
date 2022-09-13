@@ -9,6 +9,6 @@ class Clinic_specialists extends Model
 {
     use HasFactory;
     protected $table = 'clinic_specialists';
-    protected $fillable = ['fullname', 'specialization', 'user_as_clinic_id'];
+    protected $fillable = ['fullname', 'specialization', 'user_as_clinic_id', 'compensation_rate'];
     public $timestamps = false;
 }

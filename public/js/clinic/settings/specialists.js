@@ -52,10 +52,11 @@ $(function () {
                 // $("#edit_unit").val(data.equipment.unit);
 
 
-                // $("#edit_specialist_form").attr('action', "/clinic/equipments/"+id); 
+                // $("#edit_specialist_form").attr('action', "/clinic/equipments/"+id);
 
                 $("#edit_specialist_fullname").val(data.specialist.fullname);
                 $("#edit_specialist_specialization").val(data.specialist.specialization);
+                $("#edit_compensation_rate").val(data.specialist.compensation_rate);
                 $("#edit_specialist_min_time").val(data.specialist.min_time);
                 $("#edit_specialist_max_time").val(data.specialist.max_time);
 

@@ -21,6 +21,7 @@ use App\Models\Logs;
 use App\Models\Messages;
 use App\Models\Packages;
 use App\Models\Ratings;
+use App\Models\Receipt_orders;
 use App\Models\Services_has_equipments;
 use App\Models\User_as_clinic;
 use App\Models\User_as_customer;
@@ -38,16 +39,20 @@ class TestingController extends Controller
     public function index()
     {
 
-        $getUserClinic = User_as_clinic::where('id', 1)->first();
+
+        dd(Receipt_orders::with(['appointment'])->get()->toArray());
 
 
-        // $getUser = User::where('id', '=', $getUserClinic->users_id)->first();
+        // $getUserClinic = User_as_clinic::where('id', 1)->first();
 
-        $avgRatingApp = Ratings::where('users_id_ratee', '=', 1)->where('users_id_rater', '=', $getUserClinic->users_id)->avg('rating');
 
-        echo $getUserClinic . " ~ ~<br> ";
-        // echo $getUser . " ~ ~<br> ";
-        echo $avgRatingApp . " ~ ~<br> ";
+        // // $getUser = User::where('id', '=', $getUserClinic->users_id)->first();
+
+        // $avgRatingApp = Ratings::where('users_id_ratee', '=', 1)->where('users_id_rater', '=', $getUserClinic->users_id)->avg('rating');
+
+        // echo $getUserClinic . " ~ ~<br> ";
+        // // echo $getUser . " ~ ~<br> ";
+        // echo $avgRatingApp . " ~ ~<br> ";
 
         // $get_inventory = Clinic_equipment_inventory::where("clinic_equipments_id",  4)->get();
 

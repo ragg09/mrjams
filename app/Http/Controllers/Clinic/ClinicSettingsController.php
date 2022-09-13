@@ -474,6 +474,7 @@ class ClinicSettingsController extends Controller
             $validator = Validator::make($request->all(), [
                 'fullname' => 'required',
                 'specialization' => 'required',
+                'compensation_rate' => 'required',
                 'min_time' => 'required',
                 'max_time' => 'required',
             ]);
@@ -484,6 +485,7 @@ class ClinicSettingsController extends Controller
                 $specialists = new Clinic_specialists();
                 $specialists->fullname = $request->fullname;
                 $specialists->specialization = $request->specialization;
+                $specialists->compensation_rate = $request->compensation_rate;
                 $specialists->min_time = $request->min_time;
                 $specialists->max_time = $request->max_time;
                 $specialists->user_as_clinic_id = $getid[0];
@@ -502,6 +504,7 @@ class ClinicSettingsController extends Controller
             $validator = Validator::make($request->all(), [
                 'fullname' => 'required',
                 'specialization' => 'required',
+                'compensation_rate' => 'required',
                 'min_time' => 'required',
                 'max_time' => 'required',
             ]);
@@ -512,6 +515,7 @@ class ClinicSettingsController extends Controller
                 $specialists = Clinic_specialists::find($getid[0]);
                 $specialists->fullname = $request->fullname;
                 $specialists->specialization = $request->specialization;
+                $specialists->compensation_rate = $request->compensation_rate;
                 $specialists->min_time = $request->min_time;
                 $specialists->max_time = $request->max_time;
                 $specialists->save();
