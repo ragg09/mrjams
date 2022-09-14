@@ -153,7 +153,7 @@ class AppointmentController extends Controller
 
             //creating logs
             $c_log = new Customer_logs();
-            $c_log->message = "You requested an appointment to " . $clinic_name->name;
+            $c_log->message = "You requested an appointment to " . $clinic_name->name . " Please keep in mind that you cannot cancel an appointment less than one hour before to the scheduled time; If you want the transaction to proceed smoothly, it is best to contact the clinic.";
             $c_log->remark = "notif";
             $c_log->date =  date("m/d/Y");
             $c_log->time = date("h:i a");
@@ -254,7 +254,7 @@ class AppointmentController extends Controller
 
                 //creating logs
                 $c_log = new Customer_logs();
-                $c_log->message = "You requested an appointment to " . $clinic_name->name;
+                $c_log->message = "You requested an appointment to " . $clinic_name->name . " Please keep in mind that you cannot cancel an appointment less than one hour before to the scheduled time; If you want the transaction to proceed smoothly, it is best to contact the clinic.";
                 $c_log->remark = "notif";
                 $c_log->date =  date("m/d/Y");
                 $c_log->time = date("h:i a");
@@ -319,7 +319,7 @@ class AppointmentController extends Controller
      */
     public function edit($id)
     {
-        //Making Appointment (Myself) 
+        //Making Appointment (Myself)
 
         $user = User::where('email', '=',  Auth::user()->email)->first();
         $customer = User_as_customer::where('users_id', '=', $user->id)->first();
@@ -370,7 +370,7 @@ class AppointmentController extends Controller
      */
     public function destroy($id)
     {
-        // Negotiating Appointment (Mail: Appointment Status Accepted)  
+        // Negotiating Appointment (Mail: Appointment Status Accepted)
         $appointment = Appointments::find($id);
         $appointment->appointment_status_id = 4;
         $appointment->save();
