@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ClinicTypesController;
 use App\Http\Controllers\Admin\ClinicRegistrationController;
 use App\Http\Controllers\Admin\AdminQueryController;
+use App\Http\Controllers\Admin\RatingAdminController;
 
 
 use App\Http\Controllers\Clinic\TestingController;
@@ -159,6 +160,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role_admin'], 'as' 
     Route::resource('clinicTypes', ClinicTypesController::class);
     Route::resource('clinicReg', ClinicRegistrationController::class);
     Route::resource('adminQuery', AdminQueryController::class);
+    Route::resource('ratingAdmin', RatingAdminController::class);
 });
 //================================================================================================================
 //clinic routes without middleware exceptions

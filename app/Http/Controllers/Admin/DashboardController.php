@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Appointment_status;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\User_as_customer;
@@ -11,6 +12,7 @@ use App\Models\Clinic_types;
 use App\Models\Receipt_orders;
 use App\Models\Ratings;
 use App\Models\Appointments;
+
 use Illuminate\Support\Facades\DB;
 
 
@@ -26,7 +28,7 @@ class DashboardController extends Controller
         // $RegUser = User_as_customer::count();
         // $RegClinic = User_as_clinic::count();
         // $Appointment = Appointments::count();
-        // //all goods yan , bali dito rin ung need mong query? oo , pag ka load ng index sabay sabay na 
+        // //all goods yan , bali dito rin ung need mong query? oo , pag ka load ng index sabay sabay na
         // //pano itsura ng data ung need mo pano mo ba gnwa yung dati? wait
         // $Rating = ModelRating::where('users_id_ratee', '=', 1)->avg('rating');
         // round($Rating, 2);
@@ -41,6 +43,41 @@ class DashboardController extends Controller
 
         //     return view('adminViews.index', ['status' => '0']);
         // }
+
+        $appointmentList = Appointments::all();
+
+        $count = 0;
+        foreach ($appointmentList as $key) {
+            $appoint_stat = Appointment_status::where("id", $key->appointment_status_id)->first();
+            $receipt_data = Receipt_orders::where("id", $key->receipt_orders_id)->first();
+
+            $clinicname =  User_as_clinic::where("id", $receipt_data->user_as_clinic_id)->first();
+            $patient = User_as_customer::where("id", $receipt_data->user_as_customer_id)->first();
+
+            if ($appointmentList) {
+                $appoints[] = (object) array(
+                    "id" => $key->id,
+                    "Firstname" => $patient->fname,
+                    "Lastname" => $patient->lname,
+                    "ClinicName" => $clinicname->name,
+                    "DateCreated" => $key->created_at,
+                    "AppointmentDate" => $key->appointed_at,
+                    "Time" => $key->time,
+                    "Status" => $appoint_stat->status
+
+                );
+            }
+            $count++;
+        }
+
+        // if ($count > 0) {
+        //     return response()->json(['data' => $data]);
+        // } else {
+        //     return response()->json(['status' => 0]);
+        // }
+
+        // echo json_encode($appoints);
+        return view('adminViews.TotalAppointments', ['appoints' => $appoints]);
     }
 
     /**
