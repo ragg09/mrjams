@@ -1,0 +1,30 @@
+th, td{
+    font-size: 18px;
+    color: black;
+}
+span{
+    color: black;
+    font-weight: bold;
+}
+a{
+    font-weight: bold;
+}
+label{
+    font-size: 20px;
+}
+.form-control{
+    font-size: 20px;
+    color: black;
+}
+.clinicdata{
+    font-size: 20px;
+}
+p{
+    color: black;
+}
+.tcenter{
+    text-align: center;
+}
+.ratingAdminlogo{
+    text-align: center;
+}
