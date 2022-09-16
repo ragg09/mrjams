@@ -550,7 +550,7 @@ class AppointmentController extends Controller
             $logs->save();
 
             $clogs = new Customer_logs();
-            $clogs->message = "Your appointment has been accepted. See you at " . $clinic->name;
+            $clogs->message = "Your appointment has been accepted. See you at " . $clinic->name . " Please keep in mind that you cannot cancel an appointment less than one hour before to the scheduled time; If you want the transaction to proceed smoothly, it is best to contact the clinic.";
             $clogs->remark = "notif";
             $clogs->date =  date("Y/m/d");
             $clogs->time = date("h:i:sa");
@@ -563,7 +563,7 @@ class AppointmentController extends Controller
                 'address' =>  $clinic_add->address_line_1 . " " . $clinic_add->address_line_2 . " " . $clinic_add->city,
                 'contact' => $clinic->phone,
                 'title' => 'Appointment Accepted',
-                'body' => 'Your appointment has been set, see you on ' . $date . " " . date("g:i a", strtotime($time)),
+                'body' => 'Your appointment has been set, see you on ' . $date . " " . date("g:i a", strtotime($time)) . ". Please keep in mind that you cannot cancel an appointment less than one hour before to the scheduled time; If you want the transaction to proceed smoothly, it is best to contact the clinic.",
             ];
             // Mail::to('ragunayon@gmail.com')->send(new EmailNotification($details)); //testing purposes email
             Mail::to($customer_email)->send(new EmailNotification($details));
