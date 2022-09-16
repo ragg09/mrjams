@@ -6,13 +6,13 @@ $(function(){
     $(window).on('resize', function(e) {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(function() {
-            ReportStatistics();     
+            ReportStatistics();
         }, 200);
     });
 
     //calling Reports
     ReportStatistics();
-    
+
     function ReportStatistics() {
         $.ajax({
             type: "GET",
@@ -25,7 +25,7 @@ $(function(){
 
                     var total_incoming = 0;
                     var total_done = 0;
-                    
+
                     $.each(data.appointment_stats, function(key, val){
                         total_incoming += val.incoming;
                         total_done += val.done;
@@ -39,10 +39,10 @@ $(function(){
                         var data_arr = [
                             ['Date', 'Incoming', 'Done'],
                         ];
-                        
+
                         for (let index = 0; index < 30; index++) {
                             if(data.appointment_stats[index]){
-                                
+
                                 data_arr.push([moment(data.appointment_stats[index].date).format('MMM D'), data.appointment_stats[index].incoming, data.appointment_stats[index].done]);
                             }
                         }
@@ -53,10 +53,10 @@ $(function(){
                         curveType: 'function',
                         legend: { position: 'bottom' }
                         };
-                        
+
                         var figure = google.visualization.arrayToDataTable(data_arr);
                         var chart = new google.visualization.LineChart(document.getElementById('appointments_chart'));
-                
+
                         chart.draw(figure, options);
                     }
                 }else{
@@ -64,7 +64,7 @@ $(function(){
                     $('#appointments_chart').append('<div class="d-flex justify-content-center"><h5>Not enough data to show Appointment Statistics</h5><div class="spinner-border text-dark mx-3" role="status"><span class="visually-hidden">Loading...</span></div></div>');
                 }
                 //^^TOP APPOINTMENTS
-                
+
                 //TOP SERVICES
                 if(data.services_stats && data.services_stats.length >= 5){
                     var sorted_services = data.services_stats;
@@ -78,7 +78,7 @@ $(function(){
                         var data_arr = [
                             ['Name', 'Total'],
                         ];
-                        
+
                         for (let index = 0; index < 5; index++) {
                             data_arr.push([sorted_services[index].name, sorted_services[index].count]);
                         }
@@ -92,14 +92,14 @@ $(function(){
                         //     //     break;
                         //     //   }
                         // });
-        
+
                         var options = {
                             title: 'Top Selected Services Of Customer From Your Clinic',
                             vAxis: {
                                 title: 'Count',
                                 viewWindow:{
-                                    //max:data.services_count, 
-                                    min: 0, 
+                                    //max:data.services_count,
+                                    min: 0,
                                 }
                             },
                             curveType: 'function',
@@ -128,7 +128,7 @@ $(function(){
                         var data_arr = [
                             ['Name', 'Total'],
                         ];
-                        
+
                         for (let index = 0; index < 5; index++) {
                             data_arr.push([sorted_packages[index].name, sorted_packages[index].count]);
                         }
@@ -142,14 +142,14 @@ $(function(){
                         //     //     break;
                         //     //   }
                         // });
-        
+
                         var options = {
                             title: 'Top Selected Packages Of Customer From Your Clinic',
                             vAxis: {
                                 title: 'Count',
                                 viewWindow:{
-                                    //max:data.packages_count, 
-                                    min: 0, 
+                                    //max:data.packages_count,
+                                    min: 0,
                                 }
                             },
                             curveType: 'function',
@@ -186,7 +186,7 @@ $(function(){
                         var data_arr = [
                             ['Name', 'Total'],
                         ];
-                        
+
                         for (let index = 0; index < 10; index++) {
                             if(sorted_materials[index]){
                                 data_arr.push([sorted_materials[index].name, sorted_materials[index].count]);
@@ -202,14 +202,14 @@ $(function(){
                         //     //     break;
                         //     //   }
                         // });
-        
+
                         var options = {
                             title: 'Most Used Consumable Materials',
                             vAxis: {
                                 title: 'Count',
                                 viewWindow:{
-                                    //max:data.materials_count, 
-                                    min: 0, 
+                                    //max:data.materials_count,
+                                    min: 0,
                                 }
                             },
                             curveType: 'function',
@@ -224,7 +224,7 @@ $(function(){
                     $('#materials_chart').append('<div class="d-flex justify-content-center"><h5>Not enough data to show Materials Statistics</h5><div class="spinner-border text-dark mx-3" role="status"><span class="visually-hidden">Loading...</span></div></div>');
                 }
                 //^^TOP MATERIAL
-                
+
             },
             error: function(e){
                 console.log(e);
@@ -232,7 +232,7 @@ $(function(){
             }
         });
     }
-    
+
     var report_date = "";
 
     $("#material_modal_flatpicker").flatpickr({
@@ -258,11 +258,11 @@ $(function(){
                 if($('#generate_report_modal_flatpicker').val() != ""){
                     $("#generate_report_all").attr("disabled", false)
                 }
-    
+
             }else{
                 $("#generate_report_all").attr("disabled", true)
             }
-           
+
         }
 
     });
@@ -272,12 +272,12 @@ $(function(){
 
         for (let x = 1; x <= 7; x++) {
             $("#inlineCheckbox"+x).attr("disabled", false)
-            
+
         }
     });
 
     $("#inlineCheckbox1, #inlineCheckbox2, #inlineCheckbox3, #inlineCheckbox4, #inlineCheckbox5, #inlineCheckbox6, #inlineCheckbox7, #inlineCheckboxBill1, #inlineCheckboxBill2, #inlineCheckboxMaterial1, #inlineCheckboxMaterial2, #inlineCheckboxMaterial3, #inlineCheckboxServicePackage1, #inlineCheckboxServicePackage2, #inlineCheckboxServicePackage3").on('click', function(e){
-        
+
         if ($('#inlineCheckbox1, #inlineCheckbox2, #inlineCheckbox3, #inlineCheckbox4, #inlineCheckbox5, #inlineCheckbox6, #inlineCheckbox7, #inlineCheckboxBill1, #inlineCheckboxBill2, #inlineCheckboxMaterial1, #inlineCheckboxMaterial2, #inlineCheckboxMaterial3, #inlineCheckboxServicePackage1, #inlineCheckboxServicePackage2, #inlineCheckboxServicePackage3').is(':checked')) {
 
             if($('#generate_report_modal_flatpicker').val() != ""){
@@ -297,10 +297,10 @@ $(function(){
             $("#generate_report_all").attr("disabled", true)
         }
     })
-    
 
 
-    
+
+
 
 
 
@@ -313,7 +313,7 @@ $(function(){
     //         type: "GET",
     //         url: "/clinic/report/" + report_date,
     //         beforeSend: function(){
-               
+
     //         },
     //         success: function(data) {
     //           console.log(data);

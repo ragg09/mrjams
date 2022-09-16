@@ -38,7 +38,7 @@ class ReportController extends Controller
 
 
 
-
+        //top specialists
         $top_specialist =  DB::table('receipt_orders')
             ->where('user_as_clinic_id', $clinic->id)
             ->select('specialist_id', DB::raw('count(*) as total'))
@@ -60,14 +60,17 @@ class ReportController extends Controller
             }
         }
 
-        // return $complete_specialists_data;
+        //today's revenue
+        $today_revenue = 0;
+        $all_billing_today = Billings::where('user_as_clinic_id', '=',  $clinic->id)
+            ->where('created_at', 'LIKE', '%' . date("Y-m-d") . '%')
+            ->get();
 
-
-
-        // $revenue_today = Billings::where(date('Y-m-d', strtotime('created_at')),  date('Y-m-d'))->get();
-
-        // return  $revenue_today;
-
+        if (count($all_billing_today) > 0) {
+            foreach ($all_billing_today as $key) {
+                $today_revenue += $key->total_paid;
+            }
+        }
 
 
         //for accounting
@@ -90,6 +93,7 @@ class ReportController extends Controller
             'clinic' => $clinic,
             'complete_specialists_data' => $complete_specialists_data,
             'logs' => $logs,
+            'today_revenue' => $today_revenue,
         ]);
     }
 
@@ -491,6 +495,7 @@ class ReportController extends Controller
      */
     public function edit(Request $request, $id)
     {
+
         $user = User::where('email', '=',  Auth::user()->email)->first();
         $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
         $clinic_address = User_address::where('id', '=',  $clinic->user_address_id)->first();
@@ -951,7 +956,12 @@ class ReportController extends Controller
             ############################# ^^ FOR APPOINTMENTS ^^  #############################
 
 
+
+
+
             #############################  FOR BILLINGS   #############################
+
+
 
             if (isset($request->billing_fully_paid)) { // BILL FULLY PAID ISSET
                 // echo "fully paid";
@@ -1194,6 +1204,31 @@ class ReportController extends Controller
             }
 
             ############################# ^^ FOR DAILY AVAILED SERVICES & PACKAGES ^^  #############################
+
+
+            if (isset($request->billing_today)) {
+
+                $revenue_today = Billings::where("user_as_clinic_id", $clinic->id)
+                    ->where('created_at', 'LIKE', '%' . $date_key . '%')
+                    ->get();
+
+                if (count($revenue_today) > 0) {
+                    $complete_revenue_today = [];
+                    $revenue = 0;
+
+                    foreach ($revenue_today as $key) {
+                        $revenue += $key->total_paid;
+                    }
+
+                    $complete_revenue_today[] = (object) array(
+                        "revenue" => $revenue,
+                    );
+
+                    array_push($this_day_summary,  $complete_revenue_today);
+                } else {
+                    array_push($this_day_summary, array());
+                }
+            }
 
 
 

@@ -37,7 +37,14 @@
                         <div class="row">
                             <div class="col-12  d-flex justify-content-end ">
                                 <p style="font-size: 30px; font-weight: bold; margin-right: 20px">
-                                    &#8369;15,250</p>
+
+
+                                    @if ($today_revenue > 0)
+                                        &#8369;{{ number_format($today_revenue, 0) }}
+                                    @else
+                                        ---
+                                    @endif
+                                </p>
                             </div>
                             <div class="col-12  d-flex justify-content-end ">
                                 <p class="text-muted" style="margin-right: 20px">Today's Revenue</p>
