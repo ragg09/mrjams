@@ -1,5 +1,6 @@
 body {
     background-color: #eef5f9 !important;
+
 }
 
 .header {
@@ -72,12 +73,12 @@ body {
 
 #sidebar-wrapper a {
     text-decoration: none;
-    color: #9598a4;
+    color: black;
     font-size: 20px;
 }
 
 #sidebar-wrapper a:hover #sidebar-option {
-    color: #5b5c61;
+    color: #0D6EFD;
     border-radius: 10px;
     transition: 0.1s;
 }
@@ -489,7 +490,7 @@ div.container6 {
 
 #footer_clickables li{
     display:inline;
-    
+
 }
 
 #footer_clickables li a{

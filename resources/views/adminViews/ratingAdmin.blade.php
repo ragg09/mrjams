@@ -110,16 +110,9 @@
 
                                     <div class="media-body text-center">
                                         <img src="{{ asset('images/mrjams/RatingLogo.PNG') }}" class="ratingAdminlogo">
-                                        {{-- <i class="fa fa-user fa-6x mb-2" aria-hidden="true"></i>
-                           <h3 style="font-weight: bold">MR. JAMS</h3> --}}
-
                                         <h5>Appointment and Management System for Dental and Medical Clinics with
                                             Location-Based Mapping</h5>
-
                                     </div>
-
-
-
                                 </div>
                             </div>
                         </div>
@@ -134,14 +127,14 @@
                                             aria-hidden="true"></i>
                                     </div>
                                     <div class="media-body text-right">
-                                        <h4><b>Total App Rating:</b> 12</h4>
+                                        <h4><b>Total App Rating:</b> {{ number_format($totalRating, 1) }}</h4>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="card">
+                    {{-- <div class="card">
                         <div class="card-content">
                             <div class="card-body text-center">
                                 <div class="media d-flex">
@@ -171,94 +164,88 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
 
+                {{-- {{ $rating}} --}}
                 <div class="col">
                     <div class="card">
                         <div class="card-content">
                             <div class="card-body text-center">
                                 <div class="media d-flex">
                                     <div class="media-body text-right">
-                                        {{-- <div id="appMonthPatient" style="width: 100%; height: 500px">
-                             <h1 class="text-center" id="appMonthPatient_nodata">NO AVAILABLE DATA</h1>
-                           </div> --}}
-                                        <h4 style="text-align: left; font-weight: bold;">Customers Rating</h4>
+                                        <h4 style="text-align: left; font-weight: bold;">Rating</h4>
                                         <table class="table table-hover" id="appRatingCustomer">
                                             <thead style="background-color: #B3CDE0">
                                                 <tr>
-                                                    <th scope="col">ID</th>
-                                                    <th scope="col" class="tcenter">First Name</th>
-                                                    <th scope="col" class="tcenter">Last Name</th>
+                                                    <th scope="col" class="tcenter">ID</th>
+                                                    <th scope="col" class="tcenter">Name</th>
                                                     <th scope="col" class="tcenter">Comment</th>
                                                     <th scope="col" class="tcenter">Rating</th>
+                                                    <th scope="col" class="tcenter">Role</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="info">
-
-                                                <tr style="text-align: center;">
-                                                    <td>1</td>
-                                                    <td class="tcenter">Sample</td>
+                                                @foreach ($allRating as $row)
+                                                    <tr style="text-align: center;">
+                                                        {{-- <td class="tcenter">Sample</td>
                                                     <td class="tcenter">Sample</td>
                                                     <td class="tcenter">Sample</td>
                                                     <td class="tcenter">5</td>
+                                                    <td class="tcenter">Sample</td> --}}
 
-                                                </tr>
+                                                        <td class="tcenter">{{ $row->id }}</td>
+                                                        <td class="tcenter">{{ $row->name }}</td>
+                                                        <td class="tcenter">{{ $row->comment ?? 'No comment' }}</td>
+                                                        <td class="tcenter">{{ $row->rating }}</td>
+                                                        <td class="tcenter">{{ $row->role }}</td>
 
+                                                    </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
-
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
 
-                    <div class="card">
+                    {{-- <div class="card">
                         <div class="card-content">
                             <div class="card-body text-center">
                                 <div class="media d-flex">
                                     <div class="media-body text-right">
-                                        {{-- <div id="appMonthPatient" style="width: 100%; height: 500px">
-                              <h1 class="text-center" id="appMonthPatient_nodata">NO AVAILABLE DATA</h1>
-                            </div> --}}
-                                        <h4 style="text-align: left; font-weight: bold;">Clinics Rating</h4>
-
-                                        <table class="table table-hover" id="appRatingClinic">
+                                        <h4 style="text-align: left; font-weight: bold;">Clinic Rating Rating</h4>
+                                        <table class="table table-hover" id="appRatingCustomer">
                                             <thead style="background-color: #B3CDE0">
                                                 <tr>
-                                                    <th scope="col">ID</th>
-                                                    <th scope="col" class="tcenter">Clinic Name</th>
+                                                    <th scope="col" class="tcenter">ID</th>
+                                                    <th scope="col" class="tcenter">Name</th>
                                                     <th scope="col" class="tcenter">Comment</th>
                                                     <th scope="col" class="tcenter">Rating</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="info">
 
-
-
                                                 <tr style="text-align: center;">
-                                                    <td>1</td>
+                                                    <td class="tcenter">Sample</td>
                                                     <td class="tcenter">Sample</td>
                                                     <td class="tcenter">Sample</td>
                                                     <td class="tcenter">5</td>
 
                                                 </tr>
-
                                             </tbody>
                                         </table>
-
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
+
+
+
 
 
 

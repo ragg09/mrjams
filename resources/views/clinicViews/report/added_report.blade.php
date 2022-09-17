@@ -29,9 +29,10 @@
 
                                 </tbody>
                             </table>
-                            {{-- <div class="col-12  d-flex justify-content-end ">
-                                <p class="text-muted" style="margin-right: 20px">BEST DOCTOR</p>
-                            </div> --}}
+                            <div class="col-12  d-flex justify-content-end ">
+                                <p class="text-muted" style="margin-right: 20px">Doctor With The Most Performed Services
+                                </p>
+                            </div>
                         </div>
 
 
