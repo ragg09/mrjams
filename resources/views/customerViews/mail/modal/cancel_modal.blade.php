@@ -12,7 +12,7 @@
                 <div class="d-flex justify-content-center">
                     <h5><b>Are you sure you want to cancel this appointment?</b></h5>
                 </div>
-                <div class="d-flex justify-content-center" style="text-align: center;">
+                <div class="d-flex justify-content-center">
                     <p><i>Please keep in mind that you cannot cancel an appointment less than one hour before to the
                             scheduled time; If you want the transaction to proceed smoothly, it is best to contact the
                             clinic.</i></p>

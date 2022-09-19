@@ -38,9 +38,10 @@ class TestingController extends Controller
      */
     public function index()
     {
+        return env('MAPPING_API_KEY');
 
 
-        dd(Receipt_orders::with(['appointment'])->get()->toArray());
+        // dd(Receipt_orders::with(['appointment'])->get()->toArray());
 
 
         // $getUserClinic = User_as_clinic::where('id', 1)->first();
