@@ -6,7 +6,12 @@
 
 
     <div style="background: white; padding: 50px;">
-
+        <div class="justify-content-end d-flex">
+            <a class="justify-content-end d-flex text-secondary"
+                href="{{ route('clinic.owners-vault.show', 'doctor-payslip-history') }}" style="font-size: 40px;">
+                <i class="fa fa-clipboard" aria-hidden="true"></i>
+            </a>
+        </div>
 
         <div class="row mb-5">
             <div class="col  d-flex justify-content-center">

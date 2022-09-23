@@ -132,14 +132,12 @@
                                 <div class="widget-49">
                                     <div class="widget-49-title-wrapper">
                                         <div class="widget-49-date-primary">
-                                            {{-- <span class="widget-49-date-day">{{$latestCustomer[0]->id}}</span>
-                                <span class="widget-49-date-month">ID</span> --}}
+
                                             <i class="fa fa-user fa-4x" style="color: #118ab2;" aria-hidden="true"></i>
                                         </div>
 
                                         <div class="widget-49-meeting-info">
-                                            {{-- <span class="widget-49-date-day">{{$latestCustomer[0]->id}}.</span> --}}
-                                            {{-- <span class="widget-49-date-month">ID</span> --}}
+
                                             <span class="widget-60-pro-title"
                                                 style="font-size: 24px;">{{ $latestCustomer[0]->id }}.
                                                 {{ $latestCustomer[0]->lname }}, {{ $latestCustomer[0]->fname }}</span>
@@ -174,8 +172,6 @@
                                 <div class="widget-49">
                                     <div class="widget-49-title-wrapper">
                                         <div class="widget-49-date-warning">
-                                            {{-- <span class="widget-49-date-day">{{$latestClinic[0]->id}}</span>
-                                <span class="widget-49-date-month">ID</span> --}}
                                             <i class="fa fa-user-md fa-4x" style="color: #06d6a0;"
                                                 aria-hidden="true"></i>
                                         </div>

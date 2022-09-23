@@ -143,12 +143,28 @@ class OwnerController extends Controller
     public function show($id)
     {
 
+        request()->session()->flash('vault-allowed', 'Session is still valid');
+
+        if ($id == "doctor-payslip-history") {
+            $user = User::where('email', '=',  Auth::user()->email)->first();
+            $clinic = User_as_clinic::where('users_id', '=',  $user->id)->first();
+            $specialists = Clinic_specialists::where('user_as_clinic_id', $clinic->id)->get();
+
+
+            return view('clinicViews.vault.paylsip_history', compact('specialists'));
+        }
+
+        if (strpos($id, "_")) {
+            $getid = explode("_", $id);
+            $records = Clinic_specialists_compensation::where('clinic_specialists_id', $getid[0])->get();
+            return response()->json($records);
+        }
+
         $this_specialists = Clinic_specialists::find($id);
         $compensations = Clinic_specialists_compensation::where('clinic_specialists_id', $id)
             ->where('claim', 0)
             ->OrderBy('created_at', 'ASC')
             ->get();
-        request()->session()->flash('vault-allowed', 'Session is still valid');
         return view('clinicViews.vault.show', compact('this_specialists', 'compensations'));
     }
 

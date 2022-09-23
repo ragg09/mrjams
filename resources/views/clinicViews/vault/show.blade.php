@@ -7,6 +7,9 @@
 
     <div style="background: white; padding: 50px;">
 
+        <a href="{{ route('clinic.owners-vault.index') }}">
+            <h2><i class="fa fa-arrow-left" aria-hidden="true"></i></h2>
+        </a>
 
         <div class="row mb-5">
             <div class="col  d-flex justify-content-center">
